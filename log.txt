@@ -1,3 +1,27 @@
+commit cf5d3e62581afdd1ff8e053cf2ab1da763ec65b7
+Author: Ian P. Cordero <ianpcordero@gmail.com>
+Date:   Wed Jul 2 02:14:27 2014 -0700
+
+    Updated ignored files
+
+commit 626ab52730b6415f9ff101fca769a780d9f35cc9
+Author: Ian P. Cordero <ianpcordero@gmail.com>
+Date:   Wed Jul 2 02:11:18 2014 -0700
+
+    Updated .gitignore
+
+commit 522ace8c69f5e0acde9c589d9a109e4627d72176
+Author: Ian P. Cordero <ianpcordero@gmail.com>
+Date:   Wed Jul 2 02:00:32 2014 -0700
+
+    Cleaned up slightly
+
+commit eb7274117d87078fde033461fcf882fc508d260c
+Author: Ian P. Cordero <ianpcordero@gmail.com>
+Date:   Wed Jul 2 01:59:43 2014 -0700
+
+    Cleaned up slightly
+
 commit d82014231a9894bb56336400aa0a4e52ef831612
 Author: Ian P. Cordero <ianpcordero@gmail.com>
 Date:   Wed Jul 2 01:57:16 2014 -0700
