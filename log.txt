@@ -1,3 +1,9 @@
+commit d82014231a9894bb56336400aa0a4e52ef831612
+Author: Ian P. Cordero <ianpcordero@gmail.com>
+Date:   Wed Jul 2 01:57:16 2014 -0700
+
+    Cleaned up slightly
+
 commit 921a241619683ee0d87cee5a004b0d7435e6632a
 Author: Ian Cordero <icord3028@yahoo.com>
 Date:   Wed Jul 2 01:37:44 2014 -0700
