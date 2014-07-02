@@ -3,7 +3,7 @@
 //  pokemongame
 //
 //  Created by Ian Cordero on 8/6/13.
-//  Copyright (c) 2013 Ian Cordero. All rights reserved.
+//  Copyright (c) 2013-2014 Ian Cordero. All rights reserved.
 //
 
 #include <iostream>

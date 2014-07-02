@@ -19,36 +19,6 @@
 		C5E4DE1518C4879900CB715A /* Pokemon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5E4DE1318C4879900CB715A /* Pokemon.cpp */; };
 		C5E4DE1818C487A900CB715A /* Move.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5E4DE1618C487A900CB715A /* Move.cpp */; };
 		C5E4DE1B18C487B700CB715A /* Trainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5E4DE1918C487B700CB715A /* Trainer.cpp */; };
-		C5F849761946C4410074DFCF /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5F849751946C4410074DFCF /* Cocoa.framework */; };
-		C5F849801946C4410074DFCF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C5F8497E1946C4410074DFCF /* InfoPlist.strings */; };
-		C5F849821946C4410074DFCF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C5F849811946C4410074DFCF /* main.m */; };
-		C5F849861946C4410074DFCF /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = C5F849841946C4410074DFCF /* Credits.rtf */; };
-		C5F849891946C4410074DFCF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C5F849881946C4410074DFCF /* AppDelegate.m */; };
-		C5F8498C1946C4410074DFCF /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5F8498A1946C4410074DFCF /* MainMenu.xib */; };
-		C5F8498E1946C4410074DFCF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5F8498D1946C4410074DFCF /* Images.xcassets */; };
-		C5F849951946C4410074DFCF /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5F849941946C4410074DFCF /* XCTest.framework */; };
-		C5F849961946C4410074DFCF /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5F849751946C4410074DFCF /* Cocoa.framework */; };
-		C5F8499E1946C4410074DFCF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C5F8499C1946C4410074DFCF /* InfoPlist.strings */; };
-		C5F849A01946C4410074DFCF /* pokeguiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C5F8499F1946C4410074DFCF /* pokeguiTests.m */; };
-		C5F849AD1946C84D0074DFCF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5F849AC1946C84D0074DFCF /* Foundation.framework */; };
-		C5F849AF1946C84E0074DFCF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5F849AE1946C84D0074DFCF /* CoreGraphics.framework */; };
-		C5F849B11946C84E0074DFCF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5F849B01946C84E0074DFCF /* UIKit.framework */; };
-		C5F849B31946C84E0074DFCF /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5F849B21946C84E0074DFCF /* GLKit.framework */; };
-		C5F849B51946C84E0074DFCF /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5F849B41946C84E0074DFCF /* OpenGLES.framework */; };
-		C5F849BB1946C84E0074DFCF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C5F849B91946C84E0074DFCF /* InfoPlist.strings */; };
-		C5F849BD1946C84E0074DFCF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C5F849BC1946C84E0074DFCF /* main.m */; };
-		C5F849C11946C84E0074DFCF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C5F849C01946C84E0074DFCF /* AppDelegate.m */; };
-		C5F849C41946C84E0074DFCF /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5F849C21946C84E0074DFCF /* Main_iPhone.storyboard */; };
-		C5F849C71946C84E0074DFCF /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5F849C51946C84E0074DFCF /* Main_iPad.storyboard */; };
-		C5F849C91946C84E0074DFCF /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = C5F849C81946C84E0074DFCF /* Shader.fsh */; };
-		C5F849CB1946C84E0074DFCF /* Shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = C5F849CA1946C84E0074DFCF /* Shader.vsh */; };
-		C5F849CE1946C84E0074DFCF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5F849CD1946C84E0074DFCF /* ViewController.m */; };
-		C5F849D01946C84E0074DFCF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5F849CF1946C84E0074DFCF /* Images.xcassets */; };
-		C5F849D61946C84E0074DFCF /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5F849941946C4410074DFCF /* XCTest.framework */; };
-		C5F849D71946C84E0074DFCF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5F849AC1946C84D0074DFCF /* Foundation.framework */; };
-		C5F849D81946C84E0074DFCF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5F849B01946C84E0074DFCF /* UIKit.framework */; };
-		C5F849E01946C84E0074DFCF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C5F849DE1946C84E0074DFCF /* InfoPlist.strings */; };
-		C5F849E21946C84E0074DFCF /* PokemonThrowdownTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C5F849E11946C84E0074DFCF /* PokemonThrowdownTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -111,47 +81,9 @@
 		C5E4DE1A18C487B700CB715A /* Trainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Trainer.h; sourceTree = "<group>"; };
 		C5E4DE2218C48A6200CB715A /* MapData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapData.h; sourceTree = "<group>"; };
 		C5F849731946C4410074DFCF /* pokegui.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pokegui.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		C5F849751946C4410074DFCF /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
-		C5F849781946C4410074DFCF /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
-		C5F849791946C4410074DFCF /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		C5F8497A1946C4410074DFCF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		C5F8497D1946C4410074DFCF /* pokegui-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "pokegui-Info.plist"; sourceTree = "<group>"; };
-		C5F8497F1946C4410074DFCF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		C5F849811946C4410074DFCF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		C5F849831946C4410074DFCF /* pokegui-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "pokegui-Prefix.pch"; sourceTree = "<group>"; };
-		C5F849851946C4410074DFCF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
-		C5F849871946C4410074DFCF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		C5F849881946C4410074DFCF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		C5F8498B1946C4410074DFCF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		C5F8498D1946C4410074DFCF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		C5F849931946C4410074DFCF /* pokeguiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = pokeguiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		C5F849941946C4410074DFCF /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		C5F8499B1946C4410074DFCF /* pokeguiTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "pokeguiTests-Info.plist"; sourceTree = "<group>"; };
-		C5F8499D1946C4410074DFCF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		C5F8499F1946C4410074DFCF /* pokeguiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = pokeguiTests.m; sourceTree = "<group>"; };
 		C5F849AB1946C84D0074DFCF /* PokemonThrowdown.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PokemonThrowdown.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		C5F849AC1946C84D0074DFCF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		C5F849AE1946C84D0074DFCF /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		C5F849B01946C84E0074DFCF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
-		C5F849B21946C84E0074DFCF /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = Library/Frameworks/GLKit.framework; sourceTree = DEVELOPER_DIR; };
-		C5F849B41946C84E0074DFCF /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = Library/Frameworks/OpenGLES.framework; sourceTree = DEVELOPER_DIR; };
-		C5F849B81946C84E0074DFCF /* PokemonThrowdown-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PokemonThrowdown-Info.plist"; sourceTree = "<group>"; };
-		C5F849BA1946C84E0074DFCF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		C5F849BC1946C84E0074DFCF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		C5F849BE1946C84E0074DFCF /* PokemonThrowdown-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PokemonThrowdown-Prefix.pch"; sourceTree = "<group>"; };
-		C5F849BF1946C84E0074DFCF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		C5F849C01946C84E0074DFCF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		C5F849C31946C84E0074DFCF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
-		C5F849C61946C84E0074DFCF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
-		C5F849C81946C84E0074DFCF /* Shader.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Shader.fsh; path = Shaders/Shader.fsh; sourceTree = "<group>"; };
-		C5F849CA1946C84E0074DFCF /* Shader.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Shader.vsh; path = Shaders/Shader.vsh; sourceTree = "<group>"; };
-		C5F849CC1946C84E0074DFCF /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		C5F849CD1946C84E0074DFCF /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		C5F849CF1946C84E0074DFCF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		C5F849D51946C84E0074DFCF /* PokemonThrowdownTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PokemonThrowdownTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		C5F849DD1946C84E0074DFCF /* PokemonThrowdownTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PokemonThrowdownTests-Info.plist"; sourceTree = "<group>"; };
-		C5F849DF1946C84E0074DFCF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		C5F849E11946C84E0074DFCF /* PokemonThrowdownTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PokemonThrowdownTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,7 +98,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C5F849761946C4410074DFCF /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -174,8 +105,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C5F849961946C4410074DFCF /* Cocoa.framework in Frameworks */,
-				C5F849951946C4410074DFCF /* XCTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -183,11 +112,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C5F849B51946C84E0074DFCF /* OpenGLES.framework in Frameworks */,
-				C5F849AF1946C84E0074DFCF /* CoreGraphics.framework in Frameworks */,
-				C5F849B11946C84E0074DFCF /* UIKit.framework in Frameworks */,
-				C5F849B31946C84E0074DFCF /* GLKit.framework in Frameworks */,
-				C5F849AD1946C84D0074DFCF /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -195,9 +119,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C5F849D61946C84E0074DFCF /* XCTest.framework in Frameworks */,
-				C5F849D81946C84E0074DFCF /* UIKit.framework in Frameworks */,
-				C5F849D71946C84E0074DFCF /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -222,11 +143,6 @@
 			isa = PBXGroup;
 			children = (
 				C5D1866217B1BE73003709FB /* pokemongame */,
-				C5F8497B1946C4410074DFCF /* pokegui */,
-				C5F849991946C4410074DFCF /* pokeguiTests */,
-				C5F849B61946C84E0074DFCF /* PokemonThrowdown */,
-				C5F849DB1946C84E0074DFCF /* PokemonThrowdownTests */,
-				C5F849741946C4410074DFCF /* Frameworks */,
 				C5D1866117B1BE73003709FB /* Products */,
 			);
 			sourceTree = "<group>";
@@ -270,119 +186,6 @@
 				C5D1866317B1BE73003709FB /* main.cpp */,
 			);
 			path = pokemongame;
-			sourceTree = "<group>";
-		};
-		C5F849741946C4410074DFCF /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				C5F849751946C4410074DFCF /* Cocoa.framework */,
-				C5F849941946C4410074DFCF /* XCTest.framework */,
-				C5F849AC1946C84D0074DFCF /* Foundation.framework */,
-				C5F849AE1946C84D0074DFCF /* CoreGraphics.framework */,
-				C5F849B01946C84E0074DFCF /* UIKit.framework */,
-				C5F849B21946C84E0074DFCF /* GLKit.framework */,
-				C5F849B41946C84E0074DFCF /* OpenGLES.framework */,
-				C5F849771946C4410074DFCF /* Other Frameworks */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		C5F849771946C4410074DFCF /* Other Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				C5F849781946C4410074DFCF /* AppKit.framework */,
-				C5F849791946C4410074DFCF /* CoreData.framework */,
-				C5F8497A1946C4410074DFCF /* Foundation.framework */,
-			);
-			name = "Other Frameworks";
-			sourceTree = "<group>";
-		};
-		C5F8497B1946C4410074DFCF /* pokegui */ = {
-			isa = PBXGroup;
-			children = (
-				C5F849871946C4410074DFCF /* AppDelegate.h */,
-				C5F849881946C4410074DFCF /* AppDelegate.m */,
-				C5F8498A1946C4410074DFCF /* MainMenu.xib */,
-				C5F8498D1946C4410074DFCF /* Images.xcassets */,
-				C5F8497C1946C4410074DFCF /* Supporting Files */,
-			);
-			path = pokegui;
-			sourceTree = "<group>";
-		};
-		C5F8497C1946C4410074DFCF /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				C5F8497D1946C4410074DFCF /* pokegui-Info.plist */,
-				C5F8497E1946C4410074DFCF /* InfoPlist.strings */,
-				C5F849811946C4410074DFCF /* main.m */,
-				C5F849831946C4410074DFCF /* pokegui-Prefix.pch */,
-				C5F849841946C4410074DFCF /* Credits.rtf */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		C5F849991946C4410074DFCF /* pokeguiTests */ = {
-			isa = PBXGroup;
-			children = (
-				C5F8499F1946C4410074DFCF /* pokeguiTests.m */,
-				C5F8499A1946C4410074DFCF /* Supporting Files */,
-			);
-			path = pokeguiTests;
-			sourceTree = "<group>";
-		};
-		C5F8499A1946C4410074DFCF /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				C5F8499B1946C4410074DFCF /* pokeguiTests-Info.plist */,
-				C5F8499C1946C4410074DFCF /* InfoPlist.strings */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		C5F849B61946C84E0074DFCF /* PokemonThrowdown */ = {
-			isa = PBXGroup;
-			children = (
-				C5F849BF1946C84E0074DFCF /* AppDelegate.h */,
-				C5F849C01946C84E0074DFCF /* AppDelegate.m */,
-				C5F849C21946C84E0074DFCF /* Main_iPhone.storyboard */,
-				C5F849C51946C84E0074DFCF /* Main_iPad.storyboard */,
-				C5F849C81946C84E0074DFCF /* Shader.fsh */,
-				C5F849CA1946C84E0074DFCF /* Shader.vsh */,
-				C5F849CC1946C84E0074DFCF /* ViewController.h */,
-				C5F849CD1946C84E0074DFCF /* ViewController.m */,
-				C5F849CF1946C84E0074DFCF /* Images.xcassets */,
-				C5F849B71946C84E0074DFCF /* Supporting Files */,
-			);
-			path = PokemonThrowdown;
-			sourceTree = "<group>";
-		};
-		C5F849B71946C84E0074DFCF /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				C5F849B81946C84E0074DFCF /* PokemonThrowdown-Info.plist */,
-				C5F849B91946C84E0074DFCF /* InfoPlist.strings */,
-				C5F849BC1946C84E0074DFCF /* main.m */,
-				C5F849BE1946C84E0074DFCF /* PokemonThrowdown-Prefix.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		C5F849DB1946C84E0074DFCF /* PokemonThrowdownTests */ = {
-			isa = PBXGroup;
-			children = (
-				C5F849E11946C84E0074DFCF /* PokemonThrowdownTests.m */,
-				C5F849DC1946C84E0074DFCF /* Supporting Files */,
-			);
-			path = PokemonThrowdownTests;
-			sourceTree = "<group>";
-		};
-		C5F849DC1946C84E0074DFCF /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				C5F849DD1946C84E0074DFCF /* PokemonThrowdownTests-Info.plist */,
-				C5F849DE1946C84E0074DFCF /* InfoPlist.strings */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -519,10 +322,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C5F849801946C4410074DFCF /* InfoPlist.strings in Resources */,
-				C5F8498E1946C4410074DFCF /* Images.xcassets in Resources */,
-				C5F849861946C4410074DFCF /* Credits.rtf in Resources */,
-				C5F8498C1946C4410074DFCF /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -530,7 +329,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C5F8499E1946C4410074DFCF /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -538,12 +336,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C5F849C91946C84E0074DFCF /* Shader.fsh in Resources */,
-				C5F849C71946C84E0074DFCF /* Main_iPad.storyboard in Resources */,
-				C5F849C41946C84E0074DFCF /* Main_iPhone.storyboard in Resources */,
-				C5F849D01946C84E0074DFCF /* Images.xcassets in Resources */,
-				C5F849BB1946C84E0074DFCF /* InfoPlist.strings in Resources */,
-				C5F849CB1946C84E0074DFCF /* Shader.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -551,7 +343,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C5F849E01946C84E0074DFCF /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -581,8 +372,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C5F849891946C4410074DFCF /* AppDelegate.m in Sources */,
-				C5F849821946C4410074DFCF /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -590,7 +379,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C5F849A01946C4410074DFCF /* pokeguiTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -598,9 +386,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C5F849CE1946C84E0074DFCF /* ViewController.m in Sources */,
-				C5F849C11946C84E0074DFCF /* AppDelegate.m in Sources */,
-				C5F849BD1946C84E0074DFCF /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -608,7 +393,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C5F849E21946C84E0074DFCF /* PokemonThrowdownTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -626,73 +410,6 @@
 			targetProxy = C5F849D91946C84E0074DFCF /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		C5F8497E1946C4410074DFCF /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C5F8497F1946C4410074DFCF /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		C5F849841946C4410074DFCF /* Credits.rtf */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C5F849851946C4410074DFCF /* en */,
-			);
-			name = Credits.rtf;
-			sourceTree = "<group>";
-		};
-		C5F8498A1946C4410074DFCF /* MainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C5F8498B1946C4410074DFCF /* Base */,
-			);
-			name = MainMenu.xib;
-			sourceTree = "<group>";
-		};
-		C5F8499C1946C4410074DFCF /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C5F8499D1946C4410074DFCF /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		C5F849B91946C84E0074DFCF /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C5F849BA1946C84E0074DFCF /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		C5F849C21946C84E0074DFCF /* Main_iPhone.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C5F849C31946C84E0074DFCF /* Base */,
-			);
-			name = Main_iPhone.storyboard;
-			sourceTree = "<group>";
-		};
-		C5F849C51946C84E0074DFCF /* Main_iPad.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C5F849C61946C84E0074DFCF /* Base */,
-			);
-			name = Main_iPad.storyboard;
-			sourceTree = "<group>";
-		};
-		C5F849DE1946C84E0074DFCF /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C5F849DF1946C84E0074DFCF /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		C5D1866717B1BE73003709FB /* Debug */ = {

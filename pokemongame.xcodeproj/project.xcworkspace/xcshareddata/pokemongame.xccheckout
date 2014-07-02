@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>D9AAA9FA-0975-40C2-AFD2-815A0C470769</string>
+	<key>IDESourceControlProjectName</key>
+	<string>pokemongame</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>2A7F38F9-D3B9-445A-B482-1C7ABE59269E</key>
+		<string>https://github.com/plunk654/drunken-octo-wallhack.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>pokemongame.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>2A7F38F9-D3B9-445A-B482-1C7ABE59269E</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/plunk654/drunken-octo-wallhack.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>2A7F38F9-D3B9-445A-B482-1C7ABE59269E</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>2A7F38F9-D3B9-445A-B482-1C7ABE59269E</string>
+			<key>IDESourceControlWCCName</key>
+			<string>drunken-octo-wallhack</string>
+		</dict>
+	</array>
+</dict>
+</plist>
