@@ -41,7 +41,7 @@ struct TrainerData
     int pokemonIDs[MAXPOKEMON];
 };
 
-const int NUMTRAINERS = 9;
+const int NUMTRAINERS = 4;
 
 const TrainerData trainerlib[MAXTOTALTRAINERS] = {
     //                                      Pokemon

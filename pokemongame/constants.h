@@ -26,6 +26,7 @@ bool listContains(const list<Object> l, Object o)
 
 // Global Constants
 
+// TODO: make use of constants a bit more organized
 const int STAND = -1;
 const int UP = 0;
 const int RIGHT = 1;
@@ -181,6 +182,8 @@ const double typeArray[MAXTYPES][MAXTYPES] = {
     ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE2, ELE1, ELE1, ELE2, ELE1, ELE1, ELE1, ELE5  // LIT
 };
 
+// TODO: replace these clunky const int declarations with more graceful enum
+// statement
 const int NONATURE = 0;
 const int HARDY = 1;
 const int LONELY = 2;
@@ -270,6 +273,7 @@ enum Nature
     SassyNature, CarefulNature, QuickNature
 };
 
+// TODO: organize and consolidate move effects
 enum MoveEffect
 {
     MNoEffect,
@@ -376,6 +380,8 @@ enum HoldItem
 
 const int NUMITEMS = 100;
 
+// TODO: add all common battle items
+// TODO: implement most of these items
 const string itemStrings[NUMITEMS] = {
     "No Item", "Leftovers", "Choice Band", "Choice Scarf", "Choice Specs",
     "Light Ball", "Life Orb", "Light Clay", "King's Rock", "Focus Sash",
@@ -386,6 +392,7 @@ const string itemStrings[NUMITEMS] = {
     "Latiasite", "Latiosite"
 };
 
+// TODO: implement most abilities
 enum PokeAbility
 {
     PNoAbility, PLevitate, PSwiftSwim, PIntimidate, PHugePower, PStatic,
@@ -504,11 +511,13 @@ const string weatherContStrings[NUMWEATHERS] = {
     "The sandstorm rages on.", "Hail continues to fall."
 };
 
+// TODO: implement terrain-type moves
 enum Terrain
 {
     NoTerrain, Grassy, Electric, Misty
 };
 
+// TODO: implement screen-type moves
 enum Screen
 {
     NoScreen, Reflect, LightScreen

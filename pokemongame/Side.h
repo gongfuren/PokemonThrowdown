@@ -17,6 +17,11 @@ class Slot;
 class Field;
 class Trainer;
 
+// Note: Field, Side, Slot, Player, Computer, and Item classes are all "hardly
+// implemented", that is, these modules are not being utilized to any
+// appreciable extent. TODO: utilize these classes, as well as existing ones
+// to improve modularity and organization. Perhaps make new classes as needed.
+
 class Side
 {
 public:

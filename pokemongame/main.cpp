@@ -13,8 +13,6 @@
 #include "Battle.h"
 using namespace std;
 
-// Gameplay Implementation
-
 void play();
 
 // Main
@@ -31,6 +29,7 @@ int main()
     
     for (;;)
     {
+        // Title Screen
         if (showFullHeader)
         {
             cout << "O***0***O***0***O***0" << endl;
@@ -45,21 +44,20 @@ int main()
         
         cin >> choice;
         
-        if (choice == 1)
+        if (choice == 1) // Play
         {
-            // Initiate battle
             Battle b;
             b.start();
             showFullHeader = true;
             
             cout << endl;
         }
-        else if (choice == 2)
+        else if (choice == 2) // Options
         {
             cout << "Coming soon!" << endl;
             showFullHeader = false;
         }
-        else if (choice == 3)
+        else if (choice == 3) // Credits
         {
             cout << "Pokemon Throwdown" << endl
             << "An originally-coded, Pokemon simulator that is true to the game. Made by a huge fan." << endl
@@ -71,7 +69,7 @@ int main()
             
             showFullHeader = false;
         }
-        else
+        else // Quit
         {
             break;
         }

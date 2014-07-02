@@ -11,6 +11,7 @@
 
 // Auxiliary Function Implementations
 
+// TODO: clean up these functions and their usage
 void gyroscope(int& gyro, int& scope, int d)
 {
     switch (d)
