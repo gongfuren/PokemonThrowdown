@@ -68,6 +68,7 @@ int main()
             << "ex: a funky hip-hop throwdown." << endl
             << "(C) 2014 Ian P. Cordero." << endl
             << "All credit goes to Nintendo and GameFreak for design of original game mechanics, Pokemon, etc." << endl;
+            
             showFullHeader = false;
         }
         else
