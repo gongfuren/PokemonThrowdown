@@ -16,6 +16,8 @@
 #include "Side.h"
 #include "Slot.h"
 #include "Item.h"
+#include "Player.h"
+#include "Computer.h"
 #include <ctime>
 #include <cstdlib>
 #include <algorithm>
@@ -208,13 +210,13 @@ void Battle::customInit(Trainer* trainerA)
     // Craft Trainer
     if (initStage == 0)
     {
-        m_player = new Trainer(protoman, this, false);
+        m_player = new Player(protoman, this);
         m_participants[initStage] = m_player;
         m_field->getSide(0)->addTrainer(m_player);
     }
     else // initStage == 1
     {
-        m_opponent = new Trainer(protoman, this);
+        m_opponent = new Computer(protoman, this);
         m_participants[initStage] = m_opponent;
         m_field->getSide(1)->addTrainer(m_opponent);
     }
@@ -344,10 +346,23 @@ void Battle::summonsPhase()
         }
         
         if (m_actor->getPokemon() == NULL || m_actor->getPokemon()->isDead())
-            // Replace fainted Pokemon
+            // Choose replacement for fainted Pokemon
         {
             replacePokemon(m_actor);
+        }
+    }
+    
+    for (int i = 0; i < NUMPLAYERS; i++)
+    {
+        m_actor = m_participants[i];
+        
+        if (m_actor->getIntendedMove() == SWITCH)
+        {
+            // Replace fainted Pokemon
+            m_actor->switchPokemon(false);
             m_field->getSide(i)->getSlot()->fillSlot(m_actor->getPokemon());
+            
+            m_actor->setIntendedMove(NODECIS);
         }
     }
     
@@ -375,8 +390,6 @@ void Battle::preBattlePhase()
         // Forfeit
         return;
     
-    Pokemon* pokemon;
-    
     for (int i = 0; i < NUMPLAYERS; i++)
     {
         m_actor = m_participants[i];
@@ -384,25 +397,15 @@ void Battle::preBattlePhase()
         if (m_actor->getIntendedMove() == SWITCH)
         {
             m_actor->switchPokemon(true);
-            summonEffects();
             
             m_field->getSide(i)->getSlot()->fillSlot(m_actor->getPokemon());
         }
     }
     
-    // Event before battle phase (i.e. item/Mega Evolution)
-    for (int i = 0; i < NUMPLAYERS; i++)
-    {
-        m_actor = m_participants[i];
-        pokemon = m_actor->getPokemon();
-        
-        if (m_actor->getIntendedMove() == MEGA)
-        {
-            pokemon->megaEvolve();
-        }
-    }
-    
     summonEffects();
+    
+    // Event before battle phase (i.e. item)
+    
 }
 
 void Battle::battlePhase()
@@ -449,6 +452,20 @@ void Battle::battlePhase()
             priorityArray[tCtr++] = tpa[i];
         }
     }
+    
+    // Event before moves are executed (i.e. Mega Evolution)
+    for (int i = 0; i < NUMPLAYERS; i++)
+    {
+        m_actor = m_participants[i];
+        pokemon = m_actor->getPokemon();
+        
+        if (m_actor->getIntendedMove() == MEGA)
+        {
+            pokemon->megaEvolve();
+        }
+    }
+    
+    summonEffects();
     
     // Do actions for certain moves (i.e. Focus Punch, Bide)
     for (int i = 0; i < NUMPLAYERS; i++)
@@ -545,6 +562,10 @@ void Battle::postBattlePhase()
         statusEffect(m_participants[i]);
     
     checkDead();
+    
+    // Reset moves
+    for (int i = 0; i < NUMPLAYERS; i++)
+        m_participants[i]->setIntendedMove(NODECIS);
 }
 
 bool Battle::battleIsOver() const
@@ -611,75 +632,10 @@ int Battle::speedCompare(const Pokemon* pokemonA, const Pokemon* pokemonB) const
 }
 
 void Battle::actionSelect()
-{
-    Pokemon* pokemon;
-    
+{    
     for (int i = 0; i < NUMPLAYERS; i++)
     {
-        m_actor = m_participants[i];
-        
-        if (m_actor == m_player)
-            // Choose player move
-        {
-            if (!m_actor->canChooseAction())
-                continue;
-            
-            bool rerun = false;
-            
-            do
-            {
-                cout << "What would you like to do?" << endl;
-                
-                cout << "1: Fight!" << endl
-                << "2: Bag" << endl
-                << "3: Pokemon" << endl
-                << "4: Run" << endl;
-                
-                int choice;
-                cin >> choice;
-                
-                switch (choice)
-                {
-                    case 1:
-                        rerun = !chooseFight();
-                        break;
-                    case 2:
-                        rerun = !chooseBag();
-                        break;
-                    case 3:
-                        rerun = !choosePokemon(m_player);
-                        break;
-                    case 4:
-                        rerun = !chooseRun();
-                        break;
-                    default:
-                        break;
-                }
-            }
-            while (rerun);
-            
-            summonEffects();
-        }
-        else
-            // Select opponent's move
-        {
-            // Level -1: Purposely choose bad moves*
-            // Level 0: Simply make a random choice from 4 moves
-            // Level 1: 1/3 chance to favor the best move
-            // Level 2: 2/3 chance to favor the best move
-            // Level 3: Always favor the best move
-            // *Calculated using an algorithm that scores each move/switching out/etc.
-            
-            // Level 0 (no switching):
-            pokemon = m_actor->getPokemon();
-            
-            if (pokemon->canMegaEvolve())
-                m_actor->setIntendedMove(MEGA);
-            else
-                m_actor->setIntendedMove(FIGHT);
-            
-            pokemon->setIntendedMove(randInt(0, 3));
-        }
+        m_participants[i]->actionSelect();
     }
 }
 
@@ -840,12 +796,9 @@ bool Battle::playerSummon(bool optional) const
     }
     while (rerun);
     
+    // Set intended switch
     m_player->setIntendedSwitch(choice-1);
-
-    if (optional)
-        m_player->setIntendedMove(SWITCH);
-    else
-        m_player->switchPokemon(false);
+    m_player->setIntendedMove(SWITCH);
     
     return true;
 }
@@ -870,12 +823,9 @@ void Battle::opponentSummon(Trainer* trainer, bool optional) const
         {
             if (choice == 0)
             {
+                // Set intended switch
                 m_opponent->setIntendedSwitch(i);
-                
-                if (optional)
-                    m_opponent->setIntendedMove(SWITCH);
-                else
-                    m_opponent->switchPokemon(false);
+                m_opponent->setIntendedMove(SWITCH);
                 
                 break;
             }
@@ -946,7 +896,7 @@ string Battle::statusText(Pokemon* pokemon, bool showStats) const
                 o << ' ' << vstatusStrings[vs];
         }
         
-        for (int i = ATTSTAT; i < NUMSTATS; i++)
+        for (int i = ATTSTAT; i < NUMALLSTATS; i++)
         {
             if (pokemon->getStatsStatus(i) != 0)
             {
@@ -983,10 +933,10 @@ void Battle::applyStatus(Trainer* trainerA, Trainer* trainerB, int whichMove)
     MoveEffect me = trainerA->getPokemonMove(whichMove)->getEffect();
     int healAmount;
     
-    int sc[6] = { 0, 0, 0, 0, 0, 0 };
+    int sc[NUMALLSTATS] = { 0, 0, 0, 0, 0, 0, 0, 0 };
     
     if (me == MHeal50)
-        // Calculate heal amount
+        // Calculate heal amount for Healing moves
     {
         healAmount = pokemon->getBStats(HPSTAT) / 2;
         
@@ -999,10 +949,20 @@ void Battle::applyStatus(Trainer* trainerA, Trainer* trainerB, int whichMove)
                 healAmount = pokemon->getBStats(HPSTAT) / 4;
         }
     }
+    else if (me == MHeal100)
+        // Heal amount and sleep effect for Rest
+    {
+        healAmount = pokemon->getBStats(HPSTAT);
+        
+        cout << trainerB->getTitle() << " " << trainerB->getName() << "'s " << target->getName() << " went to sleep!" << endl;
+        
+        pokemon->setStatus(SleepStatus, true);
+    }
     
     switch (me)
     {
         case MHeal50:
+        case MHeal100:
             cout << trainerB->getTitle() << " " << trainerB->getName() << "'s " << target->getName();
             if (target->increaseHP(healAmount))
                 cout << "'s HP was restored!";
@@ -1142,7 +1102,7 @@ void Battle::applyStatus(Trainer* trainerA, Trainer* trainerB, int whichMove)
             break;
     }
     
-    for (int i = ATTSTAT; i < NUMSTATS; i++)
+    for (int i = ATTSTAT; i < NUMALLSTATS; i++)
     {
         if (sc[i] < 0)
         {
@@ -1169,7 +1129,7 @@ void Battle::applyAttack(Trainer* trainerA, Trainer* trainerB,
     Move* attackMove = attacker->getMove(whichMove);
 
     double typeBoost, pureDamage, sTAB, crit, modulus, other, attackMultiplier,
-    specialDefMultiplier, specialDefPierce, defPierce, modifier, spOrNot,
+    specialDefMultiplier, modifier, spOrNot,
     damage, totalDamage;
     
     int critThreshold;
@@ -1277,20 +1237,10 @@ void Battle::applyAttack(Trainer* trainerA, Trainer* trainerB,
         
     }
     
-    if (attackMove->getEffect() == MIgnoreDef100)
-        // Move pierces defense
+    if (attacker->getItem()->getID() == HLightBall && attacker->getID() == 25)
+        // Pikachu holding a Light Ball
     {
-        defPierce = static_cast<double>(target->getBStats(DEFSTAT) *
-                    attacker->statMultiplier(-6)) /
-                    static_cast<double>(target->getStats(DEFSTAT));
-        specialDefPierce = static_cast<double>(target->getBStats(SPDSTAT) *
-                            attacker->statMultiplier(-6)) /
-                            static_cast<double>(target->getStats(SPDSTAT));
-    }
-    else
-    {
-        defPierce = 1.0;
-        specialDefPierce = 1.0;
+        other *= 2.0;
     }
     
     modifier = typeBoost * sTAB * crit * modulus * other;
@@ -1299,15 +1249,13 @@ void Battle::applyAttack(Trainer* trainerA, Trainer* trainerB,
         // Physical attack
     {
         spOrNot = static_cast<double>(attacker->getStats(ATTSTAT) *
-                attackMultiplier) / static_cast<double>(target->getStats(DEFSTAT) *
-                defPierce);
+                attackMultiplier) / static_cast<double>(target->getStats(DEFSTAT));
     }
     else
         // Special attack
     {
         spOrNot = static_cast<double>(attacker->getStats(SPASTAT)) /
-        (static_cast<double>(target->getStats(SPDSTAT) * specialDefMultiplier *
-        specialDefPierce));
+        (static_cast<double>(target->getStats(SPDSTAT) * specialDefMultiplier));
     }
     
     damage = (((2.0 * attacker->getOnMyLevel() + 10.0) / 250.0) *
@@ -1489,7 +1437,11 @@ void Battle::applyEffect(Trainer* trainerA, Trainer* trainerB, int whichMove) co
         target->addVStatus(FFlinchVStatus);
     }
     
-    
+    if (effect == MLowerAcc100)
+        // Lower accuracy
+    {
+        target->lowerStat(ACCSTAT, false);
+    }
 }
 
 void Battle::applySideEffects(Trainer* trainer, int whichMove)

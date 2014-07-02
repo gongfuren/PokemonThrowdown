@@ -19,6 +19,9 @@ public:
     Player(TrainerData h, Battle* battle);
     ~Player();
     
+    virtual void actionSelect();
+    virtual bool isComputer() const;
+    
 private:
 };
 

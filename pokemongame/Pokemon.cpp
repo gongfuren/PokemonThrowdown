@@ -144,7 +144,7 @@ void Pokemon::clearVolatiles()
     m_turnsOut = -1;
     
     // Undo stat changes
-    for (int i = 1; i < NUMSTATS; i++)
+    for (int i = 1; i < NUMALLSTATS; i++)
     {
         restoreStat(i);
     }
@@ -184,12 +184,14 @@ PokeStatus Pokemon::getStatus() const
     return m_status;
 }
 
-int Pokemon::getStats(int whichStat) const
+double Pokemon::getStats(int whichStat) const
 {
     if (whichStat == HPSTAT)
         return m_statsStatus[whichStat];
+    else if (whichStat == ACCSTAT || whichStat == EVASTAT)
+        return statEMultiplier(m_statsStatus[whichStat]);
     else
-        return m_bStats[whichStat] * statMultiplier(m_statsStatus[whichStat]);
+        return m_bStats[whichStat] * statAMultiplier(m_statsStatus[whichStat]);
 }
 
 int Pokemon::getBStats(int whichStat) const
@@ -383,6 +385,7 @@ bool Pokemon::lowerStat(int whichStat, bool silent)
     bool normalExecution = true;
     
     if (!silent && m_ability == PClearBody)
+        // Clear Body cancellation
     {
         normalExecution = false;
         
@@ -537,40 +540,14 @@ void Pokemon::restoreStat(int whichStat)
             lowerStat(whichStat, true);
 }
 
-double Pokemon::statMultiplier(int statLevel) const
+double Pokemon::statAMultiplier(int statLevel) const
 {
-    switch (statLevel)
-    {
-        case 6:
-            return STAT_P6;
-        case 5:
-            return STAT_P5;
-        case 4:
-            return STAT_P4;
-        case 3:
-            return STAT_P3;
-        case 2:
-            return STAT_P2;
-        case 1:
-            return STAT_P1;
-        case 0:
-            return STAT_B0;
-        case -1:
-            return STAT_N1;
-        case -2:
-            return STAT_N2;
-        case -3:
-            return STAT_N3;
-        case -4:
-            return STAT_N4;
-        case -5:
-            return STAT_N5;
-        case -6:
-            return STAT_N6;
-        default:
-            return -1.00;
-    }
+    return STAT_A[6 + statLevel];
+}
 
+double Pokemon::statEMultiplier(int statLevel) const
+{
+    return STAT_E[6 + statLevel];
 }
 
 int Pokemon::getIntendedMove() const
@@ -641,7 +618,6 @@ bool Pokemon::passThroughStatus()
     
     if (hasVStatus(ConfuseVStatus))
     {
-        // Temporary solution (ToDo)
         int so = randInt(0,3);
         bool snapOut = (so == 0);
         
@@ -657,6 +633,18 @@ bool Pokemon::passThroughStatus()
             if (thru < 500)
             {
                 cout << m_name << " hurt itself in its confusion!" << endl;
+                
+                int pureDamage = 40;
+                int attackMultiplier = 1.0;
+                if (getAbility() == PHugePower || getAbility() == PPurePower)
+                    attackMultiplier = 2.0;
+                int spOrNot = static_cast<double>(getStats(ATTSTAT) * attackMultiplier) / static_cast<double>(getStats(DEFSTAT));
+                double damage = (((2.0 * getOnMyLevel() + 10.0) / 250.0) *
+                                 (spOrNot) * pureDamage + 2.0);
+                
+                lowerHP(damage);
+                
+                pass = false;
             }
         }
     }
@@ -727,7 +715,7 @@ void Pokemon::removeVStatus(VolatileStatus vstatus)
     m_vstatuses.remove(vstatus);
 }
 
-void Pokemon::setStatus(PokeStatus status)
+void Pokemon::setStatus(PokeStatus status, bool rest)
 {
     if (status != FaintStatus && getStatus() != HealthyStatus)
         return;
@@ -768,37 +756,16 @@ void Pokemon::setStatus(PokeStatus status)
     
     m_status = status;
     
-    cout << getTrainer()->getTitle() << ' ' << getTrainer()->getName() << "'s " << m_name;
+    if (!rest)
+        cout << getTrainer()->getTitle() << ' ' << getTrainer()->getName() << "'s " << m_name << " " << statusStartStrings[status] << endl;
     
-    switch (status)
+    if (status == SleepStatus)
     {
-        case FaintStatus:
-            cout << " fainted!";
-            break;
-        case FreezeStatus:
-            cout << " was frozen solid!";
-            break;
-        case ParalyzeStatus:
-            cout << " was paralyzed!";
-            break;
-        case BurnStatus:
-            cout << " was burned!";
-            break;
-        case PoisonStatus:
-            cout << " was poisoned!";
-            break;
-        case ToxicStatus:
-            cout << " was badly poisoned!";
-            break;
-        case SleepStatus:
-            cout << " fell asleep!";
+        if (rest)
             m_sleepTurns = randInt(1, 3);
-            break;
-        default:
-            break;
+        else
+            m_sleepTurns = 2;
     }
-    
-    cout << endl;
 }
 
 void Pokemon::setIntendedMove(int choice)
@@ -866,10 +833,20 @@ bool Pokemon::executeMove(Pokemon* target)
     
     if (move->getEffect() == MNeverMiss)
         // Never miss
+    {
         moveHits = true;
+    }
     else
         // Normal accuracy calculation
+    {
+        double a = getStats(ACCSTAT);
+        double b = target->getStats(EVASTAT);
+        double c = moveAccuracy * (a / b);
+        c += 0.5;   // round
+        
+        moveAccuracy = c;
         moveHits = (randInt(0, 99) < moveAccuracy);
+    }
     
     if (target->hasVStatus(ProtectVStatus))
         moveHits = false;
@@ -986,4 +963,9 @@ bool Pokemon::usedProtect(int turnsAgo) const
     return moveUsedLast(turnsAgo) != NULL &&
     (moveUsedLast(turnsAgo)->getEffect() == MProtect ||
      moveUsedLast(turnsAgo)->getEffect() == MShield);
+}
+
+int Pokemon::getID() const
+{
+    return m_ID;
 }

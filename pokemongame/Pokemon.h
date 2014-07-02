@@ -36,7 +36,7 @@ public:
     Type getType1() const;
     Type getType2() const;
     PokeStatus getStatus() const;
-    int getStats(int whichStat) const;
+    double getStats(int whichStat) const;
     int getBStats(int whichStat) const;
     int getStatsStatus(int whichStat) const;
     Move* getMove(int whichMove) const;
@@ -48,13 +48,14 @@ public:
     bool hasCompatMega() const;
     string getDescription() const;
     int getForm() const;
+    int getID() const;
     
     Trainer* getTrainer() const;
     Slot* getSlot() const;
     
     int getIntendedMove() const;
     void setIntendedMove(int choice);
-    void setStatus(PokeStatus status);
+    void setStatus(PokeStatus status, bool rest = false);
     void addVStatus(VolatileStatus vstatus);
     void removeVStatus(VolatileStatus vstatus);
     bool hasVStatus(VolatileStatus vstatus);
@@ -84,7 +85,8 @@ public:
     bool increaseStat(int whichStat, int levels);
     void restoreStat(int whichStat);
     void clearVolatiles();
-    double statMultiplier(int statLevel) const;
+    double statAMultiplier(int statLevel) const;
+    double statEMultiplier(int statLevel) const;
     
     void castAbility();
     

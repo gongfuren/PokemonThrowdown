@@ -46,6 +46,27 @@ const int EVASTAT = 7;
 const int CRITSTAT = 8;
 const int NUMALLSTATS = 9;
 
+const string statStrings[NUMALLSTATS] = {
+    "HP", "Att", "Def", "SpA", "SpD", "Spe", "Acc", "Eva", "Crit"
+};
+
+const string statFullStrings[NUMALLSTATS] = {
+    "HP", "Attack", "Defense", "Special Attack", "Special Defense", "Speed", "Accuracy", "Evasiveness", "Critical Hit Ratio"
+};
+
+const string statFLowerStrings[NUMALLSTATS] = {
+};
+
+const double STAT_A[13] = {
+    0.25, 0.285, 0.3333, 0.40, 0.50, 0.6666, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0
+};
+
+const double STAT_E[13] = {
+    0.3333, 0.38, 0.43, 0.5, 0.6, 0.75, 1.00, 1.3333, 1.6666, 2.0, 2.3333, 2.6666, 3.0
+};
+
+const int HPBARLENGTH = 40;
+
 const int MAXMOVES = 4;
 
 const int NODECIS = 0;
@@ -230,35 +251,6 @@ const double natureArray[NUMNATURES][NUMSTATS-1] = {
 
 const int NUMABILITIES = 100;
 
-const string statStrings[NUMALLSTATS] = {
-    "HP", "Att", "Def", "SpA", "SpD", "Spe", "Acc", "Eva", "Crit"
-};
-
-const string statFullStrings[NUMALLSTATS] = {
-    "HP", "Attack", "Defense", "Special Attack", "Special Defense", "Speed", "Accuracy", "Evasiveness", "Critical Hit Ratio"
-};
-
-const string statFLowerStrings[NUMALLSTATS] = {
-};
-
-const double STAT_N6 = 0.25;
-const double STAT_N5 = 0.285;
-const double STAT_N4 = 0.3333;
-const double STAT_N3 = 0.40;
-const double STAT_N2 = 0.50;
-const double STAT_N1 = 0.6666;
-
-const double STAT_B0 = 1.00;
-
-const double STAT_P1 = 1.5;
-const double STAT_P2 = 2.0;
-const double STAT_P3 = 2.5;
-const double STAT_P4 = 3.0;
-const double STAT_P5 = 3.5;
-const double STAT_P6 = 4.0;
-
-const int HPBARLENGTH = 40;
-
 // Global Enumerators
 
 enum Type {
@@ -318,7 +310,7 @@ enum MoveEffect
     MUpRnd,
     
     MMoveFirst, MMoveFirst2, MSuperpower, MHighCrit,
-    MHeal50, MDrain50, MDrain75,
+    MHeal50, MHeal100, MDrain50, MDrain75,
     
     MRecoil25, MRecoil33, MRecoilStrug,
     
@@ -435,7 +427,7 @@ enum Generation
 
 enum MoveTarget
 {
-    None, Self, Opponent, LongRange, Both, All, Random, TargetField, OwnSide, OpponentSide, BothSides
+    None, Self, Opponent, OpponentF, Both, All, Random
 };
 
 enum PokeStatus
@@ -457,6 +449,10 @@ const string statusFullStrings[NUMSTATUSES] = {
 
 const string statusFSNoun[NUMSTATUSES] = {
     "No Status", "Poison", "Toxic", "Paralyze", "Burn", "Freeze", "Sleep", "Faint"
+};
+
+const string statusStartStrings[NUMSTATUSES] = {
+    "", "was poisoned!", "was badly poisoned!", "was paralyzed!", "was burned!", "was frozen solid!", "fell asleep!", "fainted!"
 };
 
 enum VolatileStatus

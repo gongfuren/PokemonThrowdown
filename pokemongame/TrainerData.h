@@ -41,7 +41,7 @@ struct TrainerData
     int pokemonIDs[MAXPOKEMON];
 };
 
-const int NUMTRAINERS = 4;
+const int NUMTRAINERS = 9;
 
 const TrainerData trainerlib[MAXTOTALTRAINERS] = {
     //                                      Pokemon
@@ -49,20 +49,20 @@ const TrainerData trainerlib[MAXTOTALTRAINERS] = {
     "Red",        PKMNTRAINER, true,  1000, 196, 25,  6,   9,   3,   143,
     "Steven",     CHAMPION,    true,  1000, 227, 306, 344, 346, 348, 376,
     "Blue",       CHAMPION,    true,  1000, 214, 65,  248, 59,  103,  9,
-    "Ian",        PKMNTRAINER, true,  1000, 721, 149, 248, 303, 720, 681,
-    "Beth",       PSYTRAINER,  false, 200,  -1,  -1,  -1,  -1,  -1,  -1,
-    
-    "Max",        BUGCATCHER,  true,  200,  -1,  -1,  -1,  -1,  -1,  -1,
-    "Joey",       YOUNGSTER,   true,  200,  -1,  -1,  -1,  -1,  -1,  -1,
-    "Dana",       LASS,        false, 200,  -1,  -1,  -1,  -1,  -1,  -1,
-    "Brock",      GYMLEADER,   true,  500,  -1,  -1,  -1,  -1,  -1,  -1,
+    "Ian",        ELITEFOUR,   true,  1000, 721, 149, 151, 303, 720, 681,
+    "KC",         PKMNTRAINER, false, 1000, 25,  249, 382,  94,  157,  286,
+
+    "Anjo",       PKMNTRAINER, true,  1000,  6,  65,  121,  212,  248,  230,
+    "Jessica",    ACETRAINER,  false, 1000, 260, 429, 143, 242 ,448, 468,
+    "Erick",      PSYTRAINER,  true,  1000, 477, 330, 254, 242, 65,  157,
+    "Steven",     PSYTRAINER,  true,  1000, 65,  376, 386, 385, 197,  150,
     "Misty",      GYMLEADER,   false, 500,  -1,  -1,  -1,  -1,  -1,  -1,
     
     "Samuel",     HIKER,       true,  400,  -1,  -1,  -1,  -1,  -1,  -1,
     "Michael",    SWIMMER,     true,  350,  -1,  -1,  -1,  -1,  -1,  -1,
     "Robert",     ACETRAINER,  true,  900,  -1,  -1,  -1,  -1,  -1,  -1,
     "Ariel",      ACETRAINER,  false, 900,  -1,  -1,  -1,  -1,  -1,  -1,
-    "Rex",        PKMNTRAINER, true,  1000, -1,  -1,  -1,  -1,  -1,  -1,
+    "Beth",       PSYTRAINER,  false, 100,  -1,  -1,  -1,  -1,  -1,  -1,
     
     "Solomon",    PKMNTRAINER, true,  1000, -1,  -1,  -1,  -1,  -1,  -1
 };

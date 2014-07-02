@@ -16,7 +16,7 @@
 using namespace std;
 
 Trainer::Trainer(int trainerAID, Battle* battle)
-: m_battle(battle), m_current(-1), m_name(""), m_title(""), m_male(false), m_victory(false), m_reward(0), m_intendedMove(NODECIS), m_usedMega(false), m_isComputer(true)
+: m_battle(battle), m_current(-1), m_name(""), m_title(""), m_male(false), m_victory(false), m_reward(0), m_intendedMove(NODECIS), m_usedMega(false)
 {
     for (int i = 0; i < MAXPOKEMON; i++)
         m_pokemon[i] = NULL;
@@ -26,8 +26,8 @@ Trainer::Trainer(int trainerAID, Battle* battle)
     standardInit(trainerAID);
 }
 
-Trainer::Trainer(TrainerData h, Battle* battle, bool isComputer)
-: m_battle(battle), m_current(-1), m_name(""), m_title(""), m_male(false), m_victory(false), m_reward(0), m_intendedMove(NODECIS), m_usedMega(false), m_isComputer(isComputer)
+Trainer::Trainer(TrainerData h, Battle* battle)
+: m_battle(battle), m_current(-1), m_name(""), m_title(""), m_male(false), m_victory(false), m_reward(0), m_intendedMove(NODECIS), m_usedMega(false)
 {
     m_name = h.name;
     m_title = h.title;
@@ -136,11 +136,6 @@ void Trainer::summonPokemon()
     
     for (int i = 0; i < MAXPOKEMONPERPLAYER; i++)
         m_pokemonOut[i] = m_pokemon[m_current];
-}
-
-bool Trainer::isComputer() const
-{
-    return m_isComputer;
 }
 
 void Trainer::switchPokemon(bool optional)

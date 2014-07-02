@@ -22,8 +22,8 @@ class Trainer
 {
 public:
     Trainer(int trainerAID, Battle* battle);
-    Trainer(TrainerData h, Battle* battle, bool isComputer = true);
-    ~Trainer();
+    Trainer(TrainerData h, Battle* battle);
+    virtual ~Trainer();
     void standardInit(int trainerID);
     
     void setCurrent(int current);
@@ -33,7 +33,6 @@ public:
     
     void displayState() const;
     
-    bool isComputer() const;
     Battle* getBattle() const;
     string getName() const;
     string getTitle() const;
@@ -51,6 +50,9 @@ public:
     bool getUsedMega() const;
     void setUsedMega();
     
+    virtual void actionSelect() = 0;
+    virtual bool isComputer() const = 0;
+    
     // Strategy
     int getIntendedMove() const;
     bool setIntendedMove(int move);
@@ -61,9 +63,7 @@ public:
     
     void checkDead();
     
-private:
-    bool m_isComputer;
-    
+private:    
     string m_name;
     string m_title;
     bool m_male;
