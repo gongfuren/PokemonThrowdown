@@ -1,3 +1,28 @@
+commit 502b3c438953e783017e000e37edd5977a9243c9
+Author: Ian P. Cordero <ianpcordero@gmail.com>
+Date:   Wed Jul 2 23:13:10 2014 -0700
+
+    v0.1.4
+    
+    -Improved code modularity by moving some functions around
+    -Extracted most strings into their own array
+    -Implemented gender displaying
+    -Classified gender locked and ungendered Pokemon
+    -Justified most code text to fit within 80 columns for enhanced readability
+    -Fixed bug where title screen header would not show after the first time
+
+commit 90e08e614957a214788f547ad3a7ff35d04a1c49
+Author: Ian P. Cordero <ianpcordero@gmail.com>
+Date:   Wed Jul 2 22:23:36 2014 -0700
+
+    v0.1.4
+    
+    -Improved code modularity by moving some functions around
+    -Extracted most strings into their own array
+    -Implemented gender displaying
+    -Classified gender locked and ungendered Pokemon
+    -Justified most code text to fit within 80 columns for enhanced readability
+
 commit a00dd02daa83dd45a96fda8411ea890613378390
 Author: Ian P. Cordero <ianpcordero@gmail.com>
 Date:   Wed Jul 2 22:22:24 2014 -0700
