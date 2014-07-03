@@ -51,18 +51,18 @@ int main()
         else if (choice == 2) // Options
         {
             cout << bFStrings[7] << endl;
+            showFullHeader = false;
         }
         else if (choice == 3) // Credits
         {
             cout << bFStrings[8] << endl << bFStrings[9] << endl
             << bFStrings[10] << endl << bFStrings[11] << endl << bFStrings[12]
             << endl << bFStrings[13] << endl << bFStrings[14] << endl;
+            showFullHeader = false;
         }
         else // Quit
         {
             break;
         }
-        
-        showFullHeader = false;
     }
 }
