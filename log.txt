@@ -1,3 +1,24 @@
+commit a00dd02daa83dd45a96fda8411ea890613378390
+Author: Ian P. Cordero <ianpcordero@gmail.com>
+Date:   Wed Jul 2 22:22:24 2014 -0700
+
+    v0.1.4
+    
+    -Improved code modularity by moving some functions around
+    -Extracted most strings into their own array
+    -Implemented gender displaying
+    -Classified gender locked and ungendered Pokemon
+    -Justified most code text to fit within 80 columns for enhanced readability
+
+commit 4422ead651d336ac52153040b9047f42c5b61be9
+Author: Ian P. Cordero <ianpcordero@gmail.com>
+Date:   Wed Jul 2 02:49:39 2014 -0700
+
+    v0.1.3
+    
+    -Added a little commentary
+    -Reduced trainer presets to 4
+
 commit f67c30279d44cc22ddbdcc13f90178326ce50e19
 Author: Ian P. Cordero <ianpcordero@gmail.com>
 Date:   Wed Jul 2 02:44:41 2014 -0700
