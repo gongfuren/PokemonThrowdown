@@ -9,9 +9,10 @@
 #ifndef __pokemongame__Constants__
 #define __pokemongame__Constants__
 
-#include <string>
 #include <list>
 using namespace std;
+
+// Note: This data file does not adhere to an 80 column limit!
 
 template <typename Object>
 bool listContains(const list<Object> l, Object o)
@@ -46,17 +47,6 @@ const int ACCSTAT = 6;
 const int EVASTAT = 7;
 const int CRITSTAT = 8;
 const int NUMALLSTATS = 9;
-
-const string statStrings[NUMALLSTATS] = {
-    "HP", "Att", "Def", "SpA", "SpD", "Spe", "Acc", "Eva", "Crit"
-};
-
-const string statFullStrings[NUMALLSTATS] = {
-    "HP", "Attack", "Defense", "Special Attack", "Special Defense", "Speed", "Accuracy", "Evasiveness", "Critical Hit Ratio"
-};
-
-const string statFLowerStrings[NUMALLSTATS] = {
-};
 
 const double STAT_A[13] = {
     0.25, 0.285, 0.3333, 0.40, 0.50, 0.6666, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0
@@ -120,12 +110,6 @@ const int NEUTRALTYPE = 19;
 const int LIGHTTYPE = 20;
 
 const int MAXTYPES = 18 + 1 + 2;    // "Actual" types + NoType + Neutral/Light
-
-const string typeStrings[MAXTYPES] = {
-    "No Type", "Normal", "Grass", "Fire", "Water", "Electric", "Ice", "Bug",
-    "Poison", "Fighting", "Flying", "Ground", "Rock", "Ghost", "Psychic",
-    "Dragon", "Dark", "Steel", "Fairy", "Neutral", "Light"
-};
 
 const double ELE0 = 0.00;
 const double ELE5 = 0.50;
@@ -212,13 +196,6 @@ const int CAREFUL = 24;
 const int QUICK = 25;
 
 const int NUMNATURES = 26;
-
-const string natureStrings[NUMNATURES] = {
-    "No Nature", "Hardy", "Lonely", "Brave", "Adamant", "Naughty", "Bold",
-    "Docile", "Relaxed", "Impish", "Lax", "Timid", "Hasty", "Serious", "Jolly",
-    "Naive", "Modest", "Mild", "Quiet", "Bashful", "Rash", "Calm", "Gentle",
-    "Sassy", "Careful", "Quick"
-};
 
 const int MEGAFORM = 9;
 
@@ -382,15 +359,6 @@ const int NUMITEMS = 100;
 
 // TODO: add all common battle items
 // TODO: implement most of these items
-const string itemStrings[NUMITEMS] = {
-    "No Item", "Leftovers", "Choice Band", "Choice Scarf", "Choice Specs",
-    "Light Ball", "Life Orb", "Light Clay", "King's Rock", "Focus Sash",
-    "Black Sludge", "Oran Berry", "Sitrus Berry", "Eject Policy", "Red Card",
-    
-    "Venusaurite", "Charizardite X", "Charizardite Y", "Blastoisinite", "Alakazite", "Gengarite", "Kangaskhanite", "Pinsirite", "Gyaradosite", "Aerodactylite", "Mewtwonite X", "Mewtwonite Y", "Ampharosite", "Scizorite", "Heracronite", "Houndoominite", "Tyranitarite", "Blazikenite", "Gardevoirite", "Mawilite", "Aggronite", "Medichamite", "Manectite", "Bannetite", "Absolite", "Garchompite", "Lucarionite", "Abomasite",
-    
-    "Latiasite", "Latiosite"
-};
 
 // TODO: implement most abilities
 enum PokeAbility
@@ -402,25 +370,12 @@ enum PokeAbility
     PSnowWarning, PAnticipation, PMoldBreaker, PPurePower
 };
 
-const string abilityStrings[NUMABILITIES] = {
-    "No Ability", "Levitate", "Swift Swim", "Intimidate", "Huge Power",
-    "Static", "Serene Grace", "Unaware", "MagicBounce", "Pressure",
-    "Sand Stream", "Multiscale", "Synchronize", "Clear Body", "Drizzle",
-    "Drought", "Air Lock", "Stance Change", "Torrent", "Blaze", "Overgrow",
-    "Swarm", "Technician", "Poison Point", "Snow Warning", "Anticipation",
-    "Mold Breaker", "Pure Power"
-};
-
 enum MoveType
 {
     Physical, Special, Status
 };
 
 const int NUMMOVETYPES = 3;
-
-const string moveTypeStrings[NUMMOVETYPES] = {
-    "Physical", "Special", "Status"
-};
 
 enum ContestStat
 {
@@ -445,23 +400,6 @@ enum PokeStatus
 
 const int NUMSTATUSES = 8;
 
-const string statusStrings[NUMSTATUSES] = {
-    "OK", "PSN", "PSN", "PRZ", "BRN", "FRZ", "SLP", "FNT"
-};
-
-const string statusFullStrings[NUMSTATUSES] = {
-    "Healthy", "Poisoned", "Badly Poisoned", "Paralyzed", "Burned", "Frozen",
-    "Asleep", "Fainted"
-};
-
-const string statusFSNoun[NUMSTATUSES] = {
-    "No Status", "Poison", "Toxic", "Paralyze", "Burn", "Freeze", "Sleep", "Faint"
-};
-
-const string statusStartStrings[NUMSTATUSES] = {
-    "", "was poisoned!", "was badly poisoned!", "was paralyzed!", "was burned!", "was frozen solid!", "fell asleep!", "fainted!"
-};
-
 enum VolatileStatus
 {
     NoVStatus, ConfuseVStatus, AttractVStatus, CurseVStatus, BlockVStatus,
@@ -469,15 +407,6 @@ enum VolatileStatus
 };
 
 const int NUMVSTATUSES = 20;
-
-const string vstatusStrings[NUMVSTATUSES] = {
-    "None", "Conf", "Attr", "Curs", "Blok", "Encr", "Trmt", "Taun", "Rmpg", "Prot", "Shld", "Fcus", "Flch", "Lfcs", "Subs"
-};
-
-const string vstatusFullStrings[NUMVSTATUSES] = {
-    "None", "Confused", "Attract", "Cursed", "Blocked", "Encore", "Torment",
-    "Taunt", "Rampaging", "Protect", "Shield", "Focusing", "Flinch", "Lost Focus", "Substitute"
-};
 
 enum Location
 {
@@ -491,25 +420,6 @@ enum Weather
 };
 
 const int NUMWEATHERS = 5;
-
-const string weatherStrings[NUMWEATHERS] = {
-    "No Weather", "Sunny", "Rain", "Sandstorm", "Hail"
-};
-
-const string weatherStartStrings[NUMWEATHERS] = {
-    "", "The sunlight turned harsh.", "It started to rain.",
-    "A sandstorm kicked up!", "It started to hail!"
-};
-
-const string weatherEndStrings[NUMWEATHERS] = {
-    "", "The sunlight faded.", "The rain stopped.", "The sandstorm subsided.",
-    "The hail stopped."
-};
-
-const string weatherContStrings[NUMWEATHERS] = {
-    "", "The sunlight is harsh.", "Rain continues to fall.",
-    "The sandstorm rages on.", "Hail continues to fall."
-};
 
 // TODO: implement terrain-type moves
 enum Terrain

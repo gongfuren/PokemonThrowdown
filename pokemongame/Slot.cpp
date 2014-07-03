@@ -10,6 +10,7 @@
 #include "Pokemon.h"
 #include "Trainer.h"
 #include "constants.h"
+#include "strings.h"
 
 // Note: Field, Side, Slot, Player, Computer, and Item classes are all "hardly
 // implemented", that is, these modules are not being utilized to any
@@ -24,6 +25,12 @@ Slot::Slot(Side* side)
 Slot::~Slot()
 {
     
+}
+
+bool Slot::isFull() const
+{
+    // TEMP
+    return false;
 }
 
 Pokemon* Slot::getPokemon() const
@@ -45,21 +52,23 @@ void Slot::weatherEffect(Weather weather)
     if (m_pokemon->isDead())
         return;
     
-    if (weather == Sandstorm && !(type1 == RockType || type2 == RockType ||
-                                    type1 == GroundType || type2 == GroundType ||
-                                    type1 == SteelType || type2 == SteelType))
+    if (weather == Sandstorm && !(type1 == RockType || type2 == RockType
+                                  || type1 == GroundType || type2 == GroundType
+                                  || type1 == SteelType || type2 == SteelType))
     {
-        m_pokemon->lowerHP(static_cast<double>(m_pokemon->getBStats(HPSTAT)) * (0.0625));
+        m_pokemon->lowerHP(static_cast<double>(m_pokemon->getBStats(HPSTAT))
+                           * (0.0625));
         cout << trainer->getTitle() << " " << trainer->getName() << "'s "
-        << m_pokemon->getName() << " is buffetted by the sandstorm!" << endl;
+        << m_pokemon->getName() << " " << weatherHurtStrings[Sandstorm] << endl;
     }
     
     if (weather == Hail && !(type1 == IceType || type2 == IceType))
     {
-        m_pokemon->lowerHP(static_cast<double>(m_pokemon->getBStats(HPSTAT)) * (0.0625));
+        m_pokemon->lowerHP(static_cast<double>(m_pokemon->getBStats(HPSTAT))
+                           * (0.0625));
         
         cout << trainer->getTitle() << " " << trainer->getName() << "'s "
-        << m_pokemon->getName() << " is pelted by the hail!" << endl;
+        << m_pokemon->getName() << " " << weatherHurtStrings[Hail] << endl;
     }
 }
 

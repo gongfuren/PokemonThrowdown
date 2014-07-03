@@ -23,6 +23,7 @@ class Slot;
 class Item;
 
 class Pokemon
+// Represents a Battle-ready Pokemon and its current state
 {
 public:
     Pokemon(int pokemonID, Trainer* trainer);

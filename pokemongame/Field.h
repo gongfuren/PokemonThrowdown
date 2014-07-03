@@ -21,6 +21,7 @@ class Battle;
 // to improve modularity and organization. Perhaps make new classes as needed.
 
 class Field
+// Represents the battlefield and its current state
 {
 public:
     Field(Battle* battle);

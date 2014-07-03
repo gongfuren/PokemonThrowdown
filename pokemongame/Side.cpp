@@ -8,6 +8,7 @@
 
 #include "Side.h"
 #include "Slot.h"
+#include "constants.h"
 
 // Note: Field, Side, Slot, Player, Computer, and Item classes are all "hardly
 // implemented", that is, these modules are not being utilized to any

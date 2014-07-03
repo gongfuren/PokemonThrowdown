@@ -21,17 +21,20 @@ class Side;
 // to improve modularity and organization. Perhaps make new classes as needed.
 
 class Slot
+// Represents a slot on one side of the battlefield
+// Each Slot holds 0 or 1 Pokemon
 {
 public:
     Slot(Side* side);
     ~Slot();
     
-    Pokemon* getPokemon() const;
+    // Return true if Pokemon in Slot exists and is alive
+    bool isFull() const;
     
     Side* getSide() const;
-    
     void weatherEffect(Weather weather);
     void fillSlot(Pokemon* pokemon);
+    Pokemon* getPokemon() const;
     
 private:
     Pokemon* m_pokemon;

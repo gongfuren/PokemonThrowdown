@@ -11,6 +11,7 @@
 #include "Trainer.h"
 #include "TrainerData.h"
 #include "constants.h"
+#include "strings.h"
 #include "PokeData.h"
 #include "MoveData.h"
 #include "Side.h"
@@ -68,10 +69,11 @@ void Battle::chooseLead()
         {
             do
             {
-                cout << "Choose lead Pokemon:" << endl;
+                cout << bFStrings[15] << ":" << endl;
                 
                 for (int i = 0; i < 6; i++)
-                    cout << i+1 << ": " << m_player->getPokemon(i)->getName() << endl;
+                    cout << i+1 << ": " << m_player->getPokemon(i)->getName()
+                    << endl;
                 
                 cin >> choice;
             }
@@ -105,18 +107,16 @@ void Battle::customInit(Trainer* trainerA)
     
     do
     {
-        cout << "Choose ";
+        cout << bFStrings[16] << " ";
         if (initStage == 0)
-            cout << "a trainer";
+            cout << bFStrings[17];
         else
-            cout << "an opponent";
+            cout << bFStrings[18];
         cout << "." << endl;
         
         for (int i = 0; i < NUMTRAINERS; i++)
-        {
             cout << i+1 << ": " << trainerlib[i].title << " "
             << trainerlib[i].name << endl;
-        }
         
         cin >> choice[0];
         if (choice[0] <= 0 || choice[0] > NUMTRAINERS)
@@ -126,12 +126,12 @@ void Battle::customInit(Trainer* trainerA)
         
         do
         {
-            cout << "You chose " << trainerlib[choice[0]-1].title << " "
-            << trainerlib[choice[0]-1].name << "." << endl;
+            cout << bFStrings[19] << " " << trainerlib[choice[0]-1].title
+            << " " << trainerlib[choice[0]-1].name << "." << endl;
             
-            cout << "1: Confirm" << endl
-                 << "2: Pokemon" << endl
-                 << "3: (Cancel)" << endl;
+            cout << "1: " << bFStrings[20] << endl
+                 << "2: " << bFStrings[21] << endl
+                 << "3: " << "(" << bFStrings[22] << ")" << endl;
             
             cin >> choice[1];
             if (choice[1] <= 0 || choice[1] > 3)
@@ -154,7 +154,7 @@ void Battle::customInit(Trainer* trainerA)
                     cout << i+1 << ": " << pokelib[pokemonID].name
                     << endl;
                 }
-                cout << "7: (Cancel)" << endl;
+                cout << "7: " << "(" << bFStrings[22] << ")" << endl;
                 
                 cin >> choice[2];
                 if (choice[2] <= 0 || choice[2] > 7)
@@ -170,12 +170,12 @@ void Battle::customInit(Trainer* trainerA)
                 {
                     pokemonID = protoman.pokemonIDs[choice[2]-1];
                     
-                    cout << "You chose "
+                    cout << bFStrings[19] << " "
                     << pokelib[pokemonID].name << "."
                     << endl;
-                    cout << "1: Summary" << endl
-                         << "2: Check Moves" << endl
-                         << "3: (Cancel)" << endl;
+                    cout << "1: " << bFStrings[23] << endl
+                         << "2: " << bFStrings[24] << endl
+                         << "3: " << "(" << bFStrings[22] << ")" << endl;
                     
                     cin >> choice[3];
                     if (choice[3] <= 0 || choice[3] > 3)
@@ -224,18 +224,19 @@ void Battle::customInit(Trainer* trainerA)
 
 void Battle::pokeSummary(const PokeData pokemon) const
 {
-    cout << pokemon.name << " Lv " << pokemon.level << endl;
+    cout << pokemon.name << " " << bFStrings[28] << " " << pokemon.level
+    << endl;
     
     cout << typeStrings[pokemon.type1];
     if (pokemon.type2 != NoType)
         cout << "/" << typeStrings[pokemon.type2];
     cout << endl;
     
-    cout << "Item: " << itemStrings[pokemon.item] << endl;
+    cout << bFStrings[25] << ": " << itemStrings[pokemon.item] << endl;
     
-    cout << "Ability: " << abilityStrings[pokemon.ability] << endl;
+    cout << bFStrings[26] << ": " << abilityStrings[pokemon.ability] << endl;
     
-    cout << "Base Stats:" << endl;
+    cout << bFStrings[27] << ":" << endl;
     
     for (int i = 0; i < 6; i++)
         cout << statFullStrings[i] << ": " << pokemon.stats[i] << endl;
@@ -256,14 +257,15 @@ void Battle::pokeMoveInfo(const PokeData pokemon) const
         MoveData m = movelib[moveID];
         o << m.name << endl
         
-        << "Type: " << typeStrings[m.type] << " Damage: ";
+        << bFStrings[29] << ": " << typeStrings[m.type] << " "
+        << bFStrings[30] << ": ";
         
         if (m.damage == -1)
             o << '-';
         else
             o << m.damage;
         
-        o << " Accuracy: ";
+        o << " " << bFStrings[31] << ": ";
         
         if (m.accuracy == -1)
             o << '-';
@@ -273,9 +275,9 @@ void Battle::pokeMoveInfo(const PokeData pokemon) const
         o << " ";
         
         if (m.moveType == Physical || m.moveType == Special)
-            o << "Attack: ";
+            o << bFStrings[32] << ": ";
         else
-            o << "Move: ";
+            o << bFStrings[33] << ": ";
         
         o << moveTypeStrings[m.moveType] << endl;
     }
@@ -295,10 +297,10 @@ void Battle::start()
 void Battle::greet() const
 {
     cout << m_opponent->getTitle() << " " << m_opponent->getName()
-    << " would like to battle!" << endl;
+    << " " << bFStrings[34] << endl;
 }
 
-void Battle::clockworkTick()
+void Battle::clockTick()
 {
     m_turns++;
     
@@ -308,7 +310,7 @@ void Battle::clockworkTick()
 
 void Battle::cycle()
 {
-    for (;; clockworkTick())
+    for (;; clockTick())
     {
         // Summon pokemon (beginning of battle) or replace
         // fainted pokemon
@@ -348,7 +350,7 @@ void Battle::summonsPhase()
         if (m_actor->getPokemon() == NULL || m_actor->getPokemon()->isDead())
             // Choose replacement for fainted Pokemon
         {
-            replacePokemon(m_actor);
+            m_actor->replacePokemon();
         }
     }
     
@@ -476,9 +478,10 @@ void Battle::battlePhase()
         int moveID = pokemon->getIntendedMove();
         move = pokemon->getMove(moveID);
         
-        if ((actorMove == FIGHT || actorMove == MEGA) && move->getEffect() == MFocusPunch)
+        if ((actorMove == FIGHT || actorMove == MEGA)
+            && move->getEffect() == MFocusPunch)
         {
-            cout << pokemon->getName() << " is tightening its focus!" << endl;
+            cout << pokemon->getName() << " " << bFStrings[35] << endl;
             pokemon->addVStatus(FocusVStatus);
         }
     }
@@ -538,8 +541,7 @@ void Battle::battlePhase()
                 
                 cout << m_player->getTitle() << " " <<
                 m_player->getName() << "'s " <<
-                pokemon->getName() << " became confused"
-                << " due to fatigue!" << endl;
+                pokemon->getName() << " " << bFStrings[36] << endl;
                 
                 pokemon->addVStatus(ConfuseVStatus);
             }
@@ -549,7 +551,8 @@ void Battle::battlePhase()
 
 void Battle::postBattlePhase()
 {
-    if (m_player->getIntendedMove() == RUN || m_player->getVictory() || m_opponent->getVictory() || checkWin())
+    if (m_player->getIntendedMove() == RUN || m_player->getVictory()
+        || m_opponent->getVictory() || checkWin())
         // Forfeit || battle has been won
         return;
     
@@ -587,7 +590,8 @@ void Battle::sortSpeeds(Trainer* trainers[], int number)
     {
         for (int j = i+1; j < number; j++)
         {
-            if (speedCompare(trainers[j]->getPokemon(), trainers[i]->getPokemon()) > 0)
+            if (speedCompare(trainers[j]->getPokemon(),
+                             trainers[i]->getPokemon()) > 0)
             {
                 swap(&trainers[j], &trainers[i]);
             }
@@ -655,186 +659,6 @@ void Battle::summonEffects()
     }
 }
 
-bool Battle::replacePokemon(Trainer* trainer) const
-{
-    if (trainer == m_player)
-    {
-        return playerSummon(false);
-    }
-    else
-    {
-        opponentSummon(m_opponent, false);
-        
-        return true;
-    }
-}
-
-bool Battle::playerSummon(bool optional) const
-{
-    int choice, i;
-    bool rerun = false;
-    Pokemon* pokemon;
-    
-    do
-    {
-        rerun = false;
-        
-        cout << "Choose a Pokemon:" << endl;
-        
-        cout << m_player->generateBalls() << endl;
-        
-        // Summon prompt
-        for (i = 0; i < MAXPOKEMON; i++)
-        {
-            pokemon = m_player->getPokemon(i);
-            
-            if (pokemon == NULL)
-                break;
-            
-            ostringstream oss;
-                
-            if (pokemon->getStatus() != HealthyStatus)
-                oss << ": " << statusText(pokemon, false);
-            
-            if (m_player->getCurrent() == i && !pokemon->isDead())
-                oss << ": In Battle";
-            
-            if (pokemon != NULL)
-                cout << i+1 << ": " << pokemon->getName() << oss.str() << endl;
-        }
-        
-        if (optional)
-            cout << ++i << ": (Cancel)" << endl;
-        
-        cin >> choice;
-        
-        /*switch (choice)
-        {
-            default:
-                rerun = true;
-                continue;
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-                break;
-            case 7:
-                if (optional)
-                    return false;
-                else
-                {
-                    rerun = true;
-                    continue;
-                }
-        }*/
-        
-        if (choice > 0 && choice <= i)
-        {
-            if (optional && choice == i)
-                return false;
-        }
-        else
-        {
-            rerun = true;
-            continue;
-        }
-        
-        // Useful?
-        if (m_player->getPokemon(choice-1) == NULL)
-        {
-            rerun = true;
-            continue;
-        }
-        
-        int choicee;
-        bool rerunn = false;
-        
-        do
-        {
-            rerunn = false;
-            rerun = false;
-            
-            cout << "What to do with " << m_player->getPokemon(choice-1)->getName() << "?" << endl << "1: Switch" << endl << "2: Summary" << endl << "3: Check Moves" << endl << "4: (Cancel)" << endl;
-            
-            cin >> choicee;
-            
-            switch (choicee)
-            {
-                default:
-                    rerunn = true;
-                    continue;
-                case 1:
-                    if (m_player->getPokemon(choice-1)->isDead())
-                    {
-                        cout << m_player->getPokemon(choice-1)->getName() << " is fainted and cannot battle." << endl;
-                        rerunn = true;
-                    }
-                    else if (m_player->getCurrent() == choice-1)
-                    {
-                        cout << m_player->getPokemon(choice-1)->getName() << " is already out!" << endl;
-                        rerunn = true;
-                    }
-                    break;
-                case 2:
-                    printPokeInfo(choice-1);
-                    rerunn = true;
-                    break;
-                case 3:
-                    printPokeMoves(choice-1);
-                    rerunn = true;
-                    break;
-                case 4:
-                    rerun = true;
-                    rerunn = false;
-                    break;
-            }
-            
-        } while (rerunn);
-        
-    }
-    while (rerun);
-    
-    // Set intended switch
-    m_player->setIntendedSwitch(choice-1);
-    m_player->setIntendedMove(SWITCH);
-    
-    return true;
-}
-
-void Battle::opponentSummon(Trainer* trainer, bool optional) const
-{
-    int pokemonLeft = 0;
-    
-    for (int i = 0; i < MAXPOKEMON; i++)
-    {
-        if (trainer->getPokemon(i) != NULL && !trainer->getPokemon(i)->isDead())
-        {
-            pokemonLeft++;
-        }
-    }
-    
-    int choice = randInt(0, pokemonLeft-1);
-    
-    for (int i = 0; i < MAXPOKEMON; i++)
-    {
-        if (trainer->getPokemon(i) != NULL && !trainer->getPokemon(i)->isDead())
-        {
-            if (choice == 0)
-            {
-                // Set intended switch
-                m_opponent->setIntendedSwitch(i);
-                m_opponent->setIntendedMove(SWITCH);
-                
-                break;
-            }
-            else
-                choice--;
-        }
-    }
-}
-
 void Battle::turnCount() const
 {
     ostringstream o;
@@ -842,7 +666,7 @@ void Battle::turnCount() const
     if (m_field->getWeather() != NoWeather)
         o << " (" << weatherStrings[m_field->getWeather()] << ")";
     
-    cout << "Turn " << m_turns+1 << o.str() << endl;
+    cout << bFStrings[37] << " " << m_turns+1 << o.str() << endl;
 }
 
 void Battle::statusEffect(Trainer* trainer) const
@@ -857,20 +681,22 @@ void Battle::statusEffect(Trainer* trainer) const
     if (pokemon->getStatus() == BurnStatus)
     {
         cout << trainer->getTitle() << " " << trainer->getName()
-        << "'s " << pokemon->getName() << " is hurt by its burn!" << endl;
-        pokemon->lowerHP(static_cast<double>(pokemon->getBStats(HPSTAT)) * (0.125));
+        << "'s " << pokemon->getName() << " " << bFStrings[38] << endl;
+        pokemon->lowerHP(static_cast<double>(pokemon->getBStats(HPSTAT))
+                         * (0.125));
     }
     else if (pokemon->getStatus() == PoisonStatus)
     {
         cout << trainer->getTitle() << " " << trainer->getName() << "'s "
-        << pokemon->getName() << " is hurt by poison!" << endl;
-        pokemon->lowerHP(static_cast<double>(pokemon->getBStats(HPSTAT)) * (0.125));
+        << pokemon->getName() << " " << bFStrings[39] << endl;
+        pokemon->lowerHP(static_cast<double>(pokemon->getBStats(HPSTAT))
+                         * (0.125));
     }
     else if (pokemon->getStatus() == ToxicStatus)
     {
         pokemon->setToxicTurns(pokemon->getToxicTurns()+1);
         cout << trainer->getTitle() << " " << trainer->getName() << "'s "
-        << pokemon->getName() << " is hurt by poison!" << endl;
+        << pokemon->getName() << " " << bFStrings[39] << endl;
         pokemon->lowerHP(static_cast<double>(pokemon->getBStats(HPSTAT)) *
                            (pokemon->getToxicTurns() * (0.0625)));
     }
@@ -954,7 +780,8 @@ void Battle::applyStatus(Trainer* trainerA, Trainer* trainerB, int whichMove)
     {
         healAmount = pokemon->getBStats(HPSTAT);
         
-        cout << trainerB->getTitle() << " " << trainerB->getName() << "'s " << target->getName() << " went to sleep!" << endl;
+        cout << trainerB->getTitle() << " " << trainerB->getName() << "'s "
+        << target->getName() << " " << bFStrings[40] << endl;
         
         pokemon->setStatus(SleepStatus, true);
     }
@@ -963,11 +790,12 @@ void Battle::applyStatus(Trainer* trainerA, Trainer* trainerB, int whichMove)
     {
         case MHeal50:
         case MHeal100:
-            cout << trainerB->getTitle() << " " << trainerB->getName() << "'s " << target->getName();
+            cout << trainerB->getTitle() << " " << trainerB->getName() << "'s "
+            << target->getName();
             if (target->increaseHP(healAmount))
-                cout << "'s HP was restored!";
+                cout << "'s "<< bFStrings[41];
             else
-                cout << "'s HP can't go any higher!";
+                cout << "'s " << bFStrings[42];
             cout << endl;
             break;
         case MLowerAtt:
@@ -1147,7 +975,8 @@ void Battle::applyAttack(Trainer* trainerA, Trainer* trainerB,
         return;
     }
     
-    if (target->getAbility() == PLevitate && attackMove->getType() == GroundType)
+    if (target->getAbility() == PLevitate && attackMove->getType()
+        == GroundType)
         // Target has Levitate and attacker is using GroundType move
     {
         typeBoost = 0.0;
@@ -1163,7 +992,7 @@ void Battle::applyAttack(Trainer* trainerA, Trainer* trainerB,
     if (typeBoost == 0.0)
         // Target is immune to attack
     {
-        cout << "It doesn't affect " << trainerB->getTitle() << ' '
+        cout << bFStrings[43] << " " << trainerB->getTitle() << ' '
         << trainerB->getName() << "'s " << target->getName()
         << "." << endl;
         return;
@@ -1198,7 +1027,8 @@ void Battle::applyAttack(Trainer* trainerA, Trainer* trainerB,
     
     other = 1.0;
     
-    if (attacker->getAbility() == PHugePower || attacker->getAbility() == PPurePower)
+    if (attacker->getAbility() == PHugePower || attacker->getAbility()
+        == PPurePower)
         // Huge/Pure power ability: attack 2.0x
         attackMultiplier = 2.0;
     else
@@ -1229,8 +1059,8 @@ void Battle::applyAttack(Trainer* trainerA, Trainer* trainerB,
     else if (m_field->getWeather() == Sandstorm)
         // Rock types get a SpD boost 1.5x in Sandstorm
     {
-        specialDefMultiplier *= (target->getType1() == RockType ||
-                                 target->getType2() == RockType) ? 1.5 : 1.0;
+        specialDefMultiplier *= (target->getType1() == RockType
+                                 || target->getType2() == RockType) ? 1.5 : 1.0;
     }
     else if (m_field->getWeather() == Hail)
     {
@@ -1249,7 +1079,8 @@ void Battle::applyAttack(Trainer* trainerA, Trainer* trainerB,
         // Physical attack
     {
         spOrNot = static_cast<double>(attacker->getStats(ATTSTAT) *
-                attackMultiplier) / static_cast<double>(target->getStats(DEFSTAT));
+                attackMultiplier)
+                / static_cast<double>(target->getStats(DEFSTAT));
     }
     else
         // Special attack
@@ -1275,21 +1106,22 @@ void Battle::applyAttack(Trainer* trainerA, Trainer* trainerB,
     target->lowerHP(totalDamage);
     
     if (crit == 1.50)
-        cout << "A critical hit!" << endl;
+        cout << bFStrings[44] << endl;
     
     if (typeBoost > 1.0)
-        cout << "It's super effective!" << endl;
+        cout << bFStrings[45] << endl;
     else if (typeBoost < 1.0)
-        cout << "It's not very effective..." << endl;
+        cout << bFStrings[46] << endl;
     
     if (attackMove->getEffect() == MOHKO)
         // OHKO move that hit (since it made it here)
-        cout << "It's a one-hit KO!" << endl;
+        cout << bFStrings[47] << endl;
     
     applyEffect(trainerA, trainerB, whichMove);
 }
 
-void Battle::applyEffect(Trainer* trainerA, Trainer* trainerB, int whichMove) const
+void Battle::applyEffect(Trainer* trainerA, Trainer* trainerB,
+                         int whichMove) const
 {
     Pokemon* attacker = trainerA->getPokemon();
     Pokemon* target = trainerB->getPokemon();
@@ -1298,7 +1130,8 @@ void Battle::applyEffect(Trainer* trainerA, Trainer* trainerB, int whichMove) co
     
     // Attacker side-effects (successful move execution)
     
-    if (effect == MRampage && attackMove->isThrash() && attacker->getRampageTurns() == 0)
+    if (effect == MRampage && attackMove->isThrash()
+        && attacker->getRampageTurns() == 0)
         // Thrash-style rampage
     {
         attacker->addVStatus(RampageVStatus);
@@ -1359,7 +1192,8 @@ void Battle::applyEffect(Trainer* trainerA, Trainer* trainerB, int whichMove) co
         }
     }
     
-    if (effect == MPoison10 || effect == MPoison15 || effect == MPoison30 || effect == MPoison40)
+    if (effect == MPoison10 || effect == MPoison15 || effect == MPoison30
+        || effect == MPoison40)
         // Poison chance
     {
         if (target->getStatus() == HealthyStatus)
@@ -1406,7 +1240,8 @@ void Battle::applyEffect(Trainer* trainerA, Trainer* trainerB, int whichMove) co
         }
     }
     
-    if (effect == MParalyze10 || effect == MParalyze15 || effect == MParalyze30 || effect == MParalyze100)
+    if (effect == MParalyze10 || effect == MParalyze15 || effect == MParalyze30
+        || effect == MParalyze100)
         // Paralyze chance
     {
         if (target->getStatus() == HealthyStatus)
@@ -1470,80 +1305,6 @@ Trainer* Battle::getParticipants(int i) const
     return m_participants[i];
 }
 
-bool Battle::chooseFight()
-{
-    Pokemon* pokemon = m_player->getPokemon();
-    
-    int playerChoice, j;
-    bool canMega, willMegaEvolve = false;
-    
-    do
-    {
-        cout << "Select a move:" << endl;
-        
-        for (j = 0; j < MAXMOVES; j++)
-        {
-            cout << j+1 << ": ";
-            
-            cout << m_player->getPokemonMove(j)->getName() << endl;
-        }
-        
-        canMega = pokemon->canMegaEvolve();
-        
-        if (canMega)
-        {
-            cout << ++j << ": *Mega Evolution*";
-            
-            if (willMegaEvolve)
-                cout << " (Selected)";
-            
-            cout << endl;
-        }
-        
-        cout << ++j << ": (Move Info)" << endl;
-        cout << ++j << ": (Cancel)" << endl;
-        
-        cin >> playerChoice;
-        
-        if (playerChoice == j-1)
-            printMoveInfo();
-        
-        if (canMega && playerChoice == 5)
-        {
-            if (willMegaEvolve)
-            {
-                willMegaEvolve = false;
-            }
-            else
-            {
-                willMegaEvolve = true;
-            }
-            
-            playerChoice = j-1;
-        }
-        
-    } while (playerChoice == j-1);
-    
-    switch (playerChoice)
-    {
-        default:
-            return false;
-        case 1:
-        case 2:
-        case 3:
-        case 4:
-            if (!willMegaEvolve)
-                m_player->setIntendedMove(FIGHT);
-            else
-                m_player->setIntendedMove(MEGA);
-            break;
-    }
-    
-    pokemon->setIntendedMove(playerChoice-1);
-    
-    return true;
-}
-
 void Battle::printMoveInfo() const
 {
     Move* move;
@@ -1556,24 +1317,32 @@ void Battle::printMoveInfo() const
         
         string pOS;
         if (move->getMoveType() == Status)
-            pOS = "Move: Status";
+        {
+            pOS += bFStrings[33];
+            pOS += ": ";
+            pOS += moveTypeStrings[Status];
+        }
         else
         {
+            pOS += bFStrings[32];
+            pOS += ": ";
+
             if (move->getMoveType() == Physical)
-                pOS = "Attack: Physical";
+                pOS += moveTypeStrings[Physical];
             else
-                pOS = "Attack: Special";
+                pOS += moveTypeStrings[Special];
         }
         
-        pout << move->getName() << endl << "Type: "
-        << typeStrings[typeNumber(move->getType())] << " Damage: ";
+        pout << move->getName() << endl << bFStrings[29] << ": "
+        << typeStrings[typeNumber(move->getType())] << " " << bFStrings[30]
+        << ": ";
         
         if (move->getDamage() == -1)
             pout << '-';
         else
             pout << move->getDamage();
         
-        pout << " Accuracy: ";
+        pout << " " << bFStrings[31] << ": ";
         
         if (move->getAccuracy() == -1)
             pout << '-';
@@ -1587,38 +1356,6 @@ void Battle::printMoveInfo() const
         if (!(move->getDescription() == ""))
             cout << move->getDescription() + '\n';
     }
-}
-
-bool Battle::chooseBag() const
-{
-    // No bag implementation since focus is on competitive
-    // (no using items, among other things) battling
-    cout << "You can't do that right now." << endl;
-    
-    return false;
-}
-
-bool Battle::chooseRun() const
-{
-    cout << "Are you sure you'd like to run and forfeit the match?" << endl;
-    
-    cout << "1: Yes" << endl << "2: No" << endl;
-    
-    int choice;
-    cin >> choice;
-    
-    switch (choice)
-    {
-        case 1:
-            cout << m_player->getTitle() << " " << m_player->getName() << " has forfeited the match." << endl;
-            m_opponent->setVictory();
-            m_player->setIntendedMove(RUN);
-            return true;
-        default:
-            break;
-    }
-    
-    return false;
 }
 
 Trainer* Battle::getPlayer() const
@@ -1640,22 +1377,29 @@ void Battle::printPokeInfo(int slotNumber) const
     string slasher = "/";
     string description = "\n";
     
-    pout << pokemon->getName() << " Lv "
-    << pokemon->getOnMyLevel() << " " << ((pokemon->getGender() == Male) ? "M" : (pokemon->getGender() == Female) ? "F" : " ") << statusText(pokemon, false) << endl
+    pout << pokemon->getName() << " " << bFStrings[28] << " "
+    << pokemon->getOnMyLevel() << " "
+    << ((pokemon->getGender() == Male) ? genderStrings[Male]
+        : (pokemon->getGender() == Female) ? genderStrings[Female] : "-")
+    << " " << statusText(pokemon, false) << endl
     
-    << typeStrings[pokemon->getType1()] << ((pokemon->getType2() != NoType) ? slasher + typeStrings[pokemon->getType2()] : "") << endl
+    << typeStrings[pokemon->getType1()]
+    << ((pokemon->getType2() != NoType)
+        ? slasher + typeStrings[pokemon->getType2()] : "") << endl
     
-    << "Item: " << itemStrings[pokemon->getItem()->getID()] << endl
+    << bFStrings[25] << ": " << itemStrings[pokemon->getItem()->getID()] << endl
     
-    << "Ability: " << abilityStrings[pokemon->getAbility()] << endl
-    << "Nature: " << natureStrings[pokemon->getNature()] << endl
+    << bFStrings[26] << ": " << abilityStrings[pokemon->getAbility()] << endl
+    << bFStrings[48] << ": " << natureStrings[pokemon->getNature()] << endl
     
-    << "HP: " << pokemon->getStats(HPSTAT) << '/' << pokemon->getBStats(HPSTAT) << endl;
+    << statFullStrings[HPSTAT] << ": " << pokemon->getStats(HPSTAT) << '/'
+    << pokemon->getBStats(HPSTAT) << endl;
     
     for (int i = ATTSTAT; i < NUMSTATS; i++)
         pout << statFullStrings[i] << ": " << pokemon->getBStats(i) << endl;
     
-    pout << ((pokemon->getDescription() != "") ? pokemon->getDescription() : "") << endl;
+    pout << ((pokemon->getDescription() != "")
+             ? pokemon->getDescription() : "") << endl;
     
     cout << pout.str();
 }
@@ -1672,23 +1416,32 @@ void Battle::printPokeMoves(int pokemon) const
         
         string pOS;
         if (move->getMoveType() == Status)
-            pOS = "Move: Status";
+        {
+            pOS += bFStrings[33];
+            pOS += ": ";
+            pOS += moveTypeStrings[Status];
+        }
         else
         {
+            pOS += bFStrings[32];
+            pOS += ": ";
+            
             if (move->getMoveType() == Physical)
-                pOS = "Attack: Physical";
+                pOS += moveTypeStrings[Physical];
             else
-                pOS = "Attack: Special";
+                pOS += moveTypeStrings[Special];
         }
         
-        pout << move->getName() << endl << "Type: " << typeStrings[typeNumber(move->getType())] << " Damage: ";
+        pout << move->getName() << endl << bFStrings[29] << ": "
+        << typeStrings[typeNumber(move->getType())] << " " << bFStrings[30]
+        << ": ";
         
         if (move->getDamage() == -1)
             pout << '-';
         else
             pout << move->getDamage();
         
-        pout << " Accuracy: ";
+        pout << " " << bFStrings[31] << ": ";
         
         if (move->getAccuracy() == -1)
             pout << '-';
@@ -1699,21 +1452,8 @@ void Battle::printPokeMoves(int pokemon) const
         
         cout << pout.str() << endl;
         
-        cout << ((move->getDescription() == "") ? "" : move->getDescription() + '\n');
-    }
-}
-
-bool Battle::choosePokemon(Trainer* trainer) const
-{
-    if (trainer == m_player)
-    {
-        return playerSummon(true);
-    }
-    else
-    {
-        opponentSummon(m_opponent, true);
-        
-        return true;
+        cout << ((move->getDescription() == "") ? ""
+                 : move->getDescription() + '\n');
     }
 }
 
@@ -1729,10 +1469,12 @@ bool Battle::checkWin() const
 
     for (int i = 0; i < MAXPOKEMON; i++)
     {
-        if (m_player->getPokemon(i) != NULL && !m_player->getPokemon(i)->isDead())
+        if (m_player->getPokemon(i) != NULL
+            && !m_player->getPokemon(i)->isDead())
             opponentWon = false;
         
-        if (m_opponent->getPokemon(i) != NULL && !m_opponent->getPokemon(i)->isDead())
+        if (m_opponent->getPokemon(i) != NULL
+            && !m_opponent->getPokemon(i)->isDead())
             playerWon = false;
     }
     
@@ -1749,15 +1491,17 @@ void Battle::end() const
 {
     if (m_player->getVictory() && m_opponent->getVictory())
     {
-        cout << "The match was a draw!" << endl;
+        cout << bFStrings[49] << endl;
     }
     else if (m_player->getVictory())
     {
-        cout << m_player->getTitle() << " " << m_player->getName() << " won the battle!" << endl << "Got $" << m_opponent->getReward()
-        << " for winning!" << endl;
+        cout << m_player->getTitle() << " " << m_player->getName() << " "
+        << bFStrings[50] << endl << bFStrings[51] << " $"
+        << m_opponent->getReward() << " " << bFStrings[52] << endl;
     }
     else if (m_opponent->getVictory())
     {
-        cout << m_opponent->getTitle() << " " << m_opponent->getName() << " won the battle!" << endl;
+        cout << m_opponent->getTitle() << " " << m_opponent->getName() << " "
+        << bFStrings[50] << endl;
     }
 }

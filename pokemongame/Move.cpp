@@ -183,8 +183,10 @@ bool Move::determineFailure(Pokemon* target) const
     if (getEffect() == MSuckerPunch)
         // Sucker punch
     {
-        if (!(targetMove->isAttack() && (target->getTrainer()->getIntendedMove() == FIGHT || target->getTrainer()->getIntendedMove() == MEGA)) ||
-            targetMove->detPriorityScore() > detPriorityScore())
+        if (!(targetMove->isAttack()
+              && (target->getTrainer()->getIntendedMove() == FIGHT
+                  || target->getTrainer()->getIntendedMove() == MEGA))
+            || targetMove->detPriorityScore() > detPriorityScore())
             // Trainer isn't attacking and pokemon isn't readying attack
             // or opponent already attacked
             failed = true;

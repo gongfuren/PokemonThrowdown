@@ -11,6 +11,7 @@
 #include "Trainer.h"
 #include "Battle.h"
 #include "constants.h"
+#include "strings.h"
 #include "Item.h"
 
 #include <iostream>
@@ -18,14 +19,22 @@
 using namespace std;
 
 Pokemon::Pokemon(int pokemonID, Trainer* trainer)
-: m_name(""), m_type1(NeutralType), m_type2(NoType), m_status(HealthyStatus), m_trainer(trainer), m_dead(false), m_gender(NoGender), m_intendedMove(0), m_level(1), m_nature(NoNature), m_ability(PNoAbility), m_item(NULL), m_description(""), m_sleepTurns(0), m_toxicTurns(0), m_rampageTurns(0), m_ID(pokemonID), m_form(0), m_turnsOut(-1)
+: m_name(""), m_type1(NeutralType), m_type2(NoType), m_status(HealthyStatus),
+m_trainer(trainer), m_dead(false), m_gender(NoGender), m_intendedMove(0),
+m_level(1), m_nature(NoNature), m_ability(PNoAbility), m_item(NULL),
+m_description(""), m_sleepTurns(0), m_toxicTurns(0), m_rampageTurns(0),
+m_ID(pokemonID), m_form(0), m_turnsOut(-1)
 {
     // Standard Initialization:
     standardInit(pokemonID);
 }
 
 Pokemon::Pokemon(PokeData h, Trainer* trainer)
-: m_name(""), m_type1(NeutralType), m_type2(NoType), m_status(HealthyStatus), m_trainer(trainer), m_dead(false), m_gender(NoGender), m_intendedMove(0), m_level(1), m_nature(NoNature), m_ability(PNoAbility), m_item(NULL), m_description(""), m_sleepTurns(0), m_toxicTurns(0), m_rampageTurns(0), m_ID(h.ID), m_form(0), m_turnsOut(-1)
+: m_name(""), m_type1(NeutralType), m_type2(NoType), m_status(HealthyStatus),
+m_trainer(trainer), m_dead(false), m_gender(NoGender), m_intendedMove(0),
+m_level(1), m_nature(NoNature), m_ability(PNoAbility), m_item(NULL),
+m_description(""), m_sleepTurns(0), m_toxicTurns(0), m_rampageTurns(0),
+m_ID(h.ID), m_form(0), m_turnsOut(-1)
 {
     // Standard Initialization:
     standardInit(m_ID);
@@ -49,7 +58,8 @@ void Pokemon::transformInit(int pokemonID)
     for (int i = ATTSTAT; i < NUMSTATS; i++)
     {
         int adder = 5;
-        m_bStats[i] = ((2 * me.stats[i] + m_IVs[i] + m_EVs[i] / 4) * m_level / 100 + adder) * natureMultiplier(m_nature, i-1);
+        m_bStats[i] = ((2 * me.stats[i] + m_IVs[i] + m_EVs[i] / 4) * m_level
+                       / 100 + adder) * natureMultiplier(m_nature, i-1);
     }
 }
 
@@ -60,7 +70,8 @@ void Pokemon::standardInit(int pokemonID)
     m_type2 = pokelib[pokemonID].type2;
     m_gender = pokelib[pokemonID].gender;
     m_level = pokelib[pokemonID].level;
-    m_nature = (pokelib[pokemonID].nature == NoNature) ? returnNature(randInt(HARDY, NUMNATURES-1)) : pokelib[pokemonID].nature;
+    m_nature = (pokelib[pokemonID].nature == NoNature)
+    ? returnNature(randInt(HARDY, NUMNATURES-1)) : pokelib[pokemonID].nature;
     m_ability = pokelib[pokemonID].ability;
     m_item = new Item(pokelib[pokemonID].item);
     m_description = pokelib[pokemonID].description;
@@ -69,9 +80,12 @@ void Pokemon::standardInit(int pokemonID)
     {
         int adder = (i == HPSTAT) ? 10 + m_level : 5;
         double nature = (i == HPSTAT) ? 1.0 : natureMultiplier(m_nature, i-1);
-        m_IVs[i] = (pokelib[pokemonID].IVs[i] == -1) ? randInt(0, 31) : pokelib[pokemonID].IVs[i];
-        m_EVs[i] = (pokelib[pokemonID].EVs[i] == -1) ? randInt(0, 85) : pokelib[pokemonID].EVs[i];
-        m_bStats[i] = ((2 * pokelib[pokemonID].stats[i] + m_IVs[i] + m_EVs[i] / 4) * m_level / 100 + adder) * nature;
+        m_IVs[i] = (pokelib[pokemonID].IVs[i] == -1) ? randInt(0, 31)
+        : pokelib[pokemonID].IVs[i];
+        m_EVs[i] = (pokelib[pokemonID].EVs[i] == -1) ? randInt(0, 85)
+        : pokelib[pokemonID].EVs[i];
+        m_bStats[i] = ((2 * pokelib[pokemonID].stats[i] + m_IVs[i] + m_EVs[i]
+                        / 4) * m_level / 100 + adder) * nature;
     }
     
     m_statsStatus[HPSTAT] = m_bStats[HPSTAT];
@@ -88,6 +102,9 @@ void Pokemon::standardInit(int pokemonID)
         else
             m_moves[i] = new Move(randInt(0, MAXNUMMOVES-1), this);
     }
+    
+    if (m_gender == NoGender)
+        m_gender = static_cast<Gender>(randInt(0, 1));
 }
 
 int Pokemon::getForm() const
@@ -282,25 +299,29 @@ void Pokemon::castAbility()
             opponent->lowerStat(ATTSTAT, false);
         }
         
-        if (getAbility() == PDrizzle && getTrainer()->getBattle()->getWeather() != Rain)
+        if (getAbility() == PDrizzle
+            && getTrainer()->getBattle()->getWeather() != Rain)
         {
             flashAbility();
             getTrainer()->getBattle()->getField()->initializeWeather(Rain);
         }
         
-        if (getAbility() == PDrought && getTrainer()->getBattle()->getWeather() != Sunny)
+        if (getAbility() == PDrought
+            && getTrainer()->getBattle()->getWeather() != Sunny)
         {
             flashAbility();
             getTrainer()->getBattle()->getField()->initializeWeather(Sunny);
         }
         
-        if (getAbility() == PSandStream && getTrainer()->getBattle()->getWeather() != Sandstorm)
+        if (getAbility() == PSandStream
+            && getTrainer()->getBattle()->getWeather() != Sandstorm)
         {
             flashAbility();
             getTrainer()->getBattle()->getField()->initializeWeather(Sandstorm);
         }
         
-        if (getAbility() == PSnowWarning && getTrainer()->getBattle()->getWeather() != Hail)
+        if (getAbility() == PSnowWarning
+            && getTrainer()->getBattle()->getWeather() != Hail)
         {
             flashAbility();
             getTrainer()->getBattle()->getField()->initializeWeather(Hail);
@@ -309,7 +330,7 @@ void Pokemon::castAbility()
         if (getAbility() == PPressure)
         {
             flashAbility();
-            cout << getName() << " is exerting its Pressure!" << endl;
+            cout << getName() << " " << bFStrings[74] << endl;
         }
     }
     
@@ -369,7 +390,7 @@ void Pokemon::protectDialogue() const
     Trainer* trainer = getTrainer();
 
     cout << trainer->getTitle() << " " << trainer->getName() << "'s "
-    << m_name << " protected itself!" << endl;
+    << m_name << " " << bFStrings[75] << endl;
 }
 
 void Pokemon::avoidDialogue() const
@@ -377,7 +398,7 @@ void Pokemon::avoidDialogue() const
     Trainer* trainer = getTrainer();
     
     cout << trainer->getTitle() << " " << trainer->getName() << "'s "
-    << getName() << " avoided the attack!" << endl;
+    << getName() << " " << bFStrings[76] << endl;
 }
 
 bool Pokemon::lowerStat(int whichStat, bool silent)
@@ -391,20 +412,26 @@ bool Pokemon::lowerStat(int whichStat, bool silent)
         
         flashAbility();
         
-        cout << getTrainer()->getTitle() << " " << getTrainer()->getName() << "'s " << m_name << "'s " << statFullStrings[whichStat] << " was not lowered!" << endl;
+        cout << getTrainer()->getTitle() << " " << getTrainer()->getName()
+        << "'s " << m_name << "'s " << statFullStrings[whichStat] << " "
+        << bFStrings[77] << endl;
     }
     
     if (normalExecution)
     {
         if (!silent && m_statsStatus[whichStat] <= -6)
         {
-            cout << getTrainer()->getTitle() << " " << getTrainer()->getName() << "'s " << m_name << "'s " << statFullStrings[whichStat] << " can't go any lower!" << endl;
+            cout << getTrainer()->getTitle() << " " << getTrainer()->getName()
+            << "'s " << m_name << "'s " << statFullStrings[whichStat] << " "
+            << bFStrings[78] << endl;
         }
         else
         {
             if (!silent)
             {
-                cout << getTrainer()->getTitle() << " " << getTrainer()->getName() << "'s " << m_name << "'s " << statFullStrings[whichStat] << " fell!" << endl;
+                cout << getTrainer()->getTitle() << " "
+                << getTrainer()->getName() << "'s " << m_name << "'s "
+                << statFullStrings[whichStat] << " " << bFStrings[79] << endl;
             }
             
             m_statsStatus[whichStat]--;
@@ -424,7 +451,9 @@ bool Pokemon::lowerStat(int whichStat, int levels)
     bool min = (levels == 6) ? true : false;
     
     if (m_statsStatus[whichStat] <= -6)
-        cout << getTrainer()->getTitle() << " " << getTrainer()->getName() << "'s " << m_name << "'s " << statFullStrings[whichStat] << " can't go any lower!" << endl;
+        cout << getTrainer()->getTitle() << " " << getTrainer()->getName()
+        << "'s " << m_name << "'s " << statFullStrings[whichStat] << " "
+        << bFStrings[78] << endl;
     else
     {
         if (lowerStat(whichStat, true))
@@ -432,26 +461,38 @@ bool Pokemon::lowerStat(int whichStat, int levels)
             levels--;
             int decrease;
             
-            for (decrease = 0; levels > 0 && m_statsStatus[whichStat] >= -6; levels--)
+            for (decrease = 0; levels > 0 && m_statsStatus[whichStat] >= -6;
+                 levels--)
             {
                 if (lowerStat(whichStat, true))
                     decrease++;
             }
             
             if (min)
-                cout << getTrainer()->getTitle() << " " << getTrainer()->getName() << "'s " << m_name << "'s " << statFullStrings[whichStat] << " was minimized!" << endl;
+                cout << getTrainer()->getTitle() << " "
+                << getTrainer()->getName() << "'s " << m_name << "'s "
+                << statFullStrings[whichStat] << " " << bFStrings[80] << endl;
             else
             {
                 switch (decrease)
                 {
                     default:
-                        cout << getTrainer()->getTitle() << " " << getTrainer()->getName() << "'s " << m_name << "'s " << statFullStrings[whichStat] << " fell!" << endl;
+                        cout << getTrainer()->getTitle() << " "
+                        << getTrainer()->getName() << "'s " << m_name << "'s "
+                        << statFullStrings[whichStat] << " " << bFStrings[79]
+                        << endl;
                         break;
                     case 1:
-                        cout << getTrainer()->getTitle() << " " << getTrainer()->getName() << "'s " << m_name << "'s " << statFullStrings[whichStat] << " harshly fell!" << endl;
+                        cout << getTrainer()->getTitle() << " "
+                        << getTrainer()->getName() << "'s " << m_name << "'s "
+                        << statFullStrings[whichStat] << " " << bFStrings[81]
+                        << endl;
                         break;
                     case 2:
-                        cout << getTrainer()->getTitle() << " " << getTrainer()->getName() << "'s " << m_name << "'s " << statFullStrings[whichStat] << " fell dramatically!" << endl;
+                        cout << getTrainer()->getTitle() << " "
+                        << getTrainer()->getName() << "'s " << m_name << "'s "
+                        << statFullStrings[whichStat] << " " << bFStrings[82]
+                        << endl;
                         break;
                 }
             }
@@ -466,13 +507,17 @@ bool Pokemon::increaseStat(int whichStat, bool silent)
     if (m_statsStatus[whichStat] >= 6)
     {
         if (!silent)
-            cout << getTrainer()->getTitle() << " " << getTrainer()->getName() << "'s " << m_name << "'s " << statFullStrings[whichStat] << " can't go any higher!" << endl;
+            cout << getTrainer()->getTitle() << " " << getTrainer()->getName()
+            << "'s " << m_name << "'s " << statFullStrings[whichStat] << " "
+            << bFStrings[83] << endl;
         
         return true;
     }
     
     if (!silent)
-        cout << getTrainer()->getTitle() << " " << getTrainer()->getName() << "'s " << m_name << "'s " << statFullStrings[whichStat] << " increased!" << endl;
+        cout << getTrainer()->getTitle() << " " << getTrainer()->getName()
+        << "'s " << m_name << "'s " << statFullStrings[whichStat] << " "
+        << bFStrings[86] << endl;
     
     m_statsStatus[whichStat]++;
     
@@ -489,7 +534,9 @@ bool Pokemon::increaseStat(int whichStat, int levels)
     bool max = (levels == 6) ? true : false;
     
     if (m_statsStatus[whichStat] >= 6)
-        cout << getTrainer()->getTitle() << " " << getTrainer()->getName() << "'s " << m_name << "'s " << statFullStrings[whichStat] << " can't go any higher!" << endl;
+        cout << getTrainer()->getTitle() << " " << getTrainer()->getName()
+        << "'s " << m_name << "'s " << statFullStrings[whichStat] << " "
+        << bFStrings[84] << endl;
     else
     {
         if (increaseStat(whichStat, true))
@@ -497,26 +544,39 @@ bool Pokemon::increaseStat(int whichStat, int levels)
             levels--;
             int increase;
             
-            for (increase = 0; levels > 0 && m_statsStatus[whichStat] <= 6; levels--)
+            for (increase = 0; levels > 0 && m_statsStatus[whichStat] <= 6;
+                 levels--)
             {
                 if (increaseStat(whichStat, true))
                     increase++;
             }
             
             if (max)
-                cout << getTrainer()->getTitle() << " " << getTrainer()->getName() << "'s " << m_name << " maximized its " << statFullStrings[whichStat] << "!" << endl;
+                cout << getTrainer()->getTitle() << " "
+                << getTrainer()->getName() << "'s " << m_name << " "
+                << bFStrings[85] << " " << statFullStrings[whichStat] << "!"
+                << endl;
             else
             {
                 switch (increase)
                 {
                     default:
-                        cout << getTrainer()->getTitle() << " " << getTrainer()->getName() << "'s " << m_name << "'s " << statFullStrings[whichStat] << " increased!" << endl;
+                        cout << getTrainer()->getTitle() << " "
+                        << getTrainer()->getName() << "'s " << m_name << "'s "
+                        << statFullStrings[whichStat] << " " << bFStrings[86]
+                        << endl;
                         break;
                     case 1:
-                        cout << getTrainer()->getTitle() << " " << getTrainer()->getName() << "'s " << m_name << "'s " << statFullStrings[whichStat] << " sharply increased!" << endl;
+                        cout << getTrainer()->getTitle() << " "
+                        << getTrainer()->getName() << "'s " << m_name << "'s "
+                        << statFullStrings[whichStat] << " " << bFStrings[87]
+                        << endl;
                         break;
                     case 2:
-                        cout << getTrainer()->getTitle() << " " << getTrainer()->getName() << "'s " << m_name << "'s " << statFullStrings[whichStat] << " dramatically increased!" << endl;
+                        cout << getTrainer()->getTitle() << " "
+                        << getTrainer()->getName() << "'s " << m_name << "'s "
+                        << statFullStrings[whichStat] << " " << bFStrings[88]
+                        << endl;
                         break;
                 }
             }
@@ -566,23 +626,24 @@ bool Pokemon::passThroughStatus()
     int thru = randInt(0,99);
     
     if (m_status != HealthyStatus)
-        cout << getTrainer()->getTitle() << ' ' << getTrainer()->getName() << "'s ";
+        cout << getTrainer()->getTitle() << ' ' << getTrainer()->getName()
+        << "'s ";
     
     if (m_status == ParalyzeStatus && thru < 25)
     {
-        cout << m_name << " is paralyzed! It can't move!" << endl;
+        cout << m_name << " " << bFStrings[89] << endl;
         pass = false;
     }
     else if (m_status == SleepStatus)
     {
         if (m_sleepTurns-- > 0)
         {
-            cout << m_name << " is fast asleep." << endl;
+            cout << m_name << " " << bFStrings[90] << endl;
             pass = false;
         }
         else
         {
-            cout << m_name << " woke up!" << endl;
+            cout << m_name << " " << bFStrings[91] << endl;
             m_status = HealthyStatus;
             pass = true;
         }
@@ -591,24 +652,24 @@ bool Pokemon::passThroughStatus()
     {
         if (thru < 80)
         {
-            cout << m_name << " is frozen solid!" << endl;
+            cout << m_name << " " << bFStrings[92] << endl;
             pass = false;
         }
         else
         {
-            cout << m_name << " thawed out!" << endl;
+            cout << m_name << " " << bFStrings[93] << endl;
             m_status = HealthyStatus;
             pass = true;
         }
     }
     else if (hasVStatus(FlinchVStatus))
     {
-        cout << m_name << " flinched!" << endl;
+        cout << m_name << " " << bFStrings[94] << endl;
         pass = false;
     }
     else if (hasVStatus(FFlinchVStatus))
     {
-        cout << m_name << " lost its focus and couldn't move!" << endl;
+        cout << m_name << " " << bFStrings[95] << endl;
         pass = false;
     }
     else    // NoStatus
@@ -623,22 +684,24 @@ bool Pokemon::passThroughStatus()
         
         if (snapOut)
         {
-            cout << m_name << " snapped out of its confusion!" << endl;
+            cout << m_name << " " << bFStrings[96] << endl;
             removeVStatus(ConfuseVStatus);
         }
         else
         {
-            cout << m_name << " is confused!" << endl;
+            cout << m_name << " " << bFStrings[97] << endl;
             
             if (thru < 500)
             {
-                cout << m_name << " hurt itself in its confusion!" << endl;
+                cout << m_name << " " << bFStrings[98] << endl;
                 
                 int pureDamage = 40;
                 int attackMultiplier = 1.0;
                 if (getAbility() == PHugePower || getAbility() == PPurePower)
                     attackMultiplier = 2.0;
-                int spOrNot = static_cast<double>(getStats(ATTSTAT) * attackMultiplier) / static_cast<double>(getStats(DEFSTAT));
+                int spOrNot
+                = static_cast<double>(getStats(ATTSTAT) * attackMultiplier)
+                / static_cast<double>(getStats(DEFSTAT));
                 double damage = (((2.0 * getOnMyLevel() + 10.0) / 250.0) *
                                  (spOrNot) * pureDamage + 2.0);
                 
@@ -657,10 +720,11 @@ void Pokemon::formChange(int form)
     if (form == MEGAFORM)
         // Mega Evolution
     {
-        cout << m_name << "'s " << itemStrings[m_item->getID()] << " is reacting to "
-        << getTrainer()->getName() << "'s Mega Ring!" << endl;
+        cout << m_name << "'s " << itemStrings[m_item->getID()] << " "
+        << bFStrings[99] << " " << getTrainer()->getName() << "'s "
+        << bFStrings[100] << endl;
         
-        cout << m_name << " has Mega Evolved into " << "Mega " << m_name << "!" << endl;
+        cout << m_name << " " << bFStrings[101] << " " << m_name << "!" << endl;
         
         transformInit(m_item->getID() - HVenusaurite + 722);
         
@@ -671,24 +735,24 @@ void Pokemon::formChange(int form)
     {
         flashAbility();
         
-        cout << "Changed to ";
+        cout << bFStrings[102] << " ";
         
         if (m_form == 0)
             // Shield to Blade
         {
             transformInit(758);
             
-            cout << "Blade";
+            cout << bFStrings[107];
         }
         else
             // Blade to Shield
         {
             transformInit(681);
             
-            cout << "Shield";
+            cout << bFStrings[108];
         }
         
-        cout << " Forme!" << endl;
+        cout << " " << bFStrings[103] << endl;
     }
     
     m_form = form;
@@ -757,7 +821,8 @@ void Pokemon::setStatus(PokeStatus status, bool rest)
     m_status = status;
     
     if (!rest)
-        cout << getTrainer()->getTitle() << ' ' << getTrainer()->getName() << "'s " << m_name << " " << statusStartStrings[status] << endl;
+        cout << getTrainer()->getTitle() << ' ' << getTrainer()->getName()
+        << "'s " << m_name << " " << statusStartStrings[status] << endl;
     
     if (status == SleepStatus)
     {
@@ -815,19 +880,22 @@ bool Pokemon::executeMove(Pokemon* target)
     }
     
     cout << getTrainer()->getTitle() << ' ' << getTrainer()->getName() << "'s "
-    << getName() << " used " << move->getName() << "!" << endl;
+    << getName() << " " << bFStrings[104] << " " << move->getName() << "!"
+    << endl;
     
     moveAccuracy = move->getAccuracy();
     
     weather = battle->getWeather();
     
     if (move->getID() == 87 || move->getID() == 542 || move->getID() == 59)
-        // Weather-dependent accuracy adjustments for Thunder, Hurricane, Blizzard
+        // Weather-dependent accuracy adjustments for Thunder, Hurricane,
+        // Blizzard
     {
         if (weather == Sunny)
             moveAccuracy = 50;
-        else if ((weather == Rain && (move->getID() == 87 || move->getID() == 542)) ||
-                 (weather == Hail && move->getID() == 59))
+        else if ((weather == Rain && (move->getID() == 87
+                                      || move->getID() == 542))
+                 || (weather == Hail && move->getID() == 59))
             moveAccuracy = 100;
     }
     
@@ -854,7 +922,7 @@ bool Pokemon::executeMove(Pokemon* target)
     if (move->determineFailure(target))
         // Move failed
     {
-        cout << "But it failed!" << endl;
+        cout << bFStrings[105] << endl;
         
         return false;
     }
@@ -874,7 +942,7 @@ bool Pokemon::executeMove(Pokemon* target)
     {
         if (target == NULL || target->isDead())
         {
-            cout << "But there was no target!" << endl;
+            cout << bFStrings[106] << endl;
             
             return false;
         }
@@ -891,10 +959,12 @@ bool Pokemon::executeMove(Pokemon* target)
         }
         else if (move->getMoveType() == Status)
             // Status move
-            battle->applyStatus(getTrainer(), target->getTrainer(), intendedMove);
+            battle->applyStatus(getTrainer(), target->getTrainer(),
+                                intendedMove);
         else
             // Attack
-            battle->applyAttack(getTrainer(), target->getTrainer(), intendedMove);
+            battle->applyAttack(getTrainer(), target->getTrainer(),
+                                intendedMove);
     }
     
     battle->applySideEffects(getTrainer(), intendedMove);

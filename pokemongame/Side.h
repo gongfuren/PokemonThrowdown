@@ -23,6 +23,8 @@ class Trainer;
 // to improve modularity and organization. Perhaps make new classes as needed.
 
 class Side
+// Represents one side of the battlefield (there are always two sides) and
+// the state of a respective side
 {
 public:
     Side(Field* field);

@@ -19,6 +19,8 @@ class Battle;
 class Move;
 
 class Trainer
+// Represents a participant in the Battle, complete with 1-6 of his/her/its
+// Pokemon, and his/her/its current state
 {
 public:
     Trainer(int trainerAID, Battle* battle);
@@ -52,16 +54,21 @@ public:
     
     virtual void actionSelect() = 0;
     virtual bool isComputer() const = 0;
+    virtual bool chooseRun() = 0;
     
     // Strategy
     int getIntendedMove() const;
-    bool setIntendedMove(int move);
+    bool setIntendedMove(int move, int attack = -1);
     int getIntendedSwitch() const;
     bool setIntendedSwitch(int which);
     
     string generateBalls() const;
     
     void checkDead();
+    virtual bool choosePokemon() = 0;
+    virtual bool trainerSummon(bool optional) = 0;
+    bool replacePokemon();
+    bool chooseBag() const;
     
 private:    
     string m_name;

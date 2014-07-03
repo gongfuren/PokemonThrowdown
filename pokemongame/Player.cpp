@@ -9,6 +9,11 @@
 #include "Player.h"
 #include "Battle.h"
 #include "constants.h"
+#include "strings.h"
+
+#include <iostream>
+#include <sstream>
+using namespace std;
 
 // Note: Field, Side, Slot, Player, Computer, and Item classes are all "hardly
 // implemented", that is, these modules are not being utilized to any
@@ -36,12 +41,12 @@ void Player::actionSelect()
     
     do
     {
-        cout << "What would you like to do?" << endl;
+        cout << bFStrings[53] << endl;
         
-        cout << "1: Fight!" << endl
-        << "2: Bag" << endl
-        << "3: Pokemon" << endl
-        << "4: Run" << endl;
+        cout << "1: " << bFStrings[54] << endl
+        << "2: " << bFStrings[55] << endl
+        << "3: " << bFStrings[21] << endl
+        << "4: " << bFStrings[56] << endl;
         
         int choice;
         cin >> choice;
@@ -49,16 +54,16 @@ void Player::actionSelect()
         switch (choice)
         {
             case 1:
-                rerun = !battle->chooseFight();
+                rerun = !chooseFight();
                 break;
             case 2:
-                rerun = !battle->chooseBag();
+                rerun = !chooseBag();
                 break;
             case 3:
-                rerun = !battle->choosePokemon(this);
+                rerun = !choosePokemon();
                 break;
             case 4:
-                rerun = !battle->chooseRun();
+                rerun = !chooseRun();
                 break;
             default:
                 break;
@@ -69,7 +74,223 @@ void Player::actionSelect()
     battle->summonEffects();
 }
 
+bool Player::chooseRun()
+{
+    cout << bFStrings[57] << endl;
+    
+    cout << "1: " << bFStrings[58] << endl << "2: " << bFStrings[59] << endl;
+    
+    int choice;
+    cin >> choice;
+    
+    switch (choice)
+    {
+        case 1:
+            cout << getTitle() << " " << getName() << " " << bFStrings[60]
+            << endl;
+            getBattle()->getOpponent()->setVictory();
+            setIntendedMove(RUN);
+            return true;
+        default:
+            return false;
+    }
+}
+
+bool Player::choosePokemon()
+{
+    return trainerSummon(true);
+}
+
 bool Player::isComputer() const
 {
     return false;
+}
+
+bool Player::trainerSummon(bool optional)
+{
+    int choice, i;
+    bool rerun = false;
+    Pokemon* pokemon;
+    
+    do
+    {
+        rerun = false;
+        
+        cout << bFStrings[61] << ":" << endl;
+        
+        cout << generateBalls() << endl;
+        
+        // Summon prompt
+        for (i = 0; i < MAXPOKEMON; i++)
+        {
+            pokemon = getPokemon(i);
+            
+            if (pokemon == NULL)
+                break;
+            
+            ostringstream oss;
+            
+            if (pokemon->getStatus() != HealthyStatus)
+                oss << ": " << getBattle()->statusText(pokemon, false);
+            
+            if (getCurrent() == i && !pokemon->isDead())
+                oss << ": " << bFStrings[62];
+            
+            if (pokemon != NULL)
+                cout << i+1 << ": " << pokemon->getName() << oss.str() << endl;
+        }
+        
+        if (optional)
+            cout << ++i << ": (" << bFStrings[22] << ")" << endl;
+        
+        cin >> choice;
+        
+        if (choice > 0 && choice <= i)
+        {
+            if (optional && choice == i)
+                return false;
+        }
+        else
+        {
+            rerun = true;
+            continue;
+        }
+        
+        // Useful?
+        if (getPokemon(choice-1) == NULL)
+        {
+            rerun = true;
+            continue;
+        }
+        
+        int choicee;
+        bool rerunn = false;
+        
+        do
+        {
+            rerunn = false;
+            rerun = false;
+            
+            cout << bFStrings[63] << " " << getPokemon(choice-1)->getName()
+            << "?" << endl << "1: " << bFStrings[64] << endl << "2: "
+            << bFStrings[23] << endl << "3: " << bFStrings[24] << endl << "4: ("
+            << bFStrings[22] << ")" << endl;
+            
+            cin >> choicee;
+            
+            switch (choicee)
+            {
+                default:
+                    rerunn = true;
+                    continue;
+                case 1:
+                    if (getPokemon(choice-1)->isDead())
+                    {
+                        cout << getPokemon(choice-1)->getName() << " "
+                        << bFStrings[65] << endl;
+                        rerunn = true;
+                    }
+                    else if (getCurrent() == choice-1)
+                    {
+                        cout << getPokemon(choice-1)->getName() << " "
+                        << bFStrings[66] << endl;
+                        rerunn = true;
+                    }
+                    break;
+                case 2:
+                    getBattle()->printPokeInfo(choice-1);
+                    rerunn = true;
+                    break;
+                case 3:
+                    getBattle()->printPokeMoves(choice-1);
+                    rerunn = true;
+                    break;
+                case 4:
+                    rerun = true;
+                    rerunn = false;
+                    break;
+            }
+            
+        } while (rerunn);
+        
+    }
+    while (rerun);
+    
+    // Set intended switch
+    setIntendedSwitch(choice-1);
+    setIntendedMove(SWITCH);
+    
+    return true;
+}
+
+bool Player::chooseFight()
+{
+    Pokemon* pokemon = getPokemon();
+    
+    int playerChoice, j;
+    bool canMega, willMegaEvolve = false;
+    
+    do
+    {
+        cout << bFStrings[67] << ":" << endl;
+        
+        for (j = 0; j < MAXMOVES; j++)
+        {
+            cout << j+1 << ": ";
+            
+            cout << getPokemonMove(j)->getName() << endl;
+        }
+        
+        canMega = pokemon->canMegaEvolve();
+        
+        if (canMega)
+        {
+            cout << ++j << ": " << bFStrings[68];
+            
+            if (willMegaEvolve)
+                cout << " (" << bFStrings[69] << ")";
+            
+            cout << endl;
+        }
+        
+        cout << ++j << ": (" << bFStrings[70] << ")" << endl;
+        cout << ++j << ": (" << bFStrings[22] << ")" << endl;
+        
+        cin >> playerChoice;
+        
+        if (playerChoice == j-1)
+            getBattle()->printMoveInfo();
+        
+        if (canMega && playerChoice == 5)
+        {
+            if (willMegaEvolve)
+            {
+                willMegaEvolve = false;
+            }
+            else
+            {
+                willMegaEvolve = true;
+            }
+            
+            playerChoice = j-1;
+        }
+        
+    } while (playerChoice == j-1);
+    
+    switch (playerChoice)
+    {
+        default:
+            return false;
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+            if (!willMegaEvolve)
+                setIntendedMove(FIGHT, playerChoice-1);
+            else
+                setIntendedMove(MEGA, playerChoice-1);
+            break;
+    }
+    
+    return true;
 }

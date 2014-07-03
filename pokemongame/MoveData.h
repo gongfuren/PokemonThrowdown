@@ -14,6 +14,8 @@
 #include <string>
 using namespace std;
 
+// Note: This data file does not adhere to an 80 column limit!
+
 // Move Data
 
 struct MoveData

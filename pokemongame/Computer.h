@@ -19,18 +19,21 @@
 // to improve modularity and organization. Perhaps make new classes as needed.
 
 class Computer : public Trainer
+// Represents a computer controlled Trainer
 {
 public:
     Computer(TrainerData h, Battle* battle);
     ~Computer();
     
     virtual void actionSelect();
-    void actionSelect0();
-    void actionSelect1();
-    void actionSelect2();
+    void actionSelect(int level);
+    virtual bool chooseRun();
     virtual bool isComputer() const;
+    virtual bool choosePokemon();
+    virtual bool trainerSummon(bool optional);
     
 private:
+    int m_difficulty;
 };
 
 #endif /* defined(__pokemongame__Computer__) */

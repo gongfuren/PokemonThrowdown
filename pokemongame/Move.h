@@ -18,6 +18,7 @@ using namespace std;
 class Pokemon;
 
 class Move
+// Represents a Move and its current state (i.e. PP, charge)
 {
 public:
     Move(int moveID, Pokemon* pokemon);

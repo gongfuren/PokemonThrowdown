@@ -9,6 +9,7 @@
 #include "Field.h"
 #include "Side.h"
 #include "Battle.h"
+#include "strings.h"
 
 // Note: Field, Side, Slot, Player, Computer, and Item classes are all "hardly
 // implemented", that is, these modules are not being utilized to any

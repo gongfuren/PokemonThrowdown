@@ -19,36 +19,19 @@ class Trainer;
 class Pokemon;
 class Move;
 
-// Battle class
-// Orchestrates Pokemon battle based on rules of game
-// Controls all subclasses
 class Battle
+// Orchestrates Pokemon battle based on rules of game
+// Hosts Field and Trainers which host Side, Slot, Pokemon, Move, Item, etc.
 {
 public:
-    // Construction
     Battle();
     ~Battle();
     
-    // Battle flow functions
+    // Start the Battle
     void start();
-    void clockworkTick();
-    void cycle();
     
-    void summonsPhase();
-    void actionPhase();
-    void preBattlePhase();
-    void battlePhase();
-    void postBattlePhase();
-    
-    bool battleIsOver() const;
-    
-    // Other battle functions
-    void greet() const;
+    // Other Battle functions
     void displayState(bool showTurnCount) const;
-    void fieldEvent();
-    void turnCount() const;
-    void actionSelect();
-    bool chooseFight();
     void printMoveInfo() const;
     void applyStatus(Trainer* trainerA, Trainer* trainerB,
                      int whichMove);
@@ -57,27 +40,15 @@ public:
     void applyEffect(Trainer* trainerA, Trainer* trainerB,
                      int whichMove) const;
     void applySideEffects(Trainer* trainer, int whichMove);
-    bool chooseBag() const;
-    bool choosePokemon(Trainer* trainer) const;
-    bool replacePokemon(Trainer* trainer) const;
     void printPokeInfo(int slotNumber) const;
     void printPokeMoves(int pokemon) const;
     string statusText(Pokemon* pokemon, bool showStats) const;
-    bool playerSummon(bool optional) const;
-    void opponentSummon(Trainer* trainer, bool optional) const;
     void summonEffects();
-    bool chooseRun() const;
     void statusEffect(Trainer* trainer) const;
     void checkDead() const;
-    bool checkWin() const;
-    void end() const;
-    void pokeSummary(const PokeData pokemon) const;
-    void pokeMoveInfo(const PokeData pokemon) const;
     
-    // Initialization
     void customInit();
     void customInit(Trainer* trainer);
-    void chooseLead();
     
     // Accessor functions
     Trainer* getPlayer() const;
@@ -87,6 +58,25 @@ public:
     Field* getField() const;
     
 private:
+    void clockTick();
+    void cycle();
+    void greet() const;
+    void chooseLead();
+    void summonsPhase();
+    void actionPhase();
+    void preBattlePhase();
+    void battlePhase();
+    void postBattlePhase();
+    void fieldEvent();
+    void turnCount() const;
+    void actionSelect();
+    bool checkWin() const;
+    bool battleIsOver() const;
+    void end() const;
+    
+    void pokeSummary(const PokeData pokemon) const;
+    void pokeMoveInfo(const PokeData pokemon) const;
+    
     // Battle helper functions
     void sortSpeeds(Trainer* trainers[], int number);
     int speedCompare(const Pokemon* pokemonA, const Pokemon* pokemonB) const;

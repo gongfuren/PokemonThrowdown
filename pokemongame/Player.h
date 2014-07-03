@@ -19,13 +19,18 @@
 // to improve modularity and organization. Perhaps make new classes as needed.
 
 class Player : public Trainer
+// Represents a human controlled Trainer
 {
 public:
     Player(TrainerData h, Battle* battle);
     ~Player();
     
     virtual void actionSelect();
+    virtual bool chooseRun();
+    virtual bool choosePokemon();
     virtual bool isComputer() const;
+    virtual bool trainerSummon(bool optional);
+    bool chooseFight();
     
 private:
 };

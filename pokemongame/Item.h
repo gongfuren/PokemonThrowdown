@@ -21,6 +21,7 @@ class Pokemon;
 // to improve modularity and organization. Perhaps make new classes as needed.
 
 class Item
+// Represents an Item and its current state (i.e. used, active)
 {
 public:
     Item(int ID);

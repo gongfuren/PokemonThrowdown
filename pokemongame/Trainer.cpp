@@ -9,6 +9,7 @@
 #include "Trainer.h"
 #include "TrainerData.h"
 #include "Battle.h"
+#include "strings.h"
 
 #include <iostream>
 #include <sstream>
@@ -16,7 +17,8 @@
 using namespace std;
 
 Trainer::Trainer(int trainerAID, Battle* battle)
-: m_battle(battle), m_current(-1), m_name(""), m_title(""), m_male(false), m_victory(false), m_reward(0), m_intendedMove(NODECIS), m_usedMega(false)
+: m_battle(battle), m_current(-1), m_name(""), m_title(""), m_male(false),
+m_victory(false), m_reward(0), m_intendedMove(NODECIS), m_usedMega(false)
 {
     for (int i = 0; i < MAXPOKEMON; i++)
         m_pokemon[i] = NULL;
@@ -27,7 +29,8 @@ Trainer::Trainer(int trainerAID, Battle* battle)
 }
 
 Trainer::Trainer(TrainerData h, Battle* battle)
-: m_battle(battle), m_current(-1), m_name(""), m_title(""), m_male(false), m_victory(false), m_reward(0), m_intendedMove(NODECIS), m_usedMega(false)
+: m_battle(battle), m_current(-1), m_name(""), m_title(""), m_male(false),
+m_victory(false), m_reward(0), m_intendedMove(NODECIS), m_usedMega(false)
 {
     m_name = h.name;
     m_title = h.title;
@@ -57,7 +60,8 @@ void Trainer::standardInit(int trainerID)
     for (int i = 0; i < MAXPOKEMON; i++)
     {
         if (trainerlib[trainerID].pokemonIDs[i] != -1)
-            m_pokemon[i] = new Pokemon(trainerlib[trainerID].pokemonIDs[i], this);
+            m_pokemon[i] = new Pokemon(trainerlib[trainerID].pokemonIDs[i],
+                                       this);
         else
             m_pokemon[i] = new Pokemon(randInt(0, MAXNUMPOKEMON-1), this);
     }
@@ -68,8 +72,11 @@ int Trainer::getIntendedMove() const
     return m_intendedMove;
 }
 
-bool Trainer::setIntendedMove(int move)
+bool Trainer::setIntendedMove(int move, int attack)
 {
+    if (move == FIGHT || move == MEGA)
+        getPokemon()->setIntendedMove(attack);
+    
     m_intendedMove = move;
     
     return true;
@@ -132,7 +139,8 @@ void Trainer::setCurrent(int current)
 
 void Trainer::summonPokemon()
 {
-    cout << m_title << " " << m_name << " sent out " << m_pokemon[m_current]->getName() << "!" << endl;
+    cout << m_title << " " << m_name << " " << bFStrings[71] << " "
+    << m_pokemon[m_current]->getName() << "!" << endl;
     
     for (int i = 0; i < MAXPOKEMONPERPLAYER; i++)
         m_pokemonOut[i] = m_pokemon[m_current];
@@ -142,7 +150,8 @@ void Trainer::switchPokemon(bool optional)
 {
     if (optional)
     {
-        cout << getTitle() << " " << getName() << " withdrew " << getPokemon()->getName() << "!" << endl;
+        cout << getTitle() << " " << getName() << " " << bFStrings[72] << " "
+        << getPokemon()->getName() << "!" << endl;
         getPokemon()->clearVolatiles();
     }
     
@@ -235,10 +244,12 @@ void Trainer::displayState() const
     int pokeHP = pokemon->getStats(HPSTAT);
     int pokeTotalHP = pokemon->getBStats(HPSTAT);
     
-    string pokeHPBar = "HP:[";
+    string pokeHPBar = statFullStrings[HPSTAT];
+    pokeHPBar += ":[";
     
     int bar = static_cast<double>(static_cast<double>(pokeHP) /
-                                  static_cast<double>(pokeTotalHP)) * HPBARLENGTH;
+                                  static_cast<double>(pokeTotalHP))
+                                    * HPBARLENGTH;
     
     for (int i = 0; i < HPBARLENGTH; i++)
     {
@@ -259,26 +270,28 @@ void Trainer::displayState() const
     
     string pokeName = pokemon->getName();
     
-    char pokeGen;
+    string pokeGen;
     
     switch (pokemon->getGender())
     {
         case Male:
-            pokeGen = 'M';
+            pokeGen = genderStrings[Male];
             break;
         case Female:
-            pokeGen = 'F';
+            pokeGen = genderStrings[Female];
             break;
         case NoGender:
+            pokeGen = genderStrings[NoGender];
+            break;
         case Ungendered:
-            pokeGen = ' ';
+            pokeGen = genderStrings[Ungendered];
             break;
     }
     
     string pokeStatus = getBattle()->statusText(pokemon, true);
     
-    cout << "Lv " << pokemon->getOnMyLevel() << " " << pokeName << ' '
-    << pokeGen << ' ' << pokeStatus << ' ' << generateBalls() << endl
+    cout << bFStrings[28] << " " << pokemon->getOnMyLevel() << " " << pokeName
+    << ' ' << pokeGen << ' ' << pokeStatus << ' ' << generateBalls() << endl
     << pokeHPBar << endl;
 
 }
@@ -297,4 +310,18 @@ void Trainer::checkDead()
 {
     for (int i = 0; i < MAXPOKEMONPERPLAYER; i++)
         m_pokemonOut[i]->checkDead();
+}
+
+bool Trainer::replacePokemon()
+{
+    return trainerSummon(false);
+}
+
+bool Trainer::chooseBag() const
+{
+    // No bag implementation since focus is on competitive
+    // (no using items, among other things) battling
+    cout << bFStrings[73] << endl;
+    
+    return false;
 }
