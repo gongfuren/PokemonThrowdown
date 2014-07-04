@@ -64,7 +64,7 @@ public:
     
     string generateBalls() const;
     
-    void checkDead();
+    void checkFaint();
     virtual bool choosePokemon() = 0;
     virtual bool trainerSummon(bool optional) = 0;
     bool replacePokemon();

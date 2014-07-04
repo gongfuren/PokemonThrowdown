@@ -290,7 +290,7 @@ void Trainer::displayState() const
     
     string pokeStatus = getBattle()->statusText(pokemon, true);
     
-    cout << bFStrings[28] << " " << pokemon->getOnMyLevel() << " " << pokeName
+    cout << bFStrings[28] << " " << pokemon->getLevel() << " " << pokeName
     << ' ' << pokeGen << ' ' << pokeStatus << ' ' << generateBalls() << endl
     << pokeHPBar << endl;
 
@@ -306,10 +306,10 @@ Move* Trainer::getPokemonMove(int whichMove) const
     return getPokemon()->getMove(whichMove);
 }
 
-void Trainer::checkDead()
+void Trainer::checkFaint()
 {
     for (int i = 0; i < MAXPOKEMONPERPLAYER; i++)
-        m_pokemonOut[i]->checkDead();
+        m_pokemonOut[i]->checkFaint();
 }
 
 bool Trainer::replacePokemon()

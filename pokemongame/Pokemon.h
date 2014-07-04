@@ -42,11 +42,11 @@ public:
     int getStatsStatus(int whichStat) const;
     Move* getMove(int whichMove) const;
     Gender getGender() const;
-    int getOnMyLevel() const;
+    int getLevel() const;
     Nature getNature() const;
     PokeAbility getAbility() const;
     Item* getItem() const;
-    bool hasCompatMega() const;
+    bool hasCompatMegaStone() const;
     string getDescription() const;
     int getForm() const;
     int getID() const;
@@ -74,14 +74,14 @@ public:
     int getRampageTurns() const;
     void setRampageTurns(int turns);
     
-    void checkDead();
-    bool isDead() const;
-    void setDead();
+    void checkFaint();
+    bool isFainted() const;
+    void setFainted();
     void lowerHP(int howMuch);
     bool increaseHP(int howMuch);
     bool hasMaxHP() const;
-    bool lowerStat(int whichStat, bool silent);
-    bool lowerStat(int whichStat, int levels);
+    bool decreaseStat(int whichStat, bool silent);
+    bool decreaseStat(int whichStat, int levels);
     bool increaseStat(int whichStat, bool silent);
     bool increaseStat(int whichStat, int levels);
     void restoreStat(int whichStat);

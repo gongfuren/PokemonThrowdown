@@ -133,7 +133,7 @@ bool Player::trainerSummon(bool optional)
             if (pokemon->getStatus() != HealthyStatus)
                 oss << ": " << getBattle()->statusText(pokemon, false);
             
-            if (getCurrent() == i && !pokemon->isDead())
+            if (getCurrent() == i && !pokemon->isFainted())
                 oss << ": " << bFStrings[62];
             
             if (pokemon != NULL)
@@ -173,8 +173,8 @@ bool Player::trainerSummon(bool optional)
             
             cout << bFStrings[63] << " " << getPokemon(choice-1)->getName()
             << "?" << endl << "1: " << bFStrings[64] << endl << "2: "
-            << bFStrings[23] << endl << "3: " << bFStrings[24] << endl << "4: ("
-            << bFStrings[22] << ")" << endl;
+            << bFStrings[23] << endl << "3: " << bFStrings[24] << endl
+            << "4: (" << bFStrings[22] << ")" << endl;
             
             cin >> choicee;
             
@@ -184,7 +184,7 @@ bool Player::trainerSummon(bool optional)
                     rerunn = true;
                     continue;
                 case 1:
-                    if (getPokemon(choice-1)->isDead())
+                    if (getPokemon(choice-1)->isFainted())
                     {
                         cout << getPokemon(choice-1)->getName() << " "
                         << bFStrings[65] << endl;
@@ -198,11 +198,11 @@ bool Player::trainerSummon(bool optional)
                     }
                     break;
                 case 2:
-                    getBattle()->printPokeInfo(choice-1);
+                    getBattle()->dispPokeSummary(choice-1);
                     rerunn = true;
                     break;
                 case 3:
-                    getBattle()->printPokeMoves(choice-1);
+                    getBattle()->dispPokeMoves(choice-1);
                     rerunn = true;
                     break;
                 case 4:
@@ -259,7 +259,7 @@ bool Player::chooseFight()
         cin >> playerChoice;
         
         if (playerChoice == j-1)
-            getBattle()->printMoveInfo();
+            getBattle()->dispPokeMoves();
         
         if (canMega && playerChoice == 5)
         {

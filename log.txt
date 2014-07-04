@@ -1,3 +1,30 @@
+v0.1.4
+
+-Tinkered with things
+-Slight bug fixes
+-Minimal improvements to modularity
+-Commented Battle.h public member functions
+
+-Improved code modularity by moving some functions around
+-Extracted most strings into their own array
+-Implemented gender displaying
+-Classified gender locked and ungendered Pokemon
+-Justified most code text to fit within 80 columns for enhanced readability
+-Fixed bug where title screen header would not show after the first time
+
+commit a9bc7765b4fe5c030ce87c0f70e9c106683f1846
+Author: Ian P. Cordero <ianpcordero@gmail.com>
+Date:   Wed Jul 2 23:13:58 2014 -0700
+
+    v0.1.4
+    
+    -Improved code modularity by moving some functions around
+    -Extracted most strings into their own array
+    -Implemented gender displaying
+    -Classified gender locked and ungendered Pokemon
+    -Justified most code text to fit within 80 columns for enhanced readability
+    -Fixed bug where title screen header would not show after the first time
+
 commit 502b3c438953e783017e000e37edd5977a9243c9
 Author: Ian P. Cordero <ianpcordero@gmail.com>
 Date:   Wed Jul 2 23:13:10 2014 -0700

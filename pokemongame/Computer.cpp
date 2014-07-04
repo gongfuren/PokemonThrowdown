@@ -75,7 +75,7 @@ bool Computer::trainerSummon(bool optional)
     
     for (int i = 0; i < MAXPOKEMON; i++)
     {
-        if (getPokemon(i) != NULL && !getPokemon(i)->isDead())
+        if (getPokemon(i) != NULL && !getPokemon(i)->isFainted())
         {
             pokemonLeft++;
         }
@@ -85,7 +85,7 @@ bool Computer::trainerSummon(bool optional)
     
     for (int i = 0; i < MAXPOKEMON; i++)
     {
-        if (getPokemon(i) != NULL && !getPokemon(i)->isDead())
+        if (getPokemon(i) != NULL && !getPokemon(i)->isFainted())
         {
             if (choice == 0)
             {

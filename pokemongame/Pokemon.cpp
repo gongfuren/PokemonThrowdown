@@ -112,7 +112,7 @@ int Pokemon::getForm() const
     return m_form;
 }
 
-bool Pokemon::hasCompatMega() const
+bool Pokemon::hasCompatMegaStone() const
 {
     bool hci = false;
     int pind = -1;
@@ -231,7 +231,7 @@ Gender Pokemon::getGender() const
     return m_gender;
 }
 
-int Pokemon::getOnMyLevel() const
+int Pokemon::getLevel() const
 {
     return m_level;
 }
@@ -296,7 +296,7 @@ void Pokemon::castAbility()
         if (getAbility() == PIntimidate)
         {
             flashAbility();
-            opponent->lowerStat(ATTSTAT, false);
+            opponent->decreaseStat(ATTSTAT, false);
         }
         
         if (getAbility() == PDrizzle
@@ -317,7 +317,8 @@ void Pokemon::castAbility()
             && getTrainer()->getBattle()->getWeather() != Sandstorm)
         {
             flashAbility();
-            getTrainer()->getBattle()->getField()->initializeWeather(Sandstorm);
+            getTrainer()->getBattle()->getField()->
+            initializeWeather(Sandstorm);
         }
         
         if (getAbility() == PSnowWarning
@@ -337,17 +338,17 @@ void Pokemon::castAbility()
     m_turnsOut = 0;
 }
 
-bool Pokemon::isDead() const
+bool Pokemon::isFainted() const
 {
     return m_dead;
 }
 
 bool Pokemon::canMegaEvolve() const
 {
-    return (hasCompatMega() && getForm() == 0 && !getTrainer()->getUsedMega());
+    return (hasCompatMegaStone() && getForm() == 0 && !getTrainer()->getUsedMega());
 }
 
-void Pokemon::setDead()
+void Pokemon::setFainted()
 {
     m_statsStatus[HPSTAT] = 0;
     
@@ -401,7 +402,7 @@ void Pokemon::avoidDialogue() const
     << getName() << " " << bFStrings[76] << endl;
 }
 
-bool Pokemon::lowerStat(int whichStat, bool silent)
+bool Pokemon::decreaseStat(int whichStat, bool silent)
 {
     bool normalExecution = true;
     
@@ -441,11 +442,11 @@ bool Pokemon::lowerStat(int whichStat, bool silent)
     return normalExecution;
 }
 
-bool Pokemon::lowerStat(int whichStat, int levels)
+bool Pokemon::decreaseStat(int whichStat, int levels)
 {
     if (levels == 1)
     {
-        return lowerStat(whichStat, false);
+        return decreaseStat(whichStat, false);
     }
     
     bool min = (levels == 6) ? true : false;
@@ -456,7 +457,7 @@ bool Pokemon::lowerStat(int whichStat, int levels)
         << bFStrings[78] << endl;
     else
     {
-        if (lowerStat(whichStat, true))
+        if (decreaseStat(whichStat, true))
         {
             levels--;
             int decrease;
@@ -464,7 +465,7 @@ bool Pokemon::lowerStat(int whichStat, int levels)
             for (decrease = 0; levels > 0 && m_statsStatus[whichStat] >= -6;
                  levels--)
             {
-                if (lowerStat(whichStat, true))
+                if (decreaseStat(whichStat, true))
                     decrease++;
             }
             
@@ -597,7 +598,7 @@ void Pokemon::restoreStat(int whichStat)
     
     if (m_statsStatus[whichStat] > 0)
         while (m_statsStatus[whichStat] != 0)
-            lowerStat(whichStat, true);
+            decreaseStat(whichStat, true);
 }
 
 double Pokemon::statAMultiplier(int statLevel) const
@@ -702,7 +703,7 @@ bool Pokemon::passThroughStatus()
                 int spOrNot
                 = static_cast<double>(getStats(ATTSTAT) * attackMultiplier)
                 / static_cast<double>(getStats(DEFSTAT));
-                double damage = (((2.0 * getOnMyLevel() + 10.0) / 250.0) *
+                double damage = (((2.0 * getLevel() + 10.0) / 250.0) *
                                  (spOrNot) * pureDamage + 2.0);
                 
                 lowerHP(damage);
@@ -724,7 +725,8 @@ void Pokemon::formChange(int form)
         << bFStrings[99] << " " << getTrainer()->getName() << "'s "
         << bFStrings[100] << endl;
         
-        cout << m_name << " " << bFStrings[101] << " " << m_name << "!" << endl;
+        cout << m_name << " " << bFStrings[101] << " " << m_name << "!"
+        << endl;
         
         transformInit(m_item->getID() - HVenusaurite + 722);
         
@@ -838,10 +840,10 @@ void Pokemon::setIntendedMove(int choice)
     m_intendedMove = choice;
 }
 
-void Pokemon::checkDead()
+void Pokemon::checkFaint()
 {
-    if (!isDead() && getStats(HPSTAT) == 0)
-        setDead();
+    if (!isFainted() && getStats(HPSTAT) == 0)
+        setFainted();
 }
 
 bool Pokemon::executeMove(Pokemon* target)
@@ -853,7 +855,7 @@ bool Pokemon::executeMove(Pokemon* target)
     bool moveHits, changeForm;
     int moveAccuracy, whatForm;
     
-    if (isDead())
+    if (isFainted())
         return false;
     
     if (getAbility() == PStanceChange)
@@ -940,7 +942,7 @@ bool Pokemon::executeMove(Pokemon* target)
     else
         // Targeting pokemon other than self
     {
-        if (target == NULL || target->isDead())
+        if (target == NULL || target->isFainted())
         {
             cout << bFStrings[106] << endl;
             
@@ -970,7 +972,7 @@ bool Pokemon::executeMove(Pokemon* target)
     battle->applySideEffects(getTrainer(), intendedMove);
     
     battle->displayState(false);
-    battle->checkDead();
+    battle->checkFaint();
     
     // Record move
     recordMove(true);

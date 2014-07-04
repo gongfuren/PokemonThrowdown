@@ -22,17 +22,24 @@ class Move;
 class Battle
 // Orchestrates Pokemon battle based on rules of game
 // Hosts Field and Trainers which host Side, Slot, Pokemon, Move, Item, etc.
+// Displays relevant information regarding battle
 {
 public:
     Battle();
     ~Battle();
     
+    // Allow user to customize own Trainer and opponent Trainer
+    // TODO: allow more customization than 4 Trainers with preset Pokemon
+    // teams as is implemented at the moment
+    void customInit(Trainer* trainer);
+    
     // Start the Battle
     void start();
     
-    // Other Battle functions
+    // Display state of battle participants (i.e. Level, Name, Status, HP)
     void displayState(bool showTurnCount) const;
-    void printMoveInfo() const;
+    
+    // TODO: move these 4 into Pokemon
     void applyStatus(Trainer* trainerA, Trainer* trainerB,
                      int whichMove);
     void applyAttack(Trainer* trainerA, Trainer* trainerB,
@@ -40,15 +47,31 @@ public:
     void applyEffect(Trainer* trainerA, Trainer* trainerB,
                      int whichMove) const;
     void applySideEffects(Trainer* trainer, int whichMove);
-    void printPokeInfo(int slotNumber) const;
-    void printPokeMoves(int pokemon) const;
-    string statusText(Pokemon* pokemon, bool showStats) const;
-    void summonEffects();
-    void statusEffect(Trainer* trainer) const;
-    void checkDead() const;
     
-    void customInit();
-    void customInit(Trainer* trainer);
+    // Display in-battle summary
+    void dispPokeSummary(int slotNumber) const;
+    
+    // Display summary of specified Pokemon species
+    void dispPokeSummary(const PokeData pokemon) const;
+    
+    // Display in-battle (i.e. with current PP) moves
+    void dispPokeMoves(int pokemon) const;
+    void dispPokeMoves() const;
+    
+    // Display currently-set moves for Pokemon of specified species
+    void dispPokeMoves(const PokeData pokemon) const;
+    
+    // TODO: move into Pokemon
+    string statusText(Pokemon* pokemon, bool showStats) const;
+    
+    // Cast effects (i.e. Abilities) when Pokemon is "summoned" (sent out)
+    void summonEffects();
+    
+    // TODO: implement appropriately
+    void statusEffect(Trainer* trainer) const;
+    
+    // Check if any Pokemon have fainted
+    void checkFaint() const;
     
     // Accessor functions
     Trainer* getPlayer() const;
@@ -74,25 +97,19 @@ private:
     bool battleIsOver() const;
     void end() const;
     
-    void pokeSummary(const PokeData pokemon) const;
-    void pokeMoveInfo(const PokeData pokemon) const;
-    
     // Battle helper functions
     void sortSpeeds(Trainer* trainers[], int number);
     int speedCompare(const Pokemon* pokemonA, const Pokemon* pokemonB) const;
     void swap(Trainer** trainerA, Trainer** trainerB);
     
     Field* m_field;
-    
     Trainer* m_player;
     Trainer* m_player2;
     Trainer* m_opponent;
     Trainer* m_opponent2;
-    
     Trainer* m_actor;
     Trainer* m_participants[NUMPLAYERS];
     
-    // Invariant:
     int m_turns;
     int initStage;
 };
