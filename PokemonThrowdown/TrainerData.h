@@ -49,7 +49,7 @@ const TrainerData trainerlib[MAXTOTALTRAINERS] = {
     // Name       Title        Male   Prize 1    2    3    4    5    6
     "Red",        PKMNTRAINER, true,  1000, 196, 25,  6,   9,   3,   143,
     "Steven",     CHAMPION,    true,  1000, 227, 306, 344, 346, 348, 376,
-    "Blue",       CHAMPION,    true,  1000, 214, 65,  248, 59,  103,  9,
+    "Blue",       CHAMPION,    true,  1000, 214, 65,  248, 59,  103,  197,
     "Ian",        ACETRAINER,   true,  1000, 721, 149, 637, 303, 720, 681,
     "KC",         PKMNTRAINER, false, 1000, 25,  249, 382,  94,  157,  286,
 

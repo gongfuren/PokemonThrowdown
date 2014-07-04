@@ -810,7 +810,7 @@ void Pokemon::setStatus(PokeStatus status, bool rest)
         case ToxicStatus:
             if (getType1() == PoisonType || getType2() == PoisonType ||
                 getType1() == SteelType || getType2() == SteelType)
-                // Poison and steel types cannot be poisoned
+                // Poison and Steel types cannot be poisoned
                 return;
             break;
         case SleepStatus:
