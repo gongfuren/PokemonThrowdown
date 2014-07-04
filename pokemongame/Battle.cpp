@@ -690,7 +690,7 @@ void Battle::applyStatus(Trainer* trainerA, Trainer* trainerB, int whichMove)
     Pokemon* target = trainerB->getPokemon();
     Move* move = trainerA->getPokemonMove(whichMove);
     MoveEffect me = trainerA->getPokemonMove(whichMove)->getEffect();
-    int healAmount;
+    int healAmount = 0;
     
     int sc[NUMALLSTATS] = { 0, 0, 0, 0, 0, 0, 0, 0 };
     

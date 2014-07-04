@@ -32,8 +32,8 @@ const string bFStrings[200] = {
     "throwdown (n.) informal", // 10
     "a performance by or competition between rappers, breakdancers, etc.",
     "ex: a funky hip-hop throwdown.",
-    "(C) 2014 Ian P. Cordero.",
-    "All credit goes to Nintendo and GameFreak for design of original game mechanics, Pokemon, etc.",
+    "",
+    "Pokemon \"Throwdown\" is a play on the popular web-based Pokemon Showdown battle simulator.",
     "Choose lead Pokemon", // 15
     "Choose",
     "a trainer",

@@ -59,7 +59,6 @@ int main()
             << bFStrings[10] << endl
             << bFStrings[11] << endl
             << bFStrings[12] << endl
-            << bFStrings[13] << endl
             << bFStrings[14] << endl;
             showFullHeader = false;
         }
