@@ -16,25 +16,17 @@
 #include <stdlib.h>
 using namespace std;
 
-Trainer::Trainer(int trainerAID, Battle* battle)
-: m_battle(battle), m_current(-1), m_name(""), m_title(""), m_male(false),
-m_victory(false), m_reward(0), m_intendedMove(NODECIS), m_usedMega(false)
-{
-    for (int i = 0; i < MAXPOKEMON; i++)
-        m_pokemon[i] = NULL;
-    
-    // Standard Initialization:
-    
-    standardInit(trainerAID);
-}
-
 Trainer::Trainer(TrainerData h, Battle* battle)
-: m_battle(battle), m_current(-1), m_name(""), m_title(""), m_male(false),
-m_victory(false), m_reward(0), m_intendedMove(NODECIS), m_usedMega(false)
+: m_battle(battle)
 {
+    m_current = -1;
     m_name = h.name;
     m_title = h.title;
     m_male = h.male;
+    m_victory = false;
+    m_reward = 0;
+    m_intendedMove = NODECIS;
+    m_usedMega = false;
     m_reward = h.reward;
     
     for (int i = 0; i < 6; i++)
@@ -48,23 +40,6 @@ Trainer::~Trainer()
 {
     for (int i = 0; i < MAXPOKEMON; i++)
         delete m_pokemon[i];
-}
-
-void Trainer::standardInit(int trainerID)
-{
-    m_name = trainerlib[trainerID].name;
-    m_title = trainerlib[trainerID].title;
-    m_male = trainerlib[trainerID].male;
-    m_reward = trainerlib[trainerID].reward;
-    
-    for (int i = 0; i < MAXPOKEMON; i++)
-    {
-        if (trainerlib[trainerID].pokemonIDs[i] != -1)
-            m_pokemon[i] = new Pokemon(trainerlib[trainerID].pokemonIDs[i],
-                                       this);
-        else
-            m_pokemon[i] = new Pokemon(randInt(0, MAXNUMPOKEMON-1), this);
-    }
 }
 
 int Trainer::getIntendedMove() const

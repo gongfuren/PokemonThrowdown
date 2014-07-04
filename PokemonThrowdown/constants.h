@@ -451,12 +451,8 @@ enum Gender
 
 void gyroscope(int& gyro, int& scope, int d);
 int randInt(int lowest, int highest);
-int typeNumber(Type t);
 double typeMultiplier(Type type1, Type type2);
 double typeMultiplier(Type type1, Type type2, Type type3);
 double natureMultiplier(Nature nature, int stat);
-Nature returnNature(int whichNature);
-int weatherNumber(Weather w);
-Weather numberWeather(int n);
 
 #endif /* defined(__pokemongame__Constants__) */

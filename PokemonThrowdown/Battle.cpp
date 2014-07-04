@@ -34,20 +34,20 @@ Battle::Battle()
 {
     m_field = new Field(this);
     
+    // Zero out variables for now
     m_player = NULL;
     m_player2 = NULL;
     m_opponent = NULL;
     m_opponent2 = NULL;
     m_turns = 0;
     m_actor = NULL;
+    m_initStage = 0;
     for (int i = 0; i < MAXPLAYERS; i++)
         m_participants[i] = NULL;
     
-    // Custom Initialization:
-    initStage = 0;
-    customInit(m_player);
-    initStage = 1;
-    customInit(m_opponent);
+    // Custom Initialization
+    for (int i = 0; i < 2; i++)
+        customInit();
     
     chooseLead();
 }
@@ -93,7 +93,7 @@ void Battle::chooseLead()
     }
 }
 
-void Battle::customInit(Trainer* trainerA)
+void Battle::customInit()
 {
     TrainerData protoman;
     
@@ -103,7 +103,7 @@ void Battle::customInit(Trainer* trainerA)
     do
     {
         cout << bFStrings[16] << " ";
-        if (initStage == 0)
+        if (m_initStage == 0)
             cout << bFStrings[17];
         else
             cout << bFStrings[18];
@@ -203,16 +203,17 @@ void Battle::customInit(Trainer* trainerA)
     while (choice[0] <= 0 || choice[0] > NUMTRAINERS);
     
     // Craft Trainer
-    if (initStage == 0)
+    if (m_initStage == 0)
     {
         m_player = new Player(protoman, this);
-        m_participants[initStage] = m_player;
+        m_participants[m_initStage] = m_player;
         m_field->getSide(0)->addTrainer(m_player);
+        m_initStage++;
     }
-    else // initStage == 1
+    else // m_initStage == 1
     {
         m_opponent = new Computer(protoman, this);
-        m_participants[initStage] = m_opponent;
+        m_participants[m_initStage] = m_opponent;
         m_field->getSide(1)->addTrainer(m_opponent);
     }
 }
@@ -1402,7 +1403,7 @@ void Battle::dispPokeMoves(int pokemon) const
         }
         
         pout << move->getName() << endl << bFStrings[29] << ": "
-        << typeStrings[typeNumber(move->getType())] << " " << bFStrings[30]
+        << typeStrings[move->getType()] << " " << bFStrings[30]
         << ": ";
         
         if (move->getDamage() == -1)
@@ -1419,10 +1420,10 @@ void Battle::dispPokeMoves(int pokemon) const
         
         pout << " " << pOS;
         
-        cout << pout.str() << endl;
-        
         if (move->getDescription() != "")
-            cout << move->getDescription() << endl;
+            pout << move->getDescription() << endl;
+        
+        cout << pout.str() << endl;
     }
 }
 
@@ -1466,6 +1467,9 @@ void Battle::dispPokeMoves(const PokeData pokemon) const
             o << bFStrings[33] << ": ";
         
         o << moveTypeStrings[m.moveType] << endl;
+        
+        if (m.description != "")
+            o << m.description << endl;
     }
     
     cout << o.str();

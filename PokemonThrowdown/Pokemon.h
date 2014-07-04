@@ -133,7 +133,7 @@ private:
     
     Move* m_moves[MAXMOVES];
     stack<Move*> m_moveHistory;
-    bool m_dead;
+    bool m_fainted;
     
     Trainer* m_trainer;
     Slot* m_slot;

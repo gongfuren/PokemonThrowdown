@@ -31,7 +31,7 @@ public:
     // Allow user to customize own Trainer and opponent Trainer
     // TODO: allow more customization than 4 Trainers with preset Pokemon
     // teams as is implemented at the moment
-    void customInit(Trainer* trainer);
+    void customInit();
     
     // Start the Battle
     void start();
@@ -81,27 +81,51 @@ public:
     Field* getField() const;
     
 private:
+    // Tick the clock for each turn
     void clockTick();
+    
+    // Main Battle cycle, calls the respective phases
     void cycle();
+    
+    // Battle greeting
     void greet() const;
+    
+    // Have participants choose their lead Pokemon
     void chooseLead();
+    
+    // Five Battle phases:
+    
+    // Send out or replace Pokemon
     void summonsPhase();
+    // Players choose their actions
     void actionPhase();
+    // Right before the fun part (i.e. Pokemon switches)
     void preBattlePhase();
+    // The fun part
     void battlePhase();
+    // The not-so-fun part
     void postBattlePhase();
+    
+    // Field events (the only important one so far is starting weather)
     void fieldEvent();
+    
+    // Display turn count (starts at 1)
     void turnCount() const;
+    
+    // Tell participants to choose actions
     void actionSelect();
+    
+    // (Currently messy) functions for judging when a Battle is over
     bool checkWin() const;
     bool battleIsOver() const;
     void end() const;
     
-    // Battle helper functions
+    // Sorting priorities
     void sortSpeeds(Trainer* trainers[], int number);
     int speedCompare(const Pokemon* pokemonA, const Pokemon* pokemonB) const;
     void swap(Trainer** trainerA, Trainer** trainerB);
     
+    // Data members
     Field* m_field;
     Trainer* m_player;
     Trainer* m_player2;
@@ -109,9 +133,8 @@ private:
     Trainer* m_opponent2;
     Trainer* m_actor;
     Trainer* m_participants[NUMPLAYERS];
-    
     int m_turns;
-    int initStage;
+    int m_initStage;
 };
 
 #endif /* defined(__pokemongame__Battle__) */

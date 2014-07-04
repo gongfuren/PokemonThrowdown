@@ -19,25 +19,15 @@
 using namespace std;
 
 Pokemon::Pokemon(int pokemonID, Trainer* trainer)
-: m_name(""), m_type1(NeutralType), m_type2(NoType), m_status(HealthyStatus),
-m_trainer(trainer), m_dead(false), m_gender(NoGender), m_intendedMove(0),
-m_level(1), m_nature(NoNature), m_ability(PNoAbility), m_item(NULL),
-m_description(""), m_sleepTurns(0), m_toxicTurns(0), m_rampageTurns(0),
-m_ID(pokemonID), m_form(0), m_turnsOut(-1)
+: m_trainer(trainer)
 {
-    // Standard Initialization:
     standardInit(pokemonID);
 }
 
 Pokemon::Pokemon(PokeData h, Trainer* trainer)
-: m_name(""), m_type1(NeutralType), m_type2(NoType), m_status(HealthyStatus),
-m_trainer(trainer), m_dead(false), m_gender(NoGender), m_intendedMove(0),
-m_level(1), m_nature(NoNature), m_ability(PNoAbility), m_item(NULL),
-m_description(""), m_sleepTurns(0), m_toxicTurns(0), m_rampageTurns(0),
-m_ID(h.ID), m_form(0), m_turnsOut(-1)
+: m_trainer(trainer)
 {
-    // Standard Initialization:
-    standardInit(m_ID);
+    standardInit(h.ID);
 }
 
 Pokemon::~Pokemon()
@@ -68,13 +58,22 @@ void Pokemon::standardInit(int pokemonID)
     m_name = pokelib[pokemonID].name;
     m_type1 = pokelib[pokemonID].type1;
     m_type2 = pokelib[pokemonID].type2;
+    m_status = HealthyStatus;
     m_gender = pokelib[pokemonID].gender;
+    m_intendedMove = 0;
     m_level = pokelib[pokemonID].level;
     m_nature = (pokelib[pokemonID].nature == NoNature)
-    ? returnNature(randInt(HARDY, NUMNATURES-1)) : pokelib[pokemonID].nature;
+    ? static_cast<Nature>(randInt(HARDY, NUMNATURES-1)) : pokelib[pokemonID].nature;
     m_ability = pokelib[pokemonID].ability;
     m_item = new Item(pokelib[pokemonID].item);
     m_description = pokelib[pokemonID].description;
+    m_sleepTurns = 0;
+    m_toxicTurns = 0;
+    m_rampageTurns = 0;
+    m_ID = pokemonID;
+    m_form = 0;
+    m_turnsOut = -1;
+    m_fainted = false;
     
     for (int i = HPSTAT; i < NUMSTATS; i++)
     {
@@ -340,7 +339,7 @@ void Pokemon::castAbility()
 
 bool Pokemon::isFainted() const
 {
-    return m_dead;
+    return m_fainted;
 }
 
 bool Pokemon::canMegaEvolve() const
@@ -352,7 +351,7 @@ void Pokemon::setFainted()
 {
     m_statsStatus[HPSTAT] = 0;
     
-    m_dead = true;
+    m_fainted = true;
     setStatus(FaintStatus);
 }
 
@@ -742,7 +741,7 @@ void Pokemon::formChange(int form)
         if (m_form == 0)
             // Shield to Blade
         {
-            transformInit(758);
+            transformInit(762);
             
             cout << bFStrings[107];
         }
@@ -828,7 +827,7 @@ void Pokemon::setStatus(PokeStatus status, bool rest)
     
     if (status == SleepStatus)
     {
-        if (rest)
+        if (!rest)
             m_sleepTurns = randInt(1, 3);
         else
             m_sleepTurns = 2;

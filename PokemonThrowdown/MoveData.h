@@ -1273,7 +1273,7 @@ const MoveData movelib[MAXTOTALMOVES] = {
 	"",
     617,    "Crimson Sunset",   NeutralType,    Special,    UnknownStat,    5,  -1, 80,    X,  MOHKO,  Opponent, false,
 	"Sets off a nuclear explosion that resembles a deep red sun. The target will faint instantly if hit.",
-    618,    "Radiant Sword",   LightType, Physical,    UnknownStat,    5,  100,    100, X, MNoEffect,   Opponent, false,
+    618,    "Shining Strike",   LightType, Physical,    UnknownStat,    5,  100,    100, X, MNoEffect,   Opponent, false,
 	"The user accumulates light energy and attacks the target.",
     619,    "Radiant Blade",    LightType,  Special,    UnknownStat,    5, 100,    100,        X,  MNoEffect,  Opponent, false,
 	"Generates a sword of light and attacks the target.",

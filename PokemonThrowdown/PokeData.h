@@ -63,7 +63,7 @@ const PokeData pokelib[MAXTOTALPOKEMON] = {
 	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	53,	76,	231,	315,	PNoAbility,	0,
 	"",
  6,	"Charizard",	FireType,	FlyingType,	78,	84,	78,	109,	85,	100,
-	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HCharizarditeY,	-1,	-1,	-1,	-1,	-1,	-1,	100,	53,	337,	83,	261,	PNoAbility,	0,
+	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HCharizarditeY,	-1,	-1,	-1,	-1,	-1,	-1,	100,	53,	337,	76,	261,	PNoAbility,	0,
 	"",
  7,	"Squirtle",	WaterType,	NoType,	44,	48,	65,	50,	64,	43,
 	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	55,	110,	33,	-1,	PNoAbility,	0,
@@ -2204,15 +2204,18 @@ Male,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1
     
     //
     
-    719,    "Hypogeo",  NormalType, RockType,   70, 30, 100,    10, 100,    50,
+    // 719
+    900,    "Hypogeo",  RockType, NoType,   70, 30, 100,    10, 100,    50,
     Ungendered,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	0,
 	"",
-    720,    "Hypergeo", DragonType, RockType,   75, 95, 140,    137,    155,    108,
+    // 720
+    901,    "Hypergeo", RockType, DragonType,   75, 95, 140,    137,    155,    108,
     Ungendered,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	407,	619,	295,	408,	PLevitate,	0,
-	"According to legend, this Pokemon was formed from ancient enchanted treasure.",
-    721,    "Constantinoble",   LightType,    DarkType,  108,    137,    155,    75, 140, 95,
-    Ungendered,   NoNature,   -1, -1, -1, -1, -1, -1, HNoItem,    -1, -1, -1, -1, -1, -1, 100,    618,    322,    533,    105,    PPressure,  0,
-    "A lingering spirit that embodies both the light and dark.",
+	"According to legend, this Pokemon was formed using magic, from a hoard of ancient treasure.",
+    // 721
+    902,    "Constantinoble",   GhostType,    LightType,  108,    137,    155,    95, 140, 75,
+    Ungendered,   NoNature,   -1, -1, -1, -1, -1, -1, HNoItem,    -1, -1, -1, -1, -1, -1, 100,    618,    322,    533,    403,    PPressure,  0,
+    "A lingering spirit from an ancient time.",
     
     //
     
@@ -2329,121 +2332,155 @@ Male,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1
 	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	0,
 	"",
     // 750
+    260, "Swampert (Mega)",  WaterType,  GroundType, 100,    100,    100,    100,    100,    100,
+    NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PSwiftSwim,	0,
+    "",
+    // 751
+    254, "Sceptile (Mega)",  GrassType,  DragonType, 100,    100,    100,    100,    100,    100,
+    NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	0,
+    "",
+    // 752
+    302, "Sableye (Mega)",  DarkType,  GhostType, 100,    100,    100,    100,    100,    100,
+    NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	0,
+    "",
+    // 753
+    719, "Diancie (Mega)",  RockType,  FairyType, 100,    100,    100,    100,    100,    100,
+    Ungendered,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	0,
+    "",
+    
+    //
+    
+    // 754
     555,	"Darmanitan (Standard Mode)",	FireType,	NoType,	105,	140,	55,	30,	55,	95,
 	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	0,
 	"",
-    // 751
+    // 755
     555,	"Darmanitan (Zen Mode)",	FireType,	PsychicType,	105,	30,	105,	140,	105,	55,
 	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	0,
 	"",
-    // 752
+    // 756
     710,	"Pumpkaboo (Small Size)",	GhostType,	GrassType,	44,	66,	70,	44,	55,	56,
 	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	0,
 	"",
-    // 753
+    // 757
     710,	"Pumpkaboo (Large Size)",	GhostType,	GrassType,	54,	66,	70,	44,	55,	46,
 	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	0,
 	"",
-    // 754
+    // 758
     710,	"Pumpkaboo (Super Size)",	GhostType,	GrassType,	59,	66,	70,	44,	55,	41,
 	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	0,
 	"",
-    // 755
+    // 759
     711,	"Gourgeist (Small Size)",	GhostType,	GrassType,	55,	85,	122,	58,	75,	99,
 	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	0,
 	"",
-    // 756
+    // 760
     711,	"Gourgeist (Large Size)",	GhostType,	GrassType,	75,	95,	122,	58,	75,	69,
 	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	0,
 	"",
-    // 757
+    // 761
     711,	"Gourgeist (Super Size)",	GhostType,	GrassType,	85,	100,	122,	58,	75,	54,
 	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	0,
 	"",
-    // 758
+    // 762
     681,	"Aegislash (Blade Forme)",	SteelType,	GhostType,	60,	150,	50,	150,	50,	60,
 	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PStanceChange,	1,
 	"",
-    // 759
+    // 763
     678,	"Meowstic (Female)",	PsychicType,	NoType,	74,	48,	76,	83,	81,	104,
     Female,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	0,
 	"",
-    // 760
+    // 764
     487,	"Giratina (Origin Forme)",	GhostType,	DragonType,	150,	120,	100,	120,	100,	90,
 	Ungendered,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	0,
 	"",
-    // 761
+    // 765
     492,	"Shaymin (Sky Forme)",	GrassType,	FlyingType,	100,	103,	75,	120,	75,	127,
 	Ungendered,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	0,
 	"",
-    // 762
+    // 766
     641,   "Tornadus (Therian Forme)",   FlyingType, NoType,	79,	100,	80,	110,    90, 121,
     Male,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	0,
     "",
-    // 763
+    // 767
     648,	"Meloetta (Pirouette Forme)",	NormalType,	FightingType,	100,	128,	90,	77,	77,	128,
 	Ungendered,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	0,
 	"",
-    // 764
+    // 768
     647,	"Keldeo (Resolute Forme)",	WaterType,	FightingType,	91,	72,	90,	129,	90,	108,
 	Ungendered,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	0,
 	"",
-    // 765
+    // 769
     646,	"Kyurem (White)",	DragonType,	IceType,	125,	120,	90,	170,	100,	95,
 	Ungendered,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	0,
 	"",
-    // 766
+    // 770
     646,	"Kyurem (Black)",	DragonType,	IceType,	125,	170,	100,	120,	90,	95,
 	Ungendered,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	0,
 	"",
-    // 767
+    // 771
     645,	"Landorus (Therian Forme)",	GroundType,	FlyingType,	89,	145,	90,	105,	80,	91,
 	Male,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	0,
 	"",
-    // 768
+    // 772
     642,	"Thundurus (Therian Forme)",	ElectricType,	FlyingType,	79,	105,	70,	145,	80,	101,
 	Male,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	0,
 	"",
-    // 769
+    // 773
     479,	"Rotom (Heat)",	ElectricType,	FireType,	50,	65,	107,	105,	107,	86,
 	Ungendered,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	0,
 	"",
-    // 770
+    // 774
     479,	"Rotom (Wash)",	ElectricType,	WaterType,	50,	65,	107,	105,	107,	86,
 	Ungendered,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	0,
 	"",
-    // 771
+    // 775
     479,	"Rotom (Frost)",	ElectricType,	IceType,	50,	65,	107,	105,	107,	86,
 	Ungendered,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	0,
 	"",
-    // 772
+    // 776
     479,	"Rotom (Fan)",	ElectricType,	FlyingType,	50,	65,	107,	105,	107,	86,
 	Ungendered,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	0,
 	"",
-    // 773
+    // 777
     479,	"Rotom (Mow)",	ElectricType,	GrassType,	50,	65,	107,	105,	107,	86,
 	Ungendered,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	0,
 	"",
-    // 774
+    // 778
     386,	"Deoxys (Attack)",	PsychicType,	NoType,	50,	180,	20,	180,	20,	150,
     Ungendered,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	0,
 	"",
-    // 775
+    // 779
     386,	"Deoxys (Defense)",	PsychicType,	NoType,	50,	70,	160,	70,	160,	90,
     Ungendered,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	0,
 	"",
-    // 776
+    // 780
     386,	"Deoxys (Speed)",	PsychicType,	NoType,	50,	95,	90,	95,	90,	180,
     Ungendered,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	0,
 	"",
-    // 777
+    // 781
     413,	"Wormadam (Sandy)",	BugType,	GroundType,	60,	79,	105,	59,	85,	36,
     Female,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	0,
 	"",
-    // 778
+    // 782
     413,	"Wormadam (Trash)",	BugType,	SteelType,	60,	69,	95,	69,	95,	36,
     Female,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	0,
-	""
+	"",
+    
+    //
+    
+    // 783
+    719,    "Diancie",  RockType,   FairyType,  50, 100, 150, 100, 150, 50,
+    Ungendered, NoNature,   -1, -1, -1, -1, -1, -1, HNoItem,    -1, -1, -1, -1, -1, -1, 100,    -1, -1, -1, -1, PClearBody, 0,
+    "",
+    // 784
+    720,    "Volcanion",    FireType,   WaterType,  100, 100, 100, 100, 100, 100,
+    Ungendered, NoNature,   -1, -1, -1, -1, -1, -1, HNoItem,    -1, -1, -1, -1, -1, -1, 100,    -1, -1, -1, -1, PNoAbility, 0,
+    "",
+    // 785
+    721,    "Hoopa",    PsychicType,    GhostType,  100, 100, 100, 100, 100, 100,
+    Ungendered, NoNature,   -1, -1, -1, -1, -1, -1, HNoItem,    -1, -1, -1, -1, -1, -1, 100,    -1, -1, -1, -1, PNoAbility, 0,
+    ""
 };
 
 // As of writing this comment, all Pokemon must have 4 moves for program to work correctly/

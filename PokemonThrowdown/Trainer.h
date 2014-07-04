@@ -23,10 +23,8 @@ class Trainer
 // Pokemon, and his/her/its current state
 {
 public:
-    Trainer(int trainerAID, Battle* battle);
     Trainer(TrainerData h, Battle* battle);
     virtual ~Trainer();
-    void standardInit(int trainerID);
     
     void setCurrent(int current);
     void summonPokemon();
