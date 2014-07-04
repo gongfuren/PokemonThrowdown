@@ -8,4 +8,4 @@ throwdown (n.) informal
 a performance by or competition between rappers, breakdancers, etc.
 ex: a funky hip-hop throwdown.
 
-Pokemon "Throwdown" is a play on the much more popular web-based Pokemon Showdown battle simulator.
+Pokemon "Throwdown" is a play on the popular web-based Pokemon Showdown battle simulator.
