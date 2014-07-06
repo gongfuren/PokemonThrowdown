@@ -56,7 +56,7 @@ public:
     
     // Strategy
     int getIntendedMove() const;
-    bool setIntendedMove(int move, int attack = -1);
+    bool setIntendedMove(BattleDecision move, int attack = -1);
     int getIntendedSwitch() const;
     bool setIntendedSwitch(int which);
     

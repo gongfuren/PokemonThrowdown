@@ -21,13 +21,13 @@ using namespace std;
 Pokemon::Pokemon(int pokemonID, Trainer* trainer)
 : m_trainer(trainer)
 {
-    standardInit(pokemonID);
+    standardInit(pokelib[pokemonID]);
 }
 
 Pokemon::Pokemon(PokeData h, Trainer* trainer)
 : m_trainer(trainer)
 {
-    standardInit(h.ID);
+    standardInit(h);
 }
 
 Pokemon::~Pokemon()
@@ -45,7 +45,7 @@ void Pokemon::transformInit(int pokemonID)
     m_type2 = me.type2;
     m_ability = me.ability;
     
-    for (int i = ATTSTAT; i < NUMSTATS; i++)
+    for (int i = AttStat; i < NUMSTATS; i++)
     {
         int adder = 5;
         m_bStats[i] = ((2 * me.stats[i] + m_IVs[i] + m_EVs[i] / 4) * m_level
@@ -53,51 +53,51 @@ void Pokemon::transformInit(int pokemonID)
     }
 }
 
-void Pokemon::standardInit(int pokemonID)
+void Pokemon::standardInit(PokeData h)
 {
-    m_name = pokelib[pokemonID].name;
-    m_type1 = pokelib[pokemonID].type1;
-    m_type2 = pokelib[pokemonID].type2;
+    m_name = h.name;
+    m_type1 = h.type1;
+    m_type2 = h.type2;
     m_status = HealthyStatus;
-    m_gender = pokelib[pokemonID].gender;
+    m_gender = h.gender;
     m_intendedMove = 0;
-    m_level = pokelib[pokemonID].level;
-    m_nature = (pokelib[pokemonID].nature == NoNature)
-    ? static_cast<Nature>(randInt(HARDY, NUMNATURES-1)) : pokelib[pokemonID].nature;
-    m_ability = pokelib[pokemonID].ability;
-    m_item = new Item(pokelib[pokemonID].item);
-    m_description = pokelib[pokemonID].description;
+    m_level = h.level;
+    m_nature = (h.nature == NoNature)
+    ? static_cast<Nature>(randInt(HardyNature, NUMNATURES-1)) : h.nature;
+    m_ability = h.ability;
+    m_item = new Item(h.item);
+    m_description = h.description;
     m_sleepTurns = 0;
     m_toxicTurns = 0;
     m_rampageTurns = 0;
-    m_ID = pokemonID;
+    m_ID = h.ID;
     m_form = 0;
     m_turnsOut = -1;
     m_fainted = false;
     
-    for (int i = HPSTAT; i < NUMSTATS; i++)
+    for (int i = HPStat; i < NUMSTATS; i++)
     {
-        int adder = (i == HPSTAT) ? 10 + m_level : 5;
-        double nature = (i == HPSTAT) ? 1.0 : natureMultiplier(m_nature, i-1);
-        m_IVs[i] = (pokelib[pokemonID].IVs[i] == -1) ? randInt(0, 31)
-        : pokelib[pokemonID].IVs[i];
-        m_EVs[i] = (pokelib[pokemonID].EVs[i] == -1) ? randInt(0, 85)
-        : pokelib[pokemonID].EVs[i];
-        m_bStats[i] = ((2 * pokelib[pokemonID].stats[i] + m_IVs[i] + m_EVs[i]
+        int adder = (i == HPStat) ? 10 + m_level : 5;
+        double nature = (i == HPStat) ? 1.0 : natureMultiplier(m_nature, i-1);
+        m_IVs[i] = (h.IVs[i] == -1) ? randInt(0, 31)
+        : h.IVs[i];
+        m_EVs[i] = (h.EVs[i] == -1) ? randInt(0, 85)
+        : h.EVs[i];
+        m_bStats[i] = ((2 * h.stats[i] + m_IVs[i] + m_EVs[i]
                         / 4) * m_level / 100 + adder) * nature;
     }
     
-    m_statsStatus[HPSTAT] = m_bStats[HPSTAT];
+    m_statsStatus[HPStat] = m_bStats[HPStat];
     
-    for (int i = ATTSTAT; i < NUMALLSTATS; i++)
+    for (int i = AttStat; i < NUMALLSTATS; i++)
     {
         m_statsStatus[i] = 0;
     }
     
     for (int i = 0; i < MAXMOVES; i++)
     {
-        if (pokelib[pokemonID].moveIDs[i] != -1)
-            m_moves[i] = new Move(pokelib[pokemonID].moveIDs[i], this);
+        if (h.moveIDs[i] != -1)
+            m_moves[i] = new Move(h.moveIDs[i], this);
         else
             m_moves[i] = new Move(randInt(0, MAXNUMMOVES-1), this);
     }
@@ -202,9 +202,9 @@ PokeStatus Pokemon::getStatus() const
 
 double Pokemon::getStats(int whichStat) const
 {
-    if (whichStat == HPSTAT)
+    if (whichStat == HPStat)
         return m_statsStatus[whichStat];
-    else if (whichStat == ACCSTAT || whichStat == EVASTAT)
+    else if (whichStat == AccStat || whichStat == EvaStat)
         return statEMultiplier(m_statsStatus[whichStat]);
     else
         return m_bStats[whichStat] * statAMultiplier(m_statsStatus[whichStat]);
@@ -295,7 +295,7 @@ void Pokemon::castAbility()
         if (getAbility() == PIntimidate)
         {
             flashAbility();
-            opponent->decreaseStat(ATTSTAT, false);
+            opponent->decreaseStat(AttStat, false);
         }
         
         if (getAbility() == PDrizzle
@@ -349,7 +349,7 @@ bool Pokemon::canMegaEvolve() const
 
 void Pokemon::setFainted()
 {
-    m_statsStatus[HPSTAT] = 0;
+    m_statsStatus[HPStat] = 0;
     
     m_fainted = true;
     setStatus(FaintStatus);
@@ -357,17 +357,17 @@ void Pokemon::setFainted()
 
 void Pokemon::lowerHP(int howMuch)
 {
-    m_statsStatus[HPSTAT] -= howMuch;
+    m_statsStatus[HPStat] -= howMuch;
     
-    if (m_statsStatus[HPSTAT] <= 0)
+    if (m_statsStatus[HPStat] <= 0)
     {
-        m_statsStatus[HPSTAT] = 0;
+        m_statsStatus[HPStat] = 0;
     }
 }
 
 bool Pokemon::hasMaxHP() const
 {
-    return (m_statsStatus[HPSTAT] == m_bStats[HPSTAT]);
+    return (m_statsStatus[HPStat] == m_bStats[HPStat]);
 }
 
 bool Pokemon::increaseHP(int howMuch)
@@ -375,11 +375,11 @@ bool Pokemon::increaseHP(int howMuch)
     if (hasMaxHP())
         return false;
     
-    m_statsStatus[HPSTAT] += howMuch;
+    m_statsStatus[HPStat] += howMuch;
     
-    if (m_statsStatus[HPSTAT] >= m_bStats[HPSTAT])
+    if (m_statsStatus[HPStat] >= m_bStats[HPStat])
     {
-        m_statsStatus[HPSTAT] = m_bStats[HPSTAT];
+        m_statsStatus[HPStat] = m_bStats[HPStat];
     }
     
     return true;
@@ -700,8 +700,8 @@ bool Pokemon::passThroughStatus()
                 if (getAbility() == PHugePower || getAbility() == PPurePower)
                     attackMultiplier = 2.0;
                 int spOrNot
-                = static_cast<double>(getStats(ATTSTAT) * attackMultiplier)
-                / static_cast<double>(getStats(DEFSTAT));
+                = static_cast<double>(getStats(AttStat) * attackMultiplier)
+                / static_cast<double>(getStats(DefStat));
                 double damage = (((2.0 * getLevel() + 10.0) / 250.0) *
                                  (spOrNot) * pureDamage + 2.0);
                 
@@ -841,7 +841,7 @@ void Pokemon::setIntendedMove(int choice)
 
 void Pokemon::checkFaint()
 {
-    if (!isFainted() && getStats(HPSTAT) == 0)
+    if (!isFainted() && getStats(HPStat) == 0)
         setFainted();
 }
 
@@ -908,8 +908,8 @@ bool Pokemon::executeMove(Pokemon* target)
     else
         // Normal accuracy calculation
     {
-        double a = getStats(ACCSTAT);
-        double b = target->getStats(EVASTAT);
+        double a = getStats(AccStat);
+        double b = target->getStats(EvaStat);
         double c = moveAccuracy * (a / b);
         c += 0.5;   // round
         

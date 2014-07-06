@@ -34,7 +34,7 @@ Battle::Battle()
 {
     m_field = new Field(this);
     
-    // Zero out variables for now
+    // Zero out variables (for now)
     m_player = NULL;
     m_player2 = NULL;
     m_opponent = NULL;
@@ -68,7 +68,7 @@ void Battle::chooseLead()
         
         m_actor = m_participants[i];
         
-        if (m_actor == m_player)
+        if (!m_actor->isComputer())
         {
             do
             {
@@ -291,13 +291,13 @@ void Battle::summonsPhase()
     {
         m_actor = m_participants[i];
         
-        if (m_actor->getIntendedMove() == SWITCH)
+        if (m_actor->getIntendedMove() == SwitchDecision)
         {
             // Replace fainted Pokemon
             m_actor->switchPokemon(false);
             m_field->getSide(i)->getSlot()->fillSlot(m_actor->getPokemon());
             
-            m_actor->setIntendedMove(NODECIS);
+            m_actor->setIntendedMove(NoDecision);
         }
     }
     
@@ -321,7 +321,7 @@ void Battle::actionPhase()
 
 void Battle::preBattlePhase()
 {
-    if (m_player->getIntendedMove() == RUN)
+    if (m_player->getIntendedMove() == RunDecision)
         // Forfeit
         return;
     
@@ -329,7 +329,7 @@ void Battle::preBattlePhase()
     {
         m_actor = m_participants[i];
         
-        if (m_actor->getIntendedMove() == SWITCH)
+        if (m_actor->getIntendedMove() == SwitchDecision)
         {
             m_actor->switchPokemon(true);
             
@@ -345,7 +345,7 @@ void Battle::preBattlePhase()
 
 void Battle::battlePhase()
 {
-    if (m_player->getIntendedMove() == RUN)
+    if (m_player->getIntendedMove() == RunDecision)
         // Forfeit
         return;
     
@@ -394,7 +394,7 @@ void Battle::battlePhase()
         m_actor = m_participants[i];
         pokemon = m_actor->getPokemon();
         
-        if (m_actor->getIntendedMove() == MEGA)
+        if (m_actor->getIntendedMove() == MegaDecision)
         {
             pokemon->megaEvolve();
         }
@@ -411,7 +411,7 @@ void Battle::battlePhase()
         int moveID = pokemon->getIntendedMove();
         move = pokemon->getMove(moveID);
         
-        if ((actorMove == FIGHT || actorMove == MEGA)
+        if ((actorMove == FightDecision || actorMove == MegaDecision)
             && move->getEffect() == MFocusPunch)
         {
             cout << pokemon->getName() << " " << bFStrings[35] << endl;
@@ -433,7 +433,7 @@ void Battle::battlePhase()
             // a Pokemon was KO'd
             continue;
         
-        if (actorMove == SWITCH || actorMove == BAG)
+        if (actorMove == SwitchDecision || actorMove == BagDecision)
             // don't attack
             continue;
         
@@ -484,7 +484,7 @@ void Battle::battlePhase()
 
 void Battle::postBattlePhase()
 {
-    if (m_player->getIntendedMove() == RUN || m_player->getVictory()
+    if (m_player->getIntendedMove() == RunDecision || m_player->getVictory()
         || m_opponent->getVictory() || checkWin())
         // Forfeit || battle has been won
         return;
@@ -501,7 +501,7 @@ void Battle::postBattlePhase()
     
     // Reset moves
     for (int i = 0; i < NUMPLAYERS; i++)
-        m_participants[i]->setIntendedMove(NODECIS);
+        m_participants[i]->setIntendedMove(NoDecision);
 }
 
 bool Battle::battleIsOver() const
@@ -551,8 +551,8 @@ const
     if (pokemonB->getStatus() == ParalyzeStatus)
         smB = 0.25;
 
-    efSA = pokemonA->getStats(SPESTAT) * smA;
-    efSB = pokemonB->getStats(SPESTAT) * smB;
+    efSA = pokemonA->getStats(SpeStat) * smA;
+    efSB = pokemonB->getStats(SpeStat) * smB;
     
     if (efSA > efSB)
     {
@@ -616,14 +616,14 @@ void Battle::statusEffect(Trainer* trainer) const
     {
         cout << trainer->getTitle() << " " << trainer->getName()
         << "'s " << pokemon->getName() << " " << bFStrings[38] << endl;
-        pokemon->lowerHP(static_cast<double>(pokemon->getBStats(HPSTAT))
+        pokemon->lowerHP(static_cast<double>(pokemon->getBStats(HPStat))
                          * (0.125));
     }
     else if (pokemon->getStatus() == PoisonStatus)
     {
         cout << trainer->getTitle() << " " << trainer->getName() << "'s "
         << pokemon->getName() << " " << bFStrings[39] << endl;
-        pokemon->lowerHP(static_cast<double>(pokemon->getBStats(HPSTAT))
+        pokemon->lowerHP(static_cast<double>(pokemon->getBStats(HPStat))
                          * (0.125));
     }
     else if (pokemon->getStatus() == ToxicStatus)
@@ -631,7 +631,7 @@ void Battle::statusEffect(Trainer* trainer) const
         pokemon->setToxicTurns(pokemon->getToxicTurns()+1);
         cout << trainer->getTitle() << " " << trainer->getName() << "'s "
         << pokemon->getName() << " " << bFStrings[39] << endl;
-        pokemon->lowerHP(static_cast<double>(pokemon->getBStats(HPSTAT)) *
+        pokemon->lowerHP(static_cast<double>(pokemon->getBStats(HPStat)) *
                            (pokemon->getToxicTurns() * (0.0625)));
     }
 }
@@ -656,7 +656,7 @@ string Battle::statusText(Pokemon* pokemon, bool showStats) const
                 o << ' ' << vstatusStrings[vs];
         }
         
-        for (int i = ATTSTAT; i < NUMALLSTATS; i++)
+        for (int i = AttStat; i < NUMALLSTATS; i++)
         {
             if (pokemon->getStatsStatus(i) != 0)
             {
@@ -698,21 +698,21 @@ void Battle::applyStatus(Trainer* trainerA, Trainer* trainerB, int whichMove)
     if (me == MHeal50)
         // Calculate heal amount for Healing moves
     {
-        healAmount = pokemon->getBStats(HPSTAT) / 2;
+        healAmount = pokemon->getBStats(HPStat) / 2;
         
         if (move->getID() >= 234 && move->getID() <= 236)
         {
             // Weather-influenced healing move
             if (m_field->getWeather() == Sunny)
-                healAmount = (2 * pokemon->getBStats(HPSTAT)) / 3;
+                healAmount = (2 * pokemon->getBStats(HPStat)) / 3;
             else if (m_field->getWeather() != NoWeather)
-                healAmount = pokemon->getBStats(HPSTAT) / 4;
+                healAmount = pokemon->getBStats(HPStat) / 4;
         }
     }
     else if (me == MHeal100)
         // Heal amount and sleep effect for Rest
     {
-        healAmount = pokemon->getBStats(HPSTAT);
+        healAmount = pokemon->getBStats(HPStat);
         
         cout << trainerB->getTitle() << " " << trainerB->getName() << "'s "
         << target->getName() << " " << bFStrings[40] << endl;
@@ -733,92 +733,92 @@ void Battle::applyStatus(Trainer* trainerA, Trainer* trainerB, int whichMove)
             cout << endl;
             break;
         case MLowerAtt:
-            sc[ATTSTAT] = -1;
+            sc[AttStat] = -1;
             break;
         case MLowerAtt2:
-            sc[ATTSTAT] = -2;
+            sc[AttStat] = -2;
             break;
         case MUpAtt:
-            sc[ATTSTAT] = 1;
+            sc[AttStat] = 1;
             break;
         case MUpAtt2:
-            sc[ATTSTAT] = 2;
+            sc[AttStat] = 2;
             break;
         case MLowerDef:
-            sc[DEFSTAT] = -1;
+            sc[DefStat] = -1;
             break;
         case MLowerDef2:
-            sc[DEFSTAT] = -2;
+            sc[DefStat] = -2;
             break;
         case MUpDef:
-            sc[DEFSTAT] = 1;
+            sc[DefStat] = 1;
             break;
         case MUpDef2:
-            sc[DEFSTAT] = 2;
+            sc[DefStat] = 2;
             break;
         case MLowerSpA:
-            sc[SPASTAT] = -1;
+            sc[SpAStat] = -1;
             break;
         case MLowerSpA2:
-            sc[SPASTAT] = -2;
+            sc[SpAStat] = -2;
             break;
         case MUpSpA:
-            sc[SPASTAT] = 1;
+            sc[SpAStat] = 1;
             break;
         case MUpSpA2:
-            sc[SPASTAT] = 2;
+            sc[SpAStat] = 2;
             break;
         case MLowerSpD:
-            sc[SPDSTAT] = -1;
+            sc[SpDStat] = -1;
             break;
         case MLowerSpD2:
-            sc[SPDSTAT] = -2;
+            sc[SpDStat] = -2;
             break;
         case MUpSpD:
-            sc[SPDSTAT] = 1;
+            sc[SpDStat] = 1;
             break;
         case MUpSpD2:
-            sc[SPDSTAT] = 2;
+            sc[SpDStat] = 2;
             break;
         case MLowerSpe:
-            sc[SPESTAT] = -1;
+            sc[SpeStat] = -1;
             break;
         case MLowerSpe2:
-            sc[SPESTAT] = -2;
+            sc[SpeStat] = -2;
             break;
         case MUpSpe:
-            sc[SPESTAT] = 1;
+            sc[SpeStat] = 1;
             break;
         case MUpSpe2:
-            sc[SPESTAT] = 2;
+            sc[SpeStat] = 2;
             break;
         case MUpSpASpD:
-            sc[SPASTAT] = 1;
-            sc[SPDSTAT] = 1;
+            sc[SpAStat] = 1;
+            sc[SpDStat] = 1;
             break;
         case MUpAttDef:
-            sc[ATTSTAT] = 1;
-            sc[DEFSTAT] = 1;
+            sc[AttStat] = 1;
+            sc[DefStat] = 1;
             break;
         case MUpAttSpA:
-            sc[ATTSTAT] = 1;
-            sc[SPASTAT] = 1;
+            sc[AttStat] = 1;
+            sc[SpAStat] = 1;
             break;
         case MUpDefSpD:
-            sc[DEFSTAT] = 1;
-            sc[SPDSTAT] = 1;
+            sc[DefStat] = 1;
+            sc[SpDStat] = 1;
             break;
         case MUpAttSpe:
-            sc[ATTSTAT] = 1;
-            sc[SPESTAT] = 1;
+            sc[AttStat] = 1;
+            sc[SpeStat] = 1;
             break;
         case MUpSpASpDSpe:
-            sc[SPASTAT] = 1;
-            sc[SPDSTAT] = 1;
-            sc[SPESTAT] = 1;
+            sc[SpAStat] = 1;
+            sc[SpDStat] = 1;
+            sc[SpeStat] = 1;
             break;
         case MUpAll:
-            for (int i = ATTSTAT; i < NUMSTATS; i++)
+            for (int i = AttStat; i < NUMSTATS; i++)
                 sc[i] = 1;
             break;
         case MSun:
@@ -864,7 +864,7 @@ void Battle::applyStatus(Trainer* trainerA, Trainer* trainerB, int whichMove)
             break;
     }
     
-    for (int i = ATTSTAT; i < NUMALLSTATS; i++)
+    for (int i = AttStat; i < NUMALLSTATS; i++)
     {
         if (sc[i] < 0)
         {
@@ -904,7 +904,7 @@ void Battle::applyAttack(Trainer* trainerA, Trainer* trainerB,
         if (target->hasVStatus(ShieldVStatus))
         {
             if (attackMove->getContact())
-                attacker->decreaseStat(ATTSTAT, 2);
+                attacker->decreaseStat(AttStat, 2);
         }
         
         return;
@@ -1014,15 +1014,15 @@ void Battle::applyAttack(Trainer* trainerA, Trainer* trainerB,
     if (trainerA->getPokemonMove(whichMove)->getMoveType() == Physical)
         // Physical attack
     {
-        spOrNot = static_cast<double>(attacker->getStats(ATTSTAT) *
+        spOrNot = static_cast<double>(attacker->getStats(AttStat) *
                 attackMultiplier)
-                / static_cast<double>(target->getStats(DEFSTAT));
+                / static_cast<double>(target->getStats(DefStat));
     }
     else
         // Special attack
     {
-        spOrNot = static_cast<double>(attacker->getStats(SPASTAT)) /
-        (static_cast<double>(target->getStats(SPDSTAT)
+        spOrNot = static_cast<double>(attacker->getStats(SpAStat)) /
+        (static_cast<double>(target->getStats(SpDStat)
                              * specialDefMultiplier));
     }
     
@@ -1032,7 +1032,7 @@ void Battle::applyAttack(Trainer* trainerA, Trainer* trainerB,
     totalDamage = damage * modifier;
     
     if (attackMove->getEffect() == MOHKO)
-        totalDamage = target->getStats(HPSTAT);
+        totalDamage = target->getStats(HPStat);
     else if (attackMove->getEffect() == MDamage20)
         totalDamage = 20;
     else if (attackMove->getEffect() == MDamage40)
@@ -1078,7 +1078,7 @@ void Battle::applyEffect(Trainer* trainerA, Trainer* trainerB,
     if (effect == MOverheat)
         // Overheat effect
     {
-        attacker->decreaseStat(SPASTAT, 2);
+        attacker->decreaseStat(SpAStat, 2);
     }
     
     if (effect == MFocusPunch)
@@ -1087,7 +1087,7 @@ void Battle::applyEffect(Trainer* trainerA, Trainer* trainerB,
     
     // Target side-effects (successfully hit)
     
-    if (target->isFainted() || target->getStats(HPSTAT) == 0)
+    if (target->isFainted() || target->getStats(HPStat) == 0)
         // did the target faint?
         // fainted pokemon don't get side-effects
         return;
@@ -1212,7 +1212,7 @@ void Battle::applyEffect(Trainer* trainerA, Trainer* trainerB,
     if (effect == MLowerAcc100)
         // Lower accuracy
     {
-        target->decreaseStat(ACCSTAT, false);
+        target->decreaseStat(AccStat, false);
     }
 }
 
@@ -1226,7 +1226,7 @@ void Battle::applySideEffects(Trainer* trainer, int whichMove)
     if (attackMove->getEffect() == MSelfdestruct)
         // Self Destruct or Explosion
     {
-        attacker->lowerHP(attacker->getStats(HPSTAT));
+        attacker->lowerHP(attacker->getStats(HPStat));
     }
 
 }
@@ -1332,9 +1332,9 @@ void Battle::dispPokeSummary(int slotNumber) const
     << bFStrings[48] << ": " << natureStrings[pokemon->getNature()] << endl
     
     // Stats
-    << statFullStrings[HPSTAT] << ": " << pokemon->getStats(HPSTAT) << '/'
-    << pokemon->getBStats(HPSTAT) << endl;
-    for (int i = ATTSTAT; i < NUMSTATS; i++)
+    << statFullStrings[HPStat] << ": " << pokemon->getStats(HPStat) << '/'
+    << pokemon->getBStats(HPStat) << endl;
+    for (int i = AttStat; i < NUMSTATS; i++)
         pout << statFullStrings[i] << ": " << pokemon->getBStats(i) << endl;
     
     // Description

@@ -89,7 +89,7 @@ bool Player::chooseRun()
             cout << getTitle() << " " << getName() << " " << bFStrings[60]
             << endl;
             getBattle()->getOpponent()->setVictory();
-            setIntendedMove(RUN);
+            setIntendedMove(RunDecision);
             return true;
         default:
             return false;
@@ -218,7 +218,7 @@ bool Player::trainerSummon(bool optional)
     
     // Set intended switch
     setIntendedSwitch(choice-1);
-    setIntendedMove(SWITCH);
+    setIntendedMove(SwitchDecision);
     
     return true;
 }
@@ -286,9 +286,9 @@ bool Player::chooseFight()
         case 3:
         case 4:
             if (!willMegaEvolve)
-                setIntendedMove(FIGHT, playerChoice-1);
+                setIntendedMove(FightDecision, playerChoice-1);
             else
-                setIntendedMove(MEGA, playerChoice-1);
+                setIntendedMove(MegaDecision, playerChoice-1);
             break;
     }
     

@@ -41,9 +41,9 @@ void Computer::actionSelect(int level)
         attack = randInt(0, 3);
         
         if (pokemon->canMegaEvolve())
-            setIntendedMove(MEGA, attack);
+            setIntendedMove(MegaDecision, attack);
         else
-            setIntendedMove(FIGHT, attack);
+            setIntendedMove(FightDecision, attack);
     }
     else
     {
@@ -91,7 +91,7 @@ bool Computer::trainerSummon(bool optional)
             {
                 // Set intended switch
                 setIntendedSwitch(i);
-                setIntendedMove(SWITCH);
+                setIntendedMove(SwitchDecision);
                 
                 break;
             }

@@ -56,7 +56,7 @@ void Slot::weatherEffect(Weather weather)
                                   || type1 == GroundType || type2 == GroundType
                                   || type1 == SteelType || type2 == SteelType))
     {
-        m_pokemon->lowerHP(static_cast<double>(m_pokemon->getBStats(HPSTAT))
+        m_pokemon->lowerHP(static_cast<double>(m_pokemon->getBStats(HPStat))
                            * (0.0625));
         cout << trainer->getTitle() << " " << trainer->getName() << "'s "
         << m_pokemon->getName() << " " << weatherHurtStrings[Sandstorm]
@@ -65,7 +65,7 @@ void Slot::weatherEffect(Weather weather)
     
     if (weather == Hail && !(type1 == IceType || type2 == IceType))
     {
-        m_pokemon->lowerHP(static_cast<double>(m_pokemon->getBStats(HPSTAT))
+        m_pokemon->lowerHP(static_cast<double>(m_pokemon->getBStats(HPStat))
                            * (0.0625));
         
         cout << trainer->getTitle() << " " << trainer->getName() << "'s "

@@ -12,23 +12,23 @@
 // Auxiliary Function Implementations
 
 // TODO: clean up these functions and their usage
-void gyroscope(int& gyro, int& scope, int d)
+void gyroscope(int& gyro, int& scope, Direction d)
 {
     switch (d)
     {
-        case UP:
+        case Up:
             gyro = 0;
             scope = -1;
             break;
-        case RIGHT:
+        case Right:
             gyro = 1;
             scope = 0;
             break;
-        case DOWN:
+        case Down:
             gyro = 0;
             scope = 1;
             break;
-        case LEFT:
+        case Left:
             gyro = -1;
             scope = 0;
             break;

@@ -29,7 +29,7 @@ public:
     Pokemon(int pokemonID, Trainer* trainer);
     Pokemon(PokeData h, Trainer* trainer);
     ~Pokemon();
-    void standardInit(int pokemonID);
+    void standardInit(PokeData h);
     void customInit();
     void transformInit(int pokemonID);
     

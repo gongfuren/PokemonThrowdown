@@ -28,24 +28,21 @@ bool listContains(const list<Object> l, Object o)
 // Global Constants
 
 // TODO: make use of constants a bit more organized
-const int STAND = -1;
-const int UP = 0;
-const int RIGHT = 1;
-const int DOWN = 2;
-const int LEFT = 3;
 const int NUMDIRS = 4;
 
-const int HPSTAT = 0;
-const int ATTSTAT = 1;
-const int DEFSTAT = 2;
-const int SPASTAT = 3;
-const int SPDSTAT = 4;
-const int SPESTAT = 5;
+enum Direction
+{
+    Stand, Up, Right, Down, Left
+};
+
+enum Stats
+{
+    HPStat, AttStat, DefStat, SpAStat, SpDStat, SpeStat, AccStat, EvaStat,
+    CritStat
+};
+
 const int NUMSTATS = 6;
 
-const int ACCSTAT = 6;
-const int EVASTAT = 7;
-const int CRITSTAT = 8;
 const int NUMALLSTATS = 9;
 
 const double STAT_A[13] = {
@@ -53,23 +50,23 @@ const double STAT_A[13] = {
 };
 
 const double STAT_E[13] = {
-    0.3333, 0.38, 0.43, 0.5, 0.6, 0.75, 1.00, 1.3333, 1.6666, 2.0, 2.3333, 2.6666, 3.0
+    0.3333, 0.38, 0.43, 0.5, 0.6, 0.75, 1.00, 1.3333, 1.6666, 2.0, 2.3333,
+    2.6666, 3.0
 };
 
 const int HPBARLENGTH = 40;
 
 const int MAXMOVES = 4;
 
-const int NODECIS = 0;
-const int FIGHT = 1;
-const int BAG = 2;
-const int SWITCH = 3;
-const int RUN = 4;
-const int MEGA = 5;
+enum BattleDecision
+{
+    NoDecision, FightDecision, BagDecision, SwitchDecision, RunDecision,
+    MegaDecision
+};
 
 // Change based on battle style
-// (Single, Double, Multi, Triple, Rotation, Hoard)
 const int NUMSIDES = 2; // Invariant
+
 const int MAXPLAYERSPERSIDE = 1;
 const int NUMPLAYERSPERSIDE[NUMSIDES] = { 1, 1 };
 const int NUMPLAYERS = 2;
@@ -86,28 +83,6 @@ const int MAXTOTALMOVES = 700;
 const int MAXTOTALPOKEMON = 1000;
 const int MAXTOTALTRAINERS = 100;
 const int MAXTOTALBATTLES = 100;
-
-const int NOTYPE = 0;
-const int NORMALTYPE = 1;
-const int GRASSTYPE = 2;
-const int FIRETYPE = 3;
-const int WATERTYPE = 4;
-const int ELECTRICTYPE = 5;
-const int ICETYPE = 6;
-const int BUGTYPE = 7;
-const int POISONTYPE = 8;
-const int FIGHTINGTYPE = 9;
-const int FLYINGTYPE = 10;
-const int GROUNDTYPE = 11;
-const int ROCKTYPE = 12;
-const int GHOSTTYPE = 13;
-const int PSYCHICTYPE = 14;
-const int DRAGONTYPE = 15;
-const int DARKTYPE = 16;
-const int STEELTYPE = 17;
-const int FAIRYTYPE = 18;
-const int NEUTRALTYPE = 19;
-const int LIGHTTYPE = 20;
 
 const int MAXTYPES = 18 + 1 + 2;    // "Actual" types + NoType + Neutral/Light
 
@@ -165,35 +140,6 @@ const double typeArray[MAXTYPES][MAXTYPES] = {
     
     ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE2, ELE1, ELE1, ELE2, ELE1, ELE1, ELE1, ELE5  // LIT
 };
-
-// TODO: replace these clunky const int declarations with more graceful enum
-// statement
-const int NONATURE = 0;
-const int HARDY = 1;
-const int LONELY = 2;
-const int BRAVE = 3;
-const int ADAMANT = 4;
-const int NAUGHTY = 5;
-const int BOLD = 6;
-const int DOCILE = 7;
-const int RELAXED = 8;
-const int IMPISH = 9;
-const int LAX = 10;
-const int TIMID = 11;
-const int HASTY = 12;
-const int SERIOUS = 13;
-const int JOLLY = 14;
-const int NAIVE = 15;
-const int MODEST = 16;
-const int MILD = 17;
-const int QUIET = 18;
-const int BASHFUL = 19;
-const int RASH = 20;
-const int CALM = 21;
-const int GENTLE = 22;
-const int SASSY = 23;
-const int CAREFUL = 24;
-const int QUICK = 25;
 
 const int NUMNATURES = 26;
 
@@ -444,12 +390,17 @@ const int MAXHAZARDS = 3;
 
 enum Gender
 {
-    Male, Female, Ungendered, NoGender
+    Male, Female, Genderless, NoGender
+};
+
+enum BattleType
+{
+    SingleBattle, DoubleBattle, TripleBattle, RotationBattle, HoardBattle
 };
 
 // Auxiliary Function Declarations
 
-void gyroscope(int& gyro, int& scope, int d);
+void gyroscope(int& gyro, int& scope, Direction d);
 int randInt(int lowest, int highest);
 double typeMultiplier(Type type1, Type type2);
 double typeMultiplier(Type type1, Type type2, Type type3);

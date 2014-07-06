@@ -25,7 +25,7 @@ Trainer::Trainer(TrainerData h, Battle* battle)
     m_male = h.male;
     m_victory = false;
     m_reward = 0;
-    m_intendedMove = NODECIS;
+    m_intendedMove = NoDecision;
     m_usedMega = false;
     m_reward = h.reward;
     
@@ -47,9 +47,9 @@ int Trainer::getIntendedMove() const
     return m_intendedMove;
 }
 
-bool Trainer::setIntendedMove(int move, int attack)
+bool Trainer::setIntendedMove(BattleDecision move, int attack)
 {
-    if (move == FIGHT || move == MEGA)
+    if (move == FightDecision || move == MegaDecision)
         getPokemon()->setIntendedMove(attack);
     
     m_intendedMove = move;
@@ -216,10 +216,10 @@ void Trainer::displayState() const
 {
     Pokemon* pokemon = getPokemon();
     
-    int pokeHP = pokemon->getStats(HPSTAT);
-    int pokeTotalHP = pokemon->getBStats(HPSTAT);
+    int pokeHP = pokemon->getStats(HPStat);
+    int pokeTotalHP = pokemon->getBStats(HPStat);
     
-    string pokeHPBar = statFullStrings[HPSTAT];
+    string pokeHPBar = statFullStrings[HPStat];
     pokeHPBar += ":[";
     
     int bar = static_cast<double>(static_cast<double>(pokeHP) /
@@ -258,8 +258,8 @@ void Trainer::displayState() const
         case NoGender:
             pokeGen = genderStrings[NoGender];
             break;
-        case Ungendered:
-            pokeGen = genderStrings[Ungendered];
+        case Genderless:
+            pokeGen = genderStrings[Genderless];
             break;
     }
     
