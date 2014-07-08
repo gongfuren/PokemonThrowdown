@@ -176,6 +176,9 @@ int Move::detPriorityScore() const
 
 bool Move::determineFailure(Pokemon* target) const
 {
+    Pokemon* user = getPokemon();
+    Move* userMove = user->getMove(user->getIntendedMove());
+    MoveEffect effect = userMove->getEffect();
     Battle* battle = getPokemon()->getTrainer()->getBattle();
     Move* targetMove = target->getMove(target->getIntendedMove());
     bool failed = false;
@@ -199,7 +202,8 @@ bool Move::determineFailure(Pokemon* target) const
     {
             failed = true;
     }
-    else if (getPokemon()->usedProtect(1))
+    else if (getPokemon()->usedProtect(1)
+             && (effect == MProtect || effect == MShield))
         // Successive protects
     {
         int successChance = 100;

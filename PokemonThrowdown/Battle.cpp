@@ -1421,7 +1421,7 @@ void Battle::dispPokeMoves(int pokemon) const
         pout << " " << pOS;
         
         if (move->getDescription() != "")
-            pout << move->getDescription() << endl;
+            pout << endl << move->getDescription();
         
         cout << pout.str() << endl;
     }
