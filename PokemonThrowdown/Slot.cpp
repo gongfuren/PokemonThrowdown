@@ -58,7 +58,7 @@ void Slot::weatherEffect(Weather weather)
     {
         m_pokemon->lowerHP(static_cast<double>(m_pokemon->getBStats(HPStat))
                            * (0.0625));
-        cout << trainer->getTitle() << " " << trainer->getName() << "'s "
+        cout << trainer->getTitleName() << "'s "
         << m_pokemon->getName() << " " << weatherHurtStrings[Sandstorm]
         << endl;
     }
@@ -68,7 +68,7 @@ void Slot::weatherEffect(Weather weather)
         m_pokemon->lowerHP(static_cast<double>(m_pokemon->getBStats(HPStat))
                            * (0.0625));
         
-        cout << trainer->getTitle() << " " << trainer->getName() << "'s "
+        cout << trainer->getTitleName() << "'s "
         << m_pokemon->getName() << " " << weatherHurtStrings[Hail] << endl;
     }
 }

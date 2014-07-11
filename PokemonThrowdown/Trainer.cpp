@@ -72,6 +72,14 @@ string Trainer::getTitle() const
     return m_title;
 }
 
+string Trainer::getTitleName() const
+{
+    string h = getTitle();
+    h += " ";
+    h += getName();
+    return h;
+}
+
 bool Trainer::getMale() const
 {
     return m_male;
@@ -114,7 +122,7 @@ void Trainer::setCurrent(int current)
 
 void Trainer::summonPokemon()
 {
-    cout << m_title << " " << m_name << " " << bFStrings[71] << " "
+    cout << m_title << " " << m_name << " " << "sent out" << " "
     << m_pokemon[m_current]->getName() << "!" << endl;
     
     for (int i = 0; i < MAXPOKEMONPERPLAYER; i++)
@@ -125,7 +133,7 @@ void Trainer::switchPokemon(bool optional)
 {
     if (optional)
     {
-        cout << getTitle() << " " << getName() << " " << bFStrings[72] << " "
+        cout << getTitleName() << " " << "withdrew" << " "
         << getPokemon()->getName() << "!" << endl;
         getPokemon()->clearVolatiles();
     }
@@ -265,7 +273,7 @@ void Trainer::displayState() const
     
     string pokeStatus = getBattle()->statusText(pokemon, true);
     
-    cout << bFStrings[28] << " " << pokemon->getLevel() << " " << pokeName
+    cout << "Lv" << " " << pokemon->getLevel() << " " << pokeName
     << ' ' << pokeGen << ' ' << pokeStatus << ' ' << generateBalls() << endl
     << pokeHPBar << endl;
 
@@ -296,7 +304,7 @@ bool Trainer::chooseBag() const
 {
     // No bag implementation since focus is on competitive
     // (no using items, among other things) battling
-    cout << bFStrings[73] << endl;
+    cout << "You can't do that right now." << endl;
     
     return false;
 }

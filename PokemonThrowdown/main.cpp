@@ -28,14 +28,14 @@ int main()
     {
         // Title Screen
         if (showFullHeader)
-            cout << bFStrings[0] << endl
-            << bFStrings[1] << endl
-            << bFStrings[2] << endl;
+            cout << "O***0***O***0***O***0" << endl
+            << "* Pokemon Throwdown *" << endl
+            << "0***O***0***O***0***O" << endl;
         
-        cout << "1: " << bFStrings[3] << endl
-        << "2: " << bFStrings[4] << endl
-        << "3: " << bFStrings[5] << endl
-        << "4: " << bFStrings[6] << endl;
+        cout << "1: " << "Play" << endl
+        << "2: " << "Options" << endl
+        << "3: " << "Credits" << endl
+        << "4: " << "Quit" << endl;
         
         cin >> choice;
         
@@ -49,17 +49,16 @@ int main()
         }
         else if (choice == 2) // Options (TODO)
         {
-            cout << bFStrings[7] << endl;
+            cout << "Coming soon!" << endl;
             showFullHeader = false;
         }
         else if (choice == 3) // Credits
         {
-            cout << bFStrings[8] << endl
-            << bFStrings[9] << endl
-            << bFStrings[10] << endl
-            << bFStrings[11] << endl
-            << bFStrings[12] << endl
-            << bFStrings[14] << endl;
+            cout << "Pokemon Throwdown" << endl
+            << "An originally-coded, Pokemon simulator that is true to the game. Made by a huge fan." << endl
+            << "throwdown (n.) informal" << endl
+            << "a performance by or competition between rappers, breakdancers, etc." << endl
+            << "ex: a funky hip-hop throwdown." << endl;
             showFullHeader = false;
         }
         else // Quit

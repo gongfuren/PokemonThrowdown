@@ -36,6 +36,7 @@ public:
     Battle* getBattle() const;
     string getName() const;
     string getTitle() const;
+    string getTitleName() const;
     bool getMale() const;
     int getReward() const;
     int getCurrent() const;

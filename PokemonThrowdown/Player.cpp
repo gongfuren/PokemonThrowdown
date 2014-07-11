@@ -41,12 +41,12 @@ void Player::actionSelect()
     
     do
     {
-        cout << bFStrings[53] << endl;
+        cout << "What would you like to do?" << endl;
         
-        cout << "1: " << bFStrings[54] << endl
-        << "2: " << bFStrings[55] << endl
-        << "3: " << bFStrings[21] << endl
-        << "4: " << bFStrings[56] << endl;
+        cout << "1: " << "Fight" << "!" << endl
+        << "2: " << "Bag" << endl
+        << "3: " << "Pokemon" << endl
+        << "4: " << "Run" << endl;
         
         int choice;
         cin >> choice;
@@ -76,9 +76,9 @@ void Player::actionSelect()
 
 bool Player::chooseRun()
 {
-    cout << bFStrings[57] << endl;
+    cout << "Are you sure you'd like to run and forfeit the match?" << endl;
     
-    cout << "1: " << bFStrings[58] << endl << "2: " << bFStrings[59] << endl;
+    cout << "1: " << "Yes" << endl << "2: " << "No" << endl;
     
     int choice;
     cin >> choice;
@@ -86,7 +86,7 @@ bool Player::chooseRun()
     switch (choice)
     {
         case 1:
-            cout << getTitle() << " " << getName() << " " << bFStrings[60]
+            cout << getTitleName() << " " << "has forfeited the match."
             << endl;
             getBattle()->getOpponent()->setVictory();
             setIntendedMove(RunDecision);
@@ -116,7 +116,7 @@ bool Player::trainerSummon(bool optional)
     {
         rerun = false;
         
-        cout << bFStrings[61] << ":" << endl;
+        cout << "Choose a Pokemon" << ":" << endl;
         
         cout << generateBalls() << endl;
         
@@ -134,14 +134,14 @@ bool Player::trainerSummon(bool optional)
                 oss << ": " << getBattle()->statusText(pokemon, false);
             
             if (getCurrent() == i && !pokemon->isFainted())
-                oss << ": " << bFStrings[62];
+                oss << ": " << "In Battle";
             
             if (pokemon != NULL)
                 cout << i+1 << ": " << pokemon->getName() << oss.str() << endl;
         }
         
         if (optional)
-            cout << ++i << ": (" << bFStrings[22] << ")" << endl;
+            cout << ++i << ": (" << "Back" << ")" << endl;
         
         cin >> choice;
         
@@ -171,10 +171,10 @@ bool Player::trainerSummon(bool optional)
             rerunn = false;
             rerun = false;
             
-            cout << bFStrings[63] << " " << getPokemon(choice-1)->getName()
-            << "?" << endl << "1: " << bFStrings[64] << endl << "2: "
-            << bFStrings[23] << endl << "3: " << bFStrings[24] << endl
-            << "4: (" << bFStrings[22] << ")" << endl;
+            cout << "What to do with" << " " << getPokemon(choice-1)->getName()
+            << "?" << endl << "1: " << "Switch" << endl << "2: "
+            << "Summary" << endl << "3: " << "Check Moves" << endl
+            << "4: (" << "Back" << ")" << endl;
             
             cin >> choicee;
             
@@ -187,13 +187,13 @@ bool Player::trainerSummon(bool optional)
                     if (getPokemon(choice-1)->isFainted())
                     {
                         cout << getPokemon(choice-1)->getName() << " "
-                        << bFStrings[65] << endl;
+                        << "is fainted and cannot battle." << endl;
                         rerunn = true;
                     }
                     else if (getCurrent() == choice-1)
                     {
                         cout << getPokemon(choice-1)->getName() << " "
-                        << bFStrings[66] << endl;
+                        << "is already out!" << endl;
                         rerunn = true;
                     }
                     break;
@@ -232,7 +232,7 @@ bool Player::chooseFight()
     
     do
     {
-        cout << bFStrings[67] << ":" << endl;
+        cout << "Choose a move" << ":" << endl;
         
         for (j = 0; j < MAXMOVES; j++)
         {
@@ -245,16 +245,16 @@ bool Player::chooseFight()
         
         if (canMega)
         {
-            cout << ++j << ": " << bFStrings[68];
+            cout << ++j << ": " << "*Mega Evolution*";
             
             if (willMegaEvolve)
-                cout << " (" << bFStrings[69] << ")";
+                cout << " (" << "Selected" << ")";
             
             cout << endl;
         }
         
-        cout << ++j << ": (" << bFStrings[70] << ")" << endl;
-        cout << ++j << ": (" << bFStrings[22] << ")" << endl;
+        cout << ++j << ": (" << "Move Info" << ")" << endl;
+        cout << ++j << ": (" << "Back" << ")" << endl;
         
         cin >> playerChoice;
         
