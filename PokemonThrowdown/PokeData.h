@@ -1635,7 +1635,7 @@ const PokeData pokelib[MAXTOTALPOKEMON] = {
 	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	0,
 	"",
  530,	"Excadrill",	GroundType,	SteelType,	110,	135,	60,	50,	65,	88,
-	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	0,
+	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	89,	-1,	-1,	-1,	PNoAbility,	0,
 	"",
  531,	"Audino",	NormalType,	NoType,	103,	60,	86,	60,	86,	50,
 	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	0,
@@ -2211,11 +2211,11 @@ Male,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1
     // 720
     901,    "Hypergeo", RockType, DragonType,   75, 95, 140,    137,    155,    108,
     Genderless,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	407,	619,	295,	408,	PLevitate,	0,
-	"According to legend, this Pokemon was formed using magic, from a hoard of ancient treasure.",
+	"According to legend, this dragon was formed from a hoard of ancient treasure.",
     // 721
-    902,    "Constantinoble",   GhostType,    LightType,  108,    137,    155,    95, 140, 75,
-    Genderless,   NoNature,   -1, -1, -1, -1, -1, -1, HNoItem,    -1, -1, -1, -1, -1, -1, 100,    618,    322,    533,    403,    PPressure,  0,
-    "A lingering spirit from an ancient time.",
+    902,    "Zeratik",   GhostType,    IceType,  95,    140,    75,    155, 108, 137,
+    Genderless,   NoNature,   -1, -1, -1, -1, -1, -1, HNoItem,    -1, -1, -1, -1, -1, -1, 100,    126,    444,    56,    177,    PClearBody,  0,
+    "It controls four gems encased in ice. Each one represents a different element.",
     
     //
     
@@ -2432,7 +2432,7 @@ Male,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1
 	"",
     // 774
     479,	"Rotom (Wash)",	ElectricType,	WaterType,	50,	65,	107,	105,	107,	86,
-	Genderless,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	0,
+	Genderless,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	261,	56,	521,	220,	PLevitate,	0,
 	"",
     // 775
     479,	"Rotom (Frost)",	ElectricType,	IceType,	50,	65,	107,	105,	107,	86,
@@ -2480,7 +2480,18 @@ Male,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1
     // 785
     721,    "Hoopa",    PsychicType,    GhostType,  100, 100, 100, 100, 100, 100,
     Genderless, NoNature,   -1, -1, -1, -1, -1, -1, HNoItem,    -1, -1, -1, -1, -1, -1, 100,    -1, -1, -1, -1, PNoAbility, 0,
-    ""
+    "",
+    
+    //
+    
+    // 786
+    902,    "Constantinoble",   GhostType,    LightType,  108,    137,    155,    95, 140, 75,
+    Genderless,   NoNature,   -1, -1, -1, -1, -1, -1, HNoItem,    -1, -1, -1, -1, -1, -1, 100,    618,    322,    533,    467,    PPressure,  0,
+    "A lingering spirit from an ancient time.",
+    // 787
+    902,    "???",   LightType,    DarkType,  108,    137,    155,    95, 140, 75,
+    Genderless,   NoNature,   -1, -1, -1, -1, -1, -1, HNoItem,    -1, -1, -1, -1, -1, -1, 100,    618,    322,    533,    467,    PPressure,  0,
+    "Its halves represent dark and light. They were once seperate beings.",
 };
 
 // As of writing this comment, all Pokemon must have 4 moves for program to work correctly/

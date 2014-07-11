@@ -1273,10 +1273,12 @@ const MoveData movelib[MAXTOTALMOVES] = {
 	"",
     617,    "Crimson Sunset",   NeutralType,    Special,    UnknownStat,    5,  -1, 80,    X,  MOHKO,  Opponent, false,
 	"Sets off a nuclear explosion that resembles a deep red sun. The target will faint instantly if hit.",
-    618,    "Shining Strike",   LightType, Physical,    UnknownStat,    5,  100,    100, X, MNoEffect,   Opponent, false,
-	"The user accumulates light energy and attacks the target.",
+    618,    "Nether Ring",   IceType, Special,    UnknownStat,    5,  50,    100, X, MFreeze50,   Opponent, false,
+	"The user fires a strange pulse that drains energy. May freeze the target.", // TODO: calc damage using SpD
     619,    "Radiant Blade",    LightType,  Special,    UnknownStat,    5, 100,    100,        X,  MNoEffect,  Opponent, false,
-	"Generates a sword of light and attacks the target.",
+	"Generates a sword of light and attacks the target.", // TODO: calc damage using Def
+    620,    "Shining Strike", LightType,    Physical,   UnknownStat,    5,  100,    100,    X,  MNoEffect,  Opponent,   false,
+    "The user accumulates light energy and attacks the target."
 };
 
 #endif /* defined(__pokemongame__MoveData__) */

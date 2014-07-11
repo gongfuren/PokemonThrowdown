@@ -845,14 +845,18 @@ void Pokemon::checkFaint()
         setFainted();
 }
 
-bool Pokemon::executeMove(Pokemon* target)
+bool Pokemon::executeMove(Pokemon* target, Move* move)
 {
     int intendedMove = getIntendedMove();
-    Move* move = getMove(intendedMove);
     Battle* battle = getTrainer()->getBattle();
     Weather weather;
     bool moveHits, changeForm;
     int moveAccuracy, whatForm;
+    
+    if (move == NULL)
+    {
+        move = getMove(intendedMove);
+    }
     
     if (isFainted())
         return false;
@@ -933,10 +937,10 @@ bool Pokemon::executeMove(Pokemon* target)
     {
         if (move->getMoveType() == Status)
             // Status move
-            battle->applyStatus(getTrainer(), getTrainer(), intendedMove);
+            battle->applyStatus(getTrainer(), getTrainer(), getMove(intendedMove));
         else
             // Attack
-            battle->applyAttack(getTrainer(), getTrainer(), intendedMove);
+            battle->applyAttack(getTrainer(), getTrainer(), getMove(intendedMove));
     }
     else
         // Targeting pokemon other than self
@@ -961,14 +965,14 @@ bool Pokemon::executeMove(Pokemon* target)
         else if (move->getMoveType() == Status)
             // Status move
             battle->applyStatus(getTrainer(), target->getTrainer(),
-                                intendedMove);
+                                getMove(intendedMove));
         else
             // Attack
             battle->applyAttack(getTrainer(), target->getTrainer(),
-                                intendedMove);
+                                getMove(intendedMove));
     }
     
-    battle->applySideEffects(getTrainer(), intendedMove);
+    battle->applySideEffects(getTrainer(), getMove(intendedMove));
     
     battle->displayState(false);
     battle->checkFaint();

@@ -34,7 +34,7 @@ Battle::Battle()
 {
     m_field = new Field(this);
     
-    // Zero out variables (for now)
+    // Zero out variables
     m_player = NULL;
     m_player2 = NULL;
     m_opponent = NULL;
@@ -685,12 +685,11 @@ void Battle::displayState(bool showTurnCount) const
         m_participants[i]->displayState();
 }
 
-void Battle::applyStatus(Trainer* trainerA, Trainer* trainerB, int whichMove)
+void Battle::applyStatus(Trainer* trainerA, Trainer* trainerB, Move* move)
 {
     Pokemon* pokemon = trainerA->getPokemon();
     Pokemon* target = trainerB->getPokemon();
-    Move* move = trainerA->getPokemonMove(whichMove);
-    MoveEffect me = trainerA->getPokemonMove(whichMove)->getEffect();
+    MoveEffect me = move->getEffect();
     int healAmount = 0;
     
     int sc[NUMALLSTATS] = { 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -884,11 +883,10 @@ void Battle::applyStatus(Trainer* trainerA, Trainer* trainerB, int whichMove)
 }
 
 void Battle::applyAttack(Trainer* trainerA, Trainer* trainerB,
-                         int whichMove) const
+                         Move* move) const
 {
     Pokemon* attacker = trainerA->getPokemon();
     Pokemon* target = trainerB->getPokemon();
-    Move* attackMove = attacker->getMove(whichMove);
 
     double typeBoost, pureDamage, sTAB, crit, modulus, other, attackMultiplier,
     specialDefMultiplier, modifier, spOrNot,
@@ -903,14 +901,14 @@ void Battle::applyAttack(Trainer* trainerA, Trainer* trainerB,
         
         if (target->hasVStatus(ShieldVStatus))
         {
-            if (attackMove->getContact())
+            if (move->getContact())
                 attacker->decreaseStat(AttStat, 2);
         }
         
         return;
     }
     
-    if (target->getAbility() == PLevitate && attackMove->getType()
+    if (target->getAbility() == PLevitate && move->getType()
         == GroundType)
         // Target has Levitate and attacker is using GroundType move
     {
@@ -920,7 +918,7 @@ void Battle::applyAttack(Trainer* trainerA, Trainer* trainerB,
     else
         // Take type matchup into account
     {
-        typeBoost = typeMultiplier(attackMove->getType(), target->getType1(),
+        typeBoost = typeMultiplier(move->getType(), target->getType1(),
                                    target->getType2());
     }
     
@@ -933,10 +931,10 @@ void Battle::applyAttack(Trainer* trainerA, Trainer* trainerB,
         return;
     }
     
-    pureDamage = attackMove->getDamage();
+    pureDamage = move->getDamage();
 
-    if (attackMove->getType() == attacker->getType1() ||
-        attackMove->getType() == attacker->getType2())
+    if (move->getType() == attacker->getType1() ||
+        move->getType() == attacker->getType2())
         // Same Type Attack Bonus is 1.5x
     {
         sTAB = 1.5;
@@ -948,7 +946,7 @@ void Battle::applyAttack(Trainer* trainerA, Trainer* trainerB,
     
     critThreshold = 625;
     
-    if (attackMove->getEffect() == MHighCrit)
+    if (move->getEffect() == MHighCrit)
         critThreshold *= 2;
     
     if (randInt(0, 9999) < critThreshold)
@@ -978,17 +976,17 @@ void Battle::applyAttack(Trainer* trainerA, Trainer* trainerB,
     if (m_field->getWeather() == Rain)
         // Water attacks get a 1.5x damage boost in Rain
     {
-        if (attackMove->getType() == WaterType)
+        if (move->getType() == WaterType)
             other = 1.5;
-        else if (attackMove->getType() == FireType)
+        else if (move->getType() == FireType)
             other = 0.5;
     }
     else if (m_field->getWeather() == Sunny)
         // Fire attacks get a 1.5x damage boost in Sun
     {
-        if (attackMove->getType() == FireType)
+        if (move->getType() == FireType)
             other = 1.5;
-        else if (attackMove->getType() == WaterType)
+        else if (move->getType() == WaterType)
             other = 0.5;
     }
     else if (m_field->getWeather() == Sandstorm)
@@ -1011,7 +1009,7 @@ void Battle::applyAttack(Trainer* trainerA, Trainer* trainerB,
     
     modifier = typeBoost * sTAB * crit * modulus * other;
     
-    if (trainerA->getPokemonMove(whichMove)->getMoveType() == Physical)
+    if (move->getMoveType() == Physical)
         // Physical attack
     {
         spOrNot = static_cast<double>(attacker->getStats(AttStat) *
@@ -1031,13 +1029,13 @@ void Battle::applyAttack(Trainer* trainerA, Trainer* trainerB,
     
     totalDamage = damage * modifier;
     
-    if (attackMove->getEffect() == MOHKO)
+    if (move->getEffect() == MOHKO)
         totalDamage = target->getStats(HPStat);
-    else if (attackMove->getEffect() == MDamage20)
+    else if (move->getEffect() == MDamage20)
         totalDamage = 20;
-    else if (attackMove->getEffect() == MDamage40)
+    else if (move->getEffect() == MDamage40)
         totalDamage = 40;
-    else if (attackMove->getEffect() == MDamageLevel)
+    else if (move->getEffect() == MDamageLevel)
         totalDamage = attacker->getLevel();
     
     target->lowerHP(totalDamage);
@@ -1050,24 +1048,23 @@ void Battle::applyAttack(Trainer* trainerA, Trainer* trainerB,
     else if (typeBoost < 1.0)
         cout << "It's not very effective..." << endl;
     
-    if (attackMove->getEffect() == MOHKO)
+    if (move->getEffect() == MOHKO)
         // OHKO move that hit (since it made it here)
         cout << "It's a one-hit KO!" << endl;
     
-    applyEffect(trainerA, trainerB, whichMove);
+    applyEffect(trainerA, trainerB, move);
 }
 
 void Battle::applyEffect(Trainer* trainerA, Trainer* trainerB,
-                         int whichMove) const
+                         Move* move) const
 {
     Pokemon* attacker = trainerA->getPokemon();
     Pokemon* target = trainerB->getPokemon();
-    Move* attackMove = attacker->getMove(whichMove);
-    MoveEffect effect = attackMove->getEffect();
+    MoveEffect effect = move->getEffect();
     
     // Attacker side-effects (successful move execution)
     
-    if (effect == MRampage && attackMove->isThrash()
+    if (effect == MRampage && move->isThrash()
         && attacker->getRampageTurns() == 0)
         // Thrash-style rampage
     {
@@ -1216,14 +1213,13 @@ void Battle::applyEffect(Trainer* trainerA, Trainer* trainerB,
     }
 }
 
-void Battle::applySideEffects(Trainer* trainer, int whichMove)
+void Battle::applySideEffects(Trainer* trainer, Move* move)
 {
     // Attacker side effects not dependent on contact
     
-    Move* attackMove = trainer->getPokemonMove(whichMove);
     Pokemon* attacker = trainer->getPokemon();
     
-    if (attackMove->getEffect() == MSelfdestruct)
+    if (move->getEffect() == MSelfdestruct)
         // Self Destruct or Explosion
     {
         attacker->lowerHP(attacker->getStats(HPStat));

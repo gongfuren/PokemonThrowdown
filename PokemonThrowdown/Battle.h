@@ -41,12 +41,12 @@ public:
     
     // TODO: move these 4 into Pokemon
     void applyStatus(Trainer* trainerA, Trainer* trainerB,
-                     int whichMove);
+                     Move* move);
     void applyAttack(Trainer* trainerA, Trainer* trainerB,
-                     int whichMove) const;
+                     Move* move) const;
     void applyEffect(Trainer* trainerA, Trainer* trainerB,
-                     int whichMove) const;
-    void applySideEffects(Trainer* trainer, int whichMove);
+                     Move* move) const;
+    void applySideEffects(Trainer* trainer, Move* move);
     
     // Display in-battle summary
     void dispPokeSummary(int slotNumber) const;

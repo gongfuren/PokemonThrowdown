@@ -98,7 +98,7 @@ public:
     void megaEvolve();
     bool canMegaEvolve() const;
     
-    bool executeMove(Pokemon* target);
+    bool executeMove(Pokemon* target, Move* move = NULL);
     void recordMove(bool successful);
     Move* lastTurnsMove() const;
     Move* moveUsedLast(int turnsAgo) const;
