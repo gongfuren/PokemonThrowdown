@@ -7,7 +7,7 @@
 //
 
 #include "Pokemon.h"
-#include "PokeData.h"
+#include "pokedata.h"
 #include "Trainer.h"
 #include "Battle.h"
 #include "constants.h"
@@ -18,16 +18,16 @@
 #include <string>
 using namespace std;
 
-Pokemon::Pokemon(int pokemonID, Trainer* trainer)
+Pokemon::Pokemon(int pokemonID, Trainer* trainer, int whichAbility)
 : m_trainer(trainer)
 {
-    standardInit(pokelib[pokemonID]);
+    standardInit(pokelib[pokemonID], whichAbility);
 }
 
-Pokemon::Pokemon(PokeData h, Trainer* trainer)
+Pokemon::Pokemon(pokedata h, Trainer* trainer, int whichAbility)
 : m_trainer(trainer)
 {
-    standardInit(h);
+    standardInit(h, whichAbility);
 }
 
 Pokemon::~Pokemon()
@@ -38,12 +38,12 @@ Pokemon::~Pokemon()
 
 void Pokemon::transformInit(int pokemonID)
 {
-    PokeData me = pokelib[pokemonID];
+    pokedata me = pokelib[pokemonID];
     
     m_name = me.name;
     m_type1 = me.type1;
     m_type2 = me.type2;
-    m_ability = me.ability;
+    m_ability = me.ability[0];
     
     for (int i = AttStat; i < NUMSTATS; i++)
     {
@@ -53,7 +53,7 @@ void Pokemon::transformInit(int pokemonID)
     }
 }
 
-void Pokemon::standardInit(PokeData h)
+void Pokemon::standardInit(pokedata h, int whichAbility)
 {
     m_name = h.name;
     m_type1 = h.type1;
@@ -64,7 +64,7 @@ void Pokemon::standardInit(PokeData h)
     m_level = h.level;
     m_nature = (h.nature == NoNature)
     ? static_cast<Nature>(randInt(HardyNature, NUMNATURES-1)) : h.nature;
-    m_ability = h.ability;
+    m_ability = h.ability[whichAbility];
     m_item = new Item(h.item);
     m_description = h.description;
     m_sleepTurns = 0;

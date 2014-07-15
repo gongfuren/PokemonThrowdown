@@ -1,13 +1,13 @@
 //
-//  TrainerData.h
+//  trainerdata.h
 //  pokemongame
 //
 //  Created by Ian Cordero on 3/3/14.
 //  Copyright (c) 2014 Ian Cordero. All rights reserved.
 //
 
-#ifndef __pokemongame__TrainerData__
-#define __pokemongame__TrainerData__
+#ifndef __pokemongame__trainerdata__
+#define __pokemongame__trainerdata__
 
 #include "constants.h"
 
@@ -33,7 +33,7 @@ const string titleArray[NUMTITLES] = {
     CHAMPION, HIKER, SWIMMER, PSYTRAINER
 };
 
-struct TrainerData
+struct trainerdata
 {
     string name;
     string title;
@@ -44,7 +44,7 @@ struct TrainerData
 
 const int NUMTRAINERS = 4;
 
-const TrainerData trainerlib[MAXTOTALTRAINERS] = {
+const trainerdata trainerlib[MAXTOTALTRAINERS] = {
     //                                      Pokemon
     // Name       Title        Male   Prize 1    2    3    4    5    6
     "Red",        PKMNTRAINER, true,  1000, 196, 25,  6,   9,   3,   143,
@@ -59,4 +59,4 @@ const TrainerData trainerlib[MAXTOTALTRAINERS] = {
     "Steven",     PSYTRAINER,  true,  1000, 65,  376, 386, 385, 197,  150
 };
 
-#endif /* defined(__pokemongame__TrainerData__) */
+#endif /* defined(__pokemongame__trainerdata__) */

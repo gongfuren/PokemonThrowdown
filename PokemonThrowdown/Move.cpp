@@ -7,7 +7,7 @@
 //
 
 #include "Move.h"
-#include "MoveData.h"
+#include "movedata.h"
 #include "constants.h"
 #include "Pokemon.h"
 #include "Trainer.h"

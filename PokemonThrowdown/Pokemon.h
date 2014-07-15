@@ -11,7 +11,7 @@
 
 #include "constants.h"
 #include "Move.h"
-#include "PokeData.h"
+#include "pokedata.h"
 
 #include <string>
 #include <list>
@@ -26,10 +26,10 @@ class Pokemon
 // Represents a Battle-ready Pokemon and its current state
 {
 public:
-    Pokemon(int pokemonID, Trainer* trainer);
-    Pokemon(PokeData h, Trainer* trainer);
+    Pokemon(int pokemonID, Trainer* trainer, int whichAbility = 0);
+    Pokemon(pokedata h, Trainer* trainer, int whichAbility = 0);
     ~Pokemon();
-    void standardInit(PokeData h);
+    void standardInit(pokedata h, int whichAbility);
     void customInit();
     void transformInit(int pokemonID);
     

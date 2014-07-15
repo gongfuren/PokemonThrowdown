@@ -7,13 +7,13 @@
 //
 
 #include "Battle.h"
-#include "BattleData.h"
+#include "battledata.h"
 #include "Trainer.h"
 #include "TrainerData.h"
 #include "constants.h"
 #include "strings.h"
-#include "PokeData.h"
-#include "MoveData.h"
+#include "pokedata.h"
+#include "movedata.h"
 #include "Side.h"
 #include "Slot.h"
 #include "Item.h"
@@ -1341,7 +1341,7 @@ void Battle::dispPokeSummary(int slotNumber) const
     cout << pout.str();
 }
 
-void Battle::dispPokeSummary(const PokeData pokemon) const
+void Battle::dispPokeSummary(const pokedata pokemon) const
 {
     // Name
     cout << pokemon.name << " "
@@ -1358,7 +1358,7 @@ void Battle::dispPokeSummary(const PokeData pokemon) const
     cout << "Item" << ": " << itemStrings[pokemon.item] << endl;
     
     // Ability
-    cout << "Ability" << ": " << abilityStrings[pokemon.ability] << endl;
+    cout << "Ability" << ": " << abilityStrings[pokemon.ability[0]] << endl;
     
     // Stats
     cout << "Base Stats" << ":" << endl;
@@ -1428,7 +1428,7 @@ void Battle::dispPokeMoves() const
     dispPokeMoves(0);
 }
 
-void Battle::dispPokeMoves(const PokeData pokemon) const
+void Battle::dispPokeMoves(const pokedata pokemon) const
 {
     ostringstream o;
     
@@ -1437,7 +1437,7 @@ void Battle::dispPokeMoves(const PokeData pokemon) const
     for (int i = 0; i < 4; i++)
     {
         moveID = pokemon.moveIDs[i];
-        MoveData m = movelib[moveID];
+        movedata m = movelib[moveID];
         o << m.name << endl
         
         << "Type" << ": " << typeStrings[m.type] << " "

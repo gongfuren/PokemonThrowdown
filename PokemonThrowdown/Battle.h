@@ -10,7 +10,7 @@
 #define __pokemongame__Battle__
 
 #include "constants.h"
-#include "PokeData.h"
+#include "pokedata.h"
 #include "Field.h"
 #include <string>
 using namespace std;
@@ -52,14 +52,14 @@ public:
     void dispPokeSummary(int slotNumber) const;
     
     // Display summary of specified Pokemon species
-    void dispPokeSummary(const PokeData pokemon) const;
+    void dispPokeSummary(const pokedata pokemon) const;
     
     // Display in-battle (i.e. with current PP) moves
     void dispPokeMoves(int pokemon) const;
     void dispPokeMoves() const;
     
     // Display currently-set moves for Pokemon of specified species
-    void dispPokeMoves(const PokeData pokemon) const;
+    void dispPokeMoves(const pokedata pokemon) const;
     
     // TODO: move into Pokemon
     string statusText(Pokemon* pokemon, bool showStats) const;

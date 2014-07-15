@@ -1,13 +1,13 @@
 //
-//  MoveData.h
+//  movedata.h
 //  pokemongame
 //
 //  Created by Ian Cordero on 3/3/14.
 //  Copyright (c) 2014 Ian Cordero. All rights reserved.
 //
 
-#ifndef __pokemongame__MoveData__
-#define __pokemongame__MoveData__
+#ifndef __pokemongame__movedata__
+#define __pokemongame__movedata__
 
 #include "constants.h"
 
@@ -18,7 +18,7 @@ using namespace std;
 
 // Move Data
 
-struct MoveData
+struct movedata
 {
     int ID;
     string name;
@@ -35,7 +35,7 @@ struct MoveData
     string description;
 };
 
-const MoveData movelib[MAXTOTALMOVES] = {
+const movedata movelib[MAXTOTALMOVES] = {
     
     0,  "Struggle", NoType,    Status, UnknownStat,    -1, -1, -1, I,	MRecoilStrug,  Opponent, false,
 	"",
@@ -1281,7 +1281,7 @@ const MoveData movelib[MAXTOTALMOVES] = {
     "The user accumulates light energy and attacks the target."
 };
 
-#endif /* defined(__pokemongame__MoveData__) */
+#endif /* defined(__pokemongame__movedata__) */
 
 
 

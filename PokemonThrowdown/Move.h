@@ -10,7 +10,7 @@
 #define __pokemongame__Move__
 
 #include "constants.h"
-#include "MoveData.h"
+#include "movedata.h"
 
 #include <string>
 using namespace std;
@@ -22,7 +22,7 @@ class Move
 {
 public:
     Move(int moveID, Pokemon* pokemon);
-    Move(MoveData h, Pokemon* pokemon);
+    Move(movedata h, Pokemon* pokemon);
     ~Move();
     void standardInit(int moveID);
     

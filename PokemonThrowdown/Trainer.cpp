@@ -31,7 +31,7 @@ Trainer::Trainer(TrainerData h, Battle* battle)
     
     for (int i = 0; i < 6; i++)
     {
-        PokeData protomon = pokelib[h.pokemonIDs[i]];
+        pokedata protomon = pokelib[h.pokemonIDs[i]];
         m_pokemon[i] = new Pokemon(protomon, this);
     }
 }

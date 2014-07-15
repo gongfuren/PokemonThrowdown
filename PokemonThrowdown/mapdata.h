@@ -1,29 +1,29 @@
 //
-//  MapData.h
+//  mapdata.h
 //  pokemongame
 //
 //  Created by Ian Cordero on 3/3/14.
 //  Copyright (c) 2014 Ian Cordero. All rights reserved.
 //
 
-#ifndef __pokemongame__MapData__
-#define __pokemongame__MapData__
+#ifndef __pokemongame__mapdata__
+#define __pokemongame__mapdata__
 
 #include "constants.h"
 
 #include <string>
 using namespace std;
 
-struct MapData
+struct mapdata
 {
     string name;
 };
 
-const MapData maplib[MAXTOTALMAPS] = {
+const mapdata maplib[MAXTOTALMAPS] = {
     "Gateway Coliseum",
     "Sunset Coliseum",
     "Pokemon League",
     "Underground Coliseum"
 };
 
-#endif /* defined(__pokemongame__MapData__) */
+#endif /* defined(__pokemongame__mapdata__) */
