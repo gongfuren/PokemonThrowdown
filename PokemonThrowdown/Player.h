@@ -22,7 +22,7 @@ class Player : public Trainer
 // Represents a human controlled Trainer
 {
 public:
-    Player(TrainerData h, Battle* battle);
+    Player(trainerdata h, Battle* battle);
     ~Player();
     
     virtual void actionSelect();

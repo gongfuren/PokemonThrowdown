@@ -20,7 +20,7 @@ using namespace std;
 // appreciable extent. TODO: utilize these classes, as well as existing ones
 // to improve modularity and organization. Perhaps make new classes as needed.
 
-Player::Player(TrainerData h, Battle* battle)
+Player::Player(trainerdata h, Battle* battle)
 : Trainer(h, battle)
 {
     

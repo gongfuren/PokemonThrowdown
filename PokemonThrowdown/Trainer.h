@@ -10,7 +10,7 @@
 #define __pokemongame__Trainer__
 
 #include "Pokemon.h"
-#include "TrainerData.h"
+#include "trainerdata.h"
 
 #include <string>
 using namespace std;
@@ -23,7 +23,7 @@ class Trainer
 // Pokemon, and his/her/its current state
 {
 public:
-    Trainer(TrainerData h, Battle* battle);
+    Trainer(trainerdata h, Battle* battle);
     virtual ~Trainer();
     
     void setCurrent(int current);

@@ -9,7 +9,7 @@
 #include "Battle.h"
 #include "battledata.h"
 #include "Trainer.h"
-#include "TrainerData.h"
+#include "trainerdata.h"
 #include "constants.h"
 #include "strings.h"
 #include "pokedata.h"
@@ -95,7 +95,7 @@ void Battle::chooseLead()
 
 void Battle::customInit()
 {
-    TrainerData protoman;
+    trainerdata protoman;
     
     int choice[4] = { -1, -1, -1, -1 };
     int pokemonID;

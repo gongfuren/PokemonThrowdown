@@ -7,7 +7,7 @@
 //
 
 #include "Trainer.h"
-#include "TrainerData.h"
+#include "trainerdata.h"
 #include "Battle.h"
 #include "strings.h"
 
@@ -16,7 +16,7 @@
 #include <stdlib.h>
 using namespace std;
 
-Trainer::Trainer(TrainerData h, Battle* battle)
+Trainer::Trainer(trainerdata h, Battle* battle)
 : m_battle(battle)
 {
     m_current = -1;

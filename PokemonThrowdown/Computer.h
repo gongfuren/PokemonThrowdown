@@ -22,7 +22,7 @@ class Computer : public Trainer
 // Represents a computer controlled Trainer
 {
 public:
-    Computer(TrainerData h, Battle* battle);
+    Computer(trainerdata h, Battle* battle);
     ~Computer();
     
     virtual void actionSelect();
