@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Ian Cordero. All rights reserved.
 //
 
-#ifndef __pokemongame__Constants__
-#define __pokemongame__Constants__
+#ifndef __PokemonThrowdown__Constants__
+#define __PokemonThrowdown__Constants__
 
 #include <list>
 using namespace std;
@@ -406,4 +406,4 @@ double typeMultiplier(Type type1, Type type2);
 double typeMultiplier(Type type1, Type type2, Type type3);
 double natureMultiplier(Nature nature, int stat);
 
-#endif /* defined(__pokemongame__Constants__) */
+#endif /* defined(__PokemonThrowdown__Constants__) */

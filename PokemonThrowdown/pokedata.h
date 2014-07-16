@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Ian Cordero. All rights reserved.
 //
 
-#ifndef __pokemongame__pokedata__
-#define __pokemongame__pokedata__
+#ifndef __PokemonThrowdown__pokedata__
+#define __PokemonThrowdown__pokedata__
 
 #include "constants.h"
 
@@ -2496,4 +2496,4 @@ Male,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1
 
 // As of writing this comment, all Pokemon must have 4 moves for program to work correctly/
 
-#endif /* defined(__pokemongame__pokedata__) */
+#endif /* defined(__PokemonThrowdown__pokedata__) */

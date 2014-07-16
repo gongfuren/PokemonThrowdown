@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Ian Cordero. All rights reserved.
 //
 
-#ifndef __pokemongame__Pokemon__
-#define __pokemongame__Pokemon__
+#ifndef __PokemonThrowdown__Pokemon__
+#define __PokemonThrowdown__Pokemon__
 
 #include "constants.h"
 #include "Move.h"
@@ -26,13 +26,10 @@ class Pokemon
 // Represents a Battle-ready Pokemon and its current state
 {
 public:
-    Pokemon(int pokemonID, Trainer* trainer, int whichAbility = 0);
-    Pokemon(pokedata h, Trainer* trainer, int whichAbility = 0);
+    Pokemon(pokedata h, Trainer* trainer);
     ~Pokemon();
-    void standardInit(pokedata h, int whichAbility);
-    void customInit();
-    void transformInit(int pokemonID);
     
+    // Accessor functions
     string getName() const;
     Type getType1() const;
     Type getType2() const;
@@ -50,30 +47,17 @@ public:
     string getDescription() const;
     int getForm() const;
     int getID() const;
-    
     Trainer* getTrainer() const;
     Slot* getSlot() const;
     
+    // Battle state functions
     int getIntendedMove() const;
     void setIntendedMove(int choice);
     void setStatus(PokeStatus status, bool rest = false);
     void addVStatus(VolatileStatus vstatus);
     void removeVStatus(VolatileStatus vstatus);
     bool hasVStatus(VolatileStatus vstatus);
-    
     void removeShortStatus();
-    
-    void flashAbility() const;
-    bool passThroughStatus();
-    
-    void tick();
-    int getToxicTurns() const;
-    void setToxicTurns(int turns);
-    void setSleepTurns(int turns);
-    int getSleepTurns() const;
-    int getRampageTurns() const;
-    void setRampageTurns(int turns);
-    
     void checkFaint();
     bool isFainted() const;
     void setFainted();
@@ -86,13 +70,21 @@ public:
     bool increaseStat(int whichStat, int levels);
     void restoreStat(int whichStat);
     void clearVolatiles();
-    double statAMultiplier(int statLevel) const;
-    double statEMultiplier(int statLevel) const;
+
+    bool passThroughStatus();
+    
+    // Do something on each turn tick
+    void tick();
+    
+    // Status state
+    int getToxicTurns() const;
+    void setToxicTurns(int turns);
+    void setSleepTurns(int turns);
+    int getSleepTurns() const;
+    int getRampageTurns() const;
+    void setRampageTurns(int turns);
     
     void castAbility();
-    
-    void protectDialogue() const;
-    void avoidDialogue() const;
     
     void formChange(int form);
     void megaEvolve();
@@ -105,6 +97,23 @@ public:
     bool usedProtect(int turnsAgo) const;
     
 private:
+    // Update state for a transformation
+    void transform(int pokemonID);
+    
+    // Return multiplier for stats
+    double statAMultiplier(int statLevel) const;
+    double statEMultiplier(int statLevel) const;
+    
+    void flashAbility() const;
+    void applyStatus(Pokemon* target, Move* move);
+    void applyAttack(Pokemon* target, Move* move);
+    void applyEffect(Pokemon* target, Move* move);
+    void applySideEffects(Move* move);
+    
+    void protectDialogue() const;
+    void avoidDialogue() const;
+    
+    // Data members
     string m_name;
     int m_ID;
     Type m_type1;
@@ -121,22 +130,31 @@ private:
     Item* m_item;
     string m_description;
     
+    // The state (how many increases/decreases) of each stat
     int m_statsStatus[NUMALLSTATS];
+    
+    // Intended move slot number
     int m_intendedMove;
     
+    // Is this Pokemon fainted?
+    bool m_fainted;
+    
+    // 0 for default
     int m_form;
     
+    // Battle state
     int m_turnsOut;
     int m_sleepTurns;
     int m_toxicTurns;
     int m_rampageTurns;
     
+    // Move slots and history
     Move* m_moves[MAXMOVES];
     stack<Move*> m_moveHistory;
-    bool m_fainted;
     
+    // Keep track of Slot position and owning Trainer
     Trainer* m_trainer;
     Slot* m_slot;
 };
 
-#endif /* defined(__pokemongame__Pokemon__) */
+#endif /* defined(__PokemonThrowdown__Pokemon__) */

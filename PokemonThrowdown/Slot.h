@@ -6,11 +6,12 @@
 //  Copyright (c) 2014 Ian Cordero. All rights reserved.
 //
 
-#ifndef __pokemongame__Slot__
-#define __pokemongame__Slot__
+#ifndef __PokemonThrowdown__Slot__
+#define __PokemonThrowdown__Slot__
 
 #include <iostream>
 #include "constants.h"
+#include "Zone.h"
 
 class Pokemon;
 class Side;
@@ -20,7 +21,7 @@ class Side;
 // appreciable extent. TODO: utilize these classes, as well as existing ones
 // to improve modularity and organization. Perhaps make new classes as needed.
 
-class Slot
+class Slot : public Zone
 // Represents a slot on one side of the battlefield
 // Each Slot holds 0 or 1 Pokemon
 {
@@ -42,4 +43,4 @@ private:
     Side* m_side;
 };
 
-#endif /* defined(__pokemongame__Slot__) */
+#endif /* defined(__PokemonThrowdown__Slot__) */

@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Ian Cordero. All rights reserved.
 //
 
-#ifndef __pokemongame__Computer__
-#define __pokemongame__Computer__
+#ifndef __PokemonThrowdown__Computer__
+#define __PokemonThrowdown__Computer__
 
 #include <iostream>
 #include "Trainer.h"
@@ -36,4 +36,4 @@ private:
     int m_difficulty;
 };
 
-#endif /* defined(__pokemongame__Computer__) */
+#endif /* defined(__PokemonThrowdown__Computer__) */

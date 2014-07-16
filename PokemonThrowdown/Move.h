@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Ian Cordero. All rights reserved.
 //
 
-#ifndef __pokemongame__Move__
-#define __pokemongame__Move__
+#ifndef __PokemonThrowdown__Move__
+#define __PokemonThrowdown__Move__
 
 #include "constants.h"
 #include "movedata.h"
@@ -22,34 +22,44 @@ class Move
 {
 public:
     Move(int moveID, Pokemon* pokemon);
-    Move(movedata h, Pokemon* pokemon);
     ~Move();
-    void standardInit(int moveID);
     
-    Pokemon* getPokemon() const;
+    // Accessor Functions
     string getName() const;
     Type getType() const;
     int getDamage() const;
     int getAccuracy() const;
-    int getPP() const;
     MoveType getMoveType() const;
     string getDescription() const;
     MoveEffect getEffect() const;
     MoveTarget getTarget() const;
     int getID() const;
     bool getContact() const;
+    
+    Pokemon* getPokemon() const;
+    int getPP() const;
+    int getCurrentPP() const;
     int getAge() const;
     
-    int getCurrentPP() const;
-    void incAge();
-    void resetAge();
-    void decCurrentPP();
+    // Get priority score for Move (for determining attack order)
+    int getPriorityScore() const;
     
-    bool determineFailure(Pokemon* target) const;
+    // Identify type of Move
     bool isAttack() const;
     bool isThrash() const;
+    bool isMultiTurn() const;
     
-    int detPriorityScore() const;
+    // Increment age of Move
+    void incrementAge();
+    
+    // Reset age of Move
+    void resetAge();
+    
+    // Decrement PP; if 0, return false
+    bool decrementCurrentPP();
+    
+    // Determine if this Move will fail on target
+    bool determineFailure(Pokemon* target) const;
     
 private:
     int m_ID;
@@ -70,4 +80,4 @@ private:
     int m_PPUps;
 };
 
-#endif /* defined(__pokemongame__Move__) */
+#endif /* defined(__PokemonThrowdown__Move__) */

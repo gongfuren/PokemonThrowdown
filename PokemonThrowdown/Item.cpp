@@ -54,7 +54,7 @@ bool Item::restrictsChoice() const
         return false;
 }
 
-void Item::incAge()
+void Item::incrementAge()
 {
     m_age++;
 }

@@ -6,12 +6,13 @@
 //  Copyright (c) 2014 Ian Cordero. All rights reserved.
 //
 
-#ifndef __pokemongame__Side__
-#define __pokemongame__Side__
+#ifndef __PokemonThrowdown__Side__
+#define __PokemonThrowdown__Side__
 
 #include <iostream>
 #include <list>
 #include "constants.h"
+#include "Zone.h"
 
 class Slot;
 class Field;
@@ -22,7 +23,7 @@ class Trainer;
 // appreciable extent. TODO: utilize these classes, as well as existing ones
 // to improve modularity and organization. Perhaps make new classes as needed.
 
-class Side
+class Side : public Zone
 // Represents one side of the battlefield (there are always two sides) and
 // the state of a respective side
 {
@@ -56,4 +57,4 @@ private:
     Field* m_field;
 };
 
-#endif /* defined(__pokemongame__Side__) */
+#endif /* defined(__PokemonThrowdown__Side__) */

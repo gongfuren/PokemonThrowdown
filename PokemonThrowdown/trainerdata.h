@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Ian Cordero. All rights reserved.
 //
 
-#ifndef __pokemongame__trainerdata__
-#define __pokemongame__trainerdata__
+#ifndef __PokemonThrowdown__trainerdata__
+#define __PokemonThrowdown__trainerdata__
 
 #include "constants.h"
 
@@ -59,4 +59,4 @@ const trainerdata trainerlib[MAXTOTALTRAINERS] = {
     "Steven",     PSYTRAINER,  true,  1000, 65,  376, 386, 385, 197,  150
 };
 
-#endif /* defined(__pokemongame__trainerdata__) */
+#endif /* defined(__PokemonThrowdown__trainerdata__) */

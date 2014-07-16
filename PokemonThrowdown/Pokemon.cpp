@@ -18,42 +18,8 @@
 #include <string>
 using namespace std;
 
-Pokemon::Pokemon(int pokemonID, Trainer* trainer, int whichAbility)
+Pokemon::Pokemon(pokedata h, Trainer* trainer)
 : m_trainer(trainer)
-{
-    standardInit(pokelib[pokemonID], whichAbility);
-}
-
-Pokemon::Pokemon(pokedata h, Trainer* trainer, int whichAbility)
-: m_trainer(trainer)
-{
-    standardInit(h, whichAbility);
-}
-
-Pokemon::~Pokemon()
-{
-    for (int i = 0; i < MAXMOVES; i++)
-        delete m_moves[i];
-}
-
-void Pokemon::transformInit(int pokemonID)
-{
-    pokedata me = pokelib[pokemonID];
-    
-    m_name = me.name;
-    m_type1 = me.type1;
-    m_type2 = me.type2;
-    m_ability = me.ability[0];
-    
-    for (int i = AttStat; i < NUMSTATS; i++)
-    {
-        int adder = 5;
-        m_bStats[i] = ((2 * me.stats[i] + m_IVs[i] + m_EVs[i] / 4) * m_level
-                       / 100 + adder) * natureMultiplier(m_nature, i-1);
-    }
-}
-
-void Pokemon::standardInit(pokedata h, int whichAbility)
 {
     m_name = h.name;
     m_type1 = h.type1;
@@ -64,7 +30,7 @@ void Pokemon::standardInit(pokedata h, int whichAbility)
     m_level = h.level;
     m_nature = (h.nature == NoNature)
     ? static_cast<Nature>(randInt(HardyNature, NUMNATURES-1)) : h.nature;
-    m_ability = h.ability[whichAbility];
+    m_ability = h.ability[0];
     m_item = new Item(h.item);
     m_description = h.description;
     m_sleepTurns = 0;
@@ -104,6 +70,29 @@ void Pokemon::standardInit(pokedata h, int whichAbility)
     
     if (m_gender == NoGender)
         m_gender = static_cast<Gender>(randInt(0, 1));
+}
+
+Pokemon::~Pokemon()
+{
+    for (int i = 0; i < MAXMOVES; i++)
+        delete m_moves[i];
+}
+
+void Pokemon::transform(int pokemonID)
+{
+    pokedata me = pokelib[pokemonID];
+    
+    m_name = me.name;
+    m_type1 = me.type1;
+    m_type2 = me.type2;
+    m_ability = me.ability[0];
+    
+    for (int i = AttStat; i < NUMSTATS; i++)
+    {
+        int adder = 5;
+        m_bStats[i] = ((2 * me.stats[i] + m_IVs[i] + m_EVs[i] / 4) * m_level
+                       / 100 + adder) * natureMultiplier(m_nature, i-1);
+    }
 }
 
 int Pokemon::getForm() const
@@ -181,7 +170,7 @@ void Pokemon::clearVolatiles()
         // Aegislash
     {
         if (m_form == 1)
-            transformInit(681);
+            transform(681);
     }
 }
 
@@ -727,7 +716,7 @@ void Pokemon::formChange(int form)
         cout << m_name << " " << "has Mega Evolved into Mega" << " " << m_name << "!"
         << endl;
         
-        transformInit(m_item->getID() - HVenusaurite + 722);
+        transform(m_item->getID() - HVenusaurite + 722);
         
         getTrainer()->setUsedMega();
     }
@@ -741,14 +730,14 @@ void Pokemon::formChange(int form)
         if (m_form == 0)
             // Shield to Blade
         {
-            transformInit(762);
+            transform(762);
             
             cout <<  "Blade";
         }
         else
             // Blade to Shield
         {
-            transformInit(681);
+            transform(681);
             
             cout << "Shield";
         }
@@ -937,10 +926,10 @@ bool Pokemon::executeMove(Pokemon* target, Move* move)
     {
         if (move->getMoveType() == Status)
             // Status move
-            battle->applyStatus(getTrainer(), getTrainer(), getMove(intendedMove));
+            applyStatus(target, getMove(intendedMove));
         else
             // Attack
-            battle->applyAttack(getTrainer(), getTrainer(), getMove(intendedMove));
+            applyAttack(target, getMove(intendedMove));
     }
     else
         // Targeting pokemon other than self
@@ -964,15 +953,13 @@ bool Pokemon::executeMove(Pokemon* target, Move* move)
         }
         else if (move->getMoveType() == Status)
             // Status move
-            battle->applyStatus(getTrainer(), target->getTrainer(),
-                                getMove(intendedMove));
+            applyStatus(target, getMove(intendedMove));
         else
             // Attack
-            battle->applyAttack(getTrainer(), target->getTrainer(),
-                                getMove(intendedMove));
+            applyAttack(target, getMove(intendedMove));
     }
     
-    battle->applySideEffects(getTrainer(), getMove(intendedMove));
+    applySideEffects(getMove(intendedMove));
     
     battle->displayState(false);
     battle->checkFaint();
@@ -1043,4 +1030,541 @@ bool Pokemon::usedProtect(int turnsAgo) const
 int Pokemon::getID() const
 {
     return m_ID;
+}
+
+void Pokemon::applyStatus(Pokemon* target, Move* move)
+{
+    Pokemon* pokemon = this;
+    MoveEffect me = move->getEffect();
+    Field* field = getTrainer()->getBattle()->getField();
+    Weather weather = field->getWeather();
+    int healAmount = 0;
+    
+    int sc[NUMALLSTATS] = { 0, 0, 0, 0, 0, 0, 0, 0 };
+    
+    if (me == MHeal50)
+        // Calculate heal amount for Healing moves
+    {
+        healAmount = pokemon->getBStats(HPStat) / 2;
+        
+        if (move->getID() >= 234 && move->getID() <= 236)
+        {
+            // Weather-influenced healing move
+            if (weather == Sunny)
+                healAmount = (2 * pokemon->getBStats(HPStat)) / 3;
+            else if (weather != NoWeather)
+                healAmount = pokemon->getBStats(HPStat) / 4;
+        }
+    }
+    else if (me == MHeal100)
+        // Heal amount and sleep effect for Rest
+    {
+        healAmount = pokemon->getBStats(HPStat);
+        
+        cout << target->getTrainer()->getTitleName() << "'s "
+        << target->getName() << " " << "went to sleep!" << endl;
+        
+        pokemon->setStatus(SleepStatus, true);
+    }
+    
+    switch (me)
+    {
+        case MHeal50:
+        case MHeal100:
+            cout << target->getTrainer()->getTitleName() << "'s "
+            << target->getName();
+            if (target->increaseHP(healAmount))
+                cout << "'s "<< "HP was restored!";
+            else
+                cout << "'s " << "HP can't go any higher!";
+            cout << endl;
+            break;
+        case MLowerAtt:
+            sc[AttStat] = -1;
+            break;
+        case MLowerAtt2:
+            sc[AttStat] = -2;
+            break;
+        case MUpAtt:
+            sc[AttStat] = 1;
+            break;
+        case MUpAtt2:
+            sc[AttStat] = 2;
+            break;
+        case MLowerDef:
+            sc[DefStat] = -1;
+            break;
+        case MLowerDef2:
+            sc[DefStat] = -2;
+            break;
+        case MUpDef:
+            sc[DefStat] = 1;
+            break;
+        case MUpDef2:
+            sc[DefStat] = 2;
+            break;
+        case MLowerSpA:
+            sc[SpAStat] = -1;
+            break;
+        case MLowerSpA2:
+            sc[SpAStat] = -2;
+            break;
+        case MUpSpA:
+            sc[SpAStat] = 1;
+            break;
+        case MUpSpA2:
+            sc[SpAStat] = 2;
+            break;
+        case MLowerSpD:
+            sc[SpDStat] = -1;
+            break;
+        case MLowerSpD2:
+            sc[SpDStat] = -2;
+            break;
+        case MUpSpD:
+            sc[SpDStat] = 1;
+            break;
+        case MUpSpD2:
+            sc[SpDStat] = 2;
+            break;
+        case MLowerSpe:
+            sc[SpeStat] = -1;
+            break;
+        case MLowerSpe2:
+            sc[SpeStat] = -2;
+            break;
+        case MUpSpe:
+            sc[SpeStat] = 1;
+            break;
+        case MUpSpe2:
+            sc[SpeStat] = 2;
+            break;
+        case MUpSpASpD:
+            sc[SpAStat] = 1;
+            sc[SpDStat] = 1;
+            break;
+        case MUpAttDef:
+            sc[AttStat] = 1;
+            sc[DefStat] = 1;
+            break;
+        case MUpAttSpA:
+            sc[AttStat] = 1;
+            sc[SpAStat] = 1;
+            break;
+        case MUpDefSpD:
+            sc[DefStat] = 1;
+            sc[SpDStat] = 1;
+            break;
+        case MUpAttSpe:
+            sc[AttStat] = 1;
+            sc[SpeStat] = 1;
+            break;
+        case MUpSpASpDSpe:
+            sc[SpAStat] = 1;
+            sc[SpDStat] = 1;
+            sc[SpeStat] = 1;
+            break;
+        case MUpAll:
+            for (int i = AttStat; i < NUMSTATS; i++)
+                sc[i] = 1;
+            break;
+        case MSun:
+            if (weather != Sunny)
+                field->initializeWeather(Sunny);
+            break;
+        case MRain:
+            if (weather != Rain)
+                field->initializeWeather(Rain);
+            break;
+        case MSandstorm:
+            if (weather != Sandstorm)
+                field->initializeWeather(Sandstorm);
+            break;
+        case MHail:
+            if (weather != Hail)
+                field->initializeWeather(Hail);
+            break;
+        case MProtect:
+            target->addVStatus(ProtectVStatus);
+            target->protectDialogue();
+            break;
+        case MShield:
+            target->addVStatus(ShieldVStatus);
+            target->protectDialogue();
+            break;
+        case MBurn:
+            target->setStatus(BurnStatus);
+            break;
+        case MSleep:
+            target->setStatus(SleepStatus);
+            break;
+        case MPoison:
+            target->setStatus(PoisonStatus);
+            break;
+        case MToxic:
+            target->setStatus(ToxicStatus);
+            break;
+        case MParalyze:
+            target->setStatus(ParalyzeStatus);
+            break;
+        default:
+            break;
+    }
+    
+    for (int i = AttStat; i < NUMALLSTATS; i++)
+    {
+        if (sc[i] < 0)
+        {
+            if (sc[i] == -1)
+                target->decreaseStat(i, false);
+            else
+                target->decreaseStat(i, -sc[i]);
+        }
+        else if (sc[i] > 0)
+        {
+            if (sc[i] == -1)
+                target->increaseStat(i, false);
+            else
+                target->increaseStat(i, sc[i]);
+        }
+    }
+}
+
+void Pokemon::applyAttack(Pokemon* target, Move* move)
+{
+    Pokemon* attacker = this;
+    Field* field = getTrainer()->getBattle()->getField();
+    
+    double typeBoost, pureDamage, sTAB, crit, modulus, other, attackMultiplier,
+    specialDefMultiplier, modifier, spOrNot,
+    damage, totalDamage;
+    
+    int critThreshold;
+    
+    if (target->hasVStatus(ProtectVStatus)
+        || target->hasVStatus(ShieldVStatus))
+    {
+        target->protectDialogue();
+        
+        if (target->hasVStatus(ShieldVStatus))
+        {
+            if (move->getContact())
+                attacker->decreaseStat(AttStat, 2);
+        }
+        
+        return;
+    }
+    
+    if (target->getAbility() == PLevitate && move->getType()
+        == GroundType)
+        // Target has Levitate and attacker is using GroundType move
+    {
+        typeBoost = 0.0;
+        target->flashAbility();
+    }
+    else
+        // Take type matchup into account
+    {
+        typeBoost = typeMultiplier(move->getType(), target->getType1(),
+                                   target->getType2());
+    }
+    
+    if (typeBoost == 0.0)
+        // Target is immune to attack
+    {
+        cout << "It doesn't affect" << " "
+        << target->getTrainer()->getTitleName() << "'s " << target->getName()
+        << "." << endl;
+        return;
+    }
+    
+    pureDamage = move->getDamage();
+    
+    if (move->getType() == attacker->getType1() ||
+        move->getType() == attacker->getType2())
+        // Same Type Attack Bonus is 1.5x
+    {
+        sTAB = 1.5;
+    }
+    else
+    {
+        sTAB = 1.0;
+    }
+    
+    critThreshold = 625;
+    
+    if (move->getEffect() == MHighCrit)
+        critThreshold *= 2;
+    
+    if (randInt(0, 9999) < critThreshold)
+        // Critical hits gain a 1.5x boost
+        crit = 1.50;
+    else
+        crit = 1.00;
+    
+    // All attacks have an 85% mastery
+    modulus = static_cast<double>(randInt(85, 100)) / 100.0;
+    
+    other = 1.0;
+    
+    if (attacker->getAbility() == PHugePower || attacker->getAbility()
+        == PPurePower)
+        // Huge/Pure power ability: attack 2.0x
+        attackMultiplier = 2.0;
+    else
+        attackMultiplier = 1.0;
+    
+    if (attacker->getStatus() == BurnStatus)
+        // Attacker is burned: attack 0.5x
+        attackMultiplier *= 0.5;
+    
+    specialDefMultiplier = 1.0;
+    
+    if (field->getWeather() == Rain)
+        // Water attacks get a 1.5x damage boost in Rain
+    {
+        if (move->getType() == WaterType)
+            other = 1.5;
+        else if (move->getType() == FireType)
+            other = 0.5;
+    }
+    else if (field->getWeather() == Sunny)
+        // Fire attacks get a 1.5x damage boost in Sun
+    {
+        if (move->getType() == FireType)
+            other = 1.5;
+        else if (move->getType() == WaterType)
+            other = 0.5;
+    }
+    else if (field->getWeather() == Sandstorm)
+        // Rock types get a SpD boost 1.5x in Sandstorm
+    {
+        specialDefMultiplier *= (target->getType1() == RockType
+                                 || target->getType2() == RockType) ? 1.5
+        : 1.0;
+    }
+    else if (field->getWeather() == Hail)
+    {
+        
+    }
+    
+    if (attacker->getItem()->getID() == HLightBall && attacker->getID() == 25)
+        // Pikachu holding a Light Ball
+    {
+        other *= 2.0;
+    }
+    
+    modifier = typeBoost * sTAB * crit * modulus * other;
+    
+    if (move->getMoveType() == Physical)
+        // Physical attack
+    {
+        spOrNot = static_cast<double>(attacker->getStats(AttStat) *
+                                      attackMultiplier)
+        / static_cast<double>(target->getStats(DefStat));
+    }
+    else
+        // Special attack
+    {
+        spOrNot = static_cast<double>(attacker->getStats(SpAStat)) /
+        (static_cast<double>(target->getStats(SpDStat)
+                             * specialDefMultiplier));
+    }
+    
+    damage = (((2.0 * attacker->getLevel() + 10.0) / 250.0) *
+              (spOrNot) * pureDamage + 2.0);
+    
+    totalDamage = damage * modifier;
+    
+    if (move->getEffect() == MOHKO)
+        totalDamage = target->getStats(HPStat);
+    else if (move->getEffect() == MDamage20)
+        totalDamage = 20;
+    else if (move->getEffect() == MDamage40)
+        totalDamage = 40;
+    else if (move->getEffect() == MDamageLevel)
+        totalDamage = attacker->getLevel();
+    
+    target->lowerHP(totalDamage);
+    
+    if (crit == 1.50)
+        cout << "A critical hit!" << endl;
+    
+    if (typeBoost > 1.0)
+        cout << "It's super effective!" << endl;
+    else if (typeBoost < 1.0)
+        cout << "It's not very effective..." << endl;
+    
+    if (move->getEffect() == MOHKO)
+        // OHKO move that hit (since it made it here)
+        cout << "It's a one-hit KO!" << endl;
+    
+    applyEffect(target, move);
+}
+
+void Pokemon::applyEffect(Pokemon* target, Move* move)
+{
+    Pokemon* attacker = this;
+    MoveEffect effect = move->getEffect();
+    
+    // Attacker side-effects (successful move execution)
+    
+    if (effect == MRampage && move->isThrash()
+        && attacker->getRampageTurns() == 0)
+        // Thrash-style rampage
+    {
+        attacker->addVStatus(RampageVStatus);
+        attacker->setRampageTurns(randInt(2, 3));
+    }
+    
+    if (effect == MOverheat)
+        // Overheat effect
+    {
+        attacker->decreaseStat(SpAStat, 2);
+    }
+    
+    if (effect == MFocusPunch)
+        // Focus punch
+        attacker->removeVStatus(FocusVStatus);
+    
+    // Target side-effects (successfully hit)
+    
+    if (target->isFainted() || target->getStats(HPStat) == 0)
+        // did the target faint?
+        // fainted pokemon don't get side-effects
+        return;
+    
+    if ((effect == MFreeze10 || effect == MFreeze50) &&
+        target->getType1() != IceType && target->getType2() != IceType &&
+        target->getStatus() == HealthyStatus)
+        // Freeze chance
+    {
+        int freezeChance;
+        if (effect == MFreeze50)
+            freezeChance = 50;
+        else
+            freezeChance = 10;
+        
+        if (randInt(0, 99) < freezeChance)
+            target->setStatus(FreezeStatus);
+    }
+    
+    if (effect == MBurn10 || effect == MBurn15 || effect == MBurn30)
+        // Burn chance
+    {
+        if (target->getStatus() == HealthyStatus)
+        {
+            int chance;
+            
+            switch (effect)
+            {
+                default:
+                    chance = 10; break;
+                case MBurn15:
+                    chance = 15; break;
+                case MBurn30:
+                    chance = 30; break;
+            }
+            
+            if (randInt(0, 99) < chance)
+                target->setStatus(BurnStatus);
+        }
+    }
+    
+    if (effect == MPoison10 || effect == MPoison15 || effect == MPoison30
+        || effect == MPoison40)
+        // Poison chance
+    {
+        if (target->getStatus() == HealthyStatus)
+        {
+            int chance;
+            
+            switch (effect)
+            {
+                default:
+                    chance = 10; break;
+                case MPoison15:
+                    chance = 15; break;
+                case MPoison30:
+                    chance = 30; break;
+                case MPoison40:
+                    chance = 40; break;
+            }
+            
+            if (randInt(0, 99) < chance)
+                target->setStatus(PoisonStatus);
+        }
+    }
+    
+    if (effect == MTri20)
+        // Tri attack
+    {
+        if (target->getStatus() == HealthyStatus)
+        {
+            if (randInt(0, 99) < 20)
+            {
+                switch(randInt(0, 2))
+                {
+                    default:
+                        target->setStatus(BurnStatus);
+                        break;
+                    case 1:
+                        target->setStatus(ParalyzeStatus);
+                        break;
+                    case 2:
+                        target->setStatus(FreezeStatus);
+                        break;
+                }
+            }
+        }
+    }
+    
+    if (effect == MParalyze10 || effect == MParalyze15 || effect == MParalyze30
+        || effect == MParalyze100)
+        // Paralyze chance
+    {
+        if (target->getStatus() == HealthyStatus)
+        {
+            int chance;
+            
+            switch (effect)
+            {
+                default:
+                    chance = 10; break;
+                case MParalyze15:
+                    chance = 15; break;
+                case MParalyze30:
+                    chance = 30; break;
+                case MParalyze100:
+                    chance = 100; break;
+            }
+            
+            if (randInt(0, 99) < chance)
+                target->setStatus(ParalyzeStatus);
+        }
+    }
+    
+    if (target->hasVStatus(FocusVStatus))
+        // Target flinched
+    {
+        target->removeVStatus(FocusVStatus);
+        target->addVStatus(FFlinchVStatus);
+    }
+    
+    if (effect == MLowerAcc100)
+        // Lower accuracy
+    {
+        target->decreaseStat(AccStat, false);
+    }
+}
+
+void Pokemon::applySideEffects(Move* move)
+{
+    // Attacker side effects not dependent on contact
+    
+    if (move->getEffect() == MSelfdestruct)
+        // Self Destruct or Explosion
+    {
+        lowerHP(getStats(HPStat));
+    }
 }

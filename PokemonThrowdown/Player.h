@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Ian Cordero. All rights reserved.
 //
 
-#ifndef __pokemongame__Player__
-#define __pokemongame__Player__
+#ifndef __PokemonThrowdown__Player__
+#define __PokemonThrowdown__Player__
 
 #include <iostream>
 #include "Trainer.h"
@@ -35,4 +35,4 @@ public:
 private:
 };
 
-#endif /* defined(__pokemongame__Player__) */
+#endif /* defined(__PokemonThrowdown__Player__) */

@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Ian Cordero. All rights reserved.
 //
 
-#ifndef __pokemongame__Battle__
-#define __pokemongame__Battle__
+#ifndef __PokemonThrowdown__Battle__
+#define __PokemonThrowdown__Battle__
 
 #include "constants.h"
 #include "pokedata.h"
@@ -38,15 +38,6 @@ public:
     
     // Display state of battle participants (i.e. Level, Name, Status, HP)
     void displayState(bool showTurnCount) const;
-    
-    // TODO: move these 4 into Pokemon
-    void applyStatus(Trainer* trainerA, Trainer* trainerB,
-                     Move* move);
-    void applyAttack(Trainer* trainerA, Trainer* trainerB,
-                     Move* move) const;
-    void applyEffect(Trainer* trainerA, Trainer* trainerB,
-                     Move* move) const;
-    void applySideEffects(Trainer* trainer, Move* move);
     
     // Display in-battle summary
     void dispPokeSummary(int slotNumber) const;
@@ -79,6 +70,13 @@ public:
     Trainer* getParticipants(int i) const;
     Weather getWeather() const;
     Field* getField() const;
+    
+    // Mutator functions
+    bool setPlayer(Trainer* player);
+    bool setOpponent(Trainer* opponent);
+    bool setParticipants(Trainer* participant);
+    bool setWeather(Weather weather);
+    bool setField(Field* field);
     
 private:
     // Tick the clock for each turn
@@ -134,7 +132,7 @@ private:
     Trainer* m_actor;
     Trainer* m_participants[NUMPLAYERS];
     int m_turns;
-    int m_initStage;
+    int m_numPlayers;
 };
 
-#endif /* defined(__pokemongame__Battle__) */
+#endif /* defined(__PokemonThrowdown__Battle__) */

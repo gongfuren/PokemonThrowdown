@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Ian Cordero. All rights reserved.
 //
 
-#ifndef __pokemongame__strings__
-#define __pokemongame__strings__
+#ifndef __PokemonThrowdown__strings__
+#define __PokemonThrowdown__strings__
 
 #include "constants.h"
 
@@ -114,4 +114,4 @@ const string genderStrings[4] = {
     "M", "F", "-", "?"
 };
 
-#endif /* defined(__pokemongame__strings__) */
+#endif /* defined(__PokemonThrowdown__strings__) */

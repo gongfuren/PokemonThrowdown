@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Ian Cordero. All rights reserved.
 //
 
-#ifndef __pokemongame__Item__
-#define __pokemongame__Item__
+#ifndef __PokemonThrowdown__Item__
+#define __PokemonThrowdown__Item__
 
 #include <iostream>
 #include <string>
@@ -34,7 +34,7 @@ public:
     
     bool restrictsChoice() const;
     
-    void incAge();
+    void incrementAge();
     void resetAge();
     void applyConsumption();
     void applyEffect();
@@ -46,4 +46,4 @@ private:
     Pokemon* m_holder;
 };
 
-#endif /* defined(__pokemongame__Item__) */
+#endif /* defined(__PokemonThrowdown__Item__) */

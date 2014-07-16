@@ -6,11 +6,12 @@
 //  Copyright (c) 2014 Ian Cordero. All rights reserved.
 //
 
-#ifndef __pokemongame__Field__
-#define __pokemongame__Field__
+#ifndef __PokemonThrowdown__Field__
+#define __PokemonThrowdown__Field__
 
 #include <iostream>
 #include "constants.h"
+#include "Zone.h"
 
 class Side;
 class Battle;
@@ -20,7 +21,7 @@ class Battle;
 // appreciable extent. TODO: utilize these classes, as well as existing ones
 // to improve modularity and organization. Perhaps make new classes as needed.
 
-class Field
+class Field : public Zone
 // Represents the battlefield and its current state
 {
 public:
@@ -50,4 +51,4 @@ private:
 };
 
 
-#endif /* defined(__pokemongame__Field__) */
+#endif /* defined(__PokemonThrowdown__Field__) */

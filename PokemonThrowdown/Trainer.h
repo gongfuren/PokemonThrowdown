@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Ian Cordero. All rights reserved.
 //
 
-#ifndef __pokemongame__Trainer__
-#define __pokemongame__Trainer__
+#ifndef __PokemonThrowdown__Trainer__
+#define __PokemonThrowdown__Trainer__
 
 #include "Pokemon.h"
 #include "trainerdata.h"
@@ -87,4 +87,4 @@ private:
     bool m_victory;
 };
 
-#endif /* defined(__pokemongame__Trainer__) */
+#endif /* defined(__PokemonThrowdown__Trainer__) */

@@ -17,20 +17,6 @@
 using namespace std;
 
 Move::Move(int moveID, Pokemon* pokemon)
-: m_name(""), m_type(NoType), m_damage(0), m_accuracy(0), m_effect(MNoEffect),
-m_PP(0), m_currentPP(0), m_pokemon(pokemon), m_description(""),
-m_target(Opponent), m_ID(moveID), m_PPUps(0), m_contact(false), m_age(0)
-{
-    // Standard Initialization:
-    
-    standardInit(moveID);
-}
-
-Move::~Move()
-{
-}
-
-void Move::standardInit(int moveID)
 {
     m_name = movelib[moveID].name;
     m_type = movelib[moveID].type;
@@ -44,9 +30,14 @@ void Move::standardInit(int moveID)
     m_contact = movelib[moveID].contact;
     m_ID = moveID;
     
-    m_currentPP = movelib[moveID].PP;
+    m_pokemon = pokemon;
+    m_currentPP = m_PP;
     m_age = 0;
     m_PPUps = 3;
+}
+
+Move::~Move()
+{
 }
 
 bool Move::getContact() const
@@ -109,9 +100,15 @@ int Move::getCurrentPP() const
     return m_currentPP;
 }
 
-void Move::decCurrentPP()
+bool Move::decrementCurrentPP()
 {
-    m_currentPP--;
+    if (m_currentPP == 0)
+        return false;
+    else
+    {
+        m_currentPP--;
+        return true;
+    }
 }
 
 MoveTarget Move::getTarget() const
@@ -124,7 +121,7 @@ int Move::getAge() const
     return m_age;
 }
 
-void Move::incAge()
+void Move::incrementAge()
 {
     m_age++;
 }
@@ -147,7 +144,7 @@ bool Move::isThrash() const
     }
 }
 
-int Move::detPriorityScore() const
+int Move::getPriorityScore() const
 {
     switch (getEffect())
     {
@@ -183,33 +180,33 @@ bool Move::determineFailure(Pokemon* target) const
     Move* targetMove = target->getMove(target->getIntendedMove());
     bool failed = false;
     
+    // Sucker Punch
     if (getEffect() == MSuckerPunch)
-        // Sucker punch
     {
+        // Target isn't readying an attack
         if (!(targetMove->isAttack()
               && (target->getTrainer()->getIntendedMove() == FightDecision
                   || target->getTrainer()->getIntendedMove() == MegaDecision))
-            || targetMove->detPriorityScore() > detPriorityScore())
-            // Trainer isn't attacking and pokemon isn't readying attack
-            // or opponent already attacked
+            || targetMove->getPriorityScore() > getPriorityScore())
             failed = true;
     }
+    // Casting weather that already exists
     else if ((m_effect == MRain && battle->getWeather() == Rain) ||
              (m_effect == MSun && battle->getWeather() == Sunny) ||
              (m_effect == MSandstorm && battle->getWeather() == Sandstorm) ||
              (m_effect == MHail && battle->getWeather() == Hail))
-        // Casting weather that already exists
     {
             failed = true;
     }
+    // Successive protects
     else if (getPokemon()->usedProtect(1)
              && (effect == MProtect || effect == MShield))
-        // Successive protects
     {
         int successChance = 100;
         
+        // How many turns in a row was Protect used? Halve success rate for
+        // each turn
         for (int i = 1; getPokemon()->usedProtect(i); i++)
-            // How many turns in a row was Protect used?
         {
             successChance /= 2;
         }
@@ -226,4 +223,10 @@ bool Move::determineFailure(Pokemon* target) const
 bool Move::isAttack() const
 {
     return (m_moveType == Physical || m_moveType == Special);
+}
+
+bool Move::isMultiTurn() const
+{
+    // TODO
+    return false;
 }

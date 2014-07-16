@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Ian Cordero. All rights reserved.
 //
 
-#ifndef __pokemongame__movedata__
-#define __pokemongame__movedata__
+#ifndef __PokemonThrowdown__movedata__
+#define __PokemonThrowdown__movedata__
 
 #include "constants.h"
 
@@ -1281,7 +1281,7 @@ const movedata movelib[MAXTOTALMOVES] = {
     "The user accumulates light energy and attacks the target."
 };
 
-#endif /* defined(__pokemongame__movedata__) */
+#endif /* defined(__PokemonThrowdown__movedata__) */
 
 
 
