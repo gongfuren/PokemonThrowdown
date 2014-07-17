@@ -12,11 +12,6 @@
 #include "constants.h"
 #include "strings.h"
 
-// Note: Field, Side, Slot, Player, Computer, and Item classes are all "hardly
-// implemented", that is, these modules are not being utilized to any
-// appreciable extent. TODO: utilize these classes, as well as existing ones
-// to improve modularity and organization. Perhaps make new classes as needed.
-
 Slot::Slot(Side* side)
 {
     m_side = side;

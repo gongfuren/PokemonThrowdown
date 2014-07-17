@@ -27,13 +27,7 @@ bool listContains(const list<Object> l, Object o)
 
 // Global Constants
 
-// TODO: make use of constants a bit more organized
-const int NUMDIRS = 4;
-
-enum Direction
-{
-    Stand, Up, Right, Down, Left
-};
+// TODO: organize use of constants
 
 enum Stats
 {
@@ -76,11 +70,11 @@ const int NUMPOKEMONPERPLAYER[NUMPLAYERS] = { 1, 1 };
 const int MAXPOKEMON = 6;
 const int MAXPLAYERS = 4;
 
-const int MAXNUMMOVES = 635;
-const int MAXNUMPOKEMON = 721;
+const int MAXNUMMOVES = 622;
+const int MAXNUMPOKEMON = 788;
 
-const int MAXTOTALMOVES = 700;
-const int MAXTOTALPOKEMON = 1000;
+const int MAXTOTALMOVES = 622;
+const int MAXTOTALPOKEMON = 788;
 const int MAXTOTALTRAINERS = 100;
 const int MAXTOTALBATTLES = 100;
 
@@ -176,6 +170,8 @@ const double natureArray[NUMNATURES][NUMSTATS-1] = {
 };
 
 const int NUMABILITIES = 100;
+
+const int NUMTITLES = 20;
 
 // Global Enumerators
 
@@ -283,12 +279,12 @@ enum MoveEffect
     
     MTrap, MPartialTrap,
     
-    MSub, MHazard, MDehazard, MReflect, MLightScreen, MVitalThrow
+    MSub, MHazard, MDehazard, MReflect, MLightScreen, MVitalThrow, MFoul
 };
 
-const int MINPRIORITY = -7;
+const int MINPRIORITY = -8;
 const int NORMPRIORITY = 0;
-const int MAXPRIORITY = 7;
+const int MAXPRIORITY = 8;
 
 enum HoldItem
 {
@@ -298,7 +294,8 @@ enum HoldItem
     
     HVenusaurite, HCharizarditeX, HCharizarditeY, HBlastoisinite, HAlakazite, HGengarite, HKangaskhanite, HPinsirite, HGyaradosite, HAerodactylite, HMewtwoniteX, HMewtwoniteY, HAmpharosite, HScizorite, HHeracronite, HHoundoominite, HTyranitarite, HBlazikenite, HGardevoirite, HMawilite, HAggronite, HMedichamite, HManectite, HBannetite, HAbsolite, HGarchompite, HLucarionite, HAbomasite,
     
-    HLatiasite, HLatiosite
+    // Experimental Items
+    HSwampertite, HSceptilite, HSableite, HDiancite, HLatiasite, HLatiosite
 };
 
 const int NUMITEMS = 100;
@@ -313,7 +310,7 @@ enum PokeAbility
     PSereneGrace, PUnaware, PMagicBounce, PPressure, PSandStream, PMultiscale,
     PSynchronize, PClearBody, PDrizzle, PDrought, PAirLock, PStanceChange,
     PTorrent, PBlaze, POvergrow, PSwarm, PTechnician, PPoisonPoint,
-    PSnowWarning, PAnticipation, PMoldBreaker, PPurePower
+    PSnowWarning, PAnticipation, PMoldBreaker, PPurePower, PPrankster
 };
 
 enum MoveType
@@ -400,7 +397,6 @@ enum BattleType
 
 // Auxiliary Function Declarations
 
-void gyroscope(int& gyro, int& scope, Direction d);
 int randInt(int lowest, int highest);
 double typeMultiplier(Type type1, Type type2);
 double typeMultiplier(Type type1, Type type2, Type type3);

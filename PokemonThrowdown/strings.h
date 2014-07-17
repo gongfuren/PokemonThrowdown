@@ -11,7 +11,6 @@
 
 #include "constants.h"
 
-#include <iostream>
 #include <string>
 using namespace std;
 
@@ -45,7 +44,7 @@ const string itemStrings[NUMITEMS] = {
     
     "Venusaurite", "Charizardite X", "Charizardite Y", "Blastoisinite", "Alakazite", "Gengarite", "Kangaskhanite", "Pinsirite", "Gyaradosite", "Aerodactylite", "Mewtwonite X", "Mewtwonite Y", "Ampharosite", "Scizorite", "Heracronite", "Houndoominite", "Tyranitarite", "Blazikenite", "Gardevoirite", "Mawilite", "Aggronite", "Medichamite", "Manectite", "Bannetite", "Absolite", "Garchompite", "Lucarionite", "Abomasite",
     
-    "Latiasite", "Latiosite"
+    "Swampertite", "Sceptilite", "Sableite", "Diancite", "Latiasite", "Latiosite"
 };
 
 const string abilityStrings[NUMABILITIES] = {
@@ -54,7 +53,7 @@ const string abilityStrings[NUMABILITIES] = {
     "Sand Stream", "Multiscale", "Synchronize", "Clear Body", "Drizzle",
     "Drought", "Air Lock", "Stance Change", "Torrent", "Blaze", "Overgrow",
     "Swarm", "Technician", "Poison Point", "Snow Warning", "Anticipation",
-    "Mold Breaker", "Pure Power"
+    "Mold Breaker", "Pure Power", "Prankster"
 };
 
 const string moveTypeStrings[NUMMOVETYPES] = {
@@ -112,6 +111,36 @@ const string weatherHurtStrings[NUMWEATHERS] = {
 
 const string genderStrings[4] = {
     "M", "F", "-", "?"
+};
+
+const string PKMNTRAINER = "PKMN Trainer";
+const string YOUNGSTER = "Youngster";
+const string GYMLEADER = "Gym Leader";
+const string BUGCATCHER = "Bug Catcher";
+const string LASS = "Lass";
+
+const string ACETRAINER = "Ace Trainer";
+const string ELITEFOUR = "Elite Four";
+const string CHAMPION = "Champion";
+const string HIKER = "Hiker";
+const string SWIMMER = "Swimmer";
+
+const string PSYTRAINER = "Psychic";
+const string DRGNTAMER = "Dragon Tamer";
+const string BIRDKEEPER = "Bird Keeper";
+const string FAIRYTALE = "Fairy Tale Girl";
+const string JUGGLER = "Juggler";
+
+const string RICHBOY = "Rich Boy";
+const string LADY = "Lady";
+const string CUEBALL = "Cue Ball";
+const string VETERAN = "Veteran";
+const string SOCIALITE = "Socialite";
+
+const string titleArray[NUMTITLES] = {
+    PKMNTRAINER, YOUNGSTER, GYMLEADER, BUGCATCHER, LASS, ACETRAINER, ELITEFOUR,
+    CHAMPION, HIKER, SWIMMER, PSYTRAINER, DRGNTAMER, BIRDKEEPER, FAIRYTALE,
+    JUGGLER, RICHBOY, LADY, CUEBALL, VETERAN, SOCIALITE
 };
 
 #endif /* defined(__PokemonThrowdown__strings__) */

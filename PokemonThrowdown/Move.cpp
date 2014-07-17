@@ -146,29 +146,48 @@ bool Move::isThrash() const
 
 int Move::getPriorityScore() const
 {
+    int m;
+    
     switch (getEffect())
     {
-        case MRoar:
-            return -7;
         case MTrickRoom:
-            return -6;
+            m = -7;
+            break;
+        case MRoar:
+            m = -6;
+            break;
         case MCounter:
-            return -5;
+            m = -5;
+            break;
         case MFocusPunch:
+            m = -3;
+            break;
         case MVitalThrow:
-            return -4;
+            m = -1;
+            break;
         case MSuckerPunch:
-            return 1;
         case MMoveFirst:
-            return 2;
+            m = 1;
+            break;
         case MMoveFirst2:
-            return 3;
-        case MProtect:
+            m = 2;
+            break;
         case MShield:
-            return 6;
+            m = 3;
+            break;
+        case MProtect:
+            m = 4;
+            break;
         default:
-            return 0;
+            m = 0;
+            break;
     }
+    
+    // Prankster and a status move: enhanced priority
+    if (getPokemon()->getAbility() == PPrankster && getMoveType() == Status)
+        m++;
+    
+    return m;
 }
 
 bool Move::determineFailure(Pokemon* target) const

@@ -13,11 +13,6 @@
 #include "Trainer.h"
 #include "constants.h"
 
-// Note: Field, Side, Slot, Player, Computer, and Item classes are all "hardly
-// implemented", that is, these modules are not being utilized to any
-// appreciable extent. TODO: utilize these classes, as well as existing ones
-// to improve modularity and organization. Perhaps make new classes as needed.
-
 class Player : public Trainer
 // Represents a human controlled Trainer
 {

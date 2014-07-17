@@ -18,7 +18,7 @@
 #include <string>
 using namespace std;
 
-Pokemon::Pokemon(pokedata h, Trainer* trainer)
+Pokemon::Pokemon(pokedata h, Trainer* trainer, int wp)
 : m_trainer(trainer)
 {
     m_name = h.name;
@@ -62,10 +62,17 @@ Pokemon::Pokemon(pokedata h, Trainer* trainer)
     
     for (int i = 0; i < MAXMOVES; i++)
     {
-        if (h.moveIDs[i] != -1)
-            m_moves[i] = new Move(h.moveIDs[i], this);
+        int ic = getTrainer()->getBattle()->getNumPlayers();
+        
+        if (getTrainer()->getBattle()->getPreMoveIDs(ic, wp, i) != -1)
+            m_moves[i] = new Move(getTrainer()->getBattle()->getPreMoveIDs(ic, wp, i), this);
         else
-            m_moves[i] = new Move(randInt(0, MAXNUMMOVES-1), this);
+        {
+            if (h.moveIDs[i] != -1)
+                m_moves[i] = new Move(h.moveIDs[i], this);
+            else
+                m_moves[i] = new Move(randInt(1, MAXNUMMOVES-1), this);
+        }
     }
     
     if (m_gender == NoGender)
@@ -106,7 +113,7 @@ bool Pokemon::hasCompatMegaStone() const
     int pind = -1;
     int ms = static_cast<int>(m_item->getID() - HVenusaurite);
     
-    for (int i = 722; i <= 749; i++)
+    for (int i = 722; i <= 753; i++)
     {
         if (pokelib[i].ID == m_ID)
             pind = i;
@@ -1237,7 +1244,7 @@ void Pokemon::applyAttack(Pokemon* target, Move* move)
     
     double typeBoost, pureDamage, sTAB, crit, modulus, other, attackMultiplier,
     specialDefMultiplier, modifier, spOrNot,
-    damage, totalDamage;
+    damage, totalDamage, attack;
     
     int critThreshold;
     
@@ -1356,15 +1363,21 @@ void Pokemon::applyAttack(Pokemon* target, Move* move)
     
     modifier = typeBoost * sTAB * crit * modulus * other;
     
+    // Physical attack
     if (move->getMoveType() == Physical)
-        // Physical attack
     {
-        spOrNot = static_cast<double>(attacker->getStats(AttStat) *
-                                      attackMultiplier)
-        / static_cast<double>(target->getStats(DefStat));
+        // Foul Play: use target's Att stat
+        if (move->getEffect() == MFoul)
+            attack = static_cast<double>(target->getStats(AttStat) *
+                                         attackMultiplier);
+        else
+            attack = static_cast<double>(attacker->getStats(AttStat) *
+                                         attackMultiplier);
+        
+        spOrNot = attack / static_cast<double>(target->getStats(DefStat));
     }
+    // Special attack
     else
-        // Special attack
     {
         spOrNot = static_cast<double>(attacker->getStats(SpAStat)) /
         (static_cast<double>(target->getStats(SpDStat)

@@ -44,7 +44,7 @@ struct pokedata
 
 const pokedata pokelib[MAXTOTALPOKEMON] = {
     
- 0, "Missing No.",  NeutralType,    NoType, 120,    120,    120,    120,    120,   120,
+ 0, "Missing No.",  NoType,    NoType, 255,    255,    255,    255,    255,   255,
     NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
 	"",
  1,	"Bulbasaur",	GrassType,	PoisonType,	45,	49,	49,	65,	65,	45,
@@ -951,7 +951,7 @@ const pokedata pokelib[MAXTOTALPOKEMON] = {
 	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
 	"",
  302,	"Sableye",	DarkType,	GhostType,	50,	75,	75,	65,	65,	50,
-	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
+	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HSableite,	-1,	-1,	-1,	-1,	-1,	-1,	100,	269,	261,	105,	492,	PPrankster,	PNoAbility,	PNoAbility,	0,
 	"",
  303,	"Mawile",	SteelType,	FairyType,	50,	85,	85,	55,	55,	50,
 	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HMawilite,	-1,	-1,	-1,	-1,	-1,	-1,	100,	442,	389,	583,	264,	PIntimidate,	PIntimidate,	PIntimidate,	0,
@@ -1107,7 +1107,7 @@ const pokedata pokelib[MAXTOTALPOKEMON] = {
 	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
 	"",
  354,	"Banette",	GhostType,	NoType,	64,	115,	65,	83,	63,	65,
-	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HBannetite,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
+	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HBannetite,	-1,	-1,	-1,	-1,	-1,	-1,	100,	282,	269,	194,	421,	PNoAbility,	PNoAbility,	PNoAbility,	0,
 	"",
  355,	"Duskull",	GhostType,	NoType,	20,	40,	90,	30,	90,	25,
 	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
@@ -1686,7 +1686,7 @@ const pokedata pokelib[MAXTOTALPOKEMON] = {
 	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
 	"",
  547,	"Whimsicott",	GrassType,	FairyType,	60,	67,	85,	77,	75,	116,
-	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
+	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PPrankster,	PNoAbility,	PNoAbility,	0,
 	"",
  548,	"Petilil",	GrassType,	NoType,	45,	35,	50,	70,	50,	30,
 	Female,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
@@ -1920,7 +1920,7 @@ const pokedata pokelib[MAXTOTALPOKEMON] = {
 	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
 	"",
  625,	"Bisharp",	DarkType,	SteelType,	65,	125,	100,	60,	70,	70,
-	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
+	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	282,	442,	289,	14,	PNoAbility,	PNoAbility,	PNoAbility,	0,
 	"",
  626,	"Bouffalant",	NormalType,	NoType,	95,	110,	95,	40,	95,	55,
 	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
@@ -1935,7 +1935,7 @@ const pokedata pokelib[MAXTOTALPOKEMON] = {
 	Female,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
 	"",
  630,	"Mandibuzz",	DarkType,	FlyingType,	110,	65,	105,	55,	95,	80,
-	Female,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
+	Female,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	492,	355,	18,	432,	PNoAbility,	PNoAbility,	PNoAbility,	0,
 	"",
  631,	"Heatmor",	FireType,	NoType,	85,	97,	66,	105,	66,	65,
 	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
@@ -2079,7 +2079,7 @@ const pokedata pokelib[MAXTOTALPOKEMON] = {
 	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
 	"",
  678,	"Meowstic (Male)",	PsychicType,	NoType,	74,	48,	76,	83,	81,	104,
-Male,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
+Male,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	271,	86,	473,	281,	PPrankster,	PNoAbility,	PNoAbility,	0,
 	"",
  679,	"Honedge",	SteelType,	GhostType,	45,	80,	100,	35,	37,	28,
 	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
@@ -2166,7 +2166,7 @@ Male,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1
 	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
 	"",
  707,	"Klefki",	SteelType,	FairyType,	57,	80,	91,	80,	87,	75,
-	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
+	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	577,	207,	86,	492,	PPrankster,	PNoAbility,	PNoAbility,	0,
 	"",
  708,	"Phantump",	GhostType,	GrassType,	43,	70,	48,	50,	60,	38,
 	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
@@ -2313,7 +2313,7 @@ Male,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1
 	"",
     // 745
     354,	"Banette (Mega)",	GhostType,	NoType,	64,	165,	75,	93,	83,	75,
-	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
+	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HBannetite,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
 	"",
     // 746
     359,	"Absol (Mega)",	DarkType,	NoType,	65,	150,	60,	115,	60,	115,
@@ -2340,7 +2340,7 @@ Male,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1
     NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
     "",
     // 752
-    302, "Sableye (Mega)",  DarkType,  GhostType, 100,    100,    100,    100,    100,    100,
+    302, "Sableye (Mega)",  DarkType,  GhostType, 50,	75,	125,	65,	115,	50,
     NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
     "",
     // 753
@@ -2392,7 +2392,7 @@ Male,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1
 	"",
     // 764
     487,	"Giratina (Origin Forme)",	GhostType,	DragonType,	150,	120,	100,	120,	100,	90,
-	Genderless,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
+	Genderless,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	467,	406,	247,	396,	PLevitate,	PNoAbility,	PNoAbility,	0,
 	"",
     // 765
     492,	"Shaymin (Sky Forme)",	GrassType,	FlyingType,	100,	103,	75,	120,	75,	127,
@@ -2420,7 +2420,7 @@ Male,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1
 	"",
     // 771
     645,	"Landorus (Therian Forme)",	GroundType,	FlyingType,	89,	145,	90,	105,	80,	91,
-	Male,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
+	Male,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	89,	444,	369,	446,	PIntimidate,	PNoAbility,	PNoAbility,	0,
 	"",
     // 772
     642,	"Thundurus (Therian Forme)",	ElectricType,	FlyingType,	79,	105,	70,	145,	80,	101,
@@ -2448,11 +2448,11 @@ Male,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1
 	"",
     // 778
     386,	"Deoxys (Attack)",	PsychicType,	NoType,	50,	180,	20,	180,	20,	150,
-    Genderless,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
+    Genderless,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	354,	276,	282,	245,	PPressure,	PNoAbility,	PNoAbility,	0,
 	"",
     // 779
     386,	"Deoxys (Defense)",	PsychicType,	NoType,	50,	70,	160,	70,	160,	90,
-    Genderless,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
+    Genderless,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PPressure,	PNoAbility,	PNoAbility,	0,
 	"",
     // 780
     386,	"Deoxys (Speed)",	PsychicType,	NoType,	50,	95,	90,	95,	90,	180,
@@ -2485,13 +2485,13 @@ Male,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1
     //
     
     // 786
-    902,    "Constantinoble",   GhostType,    LightType,  108,    137,    155,    95, 140, 75,
-    Genderless,   NoNature,   -1, -1, -1, -1, -1, -1, HNoItem,    -1, -1, -1, -1, -1, -1, 100,    618,    322,    533,    467,    PPressure,  PPressure,  PPressure,  0,
-    "A lingering spirit from an ancient time.",
+    903,    "Constantinoble",   LightType,    DarkType,  108,    137,    155,    95, 140, 75,
+    Genderless,   NoNature,   -1, -1, -1, -1, -1, -1, HNoItem,    -1, -1, -1, -1, -1, -1, 100,    618,    620,    533,    467,    PPressure,  PPressure,  PPressure,  0,
+    "A lingering spirit from an ancient time. Its two halves were once seperate beings.",
     // 787
-    902,    "???",   LightType,    DarkType,  108,    137,    155,    95, 140, 75,
-    Genderless,   NoNature,   -1, -1, -1, -1, -1, -1, HNoItem,    -1, -1, -1, -1, -1, -1, 100,    618,    322,    533,    467,    PPressure,  PPressure,  PPressure,  0,
-    "Its halves represent dark and light. They were once seperate beings.",
+    904,    "???",   NeutralType,    NoType,  140,    140,    140,    140, 140, 140,
+    Genderless,   NoNature,   -1, -1, -1, -1, -1, -1, HNoItem,    -1, -1, -1, -1, -1, -1, 100,    618,    620,    533,    467,    PPressure,  PPressure,  PPressure,  0,
+    "",
 };
 
 // As of writing this comment, all Pokemon must have 4 moves for program to work correctly/

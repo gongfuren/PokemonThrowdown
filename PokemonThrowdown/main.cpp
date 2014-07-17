@@ -54,11 +54,29 @@ int main()
         }
         else if (choice == 3) // Credits
         {
-            cout << "Pokemon Throwdown" << endl
-            << "An originally-coded, Pokemon simulator that is true to the game. Made by a huge fan." << endl
+            for (int i = 0; i < 25; i++)
+                cout << "*";
+            cout << endl;
+            
+            cout << "Pokemon Throwdown" << " | " << "v0.2" << endl;
+            
+            for (int i = 0; i < 25; i++)
+                cout << "*";
+            cout << endl;
+            
+            cout << "An originally-coded Pokemon simulator that is true to the game."
+            << endl << endl
+            
+            << "All credit goes to Nintendo for original game design"
+            ", mechanics, etc." << endl << endl << "Made by a huge fan."
+            << endl << endl
+            
             << "throwdown (n.) informal" << endl
             << "a performance by or competition between rappers, breakdancers, etc." << endl
-            << "ex: a funky hip-hop throwdown." << endl;
+            << "ex: a funky hip-hop throwdown." << endl << endl
+            
+            << "(C) 2013-2014 Ian P. Cordero." << endl << endl;
+
             showFullHeader = false;
         }
         else // Quit

@@ -37,7 +37,7 @@ struct movedata
 
 const movedata movelib[MAXTOTALMOVES] = {
     
-    0,  "Struggle", NoType,    Status, UnknownStat,    -1, -1, -1, I,	MRecoilStrug,  Opponent, false,
+    0,  "-", NoType,    Status, UnknownStat,    -1, -1, -1, I,	MNoEffect,  None, false,
 	"",
     1,	"Pound",	NormalType,	Physical,	Tough,	35,	40,	100,	I,	MNoEffect,	Opponent, true,
 	"",
@@ -947,7 +947,7 @@ const movedata movelib[MAXTOTALMOVES] = {
 	"",
     454,	"Attack Order",	BugType,	Physical,	Smart,	15,	90,	100,	IV,	MNoEffect,	Opponent, false,
 	"",
-    455,	"Defend Order",	BugType,	Status,	Smart,	10,	-1,	-1,	IV,	MNoEffect,	Opponent, false,
+    455,	"Defend Order",	BugType,	Status,	Smart,	10,	-1,	-1,	IV,	MUpDefSpD,	Self, false,
 	"",
     456,	"Heal Order",	BugType,	Status,	Smart,	10,	-1,	-1,	IV,	MNoEffect,	Opponent, false,
 	"",
@@ -1021,7 +1021,7 @@ const movedata movelib[MAXTOTALMOVES] = {
 	"",
     491,	"Acid Spray",	PoisonType,	Special,	UnknownStat,	20,	40,	100,	V,	MLowerSpD2,	Opponent, false,
 	"",
-    492,	"Foul Play",	DarkType,	Physical,	UnknownStat,	15,	95,	100,	V,	MNoEffect,	Opponent, true,
+    492,	"Foul Play",	DarkType,	Physical,	UnknownStat,	15,	95,	100,	V,	MFoul,	Opponent, true,
 	"",
     493,	"Simple Beam",	NormalType,	Status,	UnknownStat,	15,	-1,	100,	V,	MNoEffect,	Opponent, false,
 	"",
@@ -1278,7 +1278,9 @@ const movedata movelib[MAXTOTALMOVES] = {
     619,    "Radiant Blade",    LightType,  Special,    UnknownStat,    5, 100,    100,        X,  MNoEffect,  Opponent, false,
 	"Generates a sword of light and attacks the target.", // TODO: calc damage using Def
     620,    "Shining Strike", LightType,    Physical,   UnknownStat,    5,  100,    100,    X,  MNoEffect,  Opponent,   false,
-    "The user accumulates light energy and attacks the target."
+    "The user accumulates light energy and attacks the target.",
+    621,    "???",  NoType, Status, UnknownStat,    -1, -1, -1, X,  MNoEffect,  None,   false,
+    ""
 };
 
 #endif /* defined(__PokemonThrowdown__movedata__) */

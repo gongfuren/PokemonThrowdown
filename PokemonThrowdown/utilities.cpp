@@ -11,34 +11,6 @@
 
 // Auxiliary Function Implementations
 
-// TODO: clean up these functions and their usage
-void gyroscope(int& gyro, int& scope, Direction d)
-{
-    switch (d)
-    {
-        case Up:
-            gyro = 0;
-            scope = -1;
-            break;
-        case Right:
-            gyro = 1;
-            scope = 0;
-            break;
-        case Down:
-            gyro = 0;
-            scope = 1;
-            break;
-        case Left:
-            gyro = -1;
-            scope = 0;
-            break;
-        default:
-            gyro = 0;
-            scope = 0;
-            break;
-    }
-}
-
 double typeMultiplier(Type type1, Type type2)
 {
     return typeArray[type1][type2];

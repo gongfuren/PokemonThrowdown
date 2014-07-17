@@ -26,7 +26,7 @@ class Pokemon
 // Represents a Battle-ready Pokemon and its current state
 {
 public:
-    Pokemon(pokedata h, Trainer* trainer);
+    Pokemon(pokedata h, Trainer* trainer, int wp);
     ~Pokemon();
     
     // Accessor functions

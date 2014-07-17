@@ -10,28 +10,10 @@
 #define __PokemonThrowdown__trainerdata__
 
 #include "constants.h"
+#include "strings.h"
 
 #include <string>
 using namespace std;
-
-const string PKMNTRAINER = "PKMN Trainer";
-const string YOUNGSTER = "Youngster";
-const string GYMLEADER = "Gym Leader";
-const string BUGCATCHER = "Bug Catcher";
-const string LASS = "Lass";
-const string ACETRAINER = "Ace Trainer";
-const string ELITEFOUR = "Elite Four";
-const string CHAMPION = "Champion";
-const string HIKER = "Hiker";
-const string SWIMMER = "Swimmer";
-const string PSYTRAINER = "Psychic";
-
-const int NUMTITLES = 11;
-
-const string titleArray[NUMTITLES] = {
-    PKMNTRAINER, YOUNGSTER, GYMLEADER, BUGCATCHER, LASS, ACETRAINER, ELITEFOUR,
-    CHAMPION, HIKER, SWIMMER, PSYTRAINER
-};
 
 struct trainerdata
 {
@@ -42,21 +24,24 @@ struct trainerdata
     int pokemonIDs[MAXPOKEMON];
 };
 
-const int NUMTRAINERS = 4;
+const int NUMTRAINERS = 11;
 
 const trainerdata trainerlib[MAXTOTALTRAINERS] = {
     //                                      Pokemon
     // Name       Title        Male   Prize 1    2    3    4    5    6
     "Red",        PKMNTRAINER, true,  1000, 196, 25,  6,   9,   3,   143,
     "Steven",     CHAMPION,    true,  1000, 227, 306, 344, 346, 348, 376,
-    "Blue",       CHAMPION,    true,  1000, 214, 65,  248, 59,  103,  197,
-    "Ian",        ACETRAINER,   true,  1000, 774, 721, 637, 303, 720, 681,
-    "KC",         PKMNTRAINER, false, 1000, 25,  249, 382,  94,  157,  286,
+    "Blue",       PKMNTRAINER, true,  1000, 214, 65,  248, 59,  103, 197,
+    "Ian",        ACETRAINER,  true,  7000, 468, 721, 637, 303, 720, 681,
+    "Jean",       FAIRYTALE,   false, 1000, 25,  249, 382, 94,  157, 286,
+    
+    "Gabriel",    DRGNTAMER,   true,  1000, 6,   65,  121, 212, 248, 230,
+    "Jessica",    HIKER,       false, 1000, 260, 429, 143, 242 ,448, 468,
+    "Eric",       CUEBALL,     true,  1000, 477, 330, 254, 242, 65,  157,
+    "Ramon",      RICHBOY,     true,  1000, 65,  376, 386, 385, 197, 150,
+    "Constance",  LADY,        false, 9000, 786, 778, 774, 302, 625, 630,
 
-    "Anjo",       PKMNTRAINER, true,  1000,  6,  65,  121,  212,  248,  230,
-    "Jessica",    ACETRAINER,  false, 1000, 260, 429, 143, 242 ,448, 468,
-    "Erick",      PSYTRAINER,  true,  1000, 477, 330, 254, 242, 65,  157,
-    "Steven",     PSYTRAINER,  true,  1000, 65,  376, 386, 385, 197,  150
+    "Lann",       JUGGLER,     true,  1000, 764, 771, 150, 151, 707, 678,
 };
 
 #endif /* defined(__PokemonThrowdown__trainerdata__) */

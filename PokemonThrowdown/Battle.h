@@ -19,6 +19,9 @@ class Trainer;
 class Pokemon;
 class Move;
 
+struct trainerdata;
+struct movedata;
+
 class Battle
 // Orchestrates Pokemon battle based on rules of game
 // Hosts Field and Trainers which host Side, Slot, Pokemon, Move, Item, etc.
@@ -29,9 +32,13 @@ public:
     ~Battle();
     
     // Allow user to customize own Trainer and opponent Trainer
-    // TODO: allow more customization than 4 Trainers with preset Pokemon
-    // teams as is implemented at the moment
-    void customInit();
+    bool chooseTrainer();
+    bool customTrainer(trainerdata* t);
+    int searchByName(bool p = true) const;
+    int browse(bool p = true) const;
+    int randomChoice(bool p = true) const;
+    void dispMoveInfo(const movedata* m) const;
+    bool repeatChosePokemon(int p, bool* r, bool m = true, bool i = true) const;
     
     // Start the Battle
     void start();
@@ -70,6 +77,9 @@ public:
     Trainer* getParticipants(int i) const;
     Weather getWeather() const;
     Field* getField() const;
+    int getPreMoveIDs(int trainer, int pokemon, int moveslot) const;
+    int* getPreMoveIDs() const;
+    int getNumPlayers() const;
     
     // Mutator functions
     bool setPlayer(Trainer* player);
@@ -133,6 +143,7 @@ private:
     Trainer* m_participants[NUMPLAYERS];
     int m_turns;
     int m_numPlayers;
+    int m_preMoveIDs[2][MAXPOKEMON][MAXMOVES];
 };
 
 #endif /* defined(__PokemonThrowdown__Battle__) */
