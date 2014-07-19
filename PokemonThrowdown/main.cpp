@@ -27,7 +27,7 @@ int main()
     {
         // Title Screen
         cout << "O***0***O***0***O***0" << endl
-        << "* Pokemon Throwdown * v0.2.1" << endl
+        << "* Pokemon Throwdown * v0.2.1.1" << endl
         << "0***O***0***O***0***O" << endl;
         
         cout << "1: " << "New Game" << endl
@@ -50,6 +50,9 @@ int main()
         }
         else if (choice == 3) // Credits
         {
+            cout << "PokemonThrowdown" << endl;
+            cout << "----------------" << endl << endl;
+            
             cout << "An originally-coded Pokemon simulator that is true to the game."
             << endl << endl
             
@@ -60,6 +63,8 @@ int main()
             << "throwdown (n.) informal" << endl
             << "a performance by or competition between rappers, breakdancers, etc." << endl
             << "ex: a funky hip-hop throwdown." << endl << endl
+            
+            << "Pokemon \"Throwdown\" is a play on the popular web-based Pokemon Showdown battle simulator." << endl << endl
             
             << "(C) 2013-2014 Ian P. Cordero." << endl;
             // Contributors feel free to add your names :) (comma seperated,
