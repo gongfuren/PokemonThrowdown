@@ -67,8 +67,7 @@ int main()
             << "Pokemon \"Throwdown\" is a play on the popular web-based Pokemon Showdown battle simulator." << endl << endl
             
             << "(C) 2013-2014 Ian P. Cordero." << endl;
-            // Contributors feel free to add your names :) (comma seperated,
-            // last name ends with period i.e. (C) 2012 Rob Joe, Billy Bob.)
+            // Contributors feel free to add your names here
         }
         else // Quit
         {
