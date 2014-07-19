@@ -37,7 +37,7 @@ struct movedata
 
 const movedata movelib[MAXTOTALMOVES] = {
     
-    0,  "-", NoType,    Status, UnknownStat,    -1, -1, -1, I,	MNoEffect,  None, false,
+    0,  "???", NoType,    Status, UnknownStat,    -1, -1, -1, I,	MNoEffect,  None, false,
 	"",
     1,	"Pound",	NormalType,	Physical,	Tough,	35,	40,	100,	I,	MNoEffect,	Opponent, true,
 	"",
@@ -1221,9 +1221,9 @@ const movedata movelib[MAXTOTALMOVES] = {
 	"",
     591,	"Diamond Storm",	RockType,	Physical,	UnknownStat,	5,	100,	95,	VI,	MNoEffect,	Opponent, true,
 	"",
-    592,	"???",	NoType,	Status,	UnknownStat,	-1,	-1,	-1,	VI,	MNoEffect,	Opponent, false,
+    592,	"Hyperspace Hole",	PsychicType,	Status,	UnknownStat,	10,	80,	-1,	VI,	MNeverMiss,	Opponent, false,
 	"",
-    593,	"???",	NoType, Status,	UnknownStat,	-1,	-1,	-1,	VI,	MNoEffect,	Opponent, false,
+    593,	"Stream Eruption",	WaterType, Status,	UnknownStat,	5,	110,	95,	VI,	MBurn30,	Opponent, false,
 	"",
     594,	"Water Shuriken",	WaterType,	Physical,	UnknownStat,	20,	15,	100,	VI,	MMultiHit,	Opponent, true,
 	"",
@@ -1271,61 +1271,21 @@ const movedata movelib[MAXTOTALMOVES] = {
 	"",
     616,	"Land's Wrath", GroundType,	Physical,	UnknownStat,	10,	90,	100,	VI,	MNoEffect,	Opponent, true,
 	"",
-    900,    "Crimson Sunset",   NeutralType,    Special,    UnknownStat,    5,  -1, 100,    X,  MOHKO,  Opponent, false,
+    // 617
+    900,    "Crimson Blaze",   NeutralType,    Special,    UnknownStat,    5,  -1, 70,    X,  MOHKO,  Opponent, false,
 	"Sets off a catastrophic explosion that resembles a deep red sun. The target will faint instantly if hit.",
+    // 618
     901,    "Nether Ring",   DarkType, Special,    UnknownStat,    5,  100,    100, X, MFreeze50,   Opponent, false,
 	"The user fires a strange pulse that drains energy. May freeze the target.",
+    // 619
     902,    "Radiant Blade",    LightType,  Special,    UnknownStat,    5, 100,    100,        X,  MNoEffect,  Opponent, false,
 	"Generates a sword of light and attacks the target.",
+    // 620
     903,    "Shining Strike", LightType,    Physical,   UnknownStat,    5,  100,    100,    X,  MNoEffect,  Opponent,   false,
     "The user accumulates light energy and attacks the target.",
-    904,    "???",  NoType, Status, UnknownStat,    -1, -1, -1, X,  MNoEffect,  None,   false,
-    ""
+    // 621
+    -1,    "Loving Embrace",  NeutralType, Physical, UnknownStat,    5, -1, 50, X,  MOHKO,  Opponent,   true,
+    "The user slowly approaches the target. The target will faint instantly if contact is made."
 };
 
 #endif /* defined(__PokemonThrowdown__movedata__) */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

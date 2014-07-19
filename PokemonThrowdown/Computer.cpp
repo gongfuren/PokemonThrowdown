@@ -49,6 +49,8 @@ void Computer::actionSelect(int level)
         for (int i = 0; i < MAXMOVES; i++)
         {
             moves[i] = getPokemon()->getMove(i);
+            if (moves[i] == NULL)
+                continue;
             
             if (moves[i]->getMoveType() == Status)
             {

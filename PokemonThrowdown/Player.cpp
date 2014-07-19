@@ -221,42 +221,57 @@ bool Player::trainerSummon(bool optional)
 bool Player::chooseFight()
 {
     Pokemon* pokemon = getPokemon();
-    
-    int playerChoice, j;
+    Move* move;
+    int playerChoice, i, j, prog;
     bool canMega, willMegaEvolve = false;
+    
+    string mvref[4], meref[2];
+    int mvsize, mesize;
     
     do
     {
+        mvsize = 0;
+        mesize = 0;
+        prog = 0;
+        
         cout << "Choose a move" << ":" << endl;
         
-        for (j = 0; j < MAXMOVES; j++)
+        for (i = 0, j = 0; i < MAXMOVES; i++)
         {
-            cout << j+1 << ": ";
-            
-            cout << getPokemonMove(j)->getName() << endl;
+            move = getPokemonMove(i);
+            if (move == NULL)
+                continue;
+            mvref[j++] = move->getName();
         }
+        
+        mvsize = j;
         
         canMega = pokemon->canMegaEvolve();
         
         if (canMega)
         {
-            cout << ++j << ": " << "*Mega Evolution*";
-            
+            meref[mesize] = "*Mega Evolution*";
             if (willMegaEvolve)
-                cout << " (" << "Selected" << ")";
-            
-            cout << endl;
+                meref[mesize] += " (Selected)";
+            mesize++;
         }
         
-        cout << ++j << ": (" << "Move Info" << ")" << endl;
-        cout << ++j << ": (" << "Back" << ")" << endl;
+        meref[mesize++] = "(Move Info)";
         
-        cin >> playerChoice;
+        playerChoice = selectorGadget(mvref, mvsize, prog, 10, true,
+                                      meref, mesize);
+
+        if (playerChoice == BACK)
+            return false;
         
-        if (playerChoice == j-1)
+        if (playerChoice == mvsize+mesize-1)
+        {
             getBattle()->dispPokeMoves();
+            playerChoice = mvsize+mesize;
+            continue;
+        }
         
-        if (canMega && playerChoice == 5)
+        if (canMega && playerChoice == mvsize+mesize-2)
         {
             if (willMegaEvolve)
             {
@@ -267,25 +282,16 @@ bool Player::chooseFight()
                 willMegaEvolve = true;
             }
             
-            playerChoice = j-1;
+            playerChoice = mvsize+mesize;
         }
         
-    } while (playerChoice == j-1);
-    
-    switch (playerChoice)
-    {
-        default:
-            return false;
-        case 1:
-        case 2:
-        case 3:
-        case 4:
-            if (!willMegaEvolve)
-                setIntendedMove(FightDecision, playerChoice-1);
-            else
-                setIntendedMove(MegaDecision, playerChoice-1);
-            break;
     }
+    while (playerChoice < 0 || playerChoice >= mvsize);
+    
+    if (!willMegaEvolve)
+        setIntendedMove(FightDecision, playerChoice);
+    else
+        setIntendedMove(MegaDecision, playerChoice);
     
     return true;
 }

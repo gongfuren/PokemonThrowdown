@@ -44,8 +44,8 @@ struct pokedata
 
 const pokedata pokelib[MAXTOTALPOKEMON] = {
     
- 0, "Missing No.",  NoType,    NoType, 255,    255,    255,    255,    255,   255,
-    NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
+ 0, "Missing No.",  NeutralType,    NoType, 255,    255,    255,    255,    255,   255,
+    NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	0,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
 	"",
  1,	"Bulbasaur",	GrassType,	PoisonType,	45,	49,	49,	65,	65,	45,
 	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	22,	73,	75,	74,	PNoAbility,	PNoAbility,	PNoAbility,	0,
@@ -2486,12 +2486,12 @@ Male,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	27
     
     // 786
     903,    "Constantinoble",   LightType,    DarkType,  108,    137,    155,    95, 140, 75,
-    Genderless,   NoNature,   -1, -1, -1, -1, -1, -1, HNoItem,    -1, -1, -1, -1, -1, -1, 100,    618,    620,    533,    467,    PPressure,  PPressure,  PPressure,  0,
-    "A lingering spirit from an ancient time. Its two halves were once seperate beings.",
+    Genderless,   NoNature,   -1, -1, -1, -1, -1, -1, HNoItem,    -1, -1, -1, -1, -1, -1, 100,    618,    620,    533,    566,    PPressure,  PPressure,  PPressure,  0,
+    "A lingering spirit from ancient times. Its two halves were once seperate beings.",
     // 787
-    904,    "???",   NeutralType,    NoType,  140,    140,    140,    140, 140, 140,
-    Genderless,   NoNature,   -1, -1, -1, -1, -1, -1, HNoItem,    -1, -1, -1, -1, -1, -1, 100,    618,    620,    533,    467,    PPressure,  PPressure,  PPressure,  0,
-    "",
+    -1,    "Doppelganger",   NeutralType,    NoType,  180,    1,    219,    1, 219, 100,
+    Genderless,   NoNature,   -1, -1, -1, -1, -1, -1, HNoItem,    -1, -1, -1, -1, -1, -1, 100,    621,    -1,    -1,    -1,    PNoAbility,  PNoAbility,  PNoAbility,  0,
+    "A strange creature that strolls nonchalantly through the battlefield until it finds a victim.",
 };
 
 // As of writing this comment, all Pokemon must have 4 moves for program to work correctly/

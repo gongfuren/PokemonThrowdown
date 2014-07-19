@@ -724,14 +724,16 @@ int Battle::browse(bool p) const
         if (choice == BACK)
             break;
         
-        while (chosePokemon(choice+1, &rerun, p))
+        choice++;
+        
+        while (chosePokemon(choice, &rerun, p))
             ;
 
     }
     while (rerun);
     
     delete[] names;
-    return choice+1;
+    return choice;
 }
 
 // Battle Flow
@@ -1351,6 +1353,9 @@ void Battle::dispPokeMoves(int pokemon) const
     {
         move = m_player->getPokemon(pokemon)->getMove(i);
         
+        if (move == NULL)
+            continue;
+        
         ostringstream pout;
         
         string pOS;
@@ -1415,8 +1420,13 @@ void Battle::dispPokeMoves(const pokedata pokemon) const
         
         if (moveID == -1)
         {
-            cout << "No preset moves :(" << endl;
-            break;
+            if (i == 0)
+            {
+                cout << "No preset moves :(" << endl;
+                break;
+            }
+            else
+                continue;
         }
         
         movedata m = movelib[moveID];

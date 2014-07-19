@@ -183,6 +183,10 @@ int selectorGadget(string opts[], int sizeo, int& prog,
         
         cin >> choice;
         
+        // DEBUG
+        //cerr << "choice: " << choice << endl
+        //<< "j: " << j << endl;
+        
         if (choice <= 0 || choice > j)
             continue;
         else if (next && choice == j - noffs)

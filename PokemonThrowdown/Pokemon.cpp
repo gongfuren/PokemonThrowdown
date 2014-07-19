@@ -73,7 +73,7 @@ Pokemon::Pokemon(pokedata h, Trainer* trainer, int wp)
             if (h.moveIDs[i] != -1)
                 m_moves[i] = new Move(h.moveIDs[i], this);
             else
-                m_moves[i] = new Move(randInt(1, MAXNUMMOVES-1), this);
+                m_moves[i] = NULL;
         }
     }
     
@@ -1069,6 +1069,7 @@ bool Pokemon::executeMove(Pokemon* target, Move* move)
         c += 0.5;   // round
         
         moveAccuracy = c;
+        
         moveHits = (randInt(0, 99) < moveAccuracy);
     }
     
