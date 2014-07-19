@@ -434,18 +434,18 @@ double natureMultiplier(Nature nature, int stat);
 /*
  selectorGadget()
  
- Organizes and displays all 'sizeo' indices of opts[] as a user-interactive 
- menu. 
+ Organizes and displays all 'sizeo' indices of opts[] as a user-interactive
+ menu.
+ 
+ Returns index of opts[] corresponding to user choice. If user chooses "Back"
+ (Back is enabled by default) returns -1. You must check and do something useful
+ with this value (i.e. break out of a loop).
  
  Allows pagination, with 'entriesPerPage' choices per page, not including
  extra items.
  
- Starts at 'prog' (and updates it so you can call this function again and not 
- lose your place)
- 
- Returns index of opts[] corresponding to user choice. If user chooses "Back"
- (Back is enabled by default) returns -1. You must check and do something useful
- with this value (i.e. break out of a loop)
+ Starts at 'prog' (and updates it so you can call this function again and not
+ lose your place).
  
  Pass in specialOpts[] for extra options on every page. specialEndOpts[] for
  options only at the end of the list after opts[], specialBeginOpts[] for

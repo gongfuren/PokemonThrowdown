@@ -122,7 +122,6 @@ const string YOUNGSTER = "Youngster";
 const string GYMLEADER = "Gym Leader";
 const string BUGCATCHER = "Bug Catcher";
 const string LASS = "Lass";
-
 const string ACETRAINER = "Ace Trainer";
 const string ELITEFOUR = "Elite Four";
 const string CHAMPION = "Champion";
@@ -134,12 +133,19 @@ const string DRGNTAMER = "Dragon Tamer";
 const string BIRDKEEPER = "Bird Keeper";
 const string FAIRYTALE = "Fairy Tale Girl";
 const string JUGGLER = "Juggler";
-
 const string RICHBOY = "Rich Boy";
 const string LADY = "Lady";
 const string CUEBALL = "Cue Ball";
 const string VETERAN = "Veteran";
 const string SOCIALITE = "Socialite";
+
+const string ROCKET = "Team Rocket Grunt";
+const string CIPHER = "Cipher Peon";
+const string FLARE = "Team Flare Admin";
+const string BEAUTY = "Beauty";
+const string POKEFAN = "Pokefan";
+const string SAGETRAINER = "Sage";
+const string ACTRESS = "Actress";
 
 const string titleArray[NUMTITLES] = {
     PKMNTRAINER, YOUNGSTER, GYMLEADER, BUGCATCHER, LASS, ACETRAINER, ELITEFOUR,

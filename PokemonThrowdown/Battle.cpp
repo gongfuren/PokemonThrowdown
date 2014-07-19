@@ -134,7 +134,7 @@ bool Battle::chooseTrainer()
             << "For some people, Pokemon are pets. Other use them for fights. "
             << "Myself... I study Pokemon as a profession." << endl << endl;
             
-            cout << "So first, please tell me about yourself." << endl;
+            cout << "First, please tell me about yourself." << endl;
         }
         else
         {

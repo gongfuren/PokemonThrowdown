@@ -30,7 +30,7 @@ int main()
         << "* Pokemon Throwdown * v0.2.1" << endl
         << "0***O***0***O***0***O" << endl;
         
-        cout << "1: " << "Play" << endl
+        cout << "1: " << "New Game" << endl
         << "2: " << "Options" << endl
         << "3: " << "Credits" << endl
         << "4: " << "Quit" << endl;

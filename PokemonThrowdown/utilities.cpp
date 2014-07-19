@@ -114,7 +114,7 @@ int selectorGadget(string opts[], int sizeo, int& prog,
             if (i + 100 < sizeo + sizeb + sizee)
             {
                 cout << j++ + 1 << ": " << "(" << "Jump Forward" << ")"
-                << " >>100" << endl;
+                << " 100>>" << endl;
                 nexth = true;
                 
                 noffs++;
