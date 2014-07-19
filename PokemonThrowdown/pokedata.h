@@ -1920,7 +1920,7 @@ const pokedata pokelib[MAXTOTALPOKEMON] = {
 	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
 	"",
  625,	"Bisharp",	DarkType,	SteelType,	65,	125,	100,	60,	70,	70,
-	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	282,	442,	389,	14,	PNoAbility,	PNoAbility,	PNoAbility,	0,
+	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	282,	442,	389,	14,	PDefiant,	PNoAbility,	PNoAbility,	0,
 	"",
  626,	"Bouffalant",	NormalType,	NoType,	95,	110,	95,	40,	95,	55,
 	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,

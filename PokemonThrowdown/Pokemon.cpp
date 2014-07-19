@@ -440,6 +440,13 @@ bool Pokemon::decreaseStat(int whichStat, bool silent)
         }
     }
     
+    // Defiant Att boost
+    if (!silent && m_ability == PDefiant)
+    {
+        flashAbility();
+        increaseStat(AttStat, 2);
+    }
+    
     return normalExecution;
 }
 

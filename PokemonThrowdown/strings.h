@@ -53,7 +53,7 @@ const string abilityStrings[NUMABILITIES] = {
     "Sand Stream", "Multiscale", "Synchronize", "Clear Body", "Drizzle",
     "Drought", "Air Lock", "Stance Change", "Torrent", "Blaze", "Overgrow",
     "Swarm", "Technician", "Poison Point", "Snow Warning", "Anticipation",
-    "Mold Breaker", "Pure Power", "Prankster"
+    "Mold Breaker", "Pure Power", "Prankster", "Defiant"
 };
 
 const string moveTypeStrings[NUMMOVETYPES] = {

@@ -1285,7 +1285,7 @@ const movedata movelib[MAXTOTALMOVES] = {
     "The user accumulates light energy and attacks the target.",
     // 621
     -1,    "Loving Embrace",  NeutralType, Physical, UnknownStat,    5, -1, 50, X,  MOHKO,  Opponent,   true,
-    "The user slowly approaches the target. The target will faint instantly if contact is made."
+    "The user attempts to embrace the target. The target will faint instantly if contact is made."
 };
 
 #endif /* defined(__PokemonThrowdown__movedata__) */

@@ -50,7 +50,10 @@ void Computer::actionSelect(int level)
         {
             moves[i] = getPokemon()->getMove(i);
             if (moves[i] == NULL)
-                continue;
+            {
+                attack = 0;
+                goto label;
+            }
             
             if (moves[i]->getMoveType() == Status)
             {
@@ -97,6 +100,8 @@ void Computer::actionSelect(int level)
             }
         }
     }
+    
+label:
     
     if (pokemon->canMegaEvolve())
         setIntendedMove(MegaDecision, attack);

@@ -314,7 +314,8 @@ enum PokeAbility
     PSereneGrace, PUnaware, PMagicBounce, PPressure, PSandStream, PMultiscale,
     PSynchronize, PClearBody, PDrizzle, PDrought, PAirLock, PStanceChange,
     PTorrent, PBlaze, POvergrow, PSwarm, PTechnician, PPoisonPoint,
-    PSnowWarning, PAnticipation, PMoldBreaker, PPurePower, PPrankster
+    PSnowWarning, PAnticipation, PMoldBreaker, PPurePower, PPrankster,
+    PDefiant
 };
 
 enum MoveType
