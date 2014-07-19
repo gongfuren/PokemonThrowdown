@@ -38,7 +38,7 @@ public:
     int browse(bool p = true) const;
     int randomChoice(bool p = true) const;
     void dispMoveInfo(const movedata* m) const;
-    bool repeatChosePokemon(int p, bool* r, bool m = true, bool i = true) const;
+    bool chosePokemon(int p, bool* r, bool m = true, bool i = true) const;
     
     // Start the Battle
     void start();
@@ -126,7 +126,6 @@ private:
     // (Currently messy) functions for judging when a Battle is over
     bool checkWin() const;
     bool battleIsOver() const;
-    void end() const;
     
     // Sorting priorities
     void sortSpeeds(Trainer* trainers[], int number);

@@ -1164,7 +1164,7 @@ const pokedata pokelib[MAXTOTALPOKEMON] = {
 	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
 	"",
  373,	"Salamence",	DragonType,	FlyingType,	95,	135,	80,	110,	80,	100,
-	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	337,	89,	421,	444,	PIntimidate,	PIntimidate,	PIntimidate,	0,
+	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	337,	89,	421,	19,	PIntimidate,	PIntimidate,	PIntimidate,	0,
 	"",
  374,	"Beldum",	SteelType,	PsychicType,	40,	55,	80,	35,	60,	30,
 	Genderless,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
@@ -1920,7 +1920,7 @@ const pokedata pokelib[MAXTOTALPOKEMON] = {
 	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
 	"",
  625,	"Bisharp",	DarkType,	SteelType,	65,	125,	100,	60,	70,	70,
-	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	282,	442,	289,	14,	PNoAbility,	PNoAbility,	PNoAbility,	0,
+	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	282,	442,	389,	14,	PNoAbility,	PNoAbility,	PNoAbility,	0,
 	"",
  626,	"Bouffalant",	NormalType,	NoType,	95,	110,	95,	40,	95,	55,
 	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
@@ -2341,7 +2341,7 @@ Male,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	27
     "",
     // 752
     302, "Sableye (Mega)",  DarkType,  GhostType, 50,	75,	125,	65,	115,	50,
-    NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
+    NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PPrankster,	PNoAbility,	PNoAbility,	0,
     "",
     // 753
     719, "Diancie (Mega)",  RockType,  FairyType, 100,    100,    100,    100,    100,    100,

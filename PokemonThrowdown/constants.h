@@ -10,6 +10,7 @@
 #define __PokemonThrowdown__Constants__
 
 #include <list>
+#include <string>
 using namespace std;
 
 // Note: This data file does not adhere to an 80 column limit!
@@ -26,6 +27,8 @@ bool listContains(const list<Object> l, Object o)
 }
 
 // Global Constants
+
+const int BACK = -1;
 
 // TODO: organize use of constants
 
@@ -104,7 +107,7 @@ const double typeArray[MAXTYPES][MAXTYPES] = {
     
     ELE1, ELE1, ELE2, ELE5, ELE5, ELE1, ELE5, ELE1, ELE1, ELE1, ELE2, ELE2, ELE1, ELE1, ELE1, ELE2, ELE1, ELE5, ELE1, ELE1, ELE1, // ICE
     
-    ELE1, ELE1, ELE2, ELE5, ELE1, ELE1, ELE1, ELE1, ELE5, ELE5, ELE5, ELE5, ELE1, ELE1, ELE2, ELE1, ELE2, ELE5, ELE5, ELE1, ELE1, // BUG
+    ELE1, ELE1, ELE2, ELE5, ELE1, ELE1, ELE1, ELE1, ELE5, ELE5, ELE5, ELE5, ELE1, ELE5, ELE2, ELE1, ELE2, ELE5, ELE5, ELE1, ELE1, // BUG
     
     ELE1, ELE1, ELE2, ELE1, ELE1, ELE1, ELE1, ELE5, ELE5, ELE5, ELE1, ELE5, ELE5, ELE1, ELE1, ELE1, ELE1, ELE0, ELE2, ELE1, ELE1, // PSN
     
@@ -240,7 +243,7 @@ enum MoveEffect
     MFlinch10, MFlinch20, MFlinch30, MFlinch100, MCrit100,
     
     MNeverMiss, MOHKO, MMultiHit, MDoubleHit, MRecharge, MOverheat,
-    MCloseCombat, MLowerDefSpDSpe,
+    MCloseCombat, MLowerDefSpDSpe, MCharge,
     
     MUpAtt2, MUpDef2, MUpSpA2, MUpSpD2, MUpSpe2,
     MUpAcc2, MUpEva2,
@@ -279,7 +282,8 @@ enum MoveEffect
     
     MTrap, MPartialTrap,
     
-    MSub, MHazard, MDehazard, MReflect, MLightScreen, MVitalThrow, MFoul
+    MSub, MHazard, MDehazard, MReflect, MLightScreen, MVitalThrow, MFoul, MSplit,
+    MTaunt
 };
 
 const int MINPRIORITY = -8;
@@ -346,10 +350,13 @@ const int NUMSTATUSES = 8;
 enum VolatileStatus
 {
     NoVStatus, ConfuseVStatus, AttractVStatus, CurseVStatus, BlockVStatus,
-    EncoreVStatus, TormentVStatus, TauntVStatus, RampageVStatus, ProtectVStatus, ShieldVStatus, FocusVStatus, FlinchVStatus, FFlinchVStatus, SubVStatus
+    EncoreVStatus, TormentVStatus, TauntVStatus, RampageVStatus, ProtectVStatus, ShieldVStatus, FocusVStatus, FlinchVStatus, FFlinchVStatus, SubVStatus,
+    FlyVStatus, DigVStatus, DiveVStatus, SolarVStatus, RchrgVStatus, SkyAttVStatus,
+    RazorWVStatus, BashVStatus, PhantVStatus, ShadVStatus, BounceVStatus,
+    GeoVStatus, FrzShckVStatus, IceBurnVStatus
 };
 
-const int NUMVSTATUSES = 20;
+const int NUMVSTATUSES = 30;
 
 enum Location
 {
@@ -397,9 +404,57 @@ enum BattleType
 
 // Auxiliary Function Declarations
 
+/*
+ randInt()
+ 
+ Returns a randomly chosen integer between lowest and highest inclusive
+ */
 int randInt(int lowest, int highest);
+
+/*
+ typeMultiplier()
+ 
+ Returns multiplier corresponding to 'type1's damage on 'type2' or 
+ 'type2'/'type3'
+ 
+ Ex: typeMultiplier(DragonType, FairyType) == 0.0
+ */
 double typeMultiplier(Type type1, Type type2);
 double typeMultiplier(Type type1, Type type2, Type type3);
+
+/*
+ natureMultiplier()
+ 
+ Returns multiplier corresponding to nature's influence on stat
+ 
+ Ex: natureMultiplier(AdamantNature, AttStat) == 1.1
+ */
 double natureMultiplier(Nature nature, int stat);
+
+/*
+ selectorGadget()
+ 
+ Organizes and displays all 'sizeo' indices of opts[] as a user-interactive 
+ menu. 
+ 
+ Allows pagination, with 'entriesPerPage' choices per page, not including
+ extra items.
+ 
+ Starts at 'prog' (and updates it so you can call this function again and not 
+ lose your place)
+ 
+ Returns index of opts[] corresponding to user choice. If user chooses "Back"
+ (Back is enabled by default) returns -1. You must check and do something useful
+ with this value (i.e. break out of a loop)
+ 
+ Pass in specialOpts[] for extra options on every page. specialEndOpts[] for
+ options only at the end of the list after opts[], specialBeginOpts[] for
+ options only at the beginning.
+ */
+int selectorGadget(string opts[], int sizeo, int& prog,
+                   int entriesPerPage = 10, bool back = true,
+                   string specialOpts[] = NULL, int sizes = 0,
+                   string specialBeginOpts[] = NULL, int sizeb = 0,
+                   string specialEndOpts[] = NULL, int sizee = 0);
 
 #endif /* defined(__PokemonThrowdown__Constants__) */

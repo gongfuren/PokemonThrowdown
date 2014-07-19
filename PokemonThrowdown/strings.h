@@ -78,12 +78,16 @@ const string statusStartStrings[NUMSTATUSES] = {
 };
 
 const string vstatusStrings[NUMVSTATUSES] = {
-    "None", "Conf", "Attr", "Curs", "Blok", "Encr", "Trmt", "Taun", "Rmpg", "Prot", "Shld", "Fcus", "Flch", "Lfcs", "Subs"
+    "None", "Conf", "Attr", "Curs", "Blok", "Encr", "Trmt", "Taun", "Rmpg", "Prot", "Shld", "Fcus", "Flch", "Lfcs", "Subs", "Flyg", "Undr", "Dive", "Chrg",
+    "Rchg", "Glow", "Razr", "Bash", "Phtm", "Shdw", "Bnce", "Geom", "Fshk",
+    "Ibrn"
 };
 
 const string vstatusFullStrings[NUMVSTATUSES] = {
     "None", "Confused", "Attract", "Cursed", "Blocked", "Encore", "Torment",
-    "Taunt", "Rampaging", "Protect", "Shield", "Focusing", "Flinch", "Lost Focus", "Substitute"
+    "Taunt", "Rampaging", "Protect", "Shield", "Focusing", "Flinch", "Lost Focus", "Substitute", "Flying", "Underground", "Diving", "Charging", "Recharging",
+    "Glowing", "Razor Wind", "Skull Bash", "Phantom Force", "Shadow Force",
+    "Bounce", "Geomancy", "Freeze Shock", "Ice Burn"
 };
 
 const string weatherStrings[NUMWEATHERS] = {

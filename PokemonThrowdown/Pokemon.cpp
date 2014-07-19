@@ -36,10 +36,12 @@ Pokemon::Pokemon(pokedata h, Trainer* trainer, int wp)
     m_sleepTurns = 0;
     m_toxicTurns = 0;
     m_rampageTurns = 0;
+    m_tauntTurns = 0;
     m_ID = h.ID;
     m_form = 0;
     m_turnsOut = -1;
     m_fainted = false;
+    m_locked = NULL;
     
     for (int i = HPStat; i < NUMSTATS; i++)
     {
@@ -170,7 +172,7 @@ void Pokemon::clearVolatiles()
         setSleepTurns(randInt(1, 3));
     
     // Clear volatile statuses
-    m_vstatuses.clear();
+    removeVStatuses();
     
     // Undo volatile transformations
     if (m_ID == 681)
@@ -179,6 +181,10 @@ void Pokemon::clearVolatiles()
         if (m_form == 1)
             transform(681);
     }
+    
+    // Reset Move history
+    while (!m_moveHistory.empty())
+        m_moveHistory.pop();
 }
 
 Type Pokemon::getType1() const
@@ -776,10 +782,10 @@ void Pokemon::removeVStatus(VolatileStatus vstatus)
     m_vstatuses.remove(vstatus);
 }
 
-void Pokemon::setStatus(PokeStatus status, bool rest)
+bool Pokemon::setStatus(PokeStatus status, bool rest)
 {
     if (status != FaintStatus && getStatus() != HealthyStatus)
-        return;
+        return false;
     
     switch (status)
     {
@@ -790,24 +796,24 @@ void Pokemon::setStatus(PokeStatus status, bool rest)
                 getTrainer()->getBattle()->getWeather() == Sunny)
                 // Ice types cannot be frozen
                 // No freezing occurs in sunny weather
-                return;
+                return false;
             break;
         case ParalyzeStatus:
             if (getType1() == ElectricType || getType2() == ElectricType)
                 // Electric types cannot be paralyzed
-                return;
+                return false;
             break;
         case BurnStatus:
             if (getType1() == FireType || getType2() == FireType)
                 // Fire types cannot be burned
-                return;
+                return false;
             break;
         case PoisonStatus:
         case ToxicStatus:
             if (getType1() == PoisonType || getType2() == PoisonType ||
                 getType1() == SteelType || getType2() == SteelType)
                 // Poison and Steel types cannot be poisoned
-                return;
+                return false;
             break;
         case SleepStatus:
             break;
@@ -828,6 +834,8 @@ void Pokemon::setStatus(PokeStatus status, bool rest)
         else
             m_sleepTurns = 2;
     }
+    
+    return true;
 }
 
 void Pokemon::setIntendedMove(int choice)
@@ -846,8 +854,9 @@ bool Pokemon::executeMove(Pokemon* target, Move* move)
     int intendedMove = getIntendedMove();
     Battle* battle = getTrainer()->getBattle();
     Weather weather;
-    bool moveHits, changeForm;
+    bool moveHits, changeForm, rerun;
     int moveAccuracy, whatForm;
+    VolatileStatus vs;
     
     if (move == NULL)
     {
@@ -856,6 +865,18 @@ bool Pokemon::executeMove(Pokemon* target, Move* move)
     
     if (isFainted())
         return false;
+    
+    weather = battle->getWeather();
+    
+    if (hasVStatus(TauntVStatus))
+    {
+        if (move->getMoveType() == Status)
+        {
+            cout << getName() << " can't use " << move->getName() << " after"
+            << " the taunt!" << endl;
+            return false;
+        }
+    }
     
     if (getAbility() == PStanceChange)
     {
@@ -880,13 +901,126 @@ bool Pokemon::executeMove(Pokemon* target, Move* move)
             formChange(whatForm);
     }
     
+    if (move->getEffect() == MCharge)
+    {
+        rerun = false;
+        
+        do
+        {
+            switch (move->getID())
+            {
+                case 76: // Solar Beam
+                    vs = SolarVStatus;
+                    break;
+                case 19: // Fly
+                    vs = FlyVStatus;
+                    break;
+                case 91: // Dig
+                    vs = DigVStatus;
+                    break;
+                case 291: // Dive
+                    vs = DiveVStatus;
+                    break;
+                case 13: // Razor Wind
+                    vs = RazorWVStatus;
+                    break;
+                case 143: // Sky Attack
+                    vs = SkyAttVStatus;
+                    break;
+                case 130: // Skull Bash
+                    vs = BashVStatus;
+                    break;
+                case 566: // Phantom Force
+                    vs = PhantVStatus;
+                    break;
+                case 467: // Shadow Force
+                    vs = ShadVStatus;
+                    break;
+                case 340: // Bounce
+                    vs = BounceVStatus;
+                    break;
+                case 601: // Geomancy
+                    vs = GeoVStatus;
+                    break;
+                case 553: // Freeze Shock
+                    vs = FrzShckVStatus;
+                    break;
+                case 554: // Ice Burn
+                    vs = IceBurnVStatus;
+                    break;
+                default:
+                    vs = SolarVStatus;
+                    break;
+            }
+            
+            if (!hasVStatus(vs))
+            {
+                cout << getTrainer()->getTitleName() << "'s " << getName() << " ";
+                
+                switch (move->getID())
+                {
+                    case 76: // Solar Beam
+                        cout << "absorbed light!";
+                        if (weather == Sunny)
+                            rerun = true;
+                        break;
+                    case 19: // Fly
+                        cout << "flew up high!";
+                        break;
+                    case 91: // Dig
+                        cout << "went underground!";
+                        break;
+                    case 291: // Dive
+                        cout << "dove underwater!";
+                        break;
+                    case 13: // Razor Wind
+                        cout << "whipped up a whirlwind!";
+                        break;
+                    case 143: // Sky Attack
+                        cout << "became cloaked in a harsh light!";
+                        break;
+                    case 130: // Skull Bash
+                        cout << "tucked in its head!";
+                        break;
+                    case 566: // Phantom Force
+                    case 467: // Shadow Force
+                        cout << "vanished instantly!";
+                        break;
+                    case 340: // Bounce
+                        cout << "bounced up high!";
+                        break;
+                    case 601: // Geomancy
+                    case 553: // Freeze Shock
+                    case 554: // Ice Burn
+                        cout << "is absorbing power!";
+                        break;
+                    default:
+                        break;
+                }
+                
+                cout << endl;
+                
+                addVStatus(vs);
+                lockMove(getMove(getIntendedMove()));
+                
+                if (!rerun)
+                    return false;
+            }
+            else
+            {
+                removeVStatus(vs);
+                unlockMove();
+                rerun = false;
+            }
+        }
+        while (rerun);
+    }
+    
     cout << getTrainer()->getTitleName() << "'s "
     << getName() << " " << "used" << " " << move->getName() << "!"
     << endl;
     
     moveAccuracy = move->getAccuracy();
-    
-    weather = battle->getWeather();
     
     if (move->getID() == 87 || move->getID() == 542 || move->getID() == 59)
         // Weather-dependent accuracy adjustments for Thunder, Hurricane,
@@ -904,6 +1038,27 @@ bool Pokemon::executeMove(Pokemon* target, Move* move)
         // Never miss
     {
         moveHits = true;
+    }
+    else if (target->hasVStatus(FlyVStatus) || target->hasVStatus(DigVStatus)
+             || target->hasVStatus(ShadVStatus)
+             || target->hasVStatus(PhantVStatus)
+             || target->hasVStatus(DiveVStatus)
+             || target->hasVStatus(BounceVStatus))
+    {
+        moveHits = false;
+        
+        if (target->hasVStatus(FlyVStatus) &&
+            // Thunder, Twister, Gust, Sky Uppercut
+            (move->getID() == 87 || move->getID() == 239
+             || move->getID() == 16))
+            moveHits = true;
+        
+        if (target->hasVStatus(DigVStatus) &&
+            // Earthquake, Magnitude
+            (move->getID() == 89 || move->getID() == 222))
+            moveHits = true;
+        
+        // TODO (unfinished)
     }
     else
         // Normal accuracy calculation
@@ -1039,14 +1194,15 @@ int Pokemon::getID() const
     return m_ID;
 }
 
-void Pokemon::applyStatus(Pokemon* target, Move* move)
+bool Pokemon::applyStatus(Pokemon* target, Move* move)
 {
     Pokemon* pokemon = this;
     MoveEffect me = move->getEffect();
     Field* field = getTrainer()->getBattle()->getField();
     Weather weather = field->getWeather();
-    int healAmount = 0;
+    int healAmount, shp, thp, php;
     
+    healAmount = 0;
     int sc[NUMALLSTATS] = { 0, 0, 0, 0, 0, 0, 0, 0 };
     
     if (me == MHeal50)
@@ -1067,17 +1223,11 @@ void Pokemon::applyStatus(Pokemon* target, Move* move)
         // Heal amount and sleep effect for Rest
     {
         healAmount = pokemon->getBStats(HPStat);
-        
-        cout << target->getTrainer()->getTitleName() << "'s "
-        << target->getName() << " " << "went to sleep!" << endl;
-        
-        pokemon->setStatus(SleepStatus, true);
     }
     
     switch (me)
     {
         case MHeal50:
-        case MHeal100:
             cout << target->getTrainer()->getTitleName() << "'s "
             << target->getName();
             if (target->increaseHP(healAmount))
@@ -1085,6 +1235,45 @@ void Pokemon::applyStatus(Pokemon* target, Move* move)
             else
                 cout << "'s " << "HP can't go any higher!";
             cout << endl;
+            break;
+        case MHeal100:
+            if (target->increaseHP(healAmount))
+            {
+                cout << target->getTrainer()->getTitleName() << "'s "
+                << target->getName() << " "
+                << "went to sleep and became healthy!" << endl;
+                
+                pokemon->removeVStatuses();
+                pokemon->removeStatus();
+                pokemon->setStatus(SleepStatus, true);
+            }
+            else
+                cout << target->getTrainer()->getTitleName() << "'s "
+                << target->getName() << "'s "
+                << "HP can't go any higher!" << endl;
+            break;
+        case MSplit:
+            shp = target->getStatsStatus(HPStat);
+            thp = getStatsStatus(HPStat);
+            php = (shp + thp) / 2;
+            if (shp >= php)
+            {
+                target->lowerHP(shp - php);
+                increaseHP(shp - php);
+            }
+            else
+            {
+                target->increaseHP(thp - php);
+                lowerHP(thp - php);
+            }
+            cout << "The battlers shared their pain!" << endl;
+            break;
+        case MTaunt:
+            if (target->hasVStatus(TauntVStatus))
+                return false;
+            cout << target->getName() << " fell for the taunt!" << endl;
+            target->addVStatus(TauntVStatus);
+            target->m_tauntTurns = 3;
             break;
         case MLowerAtt:
             sc[AttStat] = -1;
@@ -1200,19 +1389,24 @@ void Pokemon::applyStatus(Pokemon* target, Move* move)
             target->protectDialogue();
             break;
         case MBurn:
-            target->setStatus(BurnStatus);
+            if (target->setStatus(BurnStatus))
+                ;
             break;
         case MSleep:
-            target->setStatus(SleepStatus);
+            if (target->setStatus(SleepStatus))
+                ;
             break;
         case MPoison:
-            target->setStatus(PoisonStatus);
+            if (target->setStatus(PoisonStatus))
+                ;
             break;
         case MToxic:
-            target->setStatus(ToxicStatus);
+            if (target->setStatus(ToxicStatus))
+                ;
             break;
         case MParalyze:
-            target->setStatus(ParalyzeStatus);
+            if (target->setStatus(ParalyzeStatus))
+                ;
             break;
         default:
             break;
@@ -1235,6 +1429,8 @@ void Pokemon::applyStatus(Pokemon* target, Move* move)
                 target->increaseStat(i, sc[i]);
         }
     }
+    
+    return true;
 }
 
 void Pokemon::applyAttack(Pokemon* target, Move* move)
@@ -1247,6 +1443,7 @@ void Pokemon::applyAttack(Pokemon* target, Move* move)
     damage, totalDamage, attack;
     
     int critThreshold;
+    int phld1, phld2;
     
     if (target->hasVStatus(ProtectVStatus)
         || target->hasVStatus(ShieldVStatus))
@@ -1314,16 +1511,30 @@ void Pokemon::applyAttack(Pokemon* target, Move* move)
     
     other = 1.0;
     
-    if (attacker->getAbility() == PHugePower || attacker->getAbility()
-        == PPurePower)
-        // Huge/Pure power ability: attack 2.0x
-        attackMultiplier = 2.0;
+    if (move->getEffect() == MFoul)
+    {
+        if (target->getAbility() == PHugePower || target->getAbility()
+            == PPurePower)
+            attackMultiplier = 2.0;
+        else
+            attackMultiplier = 1.0;
+        
+        if (target->getStatus() == BurnStatus)
+            attackMultiplier *= 0.5;
+    }
     else
-        attackMultiplier = 1.0;
-    
-    if (attacker->getStatus() == BurnStatus)
-        // Attacker is burned: attack 0.5x
-        attackMultiplier *= 0.5;
+    {
+        if (attacker->getAbility() == PHugePower || attacker->getAbility()
+            == PPurePower)
+            // Huge/Pure power ability: attack 2.0x
+            attackMultiplier = 2.0;
+        else
+            attackMultiplier = 1.0;
+        
+        if (attacker->getStatus() == BurnStatus)
+            // Attacker is burned: attack 0.5x
+            attackMultiplier *= 0.5;
+    }
     
     specialDefMultiplier = 1.0;
     
@@ -1398,7 +1609,9 @@ void Pokemon::applyAttack(Pokemon* target, Move* move)
     else if (move->getEffect() == MDamageLevel)
         totalDamage = attacker->getLevel();
     
+    phld1 = target->getStatsStatus(HPStat);
     target->lowerHP(totalDamage);
+    phld2 = phld1 - target->getStatsStatus(HPStat);
     
     if (crit == 1.50)
         cout << "A critical hit!" << endl;
@@ -1412,10 +1625,10 @@ void Pokemon::applyAttack(Pokemon* target, Move* move)
         // OHKO move that hit (since it made it here)
         cout << "It's a one-hit KO!" << endl;
     
-    applyEffect(target, move);
+    applyEffect(target, move, phld2);
 }
 
-void Pokemon::applyEffect(Pokemon* target, Move* move)
+void Pokemon::applyEffect(Pokemon* target, Move* move, int drain)
 {
     Pokemon* attacker = this;
     MoveEffect effect = move->getEffect();
@@ -1440,6 +1653,22 @@ void Pokemon::applyEffect(Pokemon* target, Move* move)
         // Focus punch
         attacker->removeVStatus(FocusVStatus);
     
+    // Drain
+    if (effect == MDrain50 || effect == MDrain75)
+    {
+        cout << target->getName() << " had its energy drained!" << endl;
+        
+        switch (effect)
+        {
+            case MDrain50:
+                increaseHP(drain * 0.5);
+                break;
+            default: // MDrain75
+                increaseHP(drain * 0.75);
+                break;
+        }
+    }
+    
     // Target side-effects (successfully hit)
     
     if (target->isFainted() || target->getStats(HPStat) == 0)
@@ -1460,6 +1689,34 @@ void Pokemon::applyEffect(Pokemon* target, Move* move)
         
         if (randInt(0, 99) < freezeChance)
             target->setStatus(FreezeStatus);
+    }
+    
+    if (effect == MFlinch10 || effect == MFlinch100 || effect == MFlinch20
+        || effect == MFlinch30)
+    {
+        int flinchChance;
+        
+        switch (effect)
+        {
+            default:
+                flinchChance = 30;
+                break;
+            case MFlinch10:
+                flinchChance = 10;
+                break;
+            case MFlinch20:
+                flinchChance = 20;
+                break;
+            case MFlinch100:
+                flinchChance = 100;
+                break;
+        }
+        
+        if (getAbility() == PSereneGrace)
+            flinchChance *= 2;
+        
+        if (randInt(0, 99) < flinchChance)
+            target->addVStatus(FlinchVStatus);
     }
     
     if (effect == MBurn10 || effect == MBurn15 || effect == MBurn30)
@@ -1580,4 +1837,63 @@ void Pokemon::applySideEffects(Move* move)
     {
         lowerHP(getStats(HPStat));
     }
+}
+
+const stack<Move*>* Pokemon::getMoveHistory() const
+{
+    return &m_moveHistory;
+}
+
+int Pokemon::getTurnsOut() const
+{
+    return m_turnsOut;
+}
+
+bool Pokemon::lockMove(Move* m)
+{
+    if (m_locked == NULL)
+    {
+        m_locked = m;
+        return true;
+    }
+    else
+        return false;
+}
+
+bool Pokemon::unlockMove()
+{
+    if (m_locked == NULL)
+        return false;
+    else
+    {
+        m_locked = NULL;
+        return true;
+    }
+}
+
+Move* Pokemon::getLockedMove() const
+{
+    return m_locked;
+}
+
+void Pokemon::removeStatus()
+{
+    m_status = HealthyStatus;
+}
+
+void Pokemon::removeVStatuses()
+{
+    m_vstatuses.clear();
+}
+
+void Pokemon::decTauntTurns()
+{
+    if (--m_tauntTurns == 0)
+    {
+        cout << getName() << "'s taunt wore off!" << endl;
+        removeVStatus(TauntVStatus);
+    }
+    
+    if (m_tauntTurns < 0)
+        m_tauntTurns = 0;
 }

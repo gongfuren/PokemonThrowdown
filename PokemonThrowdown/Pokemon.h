@@ -49,11 +49,16 @@ public:
     int getID() const;
     Trainer* getTrainer() const;
     Slot* getSlot() const;
+    const stack<Move*>* getMoveHistory() const;
+    int getTurnsOut() const;
+    Move* getLockedMove() const;
     
     // Battle state functions
     int getIntendedMove() const;
     void setIntendedMove(int choice);
-    void setStatus(PokeStatus status, bool rest = false);
+    bool setStatus(PokeStatus status, bool rest = false);
+    void removeStatus();
+    void removeVStatuses();
     void addVStatus(VolatileStatus vstatus);
     void removeVStatus(VolatileStatus vstatus);
     bool hasVStatus(VolatileStatus vstatus);
@@ -70,6 +75,8 @@ public:
     bool increaseStat(int whichStat, int levels);
     void restoreStat(int whichStat);
     void clearVolatiles();
+    bool lockMove(Move* m);
+    bool unlockMove();
 
     bool passThroughStatus();
     
@@ -83,6 +90,7 @@ public:
     int getSleepTurns() const;
     int getRampageTurns() const;
     void setRampageTurns(int turns);
+    void decTauntTurns();
     
     void castAbility();
     
@@ -105,9 +113,9 @@ private:
     double statEMultiplier(int statLevel) const;
     
     void flashAbility() const;
-    void applyStatus(Pokemon* target, Move* move);
+    bool applyStatus(Pokemon* target, Move* move);
     void applyAttack(Pokemon* target, Move* move);
-    void applyEffect(Pokemon* target, Move* move);
+    void applyEffect(Pokemon* target, Move* move, int drain = 0);
     void applySideEffects(Move* move);
     
     void protectDialogue() const;
@@ -135,6 +143,7 @@ private:
     
     // Intended move slot number
     int m_intendedMove;
+    Move* m_locked;
     
     // Is this Pokemon fainted?
     bool m_fainted;
@@ -147,6 +156,7 @@ private:
     int m_sleepTurns;
     int m_toxicTurns;
     int m_rampageTurns;
+    int m_tauntTurns;
     
     // Move slots and history
     Move* m_moves[MAXMOVES];

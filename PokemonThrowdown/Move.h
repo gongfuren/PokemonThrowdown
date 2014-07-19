@@ -47,7 +47,6 @@ public:
     // Identify type of Move
     bool isAttack() const;
     bool isThrash() const;
-    bool isMultiTurn() const;
     
     // Increment age of Move
     void incrementAge();

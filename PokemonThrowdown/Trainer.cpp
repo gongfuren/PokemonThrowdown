@@ -152,7 +152,8 @@ bool Trainer::canChooseAction() const
 {
     Pokemon* pokemon = getPokemon();
     
-    if (pokemon->hasVStatus(RampageVStatus))
+    if (pokemon->hasVStatus(RampageVStatus)
+        || pokemon->getLockedMove() != NULL)
         return false;
     else
         return true;

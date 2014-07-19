@@ -8,11 +8,14 @@
 
 #include "Computer.h"
 #include "Pokemon.h"
+#include "Battle.h"
+#include <stack>
+using namespace std;
 
 Computer::Computer(trainerdata h, Battle* battle)
 : Trainer(h, battle)
 {
-    m_difficulty = randInt(0, 2);
+    m_difficulty = 1;
 }
 
 Computer::~Computer()
@@ -28,22 +31,75 @@ void Computer::actionSelect()
 void Computer::actionSelect(int level)
 {
     Pokemon* pokemon = getPokemon();
-    int attack;
+    Pokemon* target = getBattle()->getPlayer()->getPokemon();
     
-    // Level 0: select move at random, Mega Evolve if possible
-    if (level == 0 /* temp --> */ || level == 1 || level == 2)
+    Move* moves[MAXMOVES];
+    int attack, max, bar;
+    int smartScores[MAXMOVES] = { 0, 0, 0, 0 };
+    
+    attack = randInt(0, 3);
+    bar = 0;
+    
+    // Level 0: select move completely at random
+    if (level == 0)
+        ;
+    // Level 1: select most damaging move or status depending on score
+    else // (level == 1 || level == 2)
     {
-        attack = randInt(0, 3);
+        for (int i = 0; i < MAXMOVES; i++)
+        {
+            moves[i] = getPokemon()->getMove(i);
+            
+            if (moves[i]->getMoveType() == Status)
+            {
+                smartScores[i] = randInt(0, 150);
+                
+                if (!pokemon->getMoveHistory()->empty())
+                {
+                    stack<Move*> temp = *pokemon->getMoveHistory();
+                    
+                    while (!temp.empty() && bar++ < target->getTurnsOut())
+                    {
+                        Move* mtm = temp.top();
+                        temp.pop();
+                        
+                        if (moves[i] == mtm)
+                            smartScores[i] /= 2;
+                    }
+                }
+            }
+            else
+                smartScores[i] = moves[i]->getDamage();
+            
+            if (moves[i]->getTarget() == Opponent)
+            {
+                smartScores[i] *= typeMultiplier(moves[i]->getType(),
+                                                 target->getType1(),
+                                                 target->getType2());
+                
+                if (moves[i]->getType() == pokemon->getType1()
+                    || moves[i]->getType() == pokemon->getType2())
+                    smartScores[i] *= 1.5;
+            }
+        }
         
-        if (pokemon->canMegaEvolve())
-            setIntendedMove(MegaDecision, attack);
-        else
-            setIntendedMove(FightDecision, attack);
+        max = 0;
+        
+        for (int i = 0; i < MAXMOVES; i++)
+        {
+            if (smartScores[i] > max
+                || (smartScores[i] == max && randInt(0, 1) == 1))
+            {
+                max = smartScores[i];
+                attack = i;
+            }
+        }
     }
+    
+    if (pokemon->canMegaEvolve())
+        setIntendedMove(MegaDecision, attack);
     else
-    {
-        return;
-    }
+        setIntendedMove(FightDecision, attack);
 }
 
 bool Computer::chooseRun()

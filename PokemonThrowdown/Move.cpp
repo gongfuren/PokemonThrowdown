@@ -243,9 +243,3 @@ bool Move::isAttack() const
 {
     return (m_moveType == Physical || m_moveType == Special);
 }
-
-bool Move::isMultiTurn() const
-{
-    // TODO
-    return false;
-}
