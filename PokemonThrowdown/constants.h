@@ -174,7 +174,7 @@ const double natureArray[NUMNATURES][NUMSTATS-1] = {
 
 const int NUMABILITIES = 100;
 
-const int NUMTITLES = 20;
+const int NUMTITLES = 27;
 
 // Global Enumerators
 

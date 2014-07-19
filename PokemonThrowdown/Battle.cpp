@@ -719,7 +719,7 @@ int Battle::browse(bool p) const
         
         cout << endl;
         
-        choice = selectorGadget(names, mnum-1, prog);
+        choice = selectorGadget(names, mnum-1, prog, 16);
         
         if (choice == BACK)
             break;

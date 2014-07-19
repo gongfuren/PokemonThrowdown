@@ -193,6 +193,8 @@ int selectorGadget(string opts[], int sizeo, int& prog,
         else if (prev && choice == j - poffs)
         {
             i -= entriesPerPage;
+            if (i < 0)
+                i = 0;
             continue;
         }
         else if (nexth && choice == j - nhoffs)
@@ -203,6 +205,8 @@ int selectorGadget(string opts[], int sizeo, int& prog,
         else if (prevh && choice == j - phoffs)
         {
             i -= 100;
+            if (i < 0)
+                i = 0;
             continue;
         }
         else if (nextl && choice == j - nloffs)
