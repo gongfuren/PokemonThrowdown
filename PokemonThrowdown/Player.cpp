@@ -28,36 +28,39 @@ Player::~Player()
 
 void Player::actionSelect()
 {
+    int choice, prog = 0;
+    string aref[4];
+    bool rerun;
+    Battle* battle = getBattle();
+    
     if (!canChooseAction())
         return;
     
-    Battle* battle = getBattle();
-    bool rerun = false;
-    
     do
     {
+        rerun = false;
+        
         cout << "What would you like to do?" << endl;
         
-        cout << "1: " << "Fight" << "!" << endl
-        << "2: " << "Bag" << endl
-        << "3: " << "Pokemon" << endl
-        << "4: " << "Run" << endl;
+        aref[0] = "Fight!";
+        aref[1] = "Bag";
+        aref[2] = "Pokemon";
+        aref[3] = "Run";
         
-        int choice;
-        cin >> choice;
+        choice = selectorGadget(aref, 4, prog, 4, false);
         
         switch (choice)
         {
-            case 1:
+            case 0:
                 rerun = !chooseFight();
                 break;
-            case 2:
+            case 1:
                 rerun = !chooseBag();
                 break;
-            case 3:
+            case 2:
                 rerun = !choosePokemon();
                 break;
-            case 4:
+            case 3:
                 rerun = !chooseRun();
                 break;
             default:
@@ -71,16 +74,19 @@ void Player::actionSelect()
 
 bool Player::chooseRun()
 {
+    int choice, prog = 0;
+    string bref[2];
+    
     cout << "Are you sure you'd like to run and forfeit the match?" << endl;
     
-    cout << "1: " << "Yes" << endl << "2: " << "No" << endl;
+    bref[0] = "Yes";
+    bref[1] = "No";
     
-    int choice;
-    cin >> choice;
+    choice = selectorGadget(bref, 2, prog, 2, false);
     
     switch (choice)
     {
-        case 1:
+        case 0:
             cout << getTitleName() << " " << "has forfeited the match."
             << endl;
             getBattle()->getOpponent()->setVictory();
@@ -103,8 +109,9 @@ bool Player::isComputer() const
 
 bool Player::trainerSummon(bool optional)
 {
-    int choice, i;
+    int choice, i, prog = 0;
     bool rerun = false;
+    string pref[6], wref[3];
     Pokemon* pokemon;
     
     do
@@ -118,12 +125,14 @@ bool Player::trainerSummon(bool optional)
         // Summon prompt
         for (i = 0; i < MAXPOKEMON; i++)
         {
+            ostringstream oss;
+
             pokemon = getPokemon(i);
             
             if (pokemon == NULL)
-                break;
+                continue;
             
-            ostringstream oss;
+            oss << pokemon->getName();
             
             if (pokemon->getStatus() != HealthyStatus)
                 oss << ": " << getBattle()->statusText(pokemon, false);
@@ -131,16 +140,15 @@ bool Player::trainerSummon(bool optional)
             if (getCurrent() == i && !pokemon->isFainted())
                 oss << ": " << "In Battle";
             
-            if (pokemon != NULL)
-                cout << i+1 << ": " << pokemon->getName() << oss.str() << endl;
+            pref[i] = oss.str();
         }
         
-        if (optional)
-            cout << ++i << ": (" << "Back" << ")" << endl;
+        choice = selectorGadget(pref, 6, prog, 6, optional);
         
-        cin >> choice;
-        
-        if (choice > 0 && choice <= i)
+        if (choice == BACK)
+            return false;
+
+        if (choice >= 0 && choice < i)
         {
             if (optional && choice == i)
                 return false;
@@ -151,8 +159,7 @@ bool Player::trainerSummon(bool optional)
             continue;
         }
         
-        // Useful?
-        if (getPokemon(choice-1) == NULL)
+        if (getPokemon(choice) == NULL)
         {
             rerun = true;
             continue;
@@ -166,41 +173,42 @@ bool Player::trainerSummon(bool optional)
             rerunn = false;
             rerun = false;
             
-            cout << "What to do with" << " " << getPokemon(choice-1)->getName()
-            << "?" << endl << "1: " << "Switch" << endl << "2: "
-            << "Summary" << endl << "3: " << "Check Moves" << endl
-            << "4: (" << "Back" << ")" << endl;
+            cout << "You chose " << getPokemon(choice)->getName() << "." << endl;
             
-            cin >> choicee;
+            wref[0] = "Switch";
+            wref[1] = "Summary";
+            wref[2] = "Check Moves";
+            
+            choicee = selectorGadget(wref, 3, prog);
             
             switch (choicee)
             {
                 default:
                     rerunn = true;
                     continue;
-                case 1:
-                    if (getPokemon(choice-1)->isFainted())
+                case 0:
+                    if (getPokemon(choice)->isFainted())
                     {
-                        cout << getPokemon(choice-1)->getName() << " "
+                        cout << getPokemon(choice)->getName() << " "
                         << "is fainted and cannot battle." << endl;
                         rerunn = true;
                     }
-                    else if (getCurrent() == choice-1)
+                    else if (getCurrent() == choice)
                     {
                         cout << getPokemon(choice-1)->getName() << " "
                         << "is already out!" << endl;
                         rerunn = true;
                     }
                     break;
+                case 1:
+                    getBattle()->dispPokeSummary(choice);
+                    rerunn = true;
+                    break;
                 case 2:
-                    getBattle()->dispPokeSummary(choice-1);
+                    getBattle()->dispPokeMoves(choice);
                     rerunn = true;
                     break;
-                case 3:
-                    getBattle()->dispPokeMoves(choice-1);
-                    rerunn = true;
-                    break;
-                case 4:
+                case BACK:
                     rerun = true;
                     rerunn = false;
                     break;
@@ -212,7 +220,7 @@ bool Player::trainerSummon(bool optional)
     while (rerun);
     
     // Set intended switch
-    setIntendedSwitch(choice-1);
+    setIntendedSwitch(choice);
     setIntendedMove(SwitchDecision);
     
     return true;

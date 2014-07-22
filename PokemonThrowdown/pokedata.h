@@ -2341,7 +2341,7 @@ Male,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	27
     "",
     // 752
     302, "Sableye (Mega)",  DarkType,  GhostType, 50,	75,	125,	65,	115,	50,
-    NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PPrankster,	PNoAbility,	PNoAbility,	0,
+    NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PMagicBounce,	PNoAbility,	PNoAbility,	0,
     "",
     // 753
     719, "Diancie (Mega)",  RockType,  FairyType, 100,    100,    100,    100,    100,    100,

@@ -56,8 +56,8 @@ int main()
             cout << "An originally-coded Pokemon simulator that is true to the game."
             << endl << endl
             
-            << "All credit goes to Nintendo for original game design"
-            ", mechanics, etc." << endl << endl << "Made by a huge fan."
+            << "All credit goes to Nintendo for original game design, "
+            "mechanics, etc." << endl << endl << "Made by a huge fan."
             << endl << endl
             
             << "throwdown (n.) informal" << endl

@@ -32,13 +32,13 @@ const trainerdata trainerlib[MAXTOTALTRAINERS] = {
     "Red",        PKMNTRAINER, true,  2900, 196, 25,  6,   9,   3,   143,
     "Steven",     CHAMPION,    true,  1000, 227, 306, 344, 346, 348, 376,
     "Blue",       PKMNTRAINER, true,  1200, 214, 65,  248, 59,  103, 197,
-    "Ian",        ACETRAINER,  true,  7000, 373, 787, 637, 303, 720, 681,
+    "Ian",        ACETRAINER,  true,  7000, 373, 468, 637, 303, 720, 681,
     "Jean",       FAIRYTALE,   false, 3000, 25,  249, 382, 94,  157, 286,
     
     "Gabriel",    DRGNTAMER,   true,  5050, 6,   65,  121, 212, 248, 230,
     "Jessica",    HIKER,       false, 1100, 260, 429, 143, 242 ,448, 468,
     "Eric",       CUEBALL,     true,  100,  477, 330, 254, 242, 65,  157,
-    "Constance",  LADY,        false, 9000, 786, 778, 774, 302, 625, 630,
+    "Constance",  LADY,        false, 9000, 786, 778, 774, 787, 625, 630,
     "Lann",       JUGGLER,     true,  3700, 764, 771, 150, 151, 707, 678
 };
 

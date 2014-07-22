@@ -21,7 +21,6 @@ public:
     ~Computer();
     
     virtual void actionSelect();
-    void actionSelect(int level);
     virtual bool chooseRun();
     virtual bool isComputer() const;
     virtual bool choosePokemon();

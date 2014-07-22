@@ -25,11 +25,6 @@ Computer::~Computer()
 
 void Computer::actionSelect()
 {
-    actionSelect(m_difficulty);
-}
-
-void Computer::actionSelect(int level)
-{
     Pokemon* pokemon = getPokemon();
     Pokemon* target = getBattle()->getPlayer()->getPokemon();
     
@@ -37,14 +32,17 @@ void Computer::actionSelect(int level)
     int attack, max, bar;
     int smartScores[MAXMOVES] = { 0, 0, 0, 0 };
     
+    if (!canChooseAction())
+        return;
+    
     attack = randInt(0, 3);
     bar = 0;
     
     // Level 0: select move completely at random
-    if (level == 0)
+    if (m_difficulty == 0)
         ;
     // Level 1: select most damaging move or status depending on score
-    else // (level == 1 || level == 2)
+    else // (m_difficulty == 1 || m_difficulty == 2)
     {
         for (int i = 0; i < MAXMOVES; i++)
         {
@@ -52,7 +50,7 @@ void Computer::actionSelect(int level)
             if (moves[i] == NULL)
             {
                 attack = 0;
-                goto label;
+                break;
             }
             
             if (moves[i]->getMoveType() == Status)
@@ -92,6 +90,9 @@ void Computer::actionSelect(int level)
         
         for (int i = 0; i < MAXMOVES; i++)
         {
+            if (moves[i] == NULL)
+                continue;
+            
             if (smartScores[i] > max
                 || (smartScores[i] == max && randInt(0, 1) == 1))
             {
@@ -100,8 +101,6 @@ void Computer::actionSelect(int level)
             }
         }
     }
-    
-label:
     
     if (pokemon->canMegaEvolve())
         setIntendedMove(MegaDecision, attack);

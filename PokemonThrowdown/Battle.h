@@ -31,15 +31,6 @@ public:
     Battle();
     ~Battle();
     
-    // Allow user to customize own Trainer and opponent Trainer
-    bool chooseTrainer();
-    bool customTrainer(trainerdata* t);
-    int searchByName(bool p = true) const;
-    int browse(bool p = true) const;
-    int randomChoice(bool p = true) const;
-    void dispMoveInfo(const movedata* m) const;
-    bool chosePokemon(int p, bool* r, bool m = true, bool i = true) const;
-    
     // Start the Battle
     void start();
     
@@ -91,6 +82,15 @@ public:
 private:
     // Tick the clock for each turn
     void clockTick();
+    
+    // Allow user to customize own Trainer and opponent Trainer
+    bool chooseTrainer();
+    bool customTrainer(trainerdata* t);
+    int searchByName(bool p = true) const;
+    int browse(bool p = true) const;
+    int randomChoice(bool p = true) const;
+    void dispMoveInfo(const movedata* m) const;
+    bool chosePokemon(int p, bool* r, bool m = true, bool i = true) const;
     
     // Main Battle cycle, calls the respective phases
     void cycle();

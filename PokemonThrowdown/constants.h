@@ -420,8 +420,7 @@ int randInt(int lowest, int highest);
  
  Ex: typeMultiplier(DragonType, FairyType) == 0.0
  */
-double typeMultiplier(Type type1, Type type2);
-double typeMultiplier(Type type1, Type type2, Type type3);
+double typeMultiplier(Type type1, Type type2, Type type3 = NoType);
 
 /*
  natureMultiplier()
@@ -445,8 +444,8 @@ double natureMultiplier(Nature nature, int stat);
  Allows pagination, with 'entriesPerPage' choices per page, not including
  extra items.
  
- Starts at 'prog' (and updates it so you can call this function again and not
- lose your place).
+ Starts at index 'prog' (and updates it so you can call this function again and 
+ not lose your place).
  
  Pass in specialOpts[] for extra options on every page. specialEndOpts[] for
  options only at the end of the list after opts[], specialBeginOpts[] for

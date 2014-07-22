@@ -14,17 +14,12 @@ using namespace std;
 
 // Auxiliary Function Implementations
 
-double typeMultiplier(Type type1, Type type2)
-{
-    return typeArray[type1][type2];
-}
-
 double typeMultiplier(Type type1, Type type2, Type type3)
 {
     if (type3 == NoType)
-        return typeMultiplier(type1, type2);
+        return typeArray[type1][type2];
     else
-        return (typeMultiplier(type1, type2) * typeMultiplier(type1, type3));
+        return typeArray[type1][type2] * typeArray[type1][type3];
 }
 
 int randInt(int lowest, int highest)
@@ -52,6 +47,12 @@ int selectorGadget(string opts[], int sizeo, int& prog,
     prevh = false;
     nextl = false;
     prevl = false;
+    
+    if (prog < 0)
+        prog = 0;
+    if (prog > sizeo + sizeb + sizee)
+        prog = (sizeo + sizee + sizeb)
+        - ((sizeo + sizee + sizeb) % entriesPerPage);
     
     if (sizeo + sizee + sizeb > 100)
         jump = true;
@@ -182,10 +183,6 @@ int selectorGadget(string opts[], int sizeo, int& prog,
         }
         
         cin >> choice;
-        
-        // DEBUG
-        //cerr << "choice: " << choice << endl
-        //<< "j: " << j << endl;
         
         if (choice <= 0 || choice > j)
             continue;
