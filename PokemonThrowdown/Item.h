@@ -9,23 +9,25 @@
 #ifndef __PokemonThrowdown__Item__
 #define __PokemonThrowdown__Item__
 
+#include "Reactor.h"
+
 #include <iostream>
 #include <string>
 using namespace std;
 
 class Pokemon;
 
-class Item
+class Item : public Reactor
 // Represents an Item and its current state (i.e. used, active)
 {
 public:
-    Item(int ID);
+    Item(int ID, Pokemon* pokemon);
     ~Item();
     
     int getID() const;
     int getAge() const;
     string getName() const;
-    Pokemon* getHolder() const;
+    Pokemon* getPokemon() const;
     
     bool restrictsChoice() const;
     
@@ -36,9 +38,10 @@ public:
     
 private:
     int m_ID;
+    string name;
     int m_age;
     
-    Pokemon* m_holder;
+    Pokemon* m_pokemon;
 };
 
 #endif /* defined(__PokemonThrowdown__Item__) */

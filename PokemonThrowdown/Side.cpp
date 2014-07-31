@@ -10,13 +10,14 @@
 #include "Slot.h"
 #include "constants.h"
 
-Side::Side(Field* field)
+Side::Side(Field* field, int X, int Y)
+: Zone(X, Y, 1, 1)
 {
     m_field = field;
     m_numTrainers = 0;
     
     for (int i = 0; i < MAXPOKEMONPERPLAYER; i++)
-        m_slots[i] = new Slot(this);
+        m_slots[i] = new Slot(this, X, Y);
 }
 
 Side::~Side()

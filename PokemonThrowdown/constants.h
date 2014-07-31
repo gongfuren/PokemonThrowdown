@@ -73,10 +73,10 @@ const int NUMPOKEMONPERPLAYER[NUMPLAYERS] = { 1, 1 };
 const int MAXPOKEMON = 6;
 const int MAXPLAYERS = 4;
 
-const int MAXNUMMOVES = 622;
+const int MAXNUMMOVES = 651;
 const int MAXNUMPOKEMON = 788;
 
-const int MAXTOTALMOVES = 622;
+const int MAXTOTALMOVES = MAXNUMMOVES;
 const int MAXTOTALPOKEMON = 788;
 const int MAXTOTALTRAINERS = 100;
 const int MAXTOTALBATTLES = 100;
@@ -195,128 +195,11 @@ enum Nature
     SassyNature, CarefulNature, QuickNature
 };
 
-// TODO: organize and consolidate move effects
-enum MoveEffect
-{
-    MNoEffect,
-    
-    MDamage20, MDamage40, MDamageLevel,
-    
-    MPoison10, MPoison15, MPoison30, MPoison40,
-    
-    MToxic100,
-    
-    MBurn10, MBurn15, MBurn30,
-    
-    MFreeze10, MFreeze50,
-    
-    MParalyze10, MParalyze15, MParalyze30, MParalyze100,
-    
-    MConfuse10, MConfuse20, MConfuse100,
-    
-    MTri20,
-    
-    MConfuse, MAttract,
-    MBurn, MSleep, MParalyze, MToxic, MPoison,
-    
-    MLowerAtt, MLowerDef, MLowerSpA, MLowerSpD, MLowerSpe,
-    MLowerAcc, MLowerEva,
-    
-    MLowerAcc100,
-    
-    MLowerAttDef,
-    
-    MLowerSpD10, MLowerSpD20, MLowerSpD40, MLowerSpA100,
-    
-    MUpAtt, MUpDef, MUpSpA, MUpSpD, MUpSpe,
-    MUpAcc, MUpEva,
-    
-    MUpDef10, MUpAtt100,
-    
-    MUpRnd,
-    
-    MMoveFirst, MMoveFirst2, MSuperpower, MHighCrit,
-    MHeal50, MHeal100, MDrain50, MDrain75,
-    
-    MRecoil25, MRecoil33, MRecoilStrug,
-    
-    MFlinch10, MFlinch20, MFlinch30, MFlinch100, MCrit100,
-    
-    MNeverMiss, MOHKO, MMultiHit, MDoubleHit, MRecharge, MOverheat,
-    MCloseCombat, MLowerDefSpDSpe, MCharge,
-    
-    MUpAtt2, MUpDef2, MUpSpA2, MUpSpD2, MUpSpe2,
-    MUpAcc2, MUpEva2,
-    
-    MUpSpA3, MUpDef3,
-    
-    MLowerAtt2, MLowerDef2, MLowerSpA2, MLowerSpD2, MLowerSpe2,
-    MLowerAcc2, MLowerEva2,
-    
-    MLowerDefSpDUpAtt2SpA2Spe2,
-    
-    MUpSpASpD, MUpSpASpDSpe,
-    MUpAttSpe, MUpAttDef, MUpAttSpA, MUpDefSpD, MUpAttAcc,
-    
-    MUpAttSpe2, MUpAll, MUpAll10,
-    
-    MIgnoreDef100,
-    
-    MRain, MSun, MHail, MSandstorm, MTrickRoom, MGravity,
-    
-    MRampage, MProtect, MShield, MFocusPunch,
-    MCounter, MRoar, MSuckerPunch,
-    
-    MPayDay,
-    
-    MShockDef,
-    
-    MSelfdestruct,
-    
-    MSolarbeam, MRazorwind, MSkullbash, MSkyAttack, MSkyDrop,
-    MShadowForce, MFly, MDive, MDig, MPhantomForce,
-    
-    MBind, MWrap, MFireSpin, MWhirlpool, MMagmaStorm, MSandTomb, MStomp, MMinimize, MJumpKick,
-    
-    MRage, MFuryCut, MTeleport, MDisable, MBatonPass,
-    
-    MTrap, MPartialTrap,
-    
-    MSub, MHazard, MDehazard, MReflect, MLightScreen, MVitalThrow, MFoul, MSplit,
-    MTaunt
-};
-
 const int MINPRIORITY = -8;
 const int NORMPRIORITY = 0;
 const int MAXPRIORITY = 8;
 
-enum HoldItem
-{
-    HNoItem, HLeftovers, HChoiceBand, HChoiceScarf, HChoiceSpecs, HLightBall,
-    HLifeOrb, HLightClay, HKingsRock, HFocusSash, HBlackSludge,
-    HOranBerry, HSitrusBerry, HEjectPolicy, HRedCard,
-    
-    HVenusaurite, HCharizarditeX, HCharizarditeY, HBlastoisinite, HAlakazite, HGengarite, HKangaskhanite, HPinsirite, HGyaradosite, HAerodactylite, HMewtwoniteX, HMewtwoniteY, HAmpharosite, HScizorite, HHeracronite, HHoundoominite, HTyranitarite, HBlazikenite, HGardevoirite, HMawilite, HAggronite, HMedichamite, HManectite, HBannetite, HAbsolite, HGarchompite, HLucarionite, HAbomasite,
-    
-    // Experimental Items
-    HSwampertite, HSceptilite, HSableite, HDiancite, HLatiasite, HLatiosite
-};
-
 const int NUMITEMS = 100;
-
-// TODO: add all common battle items
-// TODO: implement most of these items
-
-// TODO: implement most abilities
-enum PokeAbility
-{
-    PNoAbility, PLevitate, PSwiftSwim, PIntimidate, PHugePower, PStatic,
-    PSereneGrace, PUnaware, PMagicBounce, PPressure, PSandStream, PMultiscale,
-    PSynchronize, PClearBody, PDrizzle, PDrought, PAirLock, PStanceChange,
-    PTorrent, PBlaze, POvergrow, PSwarm, PTechnician, PPoisonPoint,
-    PSnowWarning, PAnticipation, PMoldBreaker, PPurePower, PPrankster,
-    PDefiant
-};
 
 enum MoveType
 {
@@ -402,59 +285,5 @@ enum BattleType
 {
     SingleBattle, DoubleBattle, TripleBattle, RotationBattle, HoardBattle
 };
-
-// Auxiliary Function Declarations
-
-/*
- randInt()
- 
- Returns a randomly chosen integer between lowest and highest inclusive
- */
-int randInt(int lowest, int highest);
-
-/*
- typeMultiplier()
- 
- Returns multiplier corresponding to 'type1's damage on 'type2' or 
- 'type2'/'type3'
- 
- Ex: typeMultiplier(DragonType, FairyType) == 0.0
- */
-double typeMultiplier(Type type1, Type type2, Type type3 = NoType);
-
-/*
- natureMultiplier()
- 
- Returns multiplier corresponding to nature's influence on stat
- 
- Ex: natureMultiplier(AdamantNature, AttStat) == 1.1
- */
-double natureMultiplier(Nature nature, int stat);
-
-/*
- selectorGadget()
- 
- Organizes and displays all 'sizeo' indices of opts[] as a user-interactive
- menu.
- 
- Returns index of opts[] corresponding to user choice. If user chooses "Back"
- (Back is enabled by default) returns -1. You must check and do something useful
- with this value (i.e. break out of a loop).
- 
- Allows pagination, with 'entriesPerPage' choices per page, not including
- extra items.
- 
- Starts at index 'prog' (and updates it so you can call this function again and 
- not lose your place).
- 
- Pass in specialOpts[] for extra options on every page. specialEndOpts[] for
- options only at the end of the list after opts[], specialBeginOpts[] for
- options only at the beginning.
- */
-int selectorGadget(string opts[], int sizeo, int& prog,
-                   int entriesPerPage = 10, bool back = true,
-                   string specialOpts[] = NULL, int sizes = 0,
-                   string specialBeginOpts[] = NULL, int sizeb = 0,
-                   string specialEndOpts[] = NULL, int sizee = 0);
 
 #endif /* defined(__PokemonThrowdown__Constants__) */

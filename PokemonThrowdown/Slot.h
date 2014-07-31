@@ -21,7 +21,7 @@ class Slot : public Zone
 // Each Slot holds 0 or 1 Pokemon
 {
 public:
-    Slot(Side* side);
+    Slot(Side* side, int X, int Y);
     ~Slot();
     
     // Return true if Pokemon in Slot exists and is not fainted

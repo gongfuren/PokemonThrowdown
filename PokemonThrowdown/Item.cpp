@@ -7,13 +7,16 @@
 //
 
 #include "Item.h"
+#include "itemdata.h"
 #include "constants.h"
 #include "strings.h"
 
-Item::Item(int ID)
+Item::Item(int ID, Pokemon* pokemon)
+: Reactor(NULL)
 {
     m_ID = ID;
     m_age = -1;
+    m_pokemon = pokemon;
 }
 
 Item::~Item()
@@ -36,9 +39,9 @@ string Item::getName() const
     return itemStrings[m_ID];
 }
 
-Pokemon* Item::getHolder() const
+Pokemon* Item::getPokemon() const
 {
-    return m_holder;
+    return m_pokemon;
 }
 
 bool Item::restrictsChoice() const

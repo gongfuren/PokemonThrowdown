@@ -8,14 +8,17 @@
 
 #include "Pokemon.h"
 #include "pokedata.h"
+#include "Ability.h"
 #include "Trainer.h"
 #include "Battle.h"
 #include "constants.h"
 #include "strings.h"
 #include "Item.h"
+#include "utilities.h"
 
 #include <iostream>
 #include <string>
+#include <sstream>
 using namespace std;
 
 Pokemon::Pokemon(pokedata h, Trainer* trainer, int wp)
@@ -30,8 +33,8 @@ Pokemon::Pokemon(pokedata h, Trainer* trainer, int wp)
     m_level = h.level;
     m_nature = (h.nature == NoNature)
     ? static_cast<Nature>(randInt(HardyNature, NUMNATURES-1)) : h.nature;
-    m_ability = h.ability[0];
-    m_item = new Item(h.item);
+    m_ability = new Ability(h.ability[0], this);
+    m_item = new Item(h.item, this);
     m_description = h.description;
     m_sleepTurns = 0;
     m_toxicTurns = 0;
@@ -94,7 +97,9 @@ void Pokemon::transform(int pokemonID)
     m_name = me.name;
     m_type1 = me.type1;
     m_type2 = me.type2;
-    m_ability = me.ability[0];
+    
+    delete m_ability;
+    m_ability = new Ability(me.ability[0], this);
     
     for (int i = AttStat; i < NUMSTATS; i++)
     {
@@ -247,7 +252,7 @@ string Pokemon::getDescription() const
     return m_description;
 }
 
-PokeAbility Pokemon::getAbility() const
+Ability* Pokemon::getAbility() const
 {
     return m_ability;
 }
@@ -269,7 +274,7 @@ void Pokemon::setSleepTurns(int turns)
 
 void Pokemon::flashAbility() const
 {
-    cout << m_name << "'s " << abilityStrings[m_ability] << ":" << endl;
+    cout << m_name << "'s " << abilityStrings[m_ability->getID()] << ":" << endl;
 }
 
 void Pokemon::tick()
@@ -294,27 +299,27 @@ void Pokemon::castAbility()
             // This loop deals with ability effects on other Pokemon
             continue;
         
-        if (getAbility() == PIntimidate)
+        if (getAbility()->getID() == PIntimidate)
         {
             flashAbility();
             opponent->decreaseStat(AttStat, false);
         }
         
-        if (getAbility() == PDrizzle
+        if (getAbility()->getID() == PDrizzle
             && getTrainer()->getBattle()->getWeather() != Rain)
         {
             flashAbility();
             getTrainer()->getBattle()->getField()->initializeWeather(Rain);
         }
         
-        if (getAbility() == PDrought
+        if (getAbility()->getID() == PDrought
             && getTrainer()->getBattle()->getWeather() != Sunny)
         {
             flashAbility();
             getTrainer()->getBattle()->getField()->initializeWeather(Sunny);
         }
         
-        if (getAbility() == PSandStream
+        if (getAbility()->getID() == PSandStream
             && getTrainer()->getBattle()->getWeather() != Sandstorm)
         {
             flashAbility();
@@ -322,14 +327,14 @@ void Pokemon::castAbility()
             initializeWeather(Sandstorm);
         }
         
-        if (getAbility() == PSnowWarning
+        if (getAbility()->getID() == PSnowWarning
             && getTrainer()->getBattle()->getWeather() != Hail)
         {
             flashAbility();
             getTrainer()->getBattle()->getField()->initializeWeather(Hail);
         }
         
-        if (getAbility() == PPressure)
+        if (getAbility()->getID() == PPressure)
         {
             flashAbility();
             cout << getName() << " " << "is exerting its Pressure!" << endl;
@@ -407,7 +412,7 @@ bool Pokemon::decreaseStat(int whichStat, bool silent)
 {
     bool normalExecution = true;
     
-    if (!silent && m_ability == PClearBody)
+    if (!silent && m_ability->getID() == PClearBody)
         // Clear Body cancellation
     {
         normalExecution = false;
@@ -441,7 +446,7 @@ bool Pokemon::decreaseStat(int whichStat, bool silent)
     }
     
     // Defiant Att boost
-    if (!silent && m_ability == PDefiant)
+    if (!silent && m_ability->getID() == PDefiant)
     {
         flashAbility();
         increaseStat(AttStat, 2);
@@ -706,7 +711,8 @@ bool Pokemon::passThroughStatus()
                 
                 int pureDamage = 40;
                 int attackMultiplier = 1.0;
-                if (getAbility() == PHugePower || getAbility() == PPurePower)
+                if (getAbility()->getID() == PHugePower
+                    || getAbility()->getID() == PPurePower)
                     attackMultiplier = 2.0;
                 int spOrNot
                 = static_cast<double>(getStats(AttStat) * attackMultiplier)
@@ -779,7 +785,7 @@ void Pokemon::addVStatus(VolatileStatus vstatus)
     m_vstatuses.push_back(vstatus);
 }
 
-bool Pokemon::hasVStatus(VolatileStatus vstatus)
+bool Pokemon::hasVStatus(VolatileStatus vstatus) const
 {
     return listContains(m_vstatuses, vstatus);
 }
@@ -885,7 +891,7 @@ bool Pokemon::executeMove(Pokemon* target, Move* move)
         }
     }
     
-    if (getAbility() == PStanceChange)
+    if (getAbility()->getID() == PStanceChange)
     {
         changeForm = false;
         
@@ -1467,7 +1473,7 @@ void Pokemon::applyAttack(Pokemon* target, Move* move)
         return;
     }
     
-    if (target->getAbility() == PLevitate && move->getType()
+    if (target->getAbility()->getID() == PLevitate && move->getType()
         == GroundType)
         // Target has Levitate and attacker is using GroundType move
     {
@@ -1521,8 +1527,8 @@ void Pokemon::applyAttack(Pokemon* target, Move* move)
     
     if (move->getEffect() == MFoul)
     {
-        if (target->getAbility() == PHugePower || target->getAbility()
-            == PPurePower)
+        if (target->getAbility()->getID() == PHugePower
+            || target->getAbility()->getID() == PPurePower)
             attackMultiplier = 2.0;
         else
             attackMultiplier = 1.0;
@@ -1532,8 +1538,8 @@ void Pokemon::applyAttack(Pokemon* target, Move* move)
     }
     else
     {
-        if (attacker->getAbility() == PHugePower || attacker->getAbility()
-            == PPurePower)
+        if (attacker->getAbility()->getID() == PHugePower
+            || attacker->getAbility()->getID() == PPurePower)
             // Huge/Pure power ability: attack 2.0x
             attackMultiplier = 2.0;
         else
@@ -1720,7 +1726,7 @@ void Pokemon::applyEffect(Pokemon* target, Move* move, int drain)
                 break;
         }
         
-        if (getAbility() == PSereneGrace)
+        if (getAbility()->getID() == PSereneGrace)
             flinchChance *= 2;
         
         if (randInt(0, 99) < flinchChance)
@@ -1904,4 +1910,39 @@ void Pokemon::decTauntTurns()
     
     if (m_tauntTurns < 0)
         m_tauntTurns = 0;
+}
+
+string Pokemon::statusText(bool showStats) const
+{
+    ostringstream o;
+    
+    o << statusStrings[getStatus()];
+    
+    if (showStats)
+    {
+        for (int i = ConfuseVStatus; i <= IceBurnVStatus; i++)
+        {
+            VolatileStatus vs = static_cast<VolatileStatus>(i);
+            if (hasVStatus(vs))
+                o << ' ' << vstatusStrings[vs];
+        }
+        
+        for (int i = AttStat; i < NUMALLSTATS; i++)
+        {
+            if (getStatsStatus(i) != 0)
+            {
+                int statstatus = getStatsStatus(i);
+                
+                o << ' ';
+                o << statStrings[i];
+                
+                if (statstatus > 0)
+                    o << '+';
+                
+                o << statstatus;
+            }
+        }
+    }
+    
+    return o.str();
 }

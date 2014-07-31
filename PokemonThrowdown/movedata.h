@@ -16,6 +16,97 @@ using namespace std;
 
 // Note: This data file does not adhere to an 80 column limit!
 
+// TODO: organize and consolidate move effects
+enum MoveEffect
+{
+    MNoEffect,
+    
+    MDamage20, MDamage40, MDamageLevel,
+    
+    MPoison10, MPoison15, MPoison30, MPoison40,
+    
+    MToxic100,
+    
+    MBurn10, MBurn15, MBurn30,
+    
+    MFreeze10, MFreeze50,
+    
+    MParalyze10, MParalyze15, MParalyze30, MParalyze100,
+    
+    MConfuse10, MConfuse20, MConfuse100,
+    
+    MTri20,
+    
+    MConfuse, MAttract,
+    MBurn, MSleep, MParalyze, MToxic, MPoison,
+    
+    MLowerAtt, MLowerDef, MLowerSpA, MLowerSpD, MLowerSpe,
+    MLowerAcc, MLowerEva,
+    
+    MLowerAcc100,
+    
+    MLowerAttDef,
+    
+    MLowerSpD10, MLowerSpD20, MLowerSpD40, MLowerSpA100,
+    
+    MUpAtt, MUpDef, MUpSpA, MUpSpD, MUpSpe,
+    MUpAcc, MUpEva,
+    
+    MUpDef10, MUpAtt100,
+    
+    MUpRnd,
+    
+    MMoveFirst, MMoveFirst2, MSuperpower, MHighCrit,
+    MHeal50, MHeal100, MDrain50, MDrain75,
+    
+    MRecoil25, MRecoil33, MRecoilStrug,
+    
+    MFlinch10, MFlinch20, MFlinch30, MFlinch100, MCrit100,
+    
+    MNeverMiss, MOHKO, MMultiHit, MDoubleHit, MRecharge, MOverheat,
+    MCloseCombat, MLowerDefSpDSpe, MCharge,
+    
+    MUpAtt2, MUpDef2, MUpSpA2, MUpSpD2, MUpSpe2,
+    MUpAcc2, MUpEva2,
+    
+    MUpSpA3, MUpDef3,
+    
+    MLowerAtt2, MLowerDef2, MLowerSpA2, MLowerSpD2, MLowerSpe2,
+    MLowerAcc2, MLowerEva2,
+    
+    MLowerDefSpDUpAtt2SpA2Spe2,
+    
+    MUpSpASpD, MUpSpASpDSpe,
+    MUpAttSpe, MUpAttDef, MUpAttSpA, MUpDefSpD, MUpAttAcc,
+    
+    MUpAttSpe2, MUpAll, MUpAll10,
+    
+    MIgnoreDef100,
+    
+    MRain, MSun, MHail, MSandstorm, MTrickRoom, MGravity,
+    
+    MRampage, MProtect, MShield, MFocusPunch,
+    MCounter, MRoar, MSuckerPunch,
+    
+    MPayDay,
+    
+    MShockDef,
+    
+    MSelfdestruct,
+    
+    MSolarbeam, MRazorwind, MSkullbash, MSkyAttack, MSkyDrop,
+    MShadowForce, MFly, MDive, MDig, MPhantomForce,
+    
+    MBind, MWrap, MFireSpin, MWhirlpool, MMagmaStorm, MSandTomb, MStomp, MMinimize, MJumpKick,
+    
+    MRage, MFuryCut, MTeleport, MDisable, MBatonPass,
+    
+    MTrap, MPartialTrap,
+    
+    MSub, MHazard, MDehazard, MReflect, MLightScreen, MVitalThrow, MFoul, MSplit,
+    MTaunt
+};
+
 // Move Data
 
 struct movedata
@@ -1272,20 +1363,107 @@ const movedata movelib[MAXTOTALMOVES] = {
     616,	"Land's Wrath", GroundType,	Physical,	UnknownStat,	10,	90,	100,	VI,	MNoEffect,	Opponent, true,
 	"",
     // 617
-    900,    "Crimson Blaze",   NeutralType,    Special,    UnknownStat,    5,  -1, 70,    X,  MOHKO,  Opponent, false,
-	"Sets off a catastrophic explosion that resembles a deep red sun. The target will faint instantly if hit.",
+    900,    "???",   NoType,    Special,    UnknownStat,    -1,  -1, -1,    X,  MNoEffect,  Opponent, false,
+	"",
     // 618
-    901,    "Nether Ring",   DarkType, Special,    UnknownStat,    5,  100,    100, X, MFreeze50,   Opponent, false,
-	"The user fires a strange pulse that drains energy. May freeze the target.",
+    901,    "???",   NoType,    Special,    UnknownStat,    -1,  -1, -1,    X,  MNoEffect,  Opponent, false,
+	"",
     // 619
-    902,    "Radiant Blade",    LightType,  Special,    UnknownStat,    5, 100,    100,        X,  MNoEffect,  Opponent, false,
-	"Generates a sword of light and attacks the target.",
+    902,    "???",   NoType,    Special,    UnknownStat,    -1,  -1, -1,    X,  MNoEffect,  Opponent, false,
+	"",
     // 620
-    903,    "Shining Strike", LightType,    Physical,   UnknownStat,    5,  100,    100,    X,  MNoEffect,  Opponent,   false,
-    "The user accumulates light energy and attacks the target.",
+    903,    "???",   NoType,    Special,    UnknownStat,    -1,  -1, -1,    X,  MNoEffect,  Opponent, false,
+	"",
     // 621
+    904,    "???",   NoType,    Special,    UnknownStat,    -1,  -1, -1,    X,  MNoEffect,  Opponent, false,
+	"",
+    // 622
+    905,    "???",   NoType,    Special,    UnknownStat,    -1,  -1, -1,    X,  MNoEffect,  Opponent, false,
+	"",
+    // 623
+    906,    "???",   NoType,    Special,    UnknownStat,    -1,  -1, -1,    X,  MNoEffect,  Opponent, false,
+	"",
+    // 624
+    907,    "Queen's Shield",   LightType,  Status, Beauty,    10,  -1, -1, X,  MProtect,    Self,   false,
+    "The user raises a wall of light that nullifies damage from moves.",
+    // 625
+    908,    "Demolition", FightingType,   Physical,   Tough,   5,  100,    100,    X,  MMoveFirst,  Opponent,   true,
+    "The user uses its speed to attack the foe at blinding speeds.",
+    // 626
+    909,    "Graviton",    GroundType,   Special,    Cool, 5,  100,    100, X,  MNoEffect,  Opponent,   false,
+    "The user attacks the target by greatly increasing the force of gravity.",
+    // 627
+    910,    "Terrablast",   RockType,   Special,    Tough,    5,  100,    100,    X,  MNoEffect,  Opponent,   false,
+    "The user wreaks havoc and causes damage by altering gravitational pull.",
+    // 628
+    911,    "Crimson Blaze",    FireType,   Special,    Beauty, 5,  100,    100,    X,  MBurn30,  Opponent,   false,
+    "Summons a storm of crimson flames to deal damage to an opponent. May cause\na burn.",
+    // 629
+    912,    "Lightning Edge", ElectricType,   Physical,    Cool, 5,  100,    100,    X,  MHighCrit,  Opponent,   false,
+    "The user slashes its target with a sword of lightning. High critical-hit ratio.",
+    // 630
+    913,    "Wood Dragon", GrassType,    Physical,    Beauty, 10,  100,    100,    X,  MDrain50,  Opponent,   false,
+    "The user animates a wooden dragon to attack the foe. This dragon absorbs\nenergy from the target.",
+    // 631
+    914,    "Time Dilation",    NeutralType,    Status, UnknownStat,    10,  -1, -1, X,  MNoEffect,  None,   false,
+    "Temporarily alters the flow of time.",
+    // 632
+    915,    "Elemental Barrage",  NeutralType,    Special,    Smart,  5,  140,    90,    X,  MNoEffect,  Opponent,   false,
+    "Emits a powerful blast of wind, water, earth, and fire.",
+    // 633
+    916,    "Heaven's Mirror",  LightType,  Status, Beauty, 5,  -1, -1, X,  MProtect,   Self,   false,
+    "The user avoids damage by summoning a large mirror imbued with light.",
+    // 634
+    917,    "Sine Wave Burst",    WaterType,  Special,   Smart,    5,  100,    100,    X,  MConfuse20,  Opponent,   false,
+    "The user attacks with mysterious energy waves. May leave the target\nconfused.",
+    // 635
+    918,    "Deep Blue",  WaterType,  Physical, Tough,    5,  100, -1, X,  MNeverMiss,  None,   false,
+    "The target is dragged into a world of deep dark sea and attacked. This\nattack always lands without fail.",
+    // 636
+    919,    "Aurora Curtain",   IceType,   Special, Beauty,    5,  100, 100, X,  MNoEffect,  Opponent,   false,
+    "The user attacks by spreading curtains of plasma that contain the essence\nof ice.",
+    // 637
+    920,    "Cloud Cover", WaterType,  Status,    Cute,  10,  -1,    -1,    X,  MProtect,  Self,   false,
+    "The user avoids damage by covering itself in clouds.",
+    // 638
+    921,    "Poison Haze",    PoisonType,   Special,    Smart, 5,  130,    70, X,  MPoison30,  Opponent,   false,
+    "The target covers the battlefield with a dark haze from another dimension.",
+    // 639
+    922,    "Meteor Shower",    FireType,   Special,    Beauty, 5,  130,    70, X,  MNoEffect,  Opponent,   false,
+    "A raging storm of meteors is rained down onto the opponent.",
+    // 640
+    923,    "Savage Heart", SteelType,    Physical,   Tough,  5,  180,    70,    X,  MNoEffect,  Opponent,   false,
+    "The user borrows otherworldly power from the god of war to attack.",
+    // 641
+    924,    "Time Shear", NeutralType,    Special,    Smart,  5,  100,    100,    X,  MFreeze50,  Opponent,   false,
+    "Attacks the target by bending time around it to cause damage. May leave the\ntarget frozen.",
+    // 642
+    925,    "Shadow Assault", GhostType,    Physical,   Smart,  10,  100,    -1,    X,  MNeverMiss,  Opponent,   false,
+    "The user confounds the target with blinding light and attacks through its\nshadow. This attack will not miss.",
+    // 643
+    926,    "Song of Heaven", FlyingType, Special,    Beauty, 5,  100,    100,    X,  MNoEffect,  Opponent,   false,
+    "The user plays the song of the heavens, casting away evil with harsh winds.",
+    // 644
+    927,    "Rising Sunset",   FireType,    Special,    Cool,    5,  -1, 50,    X,  MOHKO,  Opponent, false,
+	"Sets off a catastrophic explosion that rises into the air like a deep red\nsun. The target will faint instantly if hit.",
+    // 645
+    928,    "Nether Ring",   DarkType, Special,    Smart,    5,  100,    100, X, MFreeze50,   Opponent, false,
+	"The user fires a strange pulse that drains energy. May freeze the target.",
+    // 646
+    929,    "Radiant Blade",    LightType,  Special,    Beauty,    5, 100,    100,        X,  MNoEffect,  Opponent, false,
+	"Generates a sword of light and attacks the target.",
+    // 647
+    930,    "Shining Strike", LightType,    Physical,   Cool,    5,  100,    100,    X,  MNoEffect,  Opponent,   false,
+    "The user accumulates light energy and attacks the target.",
+    // 648
+    931,    "Solemn Wishes", WaterType,    Status, Beauty, 10,  -1, -1, X,  MHeal50,  Self,  false,
+    "A light and soothing rain falls upon the field, healing the user.",
+    // 649
+    932,    "Morning Light",    LightType,  Status, Beauty, 5,  -1, -1, X,  MHeal50,    Self,   false,
+    "The bright light of a new day shines upon the battlefield and restores the\nuser's health.",
+    // 650
     -1,    "Loving Embrace",  NeutralType, Physical, UnknownStat,    5, -1, 50, X,  MOHKO,  Opponent,   true,
-    "The user attempts to embrace the target. The target will faint instantly if contact is made."
+    "The user embraces the target with sinister energy. The target will faint\ninstantly if hit.",
 };
 
 #endif /* defined(__PokemonThrowdown__movedata__) */

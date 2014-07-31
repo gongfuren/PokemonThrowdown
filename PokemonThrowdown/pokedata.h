@@ -10,6 +10,8 @@
 #define __PokemonThrowdown__pokedata__
 
 #include "constants.h"
+#include "abilitydata.h"
+#include "itemdata.h"
 
 #include <string>
 using namespace std;
@@ -2210,7 +2212,7 @@ Male,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	27
 	"",
     // 720
     901,    "Hypergeo", RockType, DragonType,   75, 95, 140,    137,    155,    108,
-    Genderless,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	407,	619,	295,	408,	PLevitate,	PLevitate,	PLevitate,	0,
+    Genderless,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	407,	646,	295,	408,	PLevitate,	PLevitate,	PLevitate,	0,
 	"According to legend, this dragon was formed from a hoard of ancient treasure.",
     // 721
     902,    "Zeratik",   GhostType,    IceType,  95,    140,    75,    155, 108, 137,
@@ -2486,11 +2488,11 @@ Male,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	27
     
     // 786
     903,    "Constantinoble",   LightType,    DarkType,  108,    137,    155,    95, 140, 75,
-    Genderless,   NoNature,   -1, -1, -1, -1, -1, -1, HNoItem,    -1, -1, -1, -1, -1, -1, 100,    618,    620,    533,    566,    PPressure,  PPressure,  PPressure,  0,
+    Genderless,   NoNature,   -1, -1, -1, -1, -1, -1, HNoItem,    -1, -1, -1, -1, -1, -1, 100,    645,    647,    533,    566,    PPressure,  PPressure,  PPressure,  0,
     "A lingering spirit from ancient times. Its two halves were once seperate beings.",
     // 787
     -1,    "Doppelganger",   NeutralType,    NoType,  180,    1,    219,    1, 219, 100,
-    Genderless,   NoNature,   -1, -1, -1, -1, -1, -1, HNoItem,    -1, -1, -1, -1, -1, -1, 100,    621,    -1,    -1,    -1,    PNoAbility,  PNoAbility,  PNoAbility,  0,
+    Genderless,   NoNature,   -1, -1, -1, -1, -1, -1, HNoItem,    -1, -1, -1, -1, -1, -1, 100,    650,    -1,    -1,    -1,    PNoAbility,  PNoAbility,  PNoAbility,  0,
     "A strange creature that strolls nonchalantly through the battlefield until it finds a victim.",
 };
 

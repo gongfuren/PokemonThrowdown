@@ -272,7 +272,7 @@ void Trainer::displayState() const
             break;
     }
     
-    string pokeStatus = getBattle()->statusText(pokemon, true);
+    string pokeStatus = pokemon->statusText(true);
     
     cout << "Lv" << " " << pokemon->getLevel() << " " << pokeName
     << ' ' << pokeGen << ' ' << pokeStatus << ' ' << generateBalls() << endl

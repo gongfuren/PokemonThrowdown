@@ -52,14 +52,14 @@ int selectorGadget(string opts[], int sizeo, int& prog,
         prog = 0;
     if (prog > sizeo + sizeb + sizee)
         prog = (sizeo + sizee + sizeb)
-        - ((sizeo + sizee + sizeb) % entriesPerPage);
+        - ((sizeo + sizee + sizeb) % entriesPerPage)-1;
     
     if (sizeo + sizee + sizeb > 100)
         jump = true;
     else
         jump = false;
     
-    if (sizeo + sizee + sizeb > 20)
+    if (sizeo + sizee + sizeb > entriesPerPage * 6)
         alphaOmega = true;
     else
         alphaOmega = false;
@@ -213,7 +213,7 @@ int selectorGadget(string opts[], int sizeo, int& prog,
         else if (nextl && choice == j - nloffs)
         {
             i = (sizeo + sizee + sizeb)
-            - ((sizeo + sizee + sizeb) % entriesPerPage);
+            - ((sizeo + sizee + sizeb) % entriesPerPage)-1;
             continue;
         }
         else if (prevl && choice == j - ploffs)

@@ -21,6 +21,7 @@ using namespace std;
 class Trainer;
 class Slot;
 class Item;
+class Ability;
 
 class Pokemon
 // Represents a Battle-ready Pokemon and its current state
@@ -41,7 +42,7 @@ public:
     Gender getGender() const;
     int getLevel() const;
     Nature getNature() const;
-    PokeAbility getAbility() const;
+    Ability* getAbility() const;
     Item* getItem() const;
     bool hasCompatMegaStone() const;
     string getDescription() const;
@@ -52,23 +53,31 @@ public:
     const stack<Move*>* getMoveHistory() const;
     int getTurnsOut() const;
     Move* getLockedMove() const;
-    
-    // Battle state functions
     int getIntendedMove() const;
+    bool isFainted() const;
+
+    // Set functions
     void setIntendedMove(int choice);
     bool setStatus(PokeStatus status, bool rest = false);
+    void setFainted();
+    
+    // Remove functions
     void removeStatus();
     void removeVStatuses();
-    void addVStatus(VolatileStatus vstatus);
     void removeVStatus(VolatileStatus vstatus);
-    bool hasVStatus(VolatileStatus vstatus);
     void removeShortStatus();
+    
+    // Add functions
+    void addVStatus(VolatileStatus vstatus);
+    
+    // Has functions
+    bool hasVStatus(VolatileStatus vstatus) const;
+    
+    // Other
     void checkFaint();
-    bool isFainted() const;
-    void setFainted();
+    bool hasMaxHP() const;
     void lowerHP(int howMuch);
     bool increaseHP(int howMuch);
-    bool hasMaxHP() const;
     bool decreaseStat(int whichStat, bool silent);
     bool decreaseStat(int whichStat, int levels);
     bool increaseStat(int whichStat, bool silent);
@@ -77,11 +86,13 @@ public:
     void clearVolatiles();
     bool lockMove(Move* m);
     bool unlockMove();
-
     bool passThroughStatus();
     
     // Do something on each turn tick
     void tick();
+    
+    // Battle serving
+    string statusText(bool showStats) const;
     
     // Status state
     int getToxicTurns() const;
@@ -134,7 +145,7 @@ private:
     Gender m_gender;
     int m_level;
     Nature m_nature;
-    PokeAbility m_ability;
+    Ability* m_ability;
     Item* m_item;
     string m_description;
     

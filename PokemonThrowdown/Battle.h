@@ -50,9 +50,6 @@ public:
     // Display currently-set moves for Pokemon of specified species
     void dispPokeMoves(const pokedata pokemon) const;
     
-    // TODO: move into Pokemon
-    string statusText(Pokemon* pokemon, bool showStats) const;
-    
     // Cast effects (i.e. Abilities) when Pokemon is "summoned" (sent out)
     void summonEffects();
     

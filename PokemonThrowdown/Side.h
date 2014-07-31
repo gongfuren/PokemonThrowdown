@@ -23,7 +23,7 @@ class Side : public Zone
 // the state of a respective side
 {
 public:
-    Side(Field* field);
+    Side(Field* field, int X, int Y);
     ~Side();
     
     Slot* getSlot(int whichSlot = 0) const;

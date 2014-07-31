@@ -17,8 +17,13 @@ class Zone
 // time
 {
 public:
+    Zone(int X, int Y, int width, int height);
     
 private:
+    int m_width;
+    int m_height;
+    int m_X;
+    int m_Y;
 };
 
 #endif /* defined(__PokemonThrowdown__Zone__) */

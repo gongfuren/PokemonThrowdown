@@ -12,7 +12,8 @@
 #include "constants.h"
 #include "strings.h"
 
-Slot::Slot(Side* side)
+Slot::Slot(Side* side, int X, int Y)
+: Zone(X, Y, 1, 1)
 {
     m_side = side;
 }

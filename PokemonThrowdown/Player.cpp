@@ -10,6 +10,7 @@
 #include "Battle.h"
 #include "constants.h"
 #include "strings.h"
+#include "utilities.h"
 
 #include <iostream>
 #include <sstream>
@@ -135,7 +136,7 @@ bool Player::trainerSummon(bool optional)
             oss << pokemon->getName();
             
             if (pokemon->getStatus() != HealthyStatus)
-                oss << ": " << getBattle()->statusText(pokemon, false);
+                oss << ": " << pokemon->statusText(false);
             
             if (getCurrent() == i && !pokemon->isFainted())
                 oss << ": " << "In Battle";

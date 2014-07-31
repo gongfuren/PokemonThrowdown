@@ -17,7 +17,9 @@
 #include "Slot.h"
 #include "Item.h"
 #include "Player.h"
+#include "Ability.h"
 #include "Computer.h"
+#include "utilities.h"
 #include <ctime>
 #include <vector>
 #include <cstdlib>
@@ -32,7 +34,7 @@ using namespace std;
 
 Battle::Battle()
 {
-    m_field = new Field(this);
+    m_field = new Field(this, 0, 0);
     
     // Zero out variables
     m_player = NULL;
@@ -53,8 +55,8 @@ Battle::Battle()
     // Custom Initialization
     for (int i = 0; i < 2; i++)
     {
-        if (!chooseTrainer())
-            return;
+        if (!chooseTrainer())   // this is an if statement in case future
+            return;             // implementations provide back functionality
     }
     
     m_turns = 0;
@@ -744,10 +746,11 @@ int Battle::browse(bool p) const
 }
 
 // Battle Flow
+// Everything above this line happens during Battle construction
 
 void Battle::start()
 {
-    if (m_turns < 0)
+    if (m_turns < 0)    // left here for potential back functionality
         return;
     
     greet();
@@ -828,7 +831,7 @@ void Battle::summonsPhase()
         }
     }
     
-    // Field event (i.e. weather)
+    // Field event (weather)
     fieldEvent();
     
     // Event at summon (i.e. Intimidate, spikes)
@@ -1185,41 +1188,6 @@ Weather Battle::getWeather() const
     return getField()->getWeather();
 }
 
-string Battle::statusText(Pokemon* pokemon, bool showStats) const
-{
-    ostringstream o;
-    
-    o << statusStrings[pokemon->getStatus()];
-    
-    if (showStats)
-    {
-        for (int i = ConfuseVStatus; i <= IceBurnVStatus; i++)
-        {
-            VolatileStatus vs = static_cast<VolatileStatus>(i);
-            if (pokemon->hasVStatus(vs))
-                o << ' ' << vstatusStrings[vs];
-        }
-        
-        for (int i = AttStat; i < NUMALLSTATS; i++)
-        {
-            if (pokemon->getStatsStatus(i) != 0)
-            {
-                int statstatus = pokemon->getStatsStatus(i);
-                
-                o << ' ';
-                o << statStrings[i];
-                
-                if (statstatus > 0)
-                    o << '+';
-                
-                o << statstatus;
-            }
-        }
-    }
-    
-    return o.str();
-}
-
 void Battle::displayState(bool showTurnCount) const
 {
     if (showTurnCount)
@@ -1292,7 +1260,7 @@ void Battle::dispPokeSummary(int slotNumber) const
     // Gender
     << genderStrings[pokemon->getGender()] << " "
     // Status
-    << statusText(pokemon, false) << endl
+    << pokemon->statusText(false) << endl
 
     // Type(s)
     << typeStrings[pokemon->getType1()];
@@ -1305,7 +1273,7 @@ void Battle::dispPokeSummary(int slotNumber) const
     << endl
     
     // Ability
-    << "Ability" << ": " << abilityStrings[pokemon->getAbility()] << endl
+    << "Ability" << ": " << abilityStrings[pokemon->getAbility()->getID()] << endl
     
     // Nature
     << "Nature" << ": " << natureStrings[pokemon->getNature()] << endl

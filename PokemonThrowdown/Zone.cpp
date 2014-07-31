@@ -7,3 +7,11 @@
 //
 
 #include "Zone.h"
+
+Zone::Zone(int X, int Y, int width, int height)
+{
+    m_X = X;
+    m_Y = Y;
+    m_width = width;
+    m_height = height;
+}

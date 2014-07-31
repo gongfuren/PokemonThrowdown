@@ -12,6 +12,8 @@
 #include "Pokemon.h"
 #include "Trainer.h"
 #include "Battle.h"
+#include "Ability.h"
+#include "utilities.h"
 
 #include <iostream>
 using namespace std;
@@ -184,7 +186,7 @@ int Move::getPriorityScore() const
     }
     
     // Prankster and a status move: enhanced priority
-    if (getPokemon()->getAbility() == PPrankster && getMoveType() == Status)
+    if (getPokemon()->getAbility()->getID() == PPrankster && getMoveType() == Status)
         m++;
     
     return m;

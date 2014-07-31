@@ -10,15 +10,17 @@
 #include "Side.h"
 #include "Battle.h"
 #include "strings.h"
+#include "utilities.h"
 
-Field::Field(Battle* battle)
+Field::Field(Battle* battle, int X, int Y)
+: Zone(X, Y, 1, 2)
 {
     m_location = GatewayColiseum;
     m_battle = battle;
     m_weather = static_cast<Weather>(randInt(0, 4));
     
     for (int i = 0; i < NUMSIDES; i++)
-        m_sides[i] = new Side(this);
+        m_sides[i] = new Side(this, X, Y);
 }
 
 Field::~Field()

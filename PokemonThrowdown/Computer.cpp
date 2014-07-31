@@ -9,6 +9,8 @@
 #include "Computer.h"
 #include "Pokemon.h"
 #include "Battle.h"
+#include "Ability.h"
+#include "utilities.h"
 #include <stack>
 using namespace std;
 
@@ -79,6 +81,10 @@ void Computer::actionSelect()
                 smartScores[i] *= typeMultiplier(moves[i]->getType(),
                                                  target->getType1(),
                                                  target->getType2());
+                
+                if (target->getAbility()->getID() == PLevitate
+                    && moves[i]->getType() == GroundType)
+                    smartScores[i] *= 0;
                 
                 if (moves[i]->getType() == pokemon->getType1()
                     || moves[i]->getType() == pokemon->getType2())

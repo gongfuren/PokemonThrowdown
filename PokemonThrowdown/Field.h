@@ -20,7 +20,7 @@ class Field : public Zone
 // Represents the battlefield and its current state
 {
 public:
-    Field(Battle* battle);
+    Field(Battle* battle, int X, int Y);
     ~Field();
     
     Side* getSide(int whichSide) const;
