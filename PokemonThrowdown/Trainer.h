@@ -69,6 +69,8 @@ public:
     bool replacePokemon();
     bool chooseBag() const;
     
+    int getNumPokemon() const;
+    
 private:    
     string m_name;
     string m_title;
@@ -82,6 +84,7 @@ private:
     
     Pokemon* m_pokemonOut[MAXPOKEMONPERPLAYER];
     Pokemon* m_pokemon[MAXPOKEMON];
+    int m_numPokemon;
     Battle* m_battle;
     int m_current;
     bool m_victory;

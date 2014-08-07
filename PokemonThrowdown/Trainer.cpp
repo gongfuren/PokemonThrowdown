@@ -28,11 +28,17 @@ Trainer::Trainer(trainerdata h, Battle* battle)
     m_intendedMove = NoDecision;
     m_usedMega = false;
     m_reward = h.reward;
+    m_numPokemon = 6;
     
     for (int i = 0; i < 6; i++)
     {
-        pokedata protomon = pokelib[h.pokemonIDs[i]];
-        m_pokemon[i] = new Pokemon(protomon, this, i);
+        if (h.pokemonIDs[i] == -1)
+        {
+            m_numPokemon--;
+            m_pokemon[i] = NULL;
+        }
+        else
+            m_pokemon[i] = new Pokemon(pokelib[h.pokemonIDs[i]], this, i);
     }
 }
 
@@ -226,7 +232,7 @@ void Trainer::displayState() const
     Pokemon* pokemon = getPokemon();
     
     int pokeHP = pokemon->getStats(HPStat);
-    int pokeTotalHP = pokemon->getBStats(HPStat);
+    int pokeTotalHP = pokemon->getBaseStats(HPStat);
     
     string pokeHPBar = statFullStrings[HPStat];
     pokeHPBar += ":[";
@@ -308,4 +314,9 @@ bool Trainer::chooseBag() const
     cout << "You can't do that right now." << endl;
     
     return false;
+}
+
+int Trainer::getNumPokemon() const
+{
+    return m_numPokemon;
 }

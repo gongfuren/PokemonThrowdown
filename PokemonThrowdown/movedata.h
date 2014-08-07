@@ -47,7 +47,7 @@ enum MoveEffect
     
     MLowerAttDef,
     
-    MLowerSpD10, MLowerSpD20, MLowerSpD40, MLowerSpA100,
+    MLowerSpD10, MLowerSpD20, MLowerSpD40, MLowerSpD50, MLowerSpA100,
     
     MUpAtt, MUpDef, MUpSpA, MUpSpD, MUpSpe,
     MUpAcc, MUpEva,
@@ -104,7 +104,9 @@ enum MoveEffect
     MTrap, MPartialTrap,
     
     MSub, MHazard, MDehazard, MReflect, MLightScreen, MVitalThrow, MFoul, MSplit,
-    MTaunt
+    MTaunt,
+    
+    MSplash
 };
 
 // Move Data
@@ -128,7 +130,7 @@ struct movedata
 
 const movedata movelib[MAXTOTALMOVES] = {
     
-    0,  "???", NoType,    Status, UnknownStat,    -1, -1, -1, I,	MNoEffect,  None, false,
+    0,  "???", NeutralType,    Physical, UnknownStat,    -1, 40, -1, I,	MRecoilStrug,  None, false,
 	"",
     1,	"Pound",	NormalType,	Physical,	Tough,	35,	40,	100,	I,	MNoEffect,	Opponent, true,
 	"",
@@ -424,11 +426,11 @@ const movedata movelib[MAXTOTALMOVES] = {
 	"",
     147,	"Spore",	GrassType,	Status,	Beauty,	15,	-1,	100,	I,	MSleep,	Opponent, false,
 	"",
-    148,	"Flash",	NormalType,	Status,	Beauty,	20,	-1,	100,	I,	MNoEffect,	Opponent, false,
+    148,	"Flash",	NormalType,	Status,	Beauty,	20,	-1,	100,	I,	MLowerAcc,	Opponent, false,
 	"",
     149,	"Psywave",	PsychicType,	Special,	Smart,	15,	-1,	100,	I,	MNoEffect,	Opponent, false,
 	"",
-    150,	"Splash",	NormalType,	Status,	Cute,	40,	-1,	-1,	I,	MNoEffect,	Opponent, false,
+    150,	"Splash",	NormalType,	Status,	Cute,	40,	-1,	-1,	I,	MSplash,	Self, false,
 	"",
     151,	"Acid Armor",	PoisonType,	Status,	Tough,	20,	-1,	-1,	I,	MUpDef2,	Self, false,
 	"",
@@ -458,7 +460,7 @@ const movedata movelib[MAXTOTALMOVES] = {
 	"",
     164,	"Substitute",	NormalType,	Status,	Smart,	10,	-1,	-1,	I,	MSub,	Opponent, false,
 	"",
-    165,	"Struggle",	NormalType,	Physical,	Cool,	1,	50,	100,	I,	MNoEffect,	Opponent, true,
+    165,	"Struggle",	NoType,	Physical,	Cool,	1,	50,	-1,	I,	MRecoilStrug,	Opponent, true,
 	"",
     166,	"Sketch",	NormalType,	Status,	Smart,	1,	-1,	-1,	II,	MNoEffect,	Opponent, false,
 	"",
@@ -476,7 +478,7 @@ const movedata movelib[MAXTOTALMOVES] = {
 	"",
     173,	"Snore",	NormalType,	Special,	Cute,	15,	50,	100,	II,	MNoEffect,	Opponent, false,
 	"",
-    174,	"Curse",	GhostType,	Status,	Tough,	10,	-1,	-1,	II,	MNoEffect,	Opponent, false,
+    174,	"Curse",	GhostType,	Status,	Tough,	10,	-1,	-1,	II,	MUpAttDef,	Opponent, false,
 	"",
     175,	"Flail",	NormalType,	Physical,	Cute,	15,	-1,	100,	II,	MNoEffect,	Opponent, true,
 	"",
@@ -718,7 +720,7 @@ const movedata movelib[MAXTOTALMOVES] = {
 	"",
     294,	"Tail Glow",	BugType,	Status,	Beauty,	20,	-1,	100,	III,	MUpSpA3,	Self, false,
 	"",
-    295,	"Luster Purge",	PsychicType,	Special,	Smart,	5,	70,	100,	III,	MNoEffect,	Opponent, false,
+    295,	"Luster Purge",	PsychicType,	Special,	Smart,	5,	70,	100,	III,	MLowerSpD50,	Opponent, false,
 	"",
     296,	"Mist Ball",	PsychicType,	Special,	Smart,	5,	70,	100,	III,	MNoEffect,	Opponent, false,
 	"",
@@ -916,7 +918,7 @@ const movedata movelib[MAXTOTALMOVES] = {
 	"",
     393,	"Magnet Rise",	ElectricType,	Status,	Cute,	10,	-1,	-1,	IV,	MNoEffect,	Opponent, false,
 	"",
-    394,	"Flare Blitz",	FireType,	Physical,	Smart,	15,	120,	100,	IV,	MNoEffect,	Opponent, true,
+    394,	"Flare Blitz",	FireType,	Physical,	Smart,	15,	120,	100,	IV,	MRecoil33,	Opponent, true,
 	"",
     395,	"Force Palm",	FightingType,	Physical,	Cool,	10,	60,	100,	IV,	MNoEffect,	Opponent, true,
 	"",
@@ -954,7 +956,7 @@ const movedata movelib[MAXTOTALMOVES] = {
 	"",
     412,	"Energy Ball",	GrassType,	Special,	Beauty,	10,	90,	100,	IV,	MNoEffect,	Opponent, false,
 	"",
-    413,	"Brave Bird",	FlyingType,	Physical,	Cute,	15,	120,	100,	IV,	MNoEffect,	Opponent, true,
+    413,	"Brave Bird",	FlyingType,	Physical,	Cute,	15,	120,	100,	IV,	MRecoil33,	Opponent, true,
 	"",
     414,	"Earth Power",	GroundType,	Special,	Smart,	10,	90,	100,	IV,	MNoEffect,	Opponent, false,
 	"",
@@ -1056,7 +1058,7 @@ const movedata movelib[MAXTOTALMOVES] = {
 	"",
     463,	"Magma Storm",	FireType,	Special,	Tough,	5,	100,	75,	IV,	MNoEffect,	Opponent, false,
 	"",
-    464,	"Dark Void",	DarkType,	Status,	Smart,	10,	-1,	80,	IV,	MNoEffect,	Opponent, false,
+    464,	"Dark Void",	DarkType,	Status,	Smart,	10,	-1,	80,	IV,	MSleep,	Opponent, false,
 	"",
     465,	"Seed Flare",	GrassType,	Special,	Cool,	5,	120,	85,	IV,	MLowerSpD40,	Opponent, false,
 	"",
@@ -1330,7 +1332,7 @@ const movedata movelib[MAXTOTALMOVES] = {
 	"",
     600,	"Powder",	BugType,	Status,	UnknownStat,	20,	-1,	100,	VI,	MNoEffect,	Opponent, false,
 	"",
-    601,	"Geomancy",	FairyType,	Status,	UnknownStat,	10,	-1,	-1,	VI,	MCharge,	Opponent, false,
+    601,	"Geomancy",	FairyType,	Status,	UnknownStat,	10,	-1,	-1,	VI,	MCharge,	Self, false,
 	"",
     602,	"Magnetic Flux",	ElectricType,	Status,	UnknownStat,	20,	-1,	-1,	VI,	MNoEffect,	Opponent, false,
 	"",
@@ -1394,7 +1396,7 @@ const movedata movelib[MAXTOTALMOVES] = {
     "The user attacks the target by greatly increasing the force of gravity.",
     // 627
     910,    "Terrablast",   RockType,   Special,    Tough,    5,  100,    100,    X,  MNoEffect,  Opponent,   false,
-    "The user wreaks havoc and causes damage by altering gravitational pull.",
+    "The user alters gravity and attacks the target using the surroundings.",
     // 628
     911,    "Crimson Blaze",    FireType,   Special,    Beauty, 5,  100,    100,    X,  MBurn30,  Opponent,   false,
     "Summons a storm of crimson flames to deal damage to an opponent. May cause\na burn.",
@@ -1417,11 +1419,11 @@ const movedata movelib[MAXTOTALMOVES] = {
     917,    "Sine Wave Burst",    WaterType,  Special,   Smart,    5,  100,    100,    X,  MConfuse20,  Opponent,   false,
     "The user attacks with mysterious energy waves. May leave the target\nconfused.",
     // 635
-    918,    "Deep Blue",  WaterType,  Physical, Tough,    5,  100, -1, X,  MNeverMiss,  None,   false,
+    918,    "Deep Blue",  WaterType,  Physical, Tough,    5,  100, -1, X,  MNeverMiss,  None,   true,
     "The target is dragged into a world of deep dark sea and attacked. This\nattack always lands without fail.",
     // 636
-    919,    "Aurora Curtain",   IceType,   Special, Beauty,    5,  100, 100, X,  MNoEffect,  Opponent,   false,
-    "The user attacks by spreading curtains of plasma that contain the essence\nof ice.",
+    919,    "Flash Freeze",   IceType,   Special, Beauty,    5,  100, 100, X,  MFreeze50,  Opponent,   false,
+    "The user fires a swift beam at the target that has a high chance of causing\nfreezing.",
     // 637
     920,    "Cloud Cover", WaterType,  Status,    Cute,  10,  -1,    -1,    X,  MProtect,  Self,   false,
     "The user avoids damage by covering itself in clouds.",

@@ -54,11 +54,11 @@ Pokemon::Pokemon(pokedata h, Trainer* trainer, int wp)
         : h.IVs[i];
         m_EVs[i] = (h.EVs[i] == -1) ? randInt(0, 85)
         : h.EVs[i];
-        m_bStats[i] = ((2 * h.stats[i] + m_IVs[i] + m_EVs[i]
+        m_baseStats[i] = ((2 * h.stats[i] + m_IVs[i] + m_EVs[i]
                         / 4) * m_level / 100 + adder) * nature;
     }
     
-    m_statsStatus[HPStat] = m_bStats[HPStat];
+    m_statsStatus[HPStat] = m_baseStats[HPStat];
     
     for (int i = AttStat; i < NUMALLSTATS; i++)
     {
@@ -79,6 +79,9 @@ Pokemon::Pokemon(pokedata h, Trainer* trainer, int wp)
                 m_moves[i] = NULL;
         }
     }
+    
+    // Struggle
+    m_moves[MAXMOVES] = new Move(165, this);
     
     if (m_gender == NoGender)
         m_gender = static_cast<Gender>(randInt(0, 1));
@@ -104,7 +107,7 @@ void Pokemon::transform(int pokemonID)
     for (int i = AttStat; i < NUMSTATS; i++)
     {
         int adder = 5;
-        m_bStats[i] = ((2 * me.stats[i] + m_IVs[i] + m_EVs[i] / 4) * m_level
+        m_baseStats[i] = ((2 * me.stats[i] + m_IVs[i] + m_EVs[i] / 4) * m_level
                        / 100 + adder) * natureMultiplier(m_nature, i-1);
     }
 }
@@ -214,12 +217,12 @@ double Pokemon::getStats(int whichStat) const
     else if (whichStat == AccStat || whichStat == EvaStat)
         return statEMultiplier(m_statsStatus[whichStat]);
     else
-        return m_bStats[whichStat] * statAMultiplier(m_statsStatus[whichStat]);
+        return m_baseStats[whichStat] * statAMultiplier(m_statsStatus[whichStat]);
 }
 
-int Pokemon::getBStats(int whichStat) const
+int Pokemon::getBaseStats(int whichStat) const
 {
-    return m_bStats[whichStat];
+    return m_baseStats[whichStat];
 }
 
 int Pokemon::getStatsStatus(int whichStat) const
@@ -374,7 +377,7 @@ void Pokemon::lowerHP(int howMuch)
 
 bool Pokemon::hasMaxHP() const
 {
-    return (m_statsStatus[HPStat] == m_bStats[HPStat]);
+    return (m_statsStatus[HPStat] == m_baseStats[HPStat]);
 }
 
 bool Pokemon::increaseHP(int howMuch)
@@ -384,9 +387,9 @@ bool Pokemon::increaseHP(int howMuch)
     
     m_statsStatus[HPStat] += howMuch;
     
-    if (m_statsStatus[HPStat] >= m_bStats[HPStat])
+    if (m_statsStatus[HPStat] >= m_baseStats[HPStat])
     {
-        m_statsStatus[HPStat] = m_bStats[HPStat];
+        m_statsStatus[HPStat] = m_baseStats[HPStat];
     }
     
     return true;
@@ -1029,9 +1032,14 @@ bool Pokemon::executeMove(Pokemon* target, Move* move)
         while (rerun);
     }
     
+    if (move->getEffect() == MRecoilStrug)
+        cout << getName() << " is out of usable moves!" << endl;
+    
     cout << getTrainer()->getTitleName() << "'s "
     << getName() << " " << "used" << " " << move->getName() << "!"
     << endl;
+    
+    move->decrementCurrentPP();
     
     moveAccuracy = move->getAccuracy();
     
@@ -1047,7 +1055,7 @@ bool Pokemon::executeMove(Pokemon* target, Move* move)
             moveAccuracy = 100;
     }
     
-    if (move->getEffect() == MNeverMiss)
+    if (move->getEffect() == MNeverMiss || move->getEffect() == MRecoilStrug)
         // Never miss
     {
         moveHits = true;
@@ -1219,24 +1227,30 @@ bool Pokemon::applyStatus(Pokemon* target, Move* move)
     healAmount = 0;
     int sc[NUMALLSTATS] = { 0, 0, 0, 0, 0, 0, 0, 0 };
     
+    if (me == MSplash)
+    {
+        cout << "But nothing happened!" << endl;
+        return true;
+    }
+    
     if (me == MHeal50)
         // Calculate heal amount for Healing moves
     {
-        healAmount = pokemon->getBStats(HPStat) / 2;
+        healAmount = pokemon->getBaseStats(HPStat) / 2;
         
         if (move->getID() >= 234 && move->getID() <= 236)
         {
             // Weather-influenced healing move
             if (weather == Sunny)
-                healAmount = (2 * pokemon->getBStats(HPStat)) / 3;
+                healAmount = (2 * pokemon->getBaseStats(HPStat)) / 3;
             else if (weather != NoWeather)
-                healAmount = pokemon->getBStats(HPStat) / 4;
+                healAmount = pokemon->getBaseStats(HPStat) / 4;
         }
     }
     else if (me == MHeal100)
         // Heal amount and sleep effect for Rest
     {
-        healAmount = pokemon->getBStats(HPStat);
+        healAmount = pokemon->getBaseStats(HPStat);
     }
     
     switch (me)
@@ -1373,6 +1387,21 @@ bool Pokemon::applyStatus(Pokemon* target, Move* move)
             sc[SpAStat] = 1;
             sc[SpDStat] = 1;
             sc[SpeStat] = 1;
+            break;
+        case MLowerDefSpDUpAtt2SpA2Spe2:
+            sc[DefStat] = -1;
+            sc[SpDStat] = -1;
+            sc[AttStat] = 2;
+            sc[SpAStat] = 2;
+            sc[SpeStat] = 2;
+            break;
+        case MCharge: // Geomancy
+            sc[SpAStat] = 2;
+            sc[SpDStat] = 2;
+            sc[SpeStat] = 2;
+            break;
+        case MLowerAcc:
+            sc[AccStat] = -1;
             break;
         case MUpAll:
             for (int i = AttStat; i < NUMSTATS; i++)
@@ -1642,7 +1671,7 @@ void Pokemon::applyAttack(Pokemon* target, Move* move)
     applyEffect(target, move, phld2);
 }
 
-void Pokemon::applyEffect(Pokemon* target, Move* move, int drain)
+void Pokemon::applyEffect(Pokemon* target, Move* move, int damage)
 {
     Pokemon* attacker = this;
     MoveEffect effect = move->getEffect();
@@ -1675,10 +1704,29 @@ void Pokemon::applyEffect(Pokemon* target, Move* move, int drain)
         switch (effect)
         {
             case MDrain50:
-                increaseHP(drain * 0.5);
+                attacker->increaseHP(damage * 0.5);
                 break;
             default: // MDrain75
-                increaseHP(drain * 0.75);
+                attacker->increaseHP(damage * 0.75);
+                break;
+        }
+    }
+    
+    // Recoil
+    if (effect == MRecoilStrug || effect == MRecoil25 || effect == MRecoil33)
+    {
+        cout << attacker->getName() << " is damaged by recoil!" << endl;
+        
+        switch (effect)
+        {
+            case MRecoil25:
+                attacker->lowerHP(damage * 0.25);
+                break;
+            case MRecoil33:
+                attacker->lowerHP(damage * 0.333);
+                break;
+            default: // MRecoilStrug
+                attacker->lowerHP(getBaseStats(HPStat) * 0.25);
                 break;
         }
     }

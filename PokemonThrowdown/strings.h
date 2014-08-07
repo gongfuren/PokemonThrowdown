@@ -146,12 +146,13 @@ const string BEAUTY = "Beauty";
 const string POKEFAN = "Pokefan";
 const string SAGETRAINER = "Sage";
 const string ACTRESS = "Actress";
+const string FISHERMAN = "Fisherman";
 
 const string titleArray[NUMTITLES] = {
     PKMNTRAINER, YOUNGSTER, GYMLEADER, BUGCATCHER, LASS, ACETRAINER, ELITEFOUR,
     CHAMPION, HIKER, SWIMMER, PSYTRAINER, DRGNTAMER, BIRDKEEPER, FAIRYTALE,
     JUGGLER, RICHBOY, LADY, CUEBALL, VETERAN, SOCIALITE, ROCKET, CIPHER, FLARE,
-    BEAUTY, POKEFAN, SAGETRAINER, ACTRESS
+    BEAUTY, POKEFAN, SAGETRAINER, ACTRESS, FISHERMAN
 };
 
 #endif /* defined(__PokemonThrowdown__strings__) */

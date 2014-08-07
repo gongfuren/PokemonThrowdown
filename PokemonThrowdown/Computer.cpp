@@ -31,13 +31,30 @@ void Computer::actionSelect()
     Pokemon* target = getBattle()->getPlayer()->getPokemon();
     
     Move* moves[MAXMOVES];
-    int attack, max, bar;
+    int attack, max, bar, numMoves;
     int smartScores[MAXMOVES] = { 0, 0, 0, 0 };
     
     if (!canChooseAction())
         return;
     
-    attack = randInt(0, 3);
+    numMoves = 0;
+    
+    for (int i = 0; i < MAXMOVES; i++)
+    {
+        moves[i] = getPokemon()->getMove(i);
+        if (moves[i] == NULL || moves[i]->getCurrentPP() == 0)
+            ;
+        else
+            numMoves++;
+    }
+    
+    if (numMoves == 0)
+    {
+        attack = MAXMOVES;
+        goto set_move____;
+    }
+    
+    attack = randInt(0, numMoves);
     bar = 0;
     
     // Level 0: select move completely at random
@@ -49,7 +66,7 @@ void Computer::actionSelect()
         for (int i = 0; i < MAXMOVES; i++)
         {
             moves[i] = getPokemon()->getMove(i);
-            if (moves[i] == NULL)
+            if (moves[i] == NULL || moves[i]->getCurrentPP() == 0)
             {
                 attack = 0;
                 break;
@@ -108,6 +125,7 @@ void Computer::actionSelect()
         }
     }
     
+set_move____:
     if (pokemon->canMegaEvolve())
         setIntendedMove(MegaDecision, attack);
     else
@@ -134,21 +152,20 @@ bool Computer::choosePokemon()
 
 bool Computer::trainerSummon(bool optional)
 {
-    int pokemonLeft = 0;
+    int pokemonLeft = 0, choice;
     
-    for (int i = 0; i < MAXPOKEMON; i++)
-    {
-        if (getPokemon(i) != NULL && !getPokemon(i)->isFainted())
-        {
+    for (int i = 0; i < getNumPokemon(); i++)
+        if (!getPokemon(i)->isFainted())
             pokemonLeft++;
-        }
-    }
     
-    int choice = randInt(0, pokemonLeft-1);
+    if (pokemonLeft > 1)
+        choice = randInt(0, pokemonLeft-2);
+    else
+        choice = 0;
     
-    for (int i = 0; i < MAXPOKEMON; i++)
+    for (int i = 0; i < getNumPokemon(); i++)
     {
-        if (getPokemon(i) != NULL && !getPokemon(i)->isFainted())
+        if (!getPokemon(i)->isFainted())
         {
             if (choice == 0)
             {

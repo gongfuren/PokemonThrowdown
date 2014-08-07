@@ -19,6 +19,7 @@
 #include "Player.h"
 #include "Ability.h"
 #include "Computer.h"
+#include "Move.h"
 #include "utilities.h"
 #include <ctime>
 #include <vector>
@@ -77,7 +78,7 @@ void Battle::chooseLead()
     int choice, prog = 0;
     string pref[6];
     
-    for (int i = 0; i < 6; i++)
+    for (int i = 0; i < m_player->getNumPokemon(); i++)
         pref[i] = m_player->getPokemon(i)->getName();
 
     for (int i = 0; i < NUMPLAYERS; i++)
@@ -87,11 +88,11 @@ void Battle::chooseLead()
         if (!m_actor->isComputer())
         {
             cout << "Choose lead Pokemon" << ":" << endl;
-            choice = selectorGadget(pref, 6, prog, 6, false);
+            choice = selectorGadget(pref, m_player->getNumPokemon(), prog, 6, false);
         }
         else
         {
-            choice = randInt(0, MAXPOKEMON-1);
+            choice = 0;
         }
         
         m_actor->setCurrent(choice);
@@ -103,7 +104,7 @@ bool Battle::chooseTrainer()
     trainerdata protoman;
     
     int choice[4] = { -1, -1, -1, -1 };
-    int pokemonID;
+    int pokemonID, np;
     int i, prog[3] = { 0, 0, 0 };
     bool rerun;
     string names[NUMTRAINERS], exops[1], pref[6], cref[2];
@@ -187,10 +188,17 @@ bool Battle::chooseTrainer()
             
             do
             {
-                for (int i = 0; i < 6; i++)
-                    pref[i] = pokelib[protoman.pokemonIDs[i]].name;
+                np = 6;
                 
-                choice[2] = selectorGadget(pref, 6, prog[2]);
+                for (int i = 0; i < 6; i++)
+                {
+                    if (protoman.pokemonIDs[i] != -1)
+                        pref[i] = pokelib[protoman.pokemonIDs[i]].name;
+                    else
+                        np--;
+                }
+                
+                choice[2] = selectorGadget(pref, np, prog[2]);
                 
                 if (choice[2] == BACK)
                 {
@@ -897,7 +905,10 @@ void Battle::battlePhase()
         mID = pokemon->getIntendedMove();
         move = pokemon->getMove(mID);
         
-        priorityScore[i] = move->getPriorityScore();
+        if (move == NULL)
+            priorityScore[i] = -9999;
+        else
+            priorityScore[i] = move->getPriorityScore();
     }
     
     for (int p = MAXPRIORITY; p >= MINPRIORITY; p--)
@@ -947,6 +958,9 @@ void Battle::battlePhase()
             cout << pokemon->getName() << " " << "is tightening its focus!" << endl;
             pokemon->addVStatus(FocusVStatus);
         }
+        
+        if (moveID == -1)
+            delete move;
     }
     
     // Cycle through pokemon with highest priority first
@@ -984,8 +998,10 @@ void Battle::battlePhase()
                 break;
         }
         
-        if (pokemon->passThroughStatus() && pokemon->executeMove(target))
-            ;
+        if (pokemon->passThroughStatus())
+        {
+            pokemon->executeMove(target);
+        }
         else
         {
             displayState(false);
@@ -1161,14 +1177,14 @@ void Battle::statusEffect(Trainer* trainer) const
     {
         cout << trainer->getTitleName()
         << "'s " << pokemon->getName() << " " << "is hurt by its burn!" << endl;
-        pokemon->lowerHP(static_cast<double>(pokemon->getBStats(HPStat))
+        pokemon->lowerHP(static_cast<double>(pokemon->getBaseStats(HPStat))
                          * (0.125));
     }
     else if (pokemon->getStatus() == PoisonStatus)
     {
         cout << trainer->getTitleName() << "'s "
         << pokemon->getName() << " " << "is hurt by poison!" << endl;
-        pokemon->lowerHP(static_cast<double>(pokemon->getBStats(HPStat))
+        pokemon->lowerHP(static_cast<double>(pokemon->getBaseStats(HPStat))
                          * (0.125));
     }
     else if (pokemon->getStatus() == ToxicStatus)
@@ -1176,7 +1192,7 @@ void Battle::statusEffect(Trainer* trainer) const
         pokemon->setToxicTurns(pokemon->getToxicTurns()+1);
         cout << trainer->getTitleName() << "'s "
         << pokemon->getName() << " " << "is hurt by poison!" << endl;
-        pokemon->lowerHP(static_cast<double>(pokemon->getBStats(HPStat)) *
+        pokemon->lowerHP(static_cast<double>(pokemon->getBaseStats(HPStat)) *
                            (pokemon->getToxicTurns() * (0.0625)));
     }
     
@@ -1228,16 +1244,13 @@ bool Battle::checkWin() const
     bool playerWon = true;
     bool opponentWon = true;
 
-    for (int i = 0; i < MAXPOKEMON; i++)
-    {
-        if (m_player->getPokemon(i) != NULL
-            && !m_player->getPokemon(i)->isFainted())
+    for (int i = 0; i < m_player->getNumPokemon(); i++)
+        if (!m_player->getPokemon(i)->isFainted())
             opponentWon = false;
         
-        if (m_opponent->getPokemon(i) != NULL
-            && !m_opponent->getPokemon(i)->isFainted())
+    for (int i = 0; i < m_opponent->getNumPokemon(); i++)
+        if (!m_opponent->getPokemon(i)->isFainted())
             playerWon = false;
-    }
     
     if (playerWon)
         m_player->setVictory();
@@ -1280,9 +1293,9 @@ void Battle::dispPokeSummary(int slotNumber) const
     
     // Stats
     << statFullStrings[HPStat] << ": " << pokemon->getStats(HPStat) << '/'
-    << pokemon->getBStats(HPStat) << endl;
+    << pokemon->getBaseStats(HPStat) << endl;
     for (int i = AttStat; i < NUMSTATS; i++)
-        pout << statFullStrings[i] << ": " << pokemon->getBStats(i) << endl;
+        pout << statFullStrings[i] << ": " << pokemon->getBaseStats(i) << endl;
     
     // Description
     if (pokemon->getDescription() != "")
@@ -1367,7 +1380,8 @@ void Battle::dispPokeMoves(int pokemon) const
         else
             pout << move->getAccuracy();
         
-        pout << " " << pOS;
+        pout << " " << "PP" << ": " << move->getCurrentPP() << "/"
+        << move->getPP() << " " << pOS;
         
         if (move->getDescription() != "")
             pout << endl << move->getDescription();
@@ -1422,7 +1436,7 @@ void Battle::dispPokeMoves(const pokedata pokemon) const
         else
             o << m.accuracy;
         
-        o << " ";
+        o << " " << "PP" << ": " << m.PP << " ";
         
         if (m.moveType == Physical || m.moveType == Special)
             o << "Attack" << ": ";

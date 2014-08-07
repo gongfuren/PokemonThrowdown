@@ -124,7 +124,7 @@ bool Player::trainerSummon(bool optional)
         cout << generateBalls() << endl;
         
         // Summon prompt
-        for (i = 0; i < MAXPOKEMON; i++)
+        for (i = 0; i < getNumPokemon(); i++)
         {
             ostringstream oss;
 
@@ -144,7 +144,7 @@ bool Player::trainerSummon(bool optional)
             pref[i] = oss.str();
         }
         
-        choice = selectorGadget(pref, 6, prog, 6, optional);
+        choice = selectorGadget(pref, getNumPokemon(), prog, 6, optional);
         
         if (choice == BACK)
             return false;
@@ -232,11 +232,26 @@ bool Player::chooseFight()
     Pokemon* pokemon = getPokemon();
     Move* move;
     int playerChoice, i, j, prog;
-    bool canMega, willMegaEvolve = false;
+    bool canMega, willMegaEvolve = false, hasMovesLeft = false;
     
     string mvref[4], meref[2];
     int mvsize, mesize;
     
+    for (i = 0; i < MAXMOVES; i++)
+    {
+        move = getPokemonMove(i);
+        if (move == NULL)
+            continue;
+        if (move->getCurrentPP() > 0)
+            hasMovesLeft = true;
+    }
+    if (!hasMovesLeft)
+    {
+        playerChoice = MAXMOVES;
+        goto set_move___;
+    }
+    
+choose_move___:
     do
     {
         mvsize = 0;
@@ -250,7 +265,10 @@ bool Player::chooseFight()
             move = getPokemonMove(i);
             if (move == NULL)
                 continue;
-            mvref[j++] = move->getName();
+            ostringstream tmp;
+            tmp << move->getName() << " (" << move->getCurrentPP() << "/"
+            << move->getPP() << ")";
+            mvref[j++] = tmp.str();
         }
         
         mvsize = j;
@@ -293,10 +311,16 @@ bool Player::chooseFight()
             
             playerChoice = mvsize+mesize;
         }
-        
     }
     while (playerChoice < 0 || playerChoice >= mvsize);
     
+    if (getPokemonMove(playerChoice)->getCurrentPP() == 0)
+    {
+        cout << "No PP remaining for selected move!" << endl;
+        goto choose_move___;
+    }
+    
+set_move___:
     if (!willMegaEvolve)
         setIntendedMove(FightDecision, playerChoice);
     else

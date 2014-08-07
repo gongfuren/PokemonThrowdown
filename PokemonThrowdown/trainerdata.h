@@ -24,22 +24,25 @@ struct trainerdata
     int pokemonIDs[MAXPOKEMON];
 };
 
-const int NUMTRAINERS = 10;
+const int NUMTRAINERS = 12;
 
 const trainerdata trainerlib[MAXTOTALTRAINERS] = {
     //                                      Pokemon
     // Name       Title        Male   Prize 1    2    3    4    5    6
-    "Red",        PKMNTRAINER, true,  2900, 196, 25,  6,   9,   3,   143,
+    "Red",        PKMNTRAINER, true,  2900, 196, 143, 6,   9,   3,   25,
     "Steven",     CHAMPION,    true,  1000, 227, 306, 344, 346, 348, 376,
-    "Blue",       PKMNTRAINER, true,  1200, 214, 65,  248, 59,  103, 197,
-    "Ian",        ACETRAINER,  true,  7000, 373, 468, 637, 303, 720, 681,
-    "Jean",       FAIRYTALE,   false, 3000, 25,  249, 382, 94,  157, 286,
+    "Blue",       PKMNTRAINER, true,  1200, 197, 65,  214, 59,  103, 248,
+    "Ian",        ACETRAINER,  true,  7000, 468, 798, 637, 681, 788, 303,
+    "Jean",       FAIRYTALE,   false, 3000, 382, 25,  286, 94,  157, 249,
     
-    "Gabriel",    DRGNTAMER,   true,  5050, 6,   65,  121, 212, 248, 230,
+    "Gabriel",    DRGNTAMER,   true,  5050, 65,  230, 121, 212, 248, 6,
     "Jessica",    HIKER,       false, 1100, 260, 429, 143, 242 ,448, 468,
-    "Eric",       CUEBALL,     true,  100,  477, 330, 254, 242, 65,  157,
-    "Constance",  LADY,        false, 9000, 786, 778, 774, 787, 625, 630,
-    "Lann",       JUGGLER,     true,  3700, 764, 771, 150, 151, 707, 678
+    "Bill",       FISHERMAN,   true,  100,  129, 129, 129, 129, 129, 130,
+    "Constance",  LADY,        false, 9000, 778, 794, 774, 797, 625, 786,
+    "Lann",       JUGGLER,     true,  300,  787, 787, 787, 787, 787, 788,
+    
+    "Ariel",      SAGETRAINER, false, 6000, 789, 791, 793, 795, 797, -1,
+    "Rhinne",     SAGETRAINER, false, 6000, 790, 792, 794, 796, 798, -1
 };
 
 #endif /* defined(__PokemonThrowdown__trainerdata__) */

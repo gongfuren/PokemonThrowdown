@@ -434,10 +434,10 @@ const pokedata pokelib[MAXTOTALPOKEMON] = {
 	Male,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
 	"",
  129,	"Magikarp",	WaterType,	NoType,	20,	10,	55,	15,	20,	80,
-	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
+	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	150,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
 	"",
  130,	"Gyarados",	WaterType,	FlyingType,	95,	125,	79,	60,	100,	81,
-	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HGyaradosite,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PIntimidate,	PIntimidate,	PIntimidate,	0,
+	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HGyaradosite,	-1,	-1,	-1,	-1,	-1,	-1,	100,	242,	127,	349,	423,	PIntimidate,	PIntimidate,	PIntimidate,	0,
 	"",
  131,	"Lapras",	WaterType,	IceType,	130,	85,	80,	85,	95,	60,
 	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
@@ -2207,17 +2207,17 @@ Male,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	27
     //
     
     // 719
-    900,    "Hypogeo",  RockType, NoType,   70, 30, 100,    10, 100,    50,
+    900,    "???",  RockType, NoType,   70, 30, 100,    10, 100,    50,
     Genderless,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
 	"",
     // 720
-    901,    "Hypergeo", RockType, DragonType,   75, 95, 140,    137,    155,    108,
+    901,    "???", RockType, DragonType,   75, 95, 140,    137,    155,    108,
     Genderless,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	407,	646,	295,	408,	PLevitate,	PLevitate,	PLevitate,	0,
-	"According to legend, this dragon was formed from a hoard of ancient treasure.",
+	"",
     // 721
-    902,    "Zeratik",   GhostType,    IceType,  95,    140,    75,    155, 108, 137,
+    902,    "???",   GhostType,    IceType,  95,    140,    75,    155, 108, 137,
     Genderless,   NoNature,   -1, -1, -1, -1, -1, -1, HNoItem,    -1, -1, -1, -1, -1, -1, 100,    126,    444,    56,    177,    PClearBody,  PClearBody,  PClearBody,  0,
-    "It controls four gems encased in ice. Each one represents a different element.",
+    "",
     
     //
     
@@ -2487,15 +2487,61 @@ Male,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	27
     //
     
     // 786
-    903,    "Constantinoble",   LightType,    DarkType,  108,    137,    155,    95, 140, 75,
-    Genderless,   NoNature,   -1, -1, -1, -1, -1, -1, HNoItem,    -1, -1, -1, -1, -1, -1, 100,    645,    647,    533,    566,    PPressure,  PPressure,  PPressure,  0,
-    "A lingering spirit from ancient times. Its two halves were once seperate beings.",
-    // 787
     -1,    "Doppelganger",   NeutralType,    NoType,  180,    1,    219,    1, 219, 100,
     Genderless,   NoNature,   -1, -1, -1, -1, -1, -1, HNoItem,    -1, -1, -1, -1, -1, -1, 100,    650,    -1,    -1,    -1,    PNoAbility,  PNoAbility,  PNoAbility,  0,
-    "A strange creature that strolls nonchalantly through the battlefield until it finds a victim.",
+    "A ghoulish figure from the mirror world. One touch can eliminate an unwary\ntarget.",
+    // 787
+    900,    "Hypogeo",  RockType, NoType,   70, 30, 100,    10, 100,    50,
+    Genderless,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	148,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
+	"It dwells in remote caves, feeding on gemstones. It does not seem to have\nmuch potential.",
+    // 788
+    901,    "Hypergeo", RockType, DragonType,   75, 95, 140,    137,    155,    108,
+    Genderless,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	407,	646,	295,	408,	PLevitate,	PLevitate,	PLevitate,	0,
+	"According to legend, this dragon was formed from a hoard of ancient treasure.",
+    // 789
+    902,    "Teraphlite",   GhostType,    RockType,  75,    140,    108,    155, 137, 95,
+    Genderless,   NoNature,   -1, -1, -1, -1, -1, -1, HNoItem,    -1, -1, -1, -1, -1, -1, 100,    126,    627,    56,    177,    PPressure,  PClearBody,  PClearBody,  0,
+    "A lingering spirit from ancient times. It controls four gems, each representing\nthe four basic elements.",
+    // 790
+    903,    "??? (Second Guardian)",  GhostType,  FireType,   95, 135, 135,    135, 135,    75,
+    Genderless,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	247,	221,	406,	526,	PPressure,	PNoAbility,	PNoAbility,	0,
+	"A lingering spirit from ancient times. It borrows its power from the sun.",
+    // 791
+    904,    "??? (Third Guardian)",  GhostType,  FairyType,   95, 135, 135,    135, 135,    75,
+    Genderless,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	247,	585,	94,	347,	PPressure,	PNoAbility,	PNoAbility,	0,
+	"A lingering spirit from ancient times. It borrows its power from the moon.",
+    // 792
+    905,    "??? (Fourth Guardian)",  GhostType,  PsychicType,   95, 135, 135,    135, 135,    75,
+    Genderless,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	247,	641,	322,	94,	PPressure,	PNoAbility,	PNoAbility,	0,
+	"A lingering spirit from ancient times. It borrows its power from the stars.\nIt has ten crystals with special time-altering powers.",
+    // 793
+    906,    "??? (Fifth Guardian)",  GhostType,  ElectricType,   95, 140, 137,    75, 108,    155,
+    Genderless,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	642,	85,	629,	14,	PPressure,	PNoAbility,	PNoAbility,	0,
+	"A lingering spirit from ancient times. It uses electricity to alter and\ncontrol matter.",
+    // 794
+    907,    "Zeratik",  GhostType,  IceType,   95, 75, 108,    140, 137,    155,
+    Genderless,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	247,	636,	634,	417,	PPressure,	PNoAbility,	PNoAbility,	0,
+	"A lingering spirit from ancient times. It can travel through reflections using\nthe ice it creates.",
+    // 795
+    908,    "??? (Seventh Guardian)",  GhostType,  SteelType,   95, 155, 108,    140, 137,    75,
+    Genderless,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	53,	430,	640,	339,	PPressure,	PNoAbility,	PNoAbility,	0,
+	"A lingering spirit from ancient times. It has special destructive powers.",
+    // 796
+    909,    "??? (Eighth Guardian)",  GhostType,  GrassType,   95, 135, 135,    135, 135,    75,
+    Genderless,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	642,	630,	94,	601,	PPressure,	PNoAbility,	PNoAbility,	0,
+	"A lingering spirit from ancient times. It has special powers over life energy.",
+    // 797
+    910,    "Knightingale",  GhostType,    DarkType,  95,    137,    140,    155, 108, 75,
+    Genderless,   NoNature,   -1, -1, -1, -1, -1, -1, HNoItem,    -1, -1, -1, -1, -1, -1, 100,    642,    59,    400,    645,    PPressure,  PPressure,  PPressure,  0,
+    "A lingering spirit from ancient times. It is an embodiment of darkness, storms,\nand vengeance.",
+    // 798
+    911,    "Constantinoble",  GhostType,    LightType,  95,    155,    108,    137, 140, 75,
+    Genderless,   NoNature,   -1, -1, -1, -1, -1, -1, HNoItem,    -1, -1, -1, -1, -1, -1, 100,    642,    643,    533,    647,    PPressure,  PPressure,  PPressure,  0,
+    "A lingering spirit from ancient times. It is an embodiment of light, loyalty,\nand justice.",
+    // 799
+    912,    "???",  NeutralType,  NoType,   140, 140, 140,    140, 140,    140,
+    Genderless,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	644,	632,	434,	639,	PPressure,	PNoAbility,	PNoAbility,	0,
+	"The master guardian. It embodies perfect balance.",
 };
-
-// As of writing this comment, all Pokemon must have 4 moves for program to work correctly/
 
 #endif /* defined(__PokemonThrowdown__pokedata__) */

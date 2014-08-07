@@ -36,7 +36,7 @@ public:
     Type getType2() const;
     PokeStatus getStatus() const;
     double getStats(int whichStat) const;
-    int getBStats(int whichStat) const;
+    int getBaseStats(int whichStat) const;
     int getStatsStatus(int whichStat) const;
     Move* getMove(int whichMove) const;
     Gender getGender() const;
@@ -126,7 +126,7 @@ private:
     void flashAbility() const;
     bool applyStatus(Pokemon* target, Move* move);
     void applyAttack(Pokemon* target, Move* move);
-    void applyEffect(Pokemon* target, Move* move, int drain = 0);
+    void applyEffect(Pokemon* target, Move* move, int damage = 0);
     void applySideEffects(Move* move);
     
     void protectDialogue() const;
@@ -139,7 +139,7 @@ private:
     Type m_type2;
     PokeStatus m_status;
     list<VolatileStatus> m_vstatuses;
-    int m_bStats[NUMSTATS];
+    int m_baseStats[NUMSTATS];
     int m_IVs[NUMSTATS];
     int m_EVs[NUMSTATS];
     Gender m_gender;
@@ -170,7 +170,7 @@ private:
     int m_tauntTurns;
     
     // Move slots and history
-    Move* m_moves[MAXMOVES];
+    Move* m_moves[MAXMOVES+1];
     stack<Move*> m_moveHistory;
     
     // Keep track of Slot position and owning Trainer
