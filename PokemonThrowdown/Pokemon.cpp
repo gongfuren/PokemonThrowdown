@@ -1041,6 +1041,9 @@ bool Pokemon::executeMove(Pokemon* target, Move* move)
     
     move->decrementCurrentPP();
     
+    if (target->getAbility()->getID() == PPressure && target != this)
+        move->decrementCurrentPP();
+    
     moveAccuracy = move->getAccuracy();
     
     if (move->getID() == 87 || move->getID() == 542 || move->getID() == 59)
@@ -1273,7 +1276,8 @@ bool Pokemon::applyStatus(Pokemon* target, Move* move)
                 
                 pokemon->removeVStatuses();
                 pokemon->removeStatus();
-                pokemon->setStatus(SleepStatus, true);
+                if (!pokemon->setStatus(SleepStatus, true))
+                    cout << "But it failed!" << endl;
             }
             else
                 cout << target->getTrainer()->getTitleName() << "'s "
@@ -1432,24 +1436,24 @@ bool Pokemon::applyStatus(Pokemon* target, Move* move)
             target->protectDialogue();
             break;
         case MBurn:
-            if (target->setStatus(BurnStatus))
-                ;
+            if (!target->setStatus(BurnStatus))
+                cout << "But it failed!" << endl;
             break;
         case MSleep:
-            if (target->setStatus(SleepStatus))
-                ;
+            if (!target->setStatus(SleepStatus))
+                cout << "But it failed!" << endl;
             break;
         case MPoison:
-            if (target->setStatus(PoisonStatus))
-                ;
+            if (!target->setStatus(PoisonStatus))
+                cout << "But it failed!" << endl;
             break;
         case MToxic:
-            if (target->setStatus(ToxicStatus))
-                ;
+            if (!target->setStatus(ToxicStatus))
+                cout << "But it failed!" << endl;
             break;
         case MParalyze:
-            if (target->setStatus(ParalyzeStatus))
-                ;
+            if (!target->setStatus(ParalyzeStatus))
+                cout << "But it failed!" << endl;
             break;
         default:
             break;

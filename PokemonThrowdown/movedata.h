@@ -1434,8 +1434,8 @@ const movedata movelib[MAXTOTALMOVES] = {
     922,    "Meteor Shower",    FireType,   Special,    Beauty, 5,  130,    70, X,  MNoEffect,  Opponent,   false,
     "A raging storm of meteors is rained down onto the opponent.",
     // 640
-    923,    "Savage Heart", SteelType,    Physical,   Tough,  5,  180,    70,    X,  MNoEffect,  Opponent,   false,
-    "The user borrows otherworldly power from the god of war to attack.",
+    923,    "Annihilation", SteelType,    Physical,   Tough,  5,  180,    70,    X,  MNoEffect,  Opponent,   false,
+    "The user harnesses otherworldly power to rain missles upon the battlefield.",
     // 641
     924,    "Time Shear", NeutralType,    Special,    Smart,  5,  100,    100,    X,  MFreeze50,  Opponent,   false,
     "Attacks the target by bending time around it to cause damage. May leave the\ntarget frozen.",

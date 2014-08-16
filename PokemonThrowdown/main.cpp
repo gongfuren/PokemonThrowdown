@@ -27,7 +27,7 @@ int main()
     {
         // Title Screen
         cout << "O***0***O***0***O***0" << endl
-        << "* Pokemon Throwdown * v0.2.2" << endl
+        << "* Pokemon Throwdown * v0.2.2.1" << endl
         << "0***O***0***O***0***O" << endl;
         
         cout << "1: " << "New Game" << endl
