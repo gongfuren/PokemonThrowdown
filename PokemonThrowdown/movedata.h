@@ -21,92 +21,19 @@ enum MoveEffect
 {
     MNoEffect,
     
-    MDamage20, MDamage40, MDamageLevel,
+    MPoison10, MPoison15, MPoison30, MPoison40, MToxic100, MBurn10, MBurn15, MBurn30, MFreeze10, MFreeze50, MParalyze10, MParalyze15, MParalyze30, MParalyze100, MConfuse10, MConfuse20, MConfuse100, MTri20, MConfuse, MAttract, MBurn, MSleep, MParalyze, MToxic, MPoison, MFlinch10, MFlinch20, MFlinch30, MFlinch100, MCrit100,
     
-    MPoison10, MPoison15, MPoison30, MPoison40,
+    MLowerAtt, MLowerDef, MLowerSpA, MLowerSpD, MLowerSpe, MLowerAcc, MLowerEva, MLowerAcc100, MLowerAttDef, MLowerSpD10, MLowerSpD20, MLowerSpD40, MLowerSpD50, MLowerSpA100, MUpAtt, MUpDef, MUpSpA, MUpSpD, MUpSpe, MUpAcc, MUpEva, MUpDef10, MUpAtt100, MUpRnd, MUpAtt2, MUpDef2, MUpSpA2, MUpSpD2, MUpSpe2, MUpAcc2, MUpEva2, MUpSpA3, MUpDef3, MLowerAtt2, MLowerDef2, MLowerSpA2, MLowerSpD2, MLowerSpe2, MLowerAcc2, MLowerEva2, MLowerDefSpDUpAtt2SpA2Spe2, MLowerSpeUpAttDef, MUpSpASpD, MUpSpASpDSpe, MUpAttSpe, MUpAttDef, MUpAttSpA, MUpDefSpD, MUpAttAcc, MUpAttSpe2, MUpAll, MUpAll10,
     
-    MToxic100,
+    MMoveFirst, MMoveFirst2, MHighCrit, MNeverMiss, MOHKO, MMultiHit, MDoubleHit, MRecharge, MOverheat, MCharge, MDamage20, MDamage40, MDamageLevel, MIgnoreDef100, MRampage, MProtect, MShield, MFocusPunch, MCounter, MRoar, MSuckerPunch, MSelfdestruct, MSolarbeam, MRazorwind, MSkullbash, MSkyAttack, MSkyDrop, MShadowForce, MFly, MDive, MDig, MPhantomForce, MSplash,
     
-    MBurn10, MBurn15, MBurn30,
-    
-    MFreeze10, MFreeze50,
-    
-    MParalyze10, MParalyze15, MParalyze30, MParalyze100,
-    
-    MConfuse10, MConfuse20, MConfuse100,
-    
-    MTri20,
-    
-    MConfuse, MAttract,
-    MBurn, MSleep, MParalyze, MToxic, MPoison,
-    
-    MLowerAtt, MLowerDef, MLowerSpA, MLowerSpD, MLowerSpe,
-    MLowerAcc, MLowerEva,
-    
-    MLowerAcc100,
-    
-    MLowerAttDef,
-    
-    MLowerSpD10, MLowerSpD20, MLowerSpD40, MLowerSpD50, MLowerSpA100,
-    
-    MUpAtt, MUpDef, MUpSpA, MUpSpD, MUpSpe,
-    MUpAcc, MUpEva,
-    
-    MUpDef10, MUpAtt100,
-    
-    MUpRnd,
-    
-    MMoveFirst, MMoveFirst2, MSuperpower, MHighCrit,
-    MHeal50, MHeal100, MDrain50, MDrain75,
-    
-    MRecoil25, MRecoil33, MRecoilStrug,
-    
-    MFlinch10, MFlinch20, MFlinch30, MFlinch100, MCrit100,
-    
-    MNeverMiss, MOHKO, MMultiHit, MDoubleHit, MRecharge, MOverheat,
-    MCloseCombat, MLowerDefSpDSpe, MCharge,
-    
-    MUpAtt2, MUpDef2, MUpSpA2, MUpSpD2, MUpSpe2,
-    MUpAcc2, MUpEva2,
-    
-    MUpSpA3, MUpDef3,
-    
-    MLowerAtt2, MLowerDef2, MLowerSpA2, MLowerSpD2, MLowerSpe2,
-    MLowerAcc2, MLowerEva2,
-    
-    MLowerDefSpDUpAtt2SpA2Spe2,
-    
-    MUpSpASpD, MUpSpASpDSpe,
-    MUpAttSpe, MUpAttDef, MUpAttSpA, MUpDefSpD, MUpAttAcc,
-    
-    MUpAttSpe2, MUpAll, MUpAll10,
-    
-    MIgnoreDef100,
+    MLowerAttDefSelf, MLowerDefSpDSelf, MLowerDefSpDSpeSelf,
+
+    MHeal50, MHeal100, MDrain50, MDrain75, MRecoil25, MRecoil33, MRecoilStrug,
     
     MRain, MSun, MHail, MSandstorm, MTrickRoom, MGravity,
     
-    MRampage, MProtect, MShield, MFocusPunch,
-    MCounter, MRoar, MSuckerPunch,
-    
-    MPayDay,
-    
-    MShockDef,
-    
-    MSelfdestruct,
-    
-    MSolarbeam, MRazorwind, MSkullbash, MSkyAttack, MSkyDrop,
-    MShadowForce, MFly, MDive, MDig, MPhantomForce,
-    
-    MBind, MWrap, MFireSpin, MWhirlpool, MMagmaStorm, MSandTomb, MStomp, MMinimize, MJumpKick,
-    
-    MRage, MFuryCut, MTeleport, MDisable, MBatonPass,
-    
-    MTrap, MPartialTrap,
-    
-    MSub, MHazard, MDehazard, MReflect, MLightScreen, MVitalThrow, MFoul, MSplit,
-    MTaunt,
-    
-    MSplash
+    MBind, MWrap, MFireSpin, MWhirlpool, MMagmaStorm, MSandTomb, MStomp, MMinimize, MJumpKick, MPayDay, MShockDef, MRage, MFuryCut, MTeleport, MDisable, MBatonPass, MTrap, MPartialTrap, MSub, MHazard, MDehazard, MReflect, MLightScreen, MVitalThrow, MFoul, MSplit, MTaunt
 };
 
 // Move Data
@@ -682,7 +609,7 @@ const movedata movelib[MAXTOTALMOVES] = {
 	"",
     275,	"Ingrain",	GrassType,	Status,	Smart,	20,	-1,	-1,	III,	MNoEffect,	Opponent, false,
 	"",
-    276,	"Superpower",	FightingType,	Physical,	Tough,	5,	120,	100,	III,	MSuperpower,	Opponent, true,
+    276,	"Superpower",	FightingType,	Physical,	Tough,	5,	120,	100,	III,	MLowerAttDefSelf,	Opponent, true,
 	"",
     277,	"Magic Coat",	PsychicType,	Status,	Beauty,	15,	-1,	-1,	III,	MNoEffect,	Opponent, false,
 	"",
@@ -870,7 +797,7 @@ const movedata movelib[MAXTOTALMOVES] = {
 	"",
     369,	"U-turn",	BugType,	Physical,	Cute,	20,	70,	100,	IV,	MBatonPass,	Opponent, true,
 	"",
-    370,	"Close Combat",	FightingType,	Physical,	Smart,	5,	120,	100,	IV,	MCloseCombat,	Opponent, true,
+    370,	"Close Combat",	FightingType,	Physical,	Smart,	5,	120,	100,	IV,	MLowerDefSpDSelf,	Opponent, true,
 	"",
     371,	"Payback",	DarkType,	Physical,	Cool,	10,	50,	100,	IV,	MNoEffect,	Opponent, true,
 	"",
@@ -1244,7 +1171,7 @@ const movedata movelib[MAXTOTALMOVES] = {
 	"",
     556,	"Icicle Crash",	IceType,	Physical,	UnknownStat,	10,	85,	90,	V,	MNoEffect,	Opponent, false,
 	"",
-    557,	"V-create",	FireType,	Physical,	UnknownStat,	5,	180,	95,	V,	MLowerDefSpDSpe,	Opponent, true,
+    557,	"V-create",	FireType,	Physical,	UnknownStat,	5,	180,	95,	V,	MLowerDefSpDSpeSelf,	Opponent, true,
 	"",
     558,	"Fusion Flare",	FireType,	Special,	UnknownStat,	5,	100,	100,	V,	MNoEffect,	Opponent, false,
 	"",
@@ -1461,8 +1388,8 @@ const movedata movelib[MAXTOTALMOVES] = {
     931,    "Solemn Wishes", WaterType,    Status, Beauty, 10,  -1, -1, X,  MHeal50,  Self,  false,
     "A light and soothing rain falls upon the field, healing the user.",
     // 649
-    932,    "Morning Light",    LightType,  Status, Beauty, 5,  -1, -1, X,  MHeal50,    Self,   false,
-    "The bright light of a new day shines upon the battlefield and restores the\nuser's health.",
+    932,    "Exertion",    PsychicType,  Status, Smart, 15,  -1, -1, X,  MLowerDefSpDUpAtt2SpA2Spe2,    Self,   false,
+    "The user exerts itself greatly, reducing stamina but increasing power.",
     // 650
     -1,    "Loving Embrace",  NeutralType, Physical, UnknownStat,    5, -1, 50, X,  MOHKO,  Opponent,   true,
     "The user embraces the target with sinister energy. The target will faint\ninstantly if hit.",

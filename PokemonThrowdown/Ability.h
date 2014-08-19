@@ -11,11 +11,10 @@
 
 #include <iostream>
 #include "abilitydata.h"
-#include "Reactor.h"
 
 class Pokemon;
 
-class Ability : public Reactor
+class Ability
 {
 public:
     Ability(int ID, Pokemon* pokemon);

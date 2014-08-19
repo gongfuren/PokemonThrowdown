@@ -9,15 +9,13 @@
 #ifndef __PokemonThrowdown__Item__
 #define __PokemonThrowdown__Item__
 
-#include "Reactor.h"
-
 #include <iostream>
 #include <string>
 using namespace std;
 
 class Pokemon;
 
-class Item : public Reactor
+class Item
 // Represents an Item and its current state (i.e. used, active)
 {
 public:

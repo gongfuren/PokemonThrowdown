@@ -9,7 +9,6 @@
 #include "Ability.h"
 
 Ability::Ability(int ID, Pokemon* pokemon)
-: Reactor(abilitylib[ID].reaction)
 {
     m_pokemon = pokemon;
     m_ID = ID;

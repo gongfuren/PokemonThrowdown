@@ -12,7 +12,6 @@
 #include "strings.h"
 
 Item::Item(int ID, Pokemon* pokemon)
-: Reactor(NULL)
 {
     m_ID = ID;
     m_age = -1;
