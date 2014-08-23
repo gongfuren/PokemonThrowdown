@@ -28,20 +28,34 @@ struct pokedata
     Type type1;
     Type type2;
     int stats[NUMSTATS];
+    Gender gender; // variant for some, but not all Pokemon
     
     // Varies across specific Pokemon of a species
-    Gender gender;
     Nature nature;
     int IVs[NUMSTATS];
-    
     // Can be changed within a single Pokemon
     HoldItem item;
     int EVs[NUMSTATS];
     int level;
     int moveIDs[MAXMOVES];
-    PokeAbility ability[3];
+    PokeAbility ability[3]; // ability 1, ability 2, hidden ability
     int form;
     string description;
+};
+
+struct pokedynamicdata
+{
+    int index;
+    
+    Nature nature;
+    int IVs[NUMSTATS];
+    // Can be changed within a single Pokemon
+    HoldItem item;
+    int EVs[NUMSTATS];
+    int level;
+    int moveIDs[MAXMOVES];
+    PokeAbility ability[3]; // ability 1, ability 2, hidden ability
+    int form;
 };
 
 const pokedata pokelib[MAXTOTALPOKEMON] = {
@@ -56,7 +70,7 @@ const pokedata pokelib[MAXTOTALPOKEMON] = {
 	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	188,	412,	77,	78,	PNoAbility,	PNoAbility,	PNoAbility,	0,
 	"",
  3,	"Venusaur",	GrassType,	PoisonType,	80,	82,	83,	100,	100,	80,
-	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	241,	76,	202,	235,	PNoAbility,	PNoAbility,	PNoAbility,	0,
+	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HVenusaurite,	-1,	-1,	-1,	-1,	-1,	-1,	100,	241,	76,	202,	235,	PNoAbility,	PNoAbility,	PNoAbility,	0,
 	"",
  4,	"Charmander",	FireType,	NoType,	39,	52,	43,	60,	50,	65,
 	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	52,	232,	108,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
@@ -74,7 +88,7 @@ const pokedata pokelib[MAXTOTALPOKEMON] = {
 	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
 	"",
  9,	"Blastoise",	WaterType,	NoType,	79,	83,	100,	85,	105,	78,
-	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	240,	58,	56,	89,	PTorrent,	PTorrent,	PTorrent,	0,
+	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HBlastoisinite,	-1,	-1,	-1,	-1,	-1,	-1,	100,	240,	58,	56,	89,	PTorrent,	PTorrent,	PTorrent,	0,
 	"",
  10,	"Caterpie",	BugType,	NoType,	45,	30,	35,	20,	20,	45,
 	NoGender,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
@@ -2449,15 +2463,15 @@ Male,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	27
 	Genderless,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
 	"",
     // 778
-    386,	"Deoxys (Attack)",	PsychicType,	NoType,	50,	180,	20,	180,	20,	150,
+    386,	"Deoxys (Attack Forme)",	PsychicType,	NoType,	50,	180,	20,	180,	20,	150,
     Genderless,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	354,	276,	282,	245,	PPressure,	PNoAbility,	PNoAbility,	0,
 	"",
     // 779
-    386,	"Deoxys (Defense)",	PsychicType,	NoType,	50,	70,	160,	70,	160,	90,
+    386,	"Deoxys (Defense Forme)",	PsychicType,	NoType,	50,	70,	160,	70,	160,	90,
     Genderless,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PPressure,	PNoAbility,	PNoAbility,	0,
 	"",
     // 780
-    386,	"Deoxys (Speed)",	PsychicType,	NoType,	50,	95,	90,	95,	90,	180,
+    386,	"Deoxys (Speed Forme)",	PsychicType,	NoType,	50,	95,	90,	95,	90,	180,
     Genderless,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	-1,	-1,	-1,	-1,	PNoAbility,	PNoAbility,	PNoAbility,	0,
 	"",
     // 781
@@ -2541,7 +2555,12 @@ Male,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	27
     // 799
     915,    "???",  NeutralType,  NoType,   140, 140, 140,    140, 140,    140,
     Genderless,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	644,	632,	434,	639,	PPressure,	PNoAbility,	PNoAbility,	0,
-	"The master guardian. It embodies perfect balance.",
+	"A lingering spirit from ancient times. It embodies perfect balance.",
+    
+    // 800
+    413,	"Floette (Eternal Flower Forme)",	FairyType,	NoType,	74,	65,	67,	125,	128,	92,
+    Female,	NoNature,	-1,	-1,	-1,	-1,	-1,	-1,	HNoItem,	-1,	-1,	-1,	-1,	-1,	-1,	100,	615,	94,	585,	649,	PNoAbility,	PNoAbility,	PNoAbility,	0,
+	"",
 };
 
 #endif /* defined(__PokemonThrowdown__pokedata__) */

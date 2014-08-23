@@ -16,26 +16,6 @@ using namespace std;
 
 // Note: This data file does not adhere to an 80 column limit!
 
-// TODO: organize and consolidate move effects
-enum MoveEffect
-{
-    MNoEffect,
-    
-    MPoison10, MPoison15, MPoison30, MPoison40, MToxic100, MBurn10, MBurn15, MBurn30, MFreeze10, MFreeze50, MParalyze10, MParalyze15, MParalyze30, MParalyze100, MConfuse10, MConfuse20, MConfuse100, MTri20, MConfuse, MAttract, MBurn, MSleep, MParalyze, MToxic, MPoison, MFlinch10, MFlinch20, MFlinch30, MFlinch100, MCrit100,
-    
-    MLowerAtt, MLowerDef, MLowerSpA, MLowerSpD, MLowerSpe, MLowerAcc, MLowerEva, MLowerAcc100, MLowerAttDef, MLowerSpD10, MLowerSpD20, MLowerSpD40, MLowerSpD50, MLowerSpA100, MUpAtt, MUpDef, MUpSpA, MUpSpD, MUpSpe, MUpAcc, MUpEva, MUpDef10, MUpAtt100, MUpRnd, MUpAtt2, MUpDef2, MUpSpA2, MUpSpD2, MUpSpe2, MUpAcc2, MUpEva2, MUpSpA3, MUpDef3, MLowerAtt2, MLowerDef2, MLowerSpA2, MLowerSpD2, MLowerSpe2, MLowerAcc2, MLowerEva2, MLowerDefSpDUpAtt2SpA2Spe2, MLowerSpeUpAttDef, MUpSpASpD, MUpSpASpDSpe, MUpAttSpe, MUpAttDef, MUpAttSpA, MUpDefSpD, MUpAttAcc, MUpAttSpe2, MUpAll, MUpAll10,
-    
-    MMoveFirst, MMoveFirst2, MHighCrit, MNeverMiss, MOHKO, MMultiHit, MDoubleHit, MRecharge, MOverheat, MCharge, MDamage20, MDamage40, MDamageLevel, MIgnoreDef100, MRampage, MProtect, MShield, MFocusPunch, MCounter, MRoar, MSuckerPunch, MSelfdestruct, MSolarbeam, MRazorwind, MSkullbash, MSkyAttack, MSkyDrop, MShadowForce, MFly, MDive, MDig, MPhantomForce, MSplash,
-    
-    MLowerAttDefSelf, MLowerDefSpDSelf, MLowerDefSpDSpeSelf,
-
-    MHeal50, MHeal100, MDrain50, MDrain75, MRecoil25, MRecoil33, MRecoilStrug,
-    
-    MRain, MSun, MHail, MSandstorm, MTrickRoom, MGravity,
-    
-    MBind, MWrap, MFireSpin, MWhirlpool, MMagmaStorm, MSandTomb, MStomp, MMinimize, MJumpKick, MPayDay, MShockDef, MRage, MFuryCut, MTeleport, MDisable, MBatonPass, MTrap, MPartialTrap, MSub, MHazard, MDehazard, MReflect, MLightScreen, MVitalThrow, MFoul, MSplit, MTaunt
-};
-
 // Move Data
 
 struct movedata
@@ -971,7 +951,7 @@ const movedata movelib[MAXTOTALMOVES] = {
 	"",
     456,	"Heal Order",	BugType,	Status,	Smart,	10,	-1,	-1,	IV,	MNoEffect,	Opponent, false,
 	"",
-    457,	"Head Smash",	RockType,	Physical,	Tough,	5,	150,	80,	IV,	MNoEffect,	Opponent, true,
+    457,	"Head Smash",	RockType,	Physical,	Tough,	5,	150,	80,	IV,	MRecoilHalf,	Opponent, true,
 	"",
     458,	"Double Hit",	NormalType,	Physical,	Smart,	10,	35,	90,	IV,	MNoEffect,	Opponent, true,
 	"",
@@ -1287,7 +1267,7 @@ const movedata movelib[MAXTOTALMOVES] = {
 	"",
     614,	"???",	NoType,	Status,	UnknownStat,	-1,	-1,	-1,	VI,	MNoEffect,	Opponent, false,
 	"",
-    615,	"???",	NoType,	Status,	UnknownStat,	-1,	-1,	-1,	VI,	MNoEffect,	Opponent, false,
+    615,	"Light of Ruin",	FairyType,	Special,	UnknownStat,	5,	140,	90,	VI,	MRecoilHalf,	Opponent, false,
 	"",
     616,	"Land's Wrath", GroundType,	Physical,	UnknownStat,	10,	90,	100,	VI,	MNoEffect,	Opponent, true,
 	"",
@@ -1319,35 +1299,35 @@ const movedata movelib[MAXTOTALMOVES] = {
     908,    "Demolition", FightingType,   Physical,   Tough,   5,  100,    100,    X,  MMoveFirst,  Opponent,   true,
     "The user uses its speed to attack the foe at blinding speeds.",
     // 626
-    909,    "Graviton",    GroundType,   Special,    Cool, 5,  100,    100, X,  MNoEffect,  Opponent,   false,
+    909,    "???",    GroundType,   Special,    Cool, 5,  100,    100, X,  MNoEffect,  Opponent,   false,
     "The user attacks the target by greatly increasing the force of gravity.",
     // 627
     910,    "Terrablast",   RockType,   Special,    Tough,    5,  100,    100,    X,  MNoEffect,  Opponent,   false,
-    "The user alters gravity and attacks the target using the surroundings.",
+    "The user alters gravity and attacks the target using the surrounding\nground and objects.",
     // 628
-    911,    "Crimson Blaze",    FireType,   Special,    Beauty, 5,  100,    100,    X,  MBurn30,  Opponent,   false,
+    911,    "???",    FireType,   Special,    Beauty, 5,  100,    100,    X,  MBurn30,  Opponent,   false,
     "Summons a storm of crimson flames to deal damage to an opponent. May cause\na burn.",
     // 629
     912,    "Lightning Edge", ElectricType,   Physical,    Cool, 5,  100,    100,    X,  MHighCrit,  Opponent,   false,
-    "The user slashes its target with a sword of lightning. High critical-hit ratio.",
+    "The user slashes its target with a sword of lightning. Has a high chance of\nlanding a critical hit.",
     // 630
     913,    "Wood Dragon", GrassType,    Physical,    Beauty, 10,  100,    100,    X,  MDrain50,  Opponent,   false,
     "The user animates a wooden dragon to attack the foe. This dragon absorbs\nenergy from the target.",
     // 631
-    914,    "Time Dilation",    NeutralType,    Status, UnknownStat,    10,  -1, -1, X,  MNoEffect,  None,   false,
-    "Temporarily alters the flow of time.",
+    914,    "Forest Bloom",    GrassType,    Special, Smart,    5,  100, 100, X,  MSleep50,  Opponent,   false,
+    "The user attacks by summoning otherworldly plants that damage and fill the air\nwith sleep-inducing pollen.",
     // 632
     915,    "Elemental Barrage",  NeutralType,    Special,    Smart,  5,  140,    90,    X,  MNoEffect,  Opponent,   false,
     "Emits a powerful blast of wind, water, earth, and fire.",
     // 633
     916,    "Heaven's Mirror",  LightType,  Status, Beauty, 5,  -1, -1, X,  MProtect,   Self,   false,
-    "The user avoids damage by summoning a large mirror imbued with light.",
+    "The user prevents damage by summoning a mirror made of light.",
     // 634
-    917,    "Sine Wave Burst",    WaterType,  Special,   Smart,    5,  100,    100,    X,  MConfuse20,  Opponent,   false,
+    917,    "???",    WaterType,  Special,   Smart,    5,  100,    100,    X,  MConfuse20,  Opponent,   false,
     "The user attacks with mysterious energy waves. May leave the target\nconfused.",
     // 635
-    918,    "Deep Blue",  WaterType,  Physical, Tough,    5,  100, -1, X,  MNeverMiss,  None,   true,
-    "The target is dragged into a world of deep dark sea and attacked. This\nattack always lands without fail.",
+    918,    "Combat Orders",  LightType,  Status, Tough,    20,  -1, -1, X,  MUpAttDefSpe,  Self,   false,
+    "The user performs a mystical ritual that boosts its attack, defense, and speed\nstats.",
     // 636
     919,    "Flash Freeze",   IceType,   Special, Beauty,    5,  100, 100, X,  MFreeze50,  Opponent,   false,
     "The user fires a swift beam at the target that has a high chance of causing\nfreezing.",
@@ -1362,7 +1342,7 @@ const movedata movelib[MAXTOTALMOVES] = {
     "A raging storm of meteors is rained down onto the opponent.",
     // 640
     923,    "Annihilation", SteelType,    Physical,   Tough,  5,  180,    70,    X,  MNoEffect,  Opponent,   false,
-    "The user harnesses otherworldly power to rain missles upon the battlefield.",
+    "The user harnesses otherworldly power to rain explosives upon the battlefield.",
     // 641
     924,    "Time Shear", NeutralType,    Special,    Smart,  5,  100,    100,    X,  MFreeze50,  Opponent,   false,
     "Attacks the target by bending time around it to cause damage. May leave the\ntarget frozen.",
@@ -1371,13 +1351,13 @@ const movedata movelib[MAXTOTALMOVES] = {
     "The user confounds the target with blinding light and attacks through its\nshadow. This attack will not miss.",
     // 643
     926,    "Song of Heaven", FlyingType, Special,    Beauty, 5,  100,    100,    X,  MNoEffect,  Opponent,   false,
-    "The user plays the song of the heavens, casting away evil with harsh winds.",
+    "The user plays the song of the heavens, creating harsh winds to cause damage.",
     // 644
-    927,    "Rising Sunset",   FireType,    Special,    Cool,    5,  -1, 50,    X,  MOHKO,  Opponent, false,
+    927,    "Crimson Sunset",   FireType,    Special,    Cool,    5,  -1, 50,    X,  MOHKO,  Opponent, false,
 	"Sets off a catastrophic explosion that rises into the air like a deep red\nsun. The target will faint instantly if hit.",
     // 645
-    928,    "Nether Ring",   DarkType, Special,    Smart,    5,  100,    100, X, MFreeze50,   Opponent, false,
-	"The user fires a strange pulse that drains energy. May freeze the target.",
+    928,    "Nether Sphere",   DarkType, Special,    Smart,    5,  100,    100, X, MNoEffect,   Opponent, false,
+	"The user fires a strange ball of darkness that drains energy.",
     // 646
     929,    "Radiant Blade",    LightType,  Special,    Beauty,    5, 100,    100,        X,  MNoEffect,  Opponent, false,
 	"Generates a sword of light and attacks the target.",
@@ -1389,7 +1369,7 @@ const movedata movelib[MAXTOTALMOVES] = {
     "A light and soothing rain falls upon the field, healing the user.",
     // 649
     932,    "Exertion",    PsychicType,  Status, Smart, 15,  -1, -1, X,  MLowerDefSpDUpAtt2SpA2Spe2,    Self,   false,
-    "The user exerts itself greatly, reducing stamina but increasing power.",
+    "The user exerts itself, reducing stamina but greatly increasing power.",
     // 650
     -1,    "Loving Embrace",  NeutralType, Physical, UnknownStat,    5, -1, 50, X,  MOHKO,  Opponent,   true,
     "The user embraces the target with sinister energy. The target will faint\ninstantly if hit.",

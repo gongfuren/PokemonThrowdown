@@ -1177,14 +1177,14 @@ void Battle::statusEffect(Trainer* trainer) const
     {
         cout << trainer->getTitleName()
         << "'s " << pokemon->getName() << " " << "is hurt by its burn!" << endl;
-        pokemon->lowerHP(static_cast<double>(pokemon->getBaseStats(HPStat))
+        pokemon->decreaseHP(static_cast<double>(pokemon->getBaseStats(HPStat))
                          * (0.125));
     }
     else if (pokemon->getStatus() == PoisonStatus)
     {
         cout << trainer->getTitleName() << "'s "
         << pokemon->getName() << " " << "is hurt by poison!" << endl;
-        pokemon->lowerHP(static_cast<double>(pokemon->getBaseStats(HPStat))
+        pokemon->decreaseHP(static_cast<double>(pokemon->getBaseStats(HPStat))
                          * (0.125));
     }
     else if (pokemon->getStatus() == ToxicStatus)
@@ -1192,7 +1192,7 @@ void Battle::statusEffect(Trainer* trainer) const
         pokemon->setToxicTurns(pokemon->getToxicTurns()+1);
         cout << trainer->getTitleName() << "'s "
         << pokemon->getName() << " " << "is hurt by poison!" << endl;
-        pokemon->lowerHP(static_cast<double>(pokemon->getBaseStats(HPStat)) *
+        pokemon->decreaseHP(static_cast<double>(pokemon->getBaseStats(HPStat)) *
                            (pokemon->getToxicTurns() * (0.0625)));
     }
     

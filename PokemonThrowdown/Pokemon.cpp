@@ -365,7 +365,7 @@ void Pokemon::setFainted()
     setStatus(FaintStatus);
 }
 
-void Pokemon::lowerHP(int howMuch)
+void Pokemon::decreaseHP(int howMuch)
 {
     m_statsStatus[HPStat] -= howMuch;
     
@@ -723,7 +723,7 @@ bool Pokemon::passThroughStatus()
                 double damage = (((2.0 * getLevel() + 10.0) / 250.0) *
                                  (spOrNot) * pureDamage + 2.0);
                 
-                lowerHP(damage);
+                decreaseHP(damage);
                 
                 pass = false;
             }
@@ -1290,13 +1290,13 @@ bool Pokemon::applyStatus(Pokemon* target, Move* move)
             php = (shp + thp) / 2;
             if (shp >= php)
             {
-                target->lowerHP(shp - php);
+                target->decreaseHP(shp - php);
                 increaseHP(shp - php);
             }
             else
             {
                 target->increaseHP(thp - php);
-                lowerHP(thp - php);
+                decreaseHP(thp - php);
             }
             cout << "The battlers shared their pain!" << endl;
             break;
@@ -1392,6 +1392,11 @@ bool Pokemon::applyStatus(Pokemon* target, Move* move)
             sc[SpDStat] = 1;
             sc[SpeStat] = 1;
             break;
+        case MUpAttDefSpe:
+            sc[AttStat] = 1;
+            sc[DefStat] = 1;
+            sc[SpeStat] = 1;
+            break;
         case MLowerDefSpDUpAtt2SpA2Spe2:
             sc[DefStat] = -1;
             sc[SpDStat] = -1;
@@ -1468,9 +1473,13 @@ bool Pokemon::applyStatus(Pokemon* target, Move* move)
             else
                 target->decreaseStat(i, -sc[i]);
         }
-        else if (sc[i] > 0)
+    }
+    
+    for (int i = AttStat; i < NUMALLSTATS; i++)
+    {
+        if (sc[i] > 0)
         {
-            if (sc[i] == -1)
+            if (sc[i] == 1)
                 target->increaseStat(i, false);
             else
                 target->increaseStat(i, sc[i]);
@@ -1657,7 +1666,7 @@ void Pokemon::applyAttack(Pokemon* target, Move* move)
         totalDamage = attacker->getLevel();
     
     phld1 = target->getStatsStatus(HPStat);
-    target->lowerHP(totalDamage);
+    target->decreaseHP(totalDamage);
     phld2 = phld1 - target->getStatsStatus(HPStat);
     
     if (crit == 1.50)
@@ -1717,20 +1726,23 @@ void Pokemon::applyEffect(Pokemon* target, Move* move, int damage)
     }
     
     // Recoil
-    if (effect == MRecoilStrug || effect == MRecoil25 || effect == MRecoil33)
+    if (effect == MRecoilStrug || effect == MRecoil25 || effect == MRecoil33 || effect == MRecoilHalf)
     {
         cout << attacker->getName() << " is damaged by recoil!" << endl;
         
         switch (effect)
         {
             case MRecoil25:
-                attacker->lowerHP(damage * 0.25);
+                attacker->decreaseHP(damage * 0.25);
                 break;
             case MRecoil33:
-                attacker->lowerHP(damage * 0.333);
+                attacker->decreaseHP(damage * 0.333);
+                break;
+            case MRecoilHalf:
+                attacker->decreaseHP(damage * 0.5);
                 break;
             default: // MRecoilStrug
-                attacker->lowerHP(getBaseStats(HPStat) * 0.25);
+                attacker->decreaseHP(getBaseStats(HPStat) * 0.25);
                 break;
         }
     }
@@ -1755,6 +1767,13 @@ void Pokemon::applyEffect(Pokemon* target, Move* move, int damage)
         
         if (randInt(0, 99) < freezeChance)
             target->setStatus(FreezeStatus);
+    }
+    
+    if (effect == MSleep50)
+        // Sleep chance
+    {
+        if (randInt(0, 1) < 1)
+            target->setStatus(SleepStatus);
     }
     
     if (effect == MFlinch10 || effect == MFlinch100 || effect == MFlinch20
@@ -1901,7 +1920,7 @@ void Pokemon::applySideEffects(Move* move)
     if (move->getEffect() == MSelfdestruct)
         // Self Destruct or Explosion
     {
-        lowerHP(getStats(HPStat));
+        decreaseHP(getStats(HPStat));
     }
 }
 

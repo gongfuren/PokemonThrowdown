@@ -76,7 +76,7 @@ public:
     // Other
     void checkFaint();
     bool hasMaxHP() const;
-    void lowerHP(int howMuch);
+    void decreaseHP(int howMuch);
     bool increaseHP(int howMuch);
     bool decreaseStat(int whichStat, bool silent);
     bool decreaseStat(int whichStat, int levels);
