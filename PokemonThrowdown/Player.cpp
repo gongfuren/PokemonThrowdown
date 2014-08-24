@@ -41,6 +41,8 @@ void Player::actionSelect()
     {
         rerun = false;
         
+        getBattle()->displayState(true);
+        
         cout << "What would you like to do?" << endl;
         
         aref[0] = "Fight!";

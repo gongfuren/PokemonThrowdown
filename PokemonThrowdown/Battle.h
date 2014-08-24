@@ -41,14 +41,14 @@ public:
     void dispPokeSummary(int slotNumber) const;
     
     // Display summary of specified Pokemon species
-    void dispPokeSummary(const pokedata pokemon) const;
+    void dispPokeSummary(const pokedynamicdata pokemon, bool dynamic = false) const;
     
     // Display in-battle (i.e. with current PP) moves
     void dispPokeMoves(int pokemon) const;
     void dispPokeMoves() const;
     
     // Display currently-set moves for Pokemon of specified species
-    void dispPokeMoves(const pokedata pokemon) const;
+    void dispPokeMoves(const pokedynamicdata pokemon, bool dynamic = false) const;
     
     // Cast effects (i.e. Abilities) when Pokemon is "summoned" (sent out)
     void summonEffects();
@@ -87,7 +87,7 @@ private:
     int browse(bool p = true) const;
     int randomChoice(bool p = true) const;
     void dispMoveInfo(const movedata* m) const;
-    bool chosePokemon(int p, bool* r, bool m = true, bool i = true) const;
+    bool chosePokemon(int p, bool* r, bool m = true, bool i = true, bool dynamic = false) const;
     
     // Main Battle cycle, calls the respective phases
     void cycle();
@@ -139,7 +139,6 @@ private:
     Trainer* m_participants[NUMPLAYERS];
     int m_turns;
     int m_numPlayers;
-    int m_preMoveIDs[2][MAXPOKEMON][MAXMOVES];
 };
 
 #endif /* defined(__PokemonThrowdown__Battle__) */

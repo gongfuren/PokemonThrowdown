@@ -7,6 +7,7 @@
 //
 
 #include "Item.h"
+#include "Pokemon.h"
 #include "itemdata.h"
 #include "constants.h"
 #include "strings.h"
@@ -62,7 +63,34 @@ void Item::resetAge()
 }
 
 void Item::applyEffect()
-// i.e. Flame Orb
 {
+    if (getID() == HLeftovers)
+    {
+        getPokemon()->increaseHP(0.0625 * getPokemon()->getStatsStatus(HPStat));
+        cout << getPokemon()->getName() << " restored HP using its " << getName() << "!" << endl;
+    }
+    else if (getID() == HBlackSludge)
+    {
+        if (getPokemon()->getType1() == PoisonType || getPokemon()->getType2() == PoisonType)
+        {
+            getPokemon()->increaseHP(0.0625 * getPokemon()->getStatsStatus(HPStat));
+            cout << getPokemon()->getName() << " restored HP using its " << getName() << "!" << endl;
+        }
+        else
+        {
+            getPokemon()->increaseHP(0.125 * getPokemon()->getStatsStatus(HPStat));
+            cout << getPokemon()->getName() << " was hurt by " << getName() << "!" << endl;
+        }
+    }
+}
+
+bool Item::endOfTurn()
+{
+    if (m_age == -1)
+        m_age = 0;
     
+    applyEffect();
+    incrementAge();
+    
+    return true;
 }

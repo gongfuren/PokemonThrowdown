@@ -29,6 +29,7 @@ public:
     
     bool restrictsChoice() const;
     
+    bool endOfTurn();
     void incrementAge();
     void resetAge();
     void applyConsumption();

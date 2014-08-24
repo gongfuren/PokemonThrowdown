@@ -27,11 +27,12 @@ class Pokemon
 // Represents a Battle-ready Pokemon and its current state
 {
 public:
-    Pokemon(pokedata h, Trainer* trainer, int wp);
+    Pokemon(pokedynamicdata h, Trainer* trainer, int wp);
     ~Pokemon();
     
     // Accessor functions
     string getName() const;
+    string getNickname() const;
     Type getType1() const;
     Type getType2() const;
     PokeStatus getStatus() const;
@@ -134,6 +135,7 @@ private:
     
     // Data members
     string m_name;
+    string m_nickname;
     int m_ID;
     Type m_type1;
     Type m_type2;

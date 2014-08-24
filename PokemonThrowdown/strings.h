@@ -91,7 +91,7 @@ const string vstatusFullStrings[NUMVSTATUSES] = {
 };
 
 const string weatherStrings[NUMWEATHERS] = {
-    "No Weather", "Sunny", "Rain", "Sandstorm", "Hail"
+    "No Weather", "Sunny", "Rain", "Sandstorm", "Hail", "Random"
 };
 
 const string weatherStartStrings[NUMWEATHERS] = {
@@ -154,5 +154,26 @@ const string titleArray[NUMTITLES] = {
     JUGGLER, RICHBOY, LADY, CUEBALL, VETERAN, SOCIALITE, ROCKET, CIPHER, FLARE,
     BEAUTY, POKEFAN, SAGETRAINER, ACTRESS, FISHERMAN
 };
+
+const string musicTracksStrings[numTracks] = {
+    "None"
+};
+
+const string switchStringsA[2] = {
+    "Off", "On"
+};
+
+const string switchStringsB[2] = {
+    "Disabled", "Enabled"
+};
+
+const string switchStringsC[2] = {
+    "No", "Yes"
+};
+
+const string switchStringsD[2] = {
+    "False", "True"
+};
+
 
 #endif /* defined(__PokemonThrowdown__strings__) */

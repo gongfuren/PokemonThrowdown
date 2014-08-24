@@ -55,4 +55,8 @@ int selectorGadget(std::string opts[], int sizeo, int& prog,
                    std::string specialBeginOpts[] = NULL, int sizeb = 0,
                    std::string specialEndOpts[] = NULL, int sizee = 0);
 
+// inputGadget()
+// Simple utility for accepting a checked int input from the command line.
+int inputGadget(int numChoices);
+
 #endif /* defined(__PokemonThrowdown__util__) */

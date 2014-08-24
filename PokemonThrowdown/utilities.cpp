@@ -7,8 +7,10 @@
 //
 
 #include "constants.h"
+#include "utilities.h"
 #include <cstdlib>
 #include <string>
+#include <limits>
 #include <iostream>
 using namespace std;
 
@@ -94,7 +96,12 @@ int selectorGadget(string opts[], int sizeo, int& prog,
         
         if (i + entriesPerPage < sizeo + sizeb + sizee)
         {
-            cout << j++ + 1 << ": " << "(" << "Next" << ")" << " >>" << endl;
+            cout << j++ + 1 << ": " << "(";
+            if (i + 2 * entriesPerPage >= sizeo + sizeb + sizee)
+                cout << "Last";
+            else
+                cout << "Next";
+            cout << ")" << " >>" << endl;
             next = true;
         }
         else
@@ -102,7 +109,12 @@ int selectorGadget(string opts[], int sizeo, int& prog,
         
         if (i > 0)
         {
-            cout << j++ + 1 << ": " << "<< " << "(" << "Prev" << ")" << endl;
+            cout << j++ + 1 << ": " << "<< " << "(";
+            if (i - entriesPerPage <= 0)
+                cout << "First";
+            else
+                cout << "Prev";
+            cout << ")" << endl;
             prev = true;
             
             noffs++;
@@ -142,7 +154,7 @@ int selectorGadget(string opts[], int sizeo, int& prog,
         {
             if (i + entriesPerPage < sizeo + sizeb + sizee)
             {
-                cout << j++ + 1 << ": " << "(" << "Skip to End" << ")" << " ->|"
+                cout << j++ + 1 << ": " << "(" << "Last" << ")" << " ->|"
                 << endl;
                 nextl = true;
                 
@@ -156,7 +168,7 @@ int selectorGadget(string opts[], int sizeo, int& prog,
             
             if (i > 0)
             {
-                cout << j++ + 1 << ": " << "|<- " << "(" << "Beginning" << ")"
+                cout << j++ + 1 << ": " << "|<- " << "(" << "First" << ")"
                 << endl;
                 prevl = true;
                 
@@ -182,7 +194,7 @@ int selectorGadget(string opts[], int sizeo, int& prog,
             ploffs++;
         }
         
-        cin >> choice;
+        choice = inputGadget(j);
         
         if (choice <= 0 || choice > j)
             continue;
@@ -226,4 +238,28 @@ int selectorGadget(string opts[], int sizeo, int& prog,
         else
             return choice + prog - 1;
     }
+}
+
+int inputGadget(int numChoices)
+{
+    int choice = -1;
+    
+    while (1)
+    {
+        cin >> choice;
+        
+        if (cin.fail() || choice < 1 || choice > numChoices)
+        {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            continue;
+        }
+        else
+            break;
+    }
+    
+    cin.clear();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    
+    return choice;
 }

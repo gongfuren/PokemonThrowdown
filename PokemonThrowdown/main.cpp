@@ -10,50 +10,50 @@
 #include <string>
 #include <ctime>
 #include "constants.h"
+#include "utilities.h"
 #include "Battle.h"
 #include "strings.h"
+#include "settings.h"
 using namespace std;
-
-// Options
 
 // Main
 
 int main()
 {
-    int choice;
+    int choice, prog = 0;
+    string opts[4], confirm[1];
     
-    // Initialize the random number generator
+    // Initialize environment
+        // Random number generator
     srand(static_cast<unsigned int>(time(NULL)));
     
     for (;;)
     {
         // Title Screen
         cout << "O***0***O***0***O***0" << endl
-        << "* Pokemon Throwdown * v0.2.2.3" << endl
+        << "* Pokemon Throwdown * v0.3" << endl
         << "0***O***0***O***0***O" << endl;
         
-        cout << "1: " << "New Game" << endl
-        << "2: " << "Options" << endl
-        << "3: " << "Credits" << endl
-        << "4: " << "Quit" << endl;
+        opts[0] = "Play";
+        opts[1] = "Settings";
+        opts[2] = "Credits";
+        opts[3] = "Quit";
         
-        cin >> choice;
+        choice = selectorGadget(opts, 4, prog, 4, false);
         
-        if (choice == 1) // Play
+        if (choice == 0) // Play
         {
             Battle b;
             b.start();
             
             cout << endl;
         }
-        else if (choice == 2) // Options (TODO)
-        {
-            cout << "Coming soon!" << endl;
-        }
-        else if (choice == 3) // Credits
+        else if (choice == 1) // Options (TODO)
+            settings();
+        else if (choice == 2) // Credits
         {
             cout << "PokemonThrowdown" << endl;
-            cout << "----------------" << endl << endl;
+            cout << "----------------" << endl;
             
             cout << "An originally-coded Pokemon simulator that is true to the game."
             << endl << endl
@@ -69,11 +69,18 @@ int main()
             << "Pokemon \"Throwdown\" is a play on the popular web-based Pokemon Showdown battle simulator." << endl << endl
             
             << "(C) 2013-2014 Ian P. Cordero." << endl;
-            // Contributors feel free to add your names here
+            // Contributors feel free to add your names here.
+            
+            confirm[0] = "OK";
+            
+            choice = selectorGadget(confirm, 1, prog, 1, false);
         }
         else // Quit
-        {
             break;
-        }
     }
+}
+
+void options()
+{
+    
 }

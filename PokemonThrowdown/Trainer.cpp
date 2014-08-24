@@ -38,7 +38,7 @@ Trainer::Trainer(trainerdata h, Battle* battle)
             m_pokemon[i] = NULL;
         }
         else
-            m_pokemon[i] = new Pokemon(pokelib[h.pokemonIDs[i]], this, i);
+            m_pokemon[i] = new Pokemon(pokedynamiclib[h.pokemonIDs[i]], this, i);
     }
 }
 

@@ -48,11 +48,6 @@ Battle::Battle()
     for (int i = 0; i < MAXPLAYERS; i++)
         m_participants[i] = NULL;
     
-    for (int i = 0; i < 2; i++)
-        for (int j = 0; j < MAXPOKEMON; j++)
-            for (int k = 0; k < MAXMOVES; k++)
-                m_preMoveIDs[i][j][k] = -1;
-    
     // Custom Initialization
     for (int i = 0; i < 2; i++)
     {
@@ -107,7 +102,7 @@ bool Battle::chooseTrainer()
     int pokemonID, np;
     int i, prog[3] = { 0, 0, 0 };
     bool rerun;
-    string names[NUMTRAINERS], exops[1], pref[6], cref[2];
+    string names[NUMTRAINERS], pref[6], cref[2];
     
     for (i = 0; i < NUMTRAINERS; i++)
     {
@@ -116,56 +111,21 @@ bool Battle::chooseTrainer()
         names[i] = o.str();
     }
     
-    exops[0] = "*Custom Trainer* (Beta)";
-    
     do
     {
         // Introduction
         if (m_numPlayers == 0)
         {
-            cout << "Hello there!" << endl << "Welcome to the world of Pokemon!"
-            << endl << endl << "My name is Oak! People call me the Pokemon Prof.! ";
-            
-            cout << "This world is inhabited by creatures called Pokemon! "
-            << "For some people, Pokemon are pets. Other use them for fights. "
-            << "Myself... I study Pokemon as a profession." << endl << endl;
-            
-            cout << "First, please tell me about yourself." << endl;
+            cout << "Choose a trainer." << endl;
         }
         else
         {
-            cout << "This is my grandchild. " << "This person has been "
-            << "your rival since you were a baby." << endl;
+            cout << "Choose an opponent." << endl;
         }
         
-        choice[0] = selectorGadget(names, NUMTRAINERS, prog[0], 6, false,
-                                   NULL, 0, exops, 1);
+        choice[0] = selectorGadget(names, NUMTRAINERS, prog[0], 6, false);
         
-        // *Custom Trainer*
-        if (choice[0] == 0)
-        {
-            trainerdata t;
-            if (customTrainer(&t))
-            {
-                protoman = t;
-            }
-            else
-            {
-                choice[0] = -1;
-                continue;
-            }
-        }
-        else
-        {
-            choice[0] -= 1;
-            
-            for (int i = 0; i < 2; i++)
-                for (int j = 0; j < MAXPOKEMON; j++)
-                    for (int k = 0; k < MAXMOVES; k++)
-                        m_preMoveIDs[i][j][k] = -1;
-            
-            protoman = trainerlib[choice[0]];
-        }
+        protoman = trainerlib[choice[0]];
         
         do
         {
@@ -193,7 +153,16 @@ bool Battle::chooseTrainer()
                 for (int i = 0; i < 6; i++)
                 {
                     if (protoman.pokemonIDs[i] != -1)
-                        pref[i] = pokelib[protoman.pokemonIDs[i]].name;
+                    {
+                        if (pokedynamiclib[protoman.pokemonIDs[i]].nickname != "")
+                        {
+                            ostringstream tmp;
+                            tmp << pokedynamiclib[protoman.pokemonIDs[i]].nickname << " (" << pokelib[pokedynamiclib[protoman.pokemonIDs[i]].index].name << ")";
+                            pref[i] = tmp.str();
+                        }
+                        else
+                            pref[i] = pokelib[pokedynamiclib[protoman.pokemonIDs[i]].index].name;
+                    }
                     else
                         np--;
                 }
@@ -208,7 +177,7 @@ bool Battle::chooseTrainer()
                 
                 pokemonID = protoman.pokemonIDs[choice[2]];
 
-                while (chosePokemon(pokemonID, &rerun, true, false))
+                while (chosePokemon(pokemonID, &rerun, true, false, true))
                     ;
                 
                 if (rerun)
@@ -240,367 +209,7 @@ bool Battle::chooseTrainer()
     return true;
 }
 
-bool Battle::customTrainer(trainerdata* t)
-{
-    int choice, i, n, pkc, mkc, r, prog[2];
-    bool rerun;
-    
-    string tref[NUMTITLES], mref[3], gref[2];
-    
-    rerun = false;
-    prog[0] = 0;
-    prog[1] = 0;
-    
-    // Choose Gender
-    if (m_numPlayers == 0)
-        cout << "Are you ";
-    else
-        cout << "Erm... Is this person ";
-    
-    cout << "a boy or a girl?" << endl;
-    
-    gref[0] = "Boy";
-    gref[1] = "Girl";
-    
-    choice = selectorGadget(gref, 2, prog[0], 10, false);
-    
-    t->male = static_cast<bool>(choice);
-    
-    // Choose name
-    do
-    {
-        cout << "What is ";
-        
-        if (m_numPlayers == 0)
-            cout << "your ";
-        else
-            cout << "this person's ";
-        
-        cout << "name?" << endl;
-        
-        cin.ignore();
-        getline(cin, t->name);
-        
-        cout << "So, ";
-        
-        if (m_numPlayers == 0)
-            cout << "your ";
-        else
-            cout << "this person's ";
-        
-        cout << "name is " << t->name << "?" << endl;
-        
-        cout << "1: " << "Yes" << endl
-        << "2: " << "No" << endl;
-        
-        cin >> choice;
-        
-        if (choice != 1)
-            rerun = true;
-        else
-            rerun = false;
-    }
-    while (rerun);
-    
-    cout << "Right! ";
-    
-    if (m_numPlayers == 0)
-        cout << "Your ";
-    else
-        cout << "This person's ";
-    
-    cout << "name is " << t->name << "!" << endl;
-    
-    // Choose title
-    cout << "What type of Trainer would ";
-    
-    if (m_numPlayers == 0)
-        cout << "you ";
-    else
-        cout << "this person ";
-    
-    cout << "like to be?" << endl;
-    
-    for (i = 0; i < NUMTITLES; i++)
-        tref[i] = titleArray[i];
-    
-    choice = selectorGadget(tref, NUMTITLES, prog[0], 6, false);
-    
-    t->title = titleArray[choice];
-    cout << "Excellent! " << t->title << " " << t->name
-    << " has a nice ring to it." << endl;
-    
-    // Assign (generic) reward
-    t->reward = 1000;
-    
-    // Choose Pokemon
-    n = 0;
-    rerun = true;
-    pkc = -1;
-    
-    cout << "Now, which Pokemon would ";
-    
-    if (m_numPlayers == 0)
-        cout << "you ";
-    else
-        cout << "this person ";
-    
-    cout << "like to use?" << endl;
-    
-    for (n = 0; n < 6; n++)
-    {
-        do
-        {
-            for (int m = 0; m < n; m++)
-                cout << "O";
-            cout << "?";
-            for (int m = n+1; m < 6; m++)
-                cout << ".";
-            cout << endl;
-            
-            for (int m = 0; m < n; m++)
-            {
-                cout << "Pokemon #" << m+1 << ": "
-                << pokelib[t->pokemonIDs[m]].name << endl;
-            }
-            
-            cout << "Pokemon #" << n+1 << ": ";
-            
-            if (pkc == -1)
-                cout << "?";
-            else
-                cout << pokelib[pkc].name;
-            
-            cout << endl;
-            
-            mref[0] = "Search By Name";
-            mref[1] = "Browse";
-            mref[2] = "Random";
-            
-            if (n > 0)
-                choice = selectorGadget(mref, 3, prog[1]);
-            else
-                choice = selectorGadget(mref, 3, prog[1], 3, false);
-            
-            if (choice == BACK)
-            {
-                rerun = true;
-                n--;
-                continue;
-                
-            }
-            
-            if (choice == 0)
-                pkc = searchByName();
-            else if (choice == 1)
-                pkc = browse();
-            else
-                pkc = randomChoice();
-            
-            rerun = (pkc == -1);
-        }
-        while (rerun);
-        
-        t->pokemonIDs[n] = pkc;
-        
-        rerun = true;
-        mkc = -1;
-        
-        // Choose Moves for each Pokemon
-        for (r = 0; r < 4; r++)
-        {
-            do
-            {
-                for (int m = 0; m < n; m++)
-                    cout << "O";
-                cout << "?";
-                for (int m = n+1; m < 6; m++)
-                    cout << ".";
-                cout << endl;
-                
-                cout << "Choose moves for " << pokelib[pkc].name << "." << endl;
-                
-                for (int m = 0; m < r; m++)
-                        cout << "> " << movelib[m_preMoveIDs[m_numPlayers][n][m]].name << endl;
-
-                cout << "> ";
-                
-                if (mkc == -1)
-                    cout << "?";
-                
-                cout << endl;
-                
-                if (r > 0)
-                    choice = selectorGadget(mref, 3, prog[1]);
-                else
-                    choice = selectorGadget(mref, 3, prog[1], 3, false);
-                
-                if (choice == BACK)
-                {
-                    rerun = true;
-                    r--;
-                    continue;
-                }
-                
-                if (choice == 0)
-                    mkc = searchByName(false);
-                else if (choice == 1)
-                    mkc = browse(false);
-                else
-                    mkc = randomChoice(false);
-                
-                rerun = (mkc == -1);
-            }
-            while (rerun);
-            
-            if (choice == BACK)
-            {
-                n--;
-                break;
-            }
-            
-            m_preMoveIDs[m_numPlayers][n][r] = mkc;
-            
-            mkc = -1;
-        }
-
-        pkc = -1;
-    }
-    
-    return true;
-}
-
-int Battle::getPreMoveIDs(int trainer, int pokemon, int moveslot) const
-{
-    return m_preMoveIDs[trainer][pokemon][moveslot];
-}
-
-int Battle::randomChoice(bool p) const
-{
-    int choice;
-    bool rerun;
-    
-    rerun = true;
-    
-    do
-    {
-        if (p)
-            choice = randInt(1, MAXNUMPOKEMON);
-        else
-            choice = randInt(1, MAXNUMMOVES);
-        
-        while (chosePokemon(choice, &rerun, p))
-            ;
-        
-        if (rerun)
-            return -1;
-    }
-    while (rerun);
-    
-    return choice;
-}
-
-int Battle::searchByName(bool p) const
-{
-    int numMatches, i, choice, mnum, prog;
-    string search, examine;
-    bool rerun;
-    string* names;
-    vector<int> matches;
-    
-    if (p)
-        mnum = MAXNUMPOKEMON;
-    else
-        mnum = MAXNUMMOVES;
-    
-    do
-    {
-        cout << "Enter ";
-        
-        if (p)
-            cout << "Pokemon ";
-        else
-            cout << "Move ";
-        
-        cout << "name (type \":q\" to cancel search):" << endl;
-        
-        cin.ignore();
-        getline(cin, search);
-        
-        if (search == ":q")
-            return -1;
-        
-        for (i = 1; i < mnum; i++)
-        {
-            if (p)
-                examine = pokelib[i].name;
-            else
-                examine = movelib[i].name;
-            
-            for (int k = 0; k < examine.length(); k++)
-                examine[k] = tolower(examine[k]);
-            
-            for (int k = 0; k < search.length(); k++)
-                search[k] = tolower(search[k]);
-            
-            if (examine.find(search) != -1)
-                matches.push_back(i);
-        }
-        
-        if (matches.empty())
-        {
-            cout << "No ";
-            
-            if (p)
-                cout << "Pokemon ";
-            else
-                cout << "Moves ";
-            
-            cout << "match the search terms." << endl;
-        }
-        else
-            break;
-    }
-    while (true);
-    
-    numMatches = static_cast<int>(matches.size());
-    names = new string[numMatches];
-    
-    for (i = 0; i < numMatches; i++)
-    {
-        ostringstream o;
-        
-        if (p)
-            o << pokelib[matches[i]].name << " (#" << pokelib[matches[i]].ID
-            << ")";
-        else
-            o << movelib[matches[i]].name << " (ID #" << movelib[matches[i]].ID
-            << ")";
-        
-        names[i] = o.str();
-    }
-    
-    prog = 0;
-    
-    do
-    {
-        choice = selectorGadget(names, numMatches, prog);
-        
-        if (choice == BACK)
-            break;
-        
-        choice = matches[choice];
-        
-        while (chosePokemon(choice, &rerun, p))
-            ;
-    }
-    while (rerun);
-    
-    delete[] names;
-    return choice;
-}
-
-bool Battle::chosePokemon(int p, bool* r, bool m, bool i) const
+bool Battle::chosePokemon(int p, bool* r, bool m, bool i, bool dynamic) const
 {
     int choice, csize, prog;
     *r = false;
@@ -614,7 +223,17 @@ bool Battle::chosePokemon(int p, bool* r, bool m, bool i) const
         cout << "You chose ";
         
         if (m)
-            cout << pokelib[p].name;
+        {
+            if (dynamic)
+            {
+                if (pokedynamiclib[p].nickname != "")
+                    cout << pokedynamiclib[p].nickname << " (" << pokelib[pokedynamiclib[p].index].name << ")";
+                else
+                    cout << pokelib[pokedynamiclib[p].index].name;
+            }
+            else
+                cout << pokelib[p].name;
+        }
         else
             cout << movelib[p].name;
         
@@ -636,7 +255,7 @@ bool Battle::chosePokemon(int p, bool* r, bool m, bool i) const
         if (i)
             choice = selectorGadget(cref, csize, prog);
         else
-            choice = selectorGadget(&cref[1], csize, prog);
+            choice = selectorGadget(cref+1, csize, prog);
         
         if (choice == BACK)
         {
@@ -650,9 +269,11 @@ bool Battle::chosePokemon(int p, bool* r, bool m, bool i) const
         if (m)
         {
             if (choice == csize-2)
-                dispPokeSummary(pokelib[p]);
+            {
+                dispPokeSummary(pokedynamiclib[p]);
+            }
             else if (choice == csize-1)
-                dispPokeMoves(pokelib[p]);
+                dispPokeMoves(pokedynamiclib[p]);
         }
     }
     while(true);
@@ -688,69 +309,6 @@ void Battle::dispMoveInfo(const movedata* m) const
     
     if (m->description != "")
         cout << m->description << endl;
-}
-
-int Battle::browse(bool p) const
-{
-    int choice, i, mnum, prog;
-    bool rerun;
-    string* names;
-    
-    rerun = false;
-    prog = 0;
-    
-    if (p)
-    {
-        mnum = MAXNUMPOKEMON;
-        names = new string[mnum-1];
-        
-        for (i = 0; i < mnum-1; i++)
-        {
-            ostringstream o;
-            o << pokelib[i+1].name << " (#" << pokelib[i+1].ID << ")";
-            names[i] = o.str();
-        }
-    }
-    else
-    {
-        mnum = MAXNUMMOVES;
-        
-        names = new string[mnum-1];
-        
-        for (i = 0; i < mnum-1; i++)
-        {
-            ostringstream o;
-            o << movelib[i+1].name << " (ID #" << movelib[i+1].ID << ")";
-            names[i] = o.str();
-        }
-    }
-    
-    do
-    {
-        cout << "Choose a ";
-        
-        if (p)
-            cout << "Pokemon.";
-        else
-            cout << "Move.";
-        
-        cout << endl;
-        
-        choice = selectorGadget(names, mnum-1, prog, 16);
-        
-        if (choice == BACK)
-            break;
-        
-        choice++;
-        
-        while (chosePokemon(choice, &rerun, p))
-            ;
-
-    }
-    while (rerun);
-    
-    delete[] names;
-    return choice;
 }
 
 // Battle Flow
@@ -849,10 +407,7 @@ void Battle::summonsPhase()
 }
 
 void Battle::actionPhase()
-{
-    // Display battle status
-    displayState(true);
-    
+{    
     // Select actions
     actionSelect();
 }
@@ -1038,7 +593,8 @@ void Battle::postBattlePhase()
     m_field->weatherContinue();
     checkFaint();
     
-    // TODO: implement item effects here and at other item-use points
+    for (int i = 0; i < NUMPLAYERS; i++)
+        m_participants[i]->getPokemon()->getItem()->endOfTurn();
     
     for (int i = 0; i < NUMPLAYERS; i++)
         statusEffect(m_participants[i]);
@@ -1304,33 +860,33 @@ void Battle::dispPokeSummary(int slotNumber) const
     cout << pout.str();
 }
 
-void Battle::dispPokeSummary(const pokedata pokemon) const
+void Battle::dispPokeSummary(const pokedynamicdata pokemon, bool dynamic) const
 {
     // Name
-    cout << pokemon.name << " "
+    cout << pokelib[pokemon.index].name << " "
     // Level
     << "Lv" << " " << pokemon.level << endl;
     
     // Type
-    cout << typeStrings[pokemon.type1];
-    if (pokemon.type2 != NoType)
-        cout << "/" << typeStrings[pokemon.type2];
+    cout << typeStrings[pokelib[pokemon.index].type1];
+    if (pokelib[pokemon.index].type2 != NoType)
+        cout << "/" << typeStrings[pokelib[pokemon.index].type2];
     cout << endl;
     
     // Item
     cout << "Item" << ": " << itemStrings[pokemon.item] << endl;
     
     // Ability
-    cout << "Ability" << ": " << abilityStrings[pokemon.ability[0]] << endl;
+    cout << "Ability" << ": " << abilityStrings[pokelib[pokemon.index].ability[pokemon.currentAbility]] << endl;
     
     // Stats
     cout << "Base Stats" << ":" << endl;
     for (int i = 0; i < 6; i++)
-        cout << statFullStrings[i] << ": " << pokemon.stats[i] << endl;
+        cout << statFullStrings[i] << ": " << pokelib[pokemon.index].stats[i] << endl;
     
     // Description
-    if (pokemon.description != "")
-        cout << pokemon.description << endl;
+    if (pokelib[pokemon.index].description != "")
+        cout << pokelib[pokemon.index].description << endl;
 }
 
 void Battle::dispPokeMoves(int pokemon) const
@@ -1395,7 +951,7 @@ void Battle::dispPokeMoves() const
     dispPokeMoves(0);
 }
 
-void Battle::dispPokeMoves(const pokedata pokemon) const
+void Battle::dispPokeMoves(const pokedynamicdata pokemon, bool dynamic) const
 {
     ostringstream o;
     

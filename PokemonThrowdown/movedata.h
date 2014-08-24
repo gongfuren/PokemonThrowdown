@@ -1296,26 +1296,26 @@ const movedata movelib[MAXTOTALMOVES] = {
     907,    "Queen's Shield",   LightType,  Status, Beauty,    10,  -1, -1, X,  MProtect,    Self,   false,
     "The user raises a wall of light that nullifies damage from moves.",
     // 625
-    908,    "Demolition", FightingType,   Physical,   Tough,   5,  100,    100,    X,  MMoveFirst,  Opponent,   true,
-    "The user uses its speed to attack the foe at blinding speeds.",
+    908,    "Demolition", FightingType,   Physical,   Tough,   10,  100,    -1,    X,  MNeverMiss,  Opponent,   true,
+    "The user focuses then attacks the foe at blinding speeds. This attack will\nnot miss.",
     // 626
-    909,    "???",    GroundType,   Special,    Cool, 5,  100,    100, X,  MNoEffect,  Opponent,   false,
-    "The user attacks the target by greatly increasing the force of gravity.",
+    909,    "Annihilation", SteelType,    Physical,   Tough,  5,  180,    70,    X,  MAnnihilation,  Opponent,   false,
+    "The user ravages the battlefield with missiles and weapons from the far future.\nThe user's Attack is reduced after.",
     // 627
     910,    "Terrablast",   RockType,   Special,    Tough,    5,  100,    100,    X,  MNoEffect,  Opponent,   false,
-    "The user alters gravity and attacks the target using the surrounding\nground and objects.",
+    "The user alters gravity, attacking the target using the surrounding objects.",
     // 628
     911,    "???",    FireType,   Special,    Beauty, 5,  100,    100,    X,  MBurn30,  Opponent,   false,
-    "Summons a storm of crimson flames to deal damage to an opponent. May cause\na burn.",
+    "",
     // 629
     912,    "Lightning Edge", ElectricType,   Physical,    Cool, 5,  100,    100,    X,  MHighCrit,  Opponent,   false,
     "The user slashes its target with a sword of lightning. Has a high chance of\nlanding a critical hit.",
     // 630
-    913,    "Wood Dragon", GrassType,    Physical,    Beauty, 10,  100,    100,    X,  MDrain50,  Opponent,   false,
-    "The user animates a wooden dragon to attack the foe. This dragon absorbs\nenergy from the target.",
+    913,    "Wood Dragon", GrassType,    Physical,    Beauty, 5,  100,    100,    X,  MDrain50,  Opponent,   false,
+    "The user animates a wooden dragon to attack the foe. This attack absorbs\nenergy from the target.",
     // 631
     914,    "Forest Bloom",    GrassType,    Special, Smart,    5,  100, 100, X,  MSleep50,  Opponent,   false,
-    "The user attacks by summoning otherworldly plants that damage and fill the air\nwith sleep-inducing pollen.",
+    "The user attacks by summoning otherworldly plants that fill the air with\ntoxic, sleep-inducing pollen.",
     // 632
     915,    "Elemental Barrage",  NeutralType,    Special,    Smart,  5,  140,    90,    X,  MNoEffect,  Opponent,   false,
     "Emits a powerful blast of wind, water, earth, and fire.",
@@ -1323,11 +1323,11 @@ const movedata movelib[MAXTOTALMOVES] = {
     916,    "Heaven's Mirror",  LightType,  Status, Beauty, 5,  -1, -1, X,  MProtect,   Self,   false,
     "The user prevents damage by summoning a mirror made of light.",
     // 634
-    917,    "???",    WaterType,  Special,   Smart,    5,  100,    100,    X,  MConfuse20,  Opponent,   false,
-    "The user attacks with mysterious energy waves. May leave the target\nconfused.",
-    // 635
-    918,    "Combat Orders",  LightType,  Status, Tough,    20,  -1, -1, X,  MUpAttDefSpe,  Self,   false,
+    917,    "Combat Orders",  FightingType,  Status, Tough,    20,  -1, -1, X,  MUpAttDefSpe,  Self,   false,
     "The user performs a mystical ritual that boosts its attack, defense, and speed\nstats.",
+    // 635
+    918,    "???",    LightType,  Status,   Tough,    20,  -1,    -1,    X,  MUpAttSpA,  Self,   false,
+    "",
     // 636
     919,    "Flash Freeze",   IceType,   Special, Beauty,    5,  100, 100, X,  MFreeze50,  Opponent,   false,
     "The user fires a swift beam at the target that has a high chance of causing\nfreezing.",
@@ -1341,8 +1341,8 @@ const movedata movelib[MAXTOTALMOVES] = {
     922,    "Meteor Shower",    FireType,   Special,    Beauty, 5,  130,    70, X,  MNoEffect,  Opponent,   false,
     "A raging storm of meteors is rained down onto the opponent.",
     // 640
-    923,    "Annihilation", SteelType,    Physical,   Tough,  5,  180,    70,    X,  MNoEffect,  Opponent,   false,
-    "The user harnesses otherworldly power to rain explosives upon the battlefield.",
+    923,    "???",    GroundType,   Special,    Cool, 5,  100,    100, X,  MNoEffect,  Opponent,   false,
+    "",
     // 641
     924,    "Time Shear", NeutralType,    Special,    Smart,  5,  100,    100,    X,  MFreeze50,  Opponent,   false,
     "Attacks the target by bending time around it to cause damage. May leave the\ntarget frozen.",
