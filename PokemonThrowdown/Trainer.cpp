@@ -16,6 +16,8 @@
 #include <stdlib.h>
 using namespace std;
 
+const pokedynamicdata* pokebattlers[MAXPOKEMON];
+
 Trainer::Trainer(trainerdata h, Battle* battle)
 : m_battle(battle)
 {
@@ -32,13 +34,15 @@ Trainer::Trainer(trainerdata h, Battle* battle)
     
     for (int i = 0; i < 6; i++)
     {
-        if (h.pokemonIDs[i] == -1)
+        if (pokebattlers[i] == NULL)
         {
             m_numPokemon--;
             m_pokemon[i] = NULL;
         }
         else
-            m_pokemon[i] = new Pokemon(pokedynamiclib[h.pokemonIDs[i]], this, i);
+        {
+            m_pokemon[i] = new Pokemon(*pokebattlers[i], this, i);
+        }
     }
 }
 

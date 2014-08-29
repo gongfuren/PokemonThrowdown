@@ -16,71 +16,83 @@
 #include "settings.h"
 using namespace std;
 
+static void displayCredits();
+static void titleScreen();
+
 // Main
 
 int main()
 {
-    int choice, prog = 0;
-    string opts[4], confirm[1];
+    // Title Screen
+    titleScreen();
     
     // Initialize environment
-        // Random number generator
-    srand(static_cast<unsigned int>(time(NULL)));
+    srand(static_cast<unsigned int>(time(NULL))); // RNG
+    loadSettings(); // Settings
+    
+    bool ff = false;
+    int choice, prog = 0;
+    string opts[5];
     
     for (;;)
     {
-        // Title Screen
-        cout << "O***0***O***0***O***0" << endl
-        << "* Pokemon Throwdown * v0.3" << endl
-        << "0***O***0***O***0***O" << endl;
+        if (ff)
+            titleScreen();
+        else
+            ff = true;
         
+        // Main Menu
         opts[0] = "Play";
-        opts[1] = "Settings";
-        opts[2] = "Credits";
-        opts[3] = "Quit";
-        
-        choice = selectorGadget(opts, 4, prog, 4, false);
+        opts[1] = "Trainers";
+        opts[2] = "Settings";
+        opts[3] = "Credits";
+        opts[4] = "Quit";
+        choice = selectorGadget(opts, 5, prog, 5, false);
         
         if (choice == 0) // Play
         {
             Battle b;
             b.start();
-            
             cout << endl;
         }
-        else if (choice == 1) // Options (TODO)
-            settings();
-        else if (choice == 2) // Credits
-        {
-            cout << "PokemonThrowdown" << endl;
-            cout << "----------------" << endl;
-            
-            cout << "An originally-coded Pokemon simulator that is true to the game."
-            << endl << endl
-            
-            << "All credit goes to Nintendo for original game design, "
-            "mechanics, etc." << endl << endl << "Made by a huge fan."
-            << endl << endl
-            
-            << "throwdown (n.) informal" << endl
-            << "a performance by or competition between rappers, breakdancers, etc." << endl
-            << "ex: a funky hip-hop throwdown." << endl << endl
-            
-            << "Pokemon \"Throwdown\" is a play on the popular web-based Pokemon Showdown battle simulator." << endl << endl
-            
-            << "(C) 2013-2014 Ian P. Cordero." << endl;
-            // Contributors feel free to add your names here.
-            
-            confirm[0] = "OK";
-            
-            choice = selectorGadget(confirm, 1, prog, 1, false);
-        }
+        else if (choice == 1)
+            customTrainers();
+        else if (choice == 2)
+            configureSettings();
+        else if (choice == 3)
+            displayCredits();
         else // Quit
             break;
     }
 }
 
-void options()
+static void titleScreen()
 {
+    cout << "O***0***O***0***O***0" << endl
+    << "* Pokemon Throwdown * v0.4" << endl
+    << "0***O***0***O***0***O" << endl;
+}
+
+static void displayCredits()
+{
+    cout << "PokemonThrowdown" << endl;
+    cout << "----------------" << endl;
     
+    cout << "An originally-coded Pokemon simulator that is true to the game."
+    << endl << endl
+    
+    << "All credit goes to Nintendo for original game design, "
+    "mechanics, etc." << endl << endl << "Made by a huge fan."
+    << endl << endl
+    
+    << "throwdown (n.) informal" << endl
+    << "a performance by or competition between rappers, breakdancers, etc." << endl
+    << "ex: a funky hip-hop throwdown." << endl << endl
+    
+    << "Pokemon \"Throwdown\" is a play on the popular web-based Pokemon Showdown battle simulator." << endl << endl
+    
+    << "(C) 2013-2014 Ian P. Cordero." << endl;
+    // Contributors feel free to add your names here.
+    
+    confirmGadget();
 }

@@ -31,6 +31,7 @@ void Computer::actionSelect()
     Pokemon* target = getBattle()->getPlayer()->getPokemon();
     
     Move* moves[MAXMOVES];
+    bool damager = false;
     int attack, max, bar, numMoves;
     int smartScores[MAXMOVES] = { 0, 0, 0, 0 };
     
@@ -38,6 +39,21 @@ void Computer::actionSelect()
         return;
     
     numMoves = 0;
+    
+    int pokemonLeft = 0, choice;
+    
+    for (int i = 0; i < getNumPokemon(); i++)
+        if (!getPokemon(i)->isFainted())
+            pokemonLeft++;
+    if (pokemonLeft > 1)
+    {
+    re_pick___:
+        choice = randInt(1, MAXPOKEMON-1);
+        if (getPokemon(choice)->isFainted())
+            goto re_pick___;
+    }
+    else
+        choice = -1;
     
     for (int i = 0; i < MAXMOVES; i++)
     {
@@ -72,7 +88,7 @@ void Computer::actionSelect()
                 break;
             }
             
-            if (moves[i]->getMoveType() == Status)
+            if (moves[i]->getMoveType() == Status || moves[i]->getDamage() == -1)
             {
                 smartScores[i] = randInt(0, 150);
                 
@@ -91,23 +107,37 @@ void Computer::actionSelect()
                 }
             }
             else
-                smartScores[i] = moves[i]->getDamage();
-            
-            if (moves[i]->getTarget() == Opponent)
             {
-                smartScores[i] *= typeMultiplier(moves[i]->getType(),
-                                                 target->getType1(),
-                                                 target->getType2());
+                smartScores[i] = moves[i]->getDamage();
                 
-                if (target->getAbility()->getID() == PLevitate
-                    && moves[i]->getType() == GroundType)
-                    smartScores[i] *= 0;
+                if (moves[i]->getTarget() == Opponent)
+                {
+                    smartScores[i] *= typeMultiplier(moves[i]->getType(),
+                                                     target->getType1(),
+                                                     target->getType2());
+                    
+                    if (target->getAbility()->getID() == PLevitate
+                        && moves[i]->getType() == GroundType)
+                        smartScores[i] *= 0;
+                    
+                    if (moves[i]->getType() == pokemon->getType1()
+                        || moves[i]->getType() == pokemon->getType2())
+                        smartScores[i] *= 1.5;
+                }
                 
-                if (moves[i]->getType() == pokemon->getType1()
-                    || moves[i]->getType() == pokemon->getType2())
-                    smartScores[i] *= 1.5;
+                if (smartScores[i] >= 40)
+                    damager = true;
             }
         }
+        
+        for (int i = AttStat; i < NUMSTATS; i++)
+            if (getPokemon()->getStatsStatus(i) < -2)
+                damager = false;
+        
+        if (!damager && choice != -1)
+            goto set_move____;
+        else
+            damager = true;
         
         max = 0;
         
@@ -126,7 +156,12 @@ void Computer::actionSelect()
     }
     
 set_move____:
-    if (pokemon->canMegaEvolve())
+    if (!damager)
+    {
+        setIntendedSwitch(choice);
+        setIntendedMove(SwitchDecision);
+    }
+    else if (pokemon->canMegaEvolve())
         setIntendedMove(MegaDecision, attack);
     else
         setIntendedMove(FightDecision, attack);

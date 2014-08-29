@@ -12,7 +12,7 @@
 #include <iostream>
 #include "constants.h"
 
-// Auxiliary Function Declarations
+// Auxiliary Function Declarations ///////////////////////////////////////////
 
 // randInt()
 // Returns a randomly chosen integer between lowest and highest inclusive
@@ -58,5 +58,17 @@ int selectorGadget(std::string opts[], int sizeo, int& prog,
 // inputGadget()
 // Simple utility for accepting a checked int input from the command line.
 int inputGadget(int numChoices);
+
+// numericalGadget()
+// Accepts input from cin between min and max, inclusive
+int numericalGadget(int min, int max, string error = "Invalid input!");
+
+// confirmGadget()
+// Displays an OK prompt for the user at the command line
+void confirmGadget();
+
+// stringToNumber()
+// Simple conversion to int from a string
+int stringToNumber(const string& string);
 
 #endif /* defined(__PokemonThrowdown__util__) */

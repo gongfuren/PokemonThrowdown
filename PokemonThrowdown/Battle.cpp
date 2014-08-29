@@ -21,6 +21,7 @@
 #include "Computer.h"
 #include "Move.h"
 #include "utilities.h"
+#include "settings.h"
 #include <ctime>
 #include <vector>
 #include <cstdlib>
@@ -51,8 +52,8 @@ Battle::Battle()
     // Custom Initialization
     for (int i = 0; i < 2; i++)
     {
-        if (!chooseTrainer())   // this is an if statement in case future
-            return;             // implementations provide back functionality
+        if (!chooseTrainer())
+            return;
     }
     
     m_turns = 0;
@@ -97,18 +98,26 @@ void Battle::chooseLead()
 bool Battle::chooseTrainer()
 {
     trainerdata protoman;
+    pokedynamicdata protomon;
     
     int choice[4] = { -1, -1, -1, -1 };
     int pokemonID, np;
     int i, prog[3] = { 0, 0, 0 };
     bool rerun;
-    string names[NUMTRAINERS], pref[6], cref[2];
+    string names[NUMTRAINERS], pref[MAXPOKEMON], cref[2], cNames[MAXCTRAINERS];
     
     for (i = 0; i < NUMTRAINERS; i++)
     {
         ostringstream o;
         o << trainerlib[i].title << " " << trainerlib[i].name;
         names[i] = o.str();
+    }
+    
+    for (i = 0; i < numCustomTrainers; i++)
+    {
+        ostringstream tmp;
+        tmp << trainerarray[i].title << " " << trainerarray[i].name;
+        cNames[i] = tmp.str();
     }
     
     do
@@ -123,9 +132,33 @@ bool Battle::chooseTrainer()
             cout << "Choose an opponent." << endl;
         }
         
-        choice[0] = selectorGadget(names, NUMTRAINERS, prog[0], 6, false);
+        choice[0] = selectorGadget(names, 0, prog[0], 10, false, NULL, 0, cNames, numCustomTrainers);
         
-        protoman = trainerlib[choice[0]];
+        if (choice[0] == BACK)
+            return false;
+        
+        if (choice[0] < numCustomTrainers)
+        {
+            protoman = trainerarray[choice[0]];
+            for (int i = 0; i < MAXPOKEMON; i++)
+            {
+                if (protoman.pokemonIDs[i] >= 0)
+                    pokebattlers[i] = &pokedynamicarray[choice[0]][protoman.pokemonIDs[i]];
+                else
+                    pokebattlers[i] = NULL;
+            }
+        }
+        else
+        {
+            protoman = trainerlib[choice[0] - numCustomTrainers];
+            for (int i = 0; i < MAXPOKEMON; i++)
+            {
+                if (protoman.pokemonIDs[i] >= 0)
+                    pokebattlers[i] = &pokedynamiclib[protoman.pokemonIDs[i]];
+                else
+                    pokebattlers[i] = NULL;
+            }
+        }
         
         do
         {
@@ -150,18 +183,18 @@ bool Battle::chooseTrainer()
             {
                 np = 6;
                 
-                for (int i = 0; i < 6; i++)
+                for (int i = 0; i < MAXPOKEMON; i++)
                 {
-                    if (protoman.pokemonIDs[i] != -1)
+                    if (pokebattlers[i] != NULL)
                     {
-                        if (pokedynamiclib[protoman.pokemonIDs[i]].nickname != "")
+                        if (pokebattlers[i]->nickname != "")
                         {
                             ostringstream tmp;
-                            tmp << pokedynamiclib[protoman.pokemonIDs[i]].nickname << " (" << pokelib[pokedynamiclib[protoman.pokemonIDs[i]].index].name << ")";
+                            tmp << pokebattlers[i]->nickname << " (" << pokelib[pokebattlers[i]->index].name << ")";
                             pref[i] = tmp.str();
                         }
                         else
-                            pref[i] = pokelib[pokedynamiclib[protoman.pokemonIDs[i]].index].name;
+                            pref[i] = pokelib[pokebattlers[i]->index].name;
                     }
                     else
                         np--;
@@ -177,7 +210,7 @@ bool Battle::chooseTrainer()
                 
                 pokemonID = protoman.pokemonIDs[choice[2]];
 
-                while (chosePokemon(pokemonID, &rerun, true, false, true))
+                while (chosePokemon(pokemonID, &rerun, true, false, true, (choice[0] < numCustomTrainers), choice[0]))
                     ;
                 
                 if (rerun)
@@ -190,7 +223,7 @@ bool Battle::chooseTrainer()
         }
         while (choice[1] < 0 || choice[1] >= 2);
     }
-    while (choice[0] < 0 || choice[0] >= NUMTRAINERS);
+    while (choice[0] < 0 || choice[0] >= NUMTRAINERS + numCustomTrainers);
     
     // Craft Trainer
     if (m_numPlayers == 0)
@@ -209,11 +242,17 @@ bool Battle::chooseTrainer()
     return true;
 }
 
-bool Battle::chosePokemon(int p, bool* r, bool m, bool i, bool dynamic) const
+bool Battle::chosePokemon(int p, bool* r, bool m, bool i, bool dynamic, bool custom, int ci) const
 {
     int choice, csize, prog;
     *r = false;
     string cref[3];
+    pokedynamicdata pdd;
+    
+    if (custom)
+        pdd = pokedynamicarray[ci][p];
+    else
+        pdd = pokedynamiclib[p];
     
     do
     {
@@ -226,13 +265,18 @@ bool Battle::chosePokemon(int p, bool* r, bool m, bool i, bool dynamic) const
         {
             if (dynamic)
             {
-                if (pokedynamiclib[p].nickname != "")
-                    cout << pokedynamiclib[p].nickname << " (" << pokelib[pokedynamiclib[p].index].name << ")";
+                if (pdd.nickname != "")
+                    cout << pdd.nickname << " (" << pokelib[pdd.index].name << ")";
                 else
-                    cout << pokelib[pokedynamiclib[p].index].name;
+                    cout << pokelib[pdd.index].name;
             }
             else
-                cout << pokelib[p].name;
+            {
+                if (custom)
+                    cout << pokelib[pdd.index].name;
+                else
+                    cout << pokelib[p].name;
+            }
         }
         else
             cout << movelib[p].name;
@@ -270,10 +314,10 @@ bool Battle::chosePokemon(int p, bool* r, bool m, bool i, bool dynamic) const
         {
             if (choice == csize-2)
             {
-                dispPokeSummary(pokedynamiclib[p]);
+                dispPokeSummary(pdd);
             }
             else if (choice == csize-1)
-                dispPokeMoves(pokedynamiclib[p]);
+                dispPokeMoves(pdd);
         }
     }
     while(true);

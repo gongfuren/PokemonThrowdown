@@ -66,19 +66,19 @@ void Item::applyEffect()
 {
     if (getID() == HLeftovers)
     {
-        getPokemon()->increaseHP(0.0625 * getPokemon()->getStatsStatus(HPStat));
-        cout << getPokemon()->getName() << " restored HP using its " << getName() << "!" << endl;
+        if (getPokemon()->increaseHP(0.0625 * getPokemon()->getBaseStats(HPStat)))
+            cout << getPokemon()->getName() << " restored HP using its " << getName() << "!" << endl;
     }
     else if (getID() == HBlackSludge)
     {
         if (getPokemon()->getType1() == PoisonType || getPokemon()->getType2() == PoisonType)
         {
-            getPokemon()->increaseHP(0.0625 * getPokemon()->getStatsStatus(HPStat));
-            cout << getPokemon()->getName() << " restored HP using its " << getName() << "!" << endl;
+            if (getPokemon()->increaseHP(0.0625 * getPokemon()->getBaseStats(HPStat)))
+                cout << getPokemon()->getName() << " restored HP using its " << getName() << "!" << endl;
         }
         else
         {
-            getPokemon()->increaseHP(0.125 * getPokemon()->getStatsStatus(HPStat));
+            getPokemon()->increaseHP(0.125 * getPokemon()->getBaseStats(HPStat));
             cout << getPokemon()->getName() << " was hurt by " << getName() << "!" << endl;
         }
     }
@@ -86,6 +86,9 @@ void Item::applyEffect()
 
 bool Item::endOfTurn()
 {
+    if (getPokemon()->isFainted())
+        return false;
+    
     if (m_age == -1)
         m_age = 0;
     

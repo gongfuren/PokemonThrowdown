@@ -79,6 +79,7 @@ const int MAXNUMPOKEMON = 801;
 const int MAXTOTALMOVES = MAXNUMMOVES;
 const int MAXTOTALPOKEMON = MAXNUMPOKEMON;
 const int MAXTOTALTRAINERS = 100;
+
 const int MAXTOTALBATTLES = 100;
 
 const int MAXTYPES = 18 + 1 + 2;    // "Actual" types + NoType + Neutral/Light
@@ -143,36 +144,36 @@ const int NUMNATURES = 26;
 const int MEGAFORM = 9;
 
 const double natureArray[NUMNATURES][NUMSTATS-1] = {
-    //  ATT  DEF  SPA  SPD  SPE
-    1.0, 1.0, 1.0, 1.0, 1.0,
-    1.0, 1.0, 1.0, 1.0, 1.0,
-    1.1, 0.9, 1.0, 1.0, 1.0,
-    1.1, 1.0, 1.0, 1.0, 0.9,
-    1.1, 1.0, 0.9, 1.0, 1.0,
-    1.1, 1.0, 1.0, 0.9, 1.0,
-    1.0, 1.0, 1.0, 1.0, 1.0,
-    0.9, 1.1, 1.0, 1.0, 1.0,
-    1.0, 1.1, 1.0, 1.0, 0.9,
-    1.0, 1.1, 0.9, 1.0, 1.0,
-    1.0, 1.1, 1.0, 0.9, 1.0,
-    1.0, 1.0, 1.0, 1.0, 1.0,
-    0.9, 1.0, 1.0, 1.0, 1.1,
-    1.0, 0.9, 1.0, 1.0, 1.1,
-    1.0, 1.0, 0.9, 1.0, 1.1,
-    1.0, 1.0, 1.0, 0.9, 1.1,
-    1.0, 1.0, 1.0, 1.0, 1.0,
-    0.9, 1.0, 1.1, 1.0, 1.0,
-    1.1, 0.9, 1.1, 1.0, 1.0,
-    1.0, 1.0, 1.1, 1.0, 0.9,
-    1.0, 1.0, 1.1, 0.9, 1.0,
-    1.0, 1.0, 1.0, 1.0, 1.0,
-    0.9, 1.0, 1.0, 1.1, 1.0,
-    1.0, 0.9, 1.0, 1.1, 1.0,
-    1.0, 1.0, 1.0, 1.1, 0.9,
-    1.0, 1.0, 0.9, 1.1, 1.0
+//  ATT  DEF  SPA  SPD  SPE
+    1.0, 1.0, 1.0, 1.0, 1.0, // NoNature
+    1.0, 1.0, 1.0, 1.0, 1.0, // Hardy
+    1.1, 0.9, 1.0, 1.0, 1.0, // Lonely
+    1.1, 1.0, 1.0, 1.0, 0.9, // Brave
+    1.1, 1.0, 0.9, 1.0, 1.0, // Adamant
+    1.1, 1.0, 1.0, 0.9, 1.0, // Naughty
+    1.0, 1.0, 1.0, 1.0, 1.0, // Docile
+    0.9, 1.1, 1.0, 1.0, 1.0, // Bold
+    1.0, 1.1, 1.0, 1.0, 0.9, // Relaxed
+    1.0, 1.1, 0.9, 1.0, 1.0, // Impish
+    1.0, 1.1, 1.0, 0.9, 1.0, // Lax
+    1.0, 1.0, 1.0, 1.0, 1.0, // Serious
+    0.9, 1.0, 1.0, 1.0, 1.1, // Timid
+    1.0, 0.9, 1.0, 1.0, 1.1, // Hasty
+    1.0, 1.0, 0.9, 1.0, 1.1, // Jolly
+    1.0, 1.0, 1.0, 0.9, 1.1, // Naive
+    1.0, 1.0, 1.0, 1.0, 1.0, // Bashful
+    0.9, 1.0, 1.1, 1.0, 1.0, // Modest
+    1.0, 0.9, 1.1, 1.0, 1.0, // Mild
+    1.0, 1.0, 1.1, 1.0, 0.9, // Quiet
+    1.0, 1.0, 1.1, 0.9, 1.0, // Rash
+    1.0, 1.0, 1.0, 1.0, 1.0, // Quirky
+    0.9, 1.0, 1.0, 1.1, 1.0, // Calm
+    1.0, 0.9, 1.0, 1.1, 1.0, // Gentle
+    1.0, 1.0, 1.0, 1.1, 0.9, // Sassy
+    1.0, 1.0, 0.9, 1.1, 1.0 // Careful
 };
 
-const int NUMABILITIES = 100;
+const int NUMABILITIES = 35;
 
 const int NUMTITLES = 28;
 
@@ -188,18 +189,18 @@ enum Type {
 enum Nature
 {
     NoNature, HardyNature, LonelyNature, BraveNature, AdamantNature,
-    NaughtyNature, BoldNature, DocileNature, RelaxedNature,
-    ImpishNature, LaxNature, TimidNature, HastyNature, SeriousNature,
-    JollyNature, NaiveNature, ModestNature, MildNature,
-    QuietNature, BashfulNature, RashNature, CalmNature, GentleNature,
-    SassyNature, CarefulNature, QuickNature
+    NaughtyNature, DocileNature, BoldNature, RelaxedNature,
+    ImpishNature, LaxNature, SeriousNature, TimidNature, HastyNature,
+    JollyNature, NaiveNature, BashfulNature, ModestNature, MildNature,
+    QuietNature, RashNature, QuirkyNature, CalmNature, GentleNature,
+    SassyNature, CarefulNature
 };
 
 const int MINPRIORITY = -8;
 const int NORMPRIORITY = 0;
 const int MAXPRIORITY = 8;
 
-const int NUMITEMS = 100;
+const int NUMITEMS = 56;
 
 enum MoveType
 {
@@ -244,16 +245,19 @@ const int NUMVSTATUSES = 30;
 
 enum Location
 {
-    GatewayColiseum, ShortGrass, TallGrass, Sand, StillWater, River, Ocean,
-    Cave, DarkCave
+    NoLocation, Coliseum, Plains, TallGrass, Beach, StillWater, River, Ocean,
+    Cave, DarkCave, Indoors, Desert, Mountain, Volcano, Snow, Boreal, Forest, Jungle,
+    Metal, Wood
 };
+
+const int NUMLOCATIONS = 20;
 
 enum Weather
 {
-    NoWeather, Sunny, Rain, Sandstorm, Hail, RandomWeather
+    NoWeather, Sunny, Rain, Sandstorm, Hail, Fog, Twilight, RandomWeather
 };
 
-const int NUMWEATHERS = 6;
+const int NUMWEATHERS = 8;
 
 // TODO: implement terrain-type moves
 enum Terrain
@@ -278,7 +282,7 @@ const int MAXHAZARDS = 3;
 
 enum Gender
 {
-    Male, Female, Genderless, NoGender
+    Male, Female, NoGender, Genderless
 };
 
 enum BattleType
@@ -301,15 +305,21 @@ enum MoveEffect
     
     MHeal50, MHeal100, MDrain50, MDrain75, MRecoil25, MRecoil33, MRecoilStrug, MRecoilHalf,
     
-    MRain, MSun, MHail, MSandstorm, MTrickRoom, MGravity,
+    MRain, MSun, MHail, MSandstorm, MTrickRoom, MGravity, MTwilight,
     
     MBind, MWrap, MFireSpin, MWhirlpool, MMagmaStorm, MSandTomb, MStomp, MMinimize, MJumpKick, MPayDay, MShockDef, MRage, MFuryCut, MTeleport, MDisable, MBatonPass, MTrap, MPartialTrap, MSub, MHazard, MDehazard, MReflect, MLightScreen, MVitalThrow, MFoul, MSplit, MTaunt
 };
 
-const int numTracks = 1;
+const int NUMTRACKS = 11;
 enum musicTracks
 {
-    NoMusic
+    NoMusic, BWTrainer, PBRGateway, XYTrainer, RBYTrainer, RBYFinal, RBYChampion, RSEChampion, DPPtChampion, XYChampion, RSETrainer
 };
+
+const int NUMTRAINERS = 6;
+const int MAXCTRAINERS = 10;
+const int POKEDYLIBSIZE = MAXPOKEMON * NUMTRAINERS;
+
+const int DF = 787;
 
 #endif /* defined(__PokemonThrowdown__Constants__) */

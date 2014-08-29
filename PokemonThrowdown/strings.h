@@ -17,7 +17,7 @@ using namespace std;
 // Note: This data file does not adhere to an 80 column limit!
 
 const string statStrings[NUMALLSTATS] = {
-    "HP", "Att", "Def", "SpA", "SpD", "Spe", "Acc", "Eva", "Crit"
+    "HP", "Atk", "Def", "SpA", "SpD", "Spe", "Acc", "Eva", "Crit"
 };
 
 const string statFullStrings[NUMALLSTATS] = {
@@ -40,20 +40,21 @@ const string natureStrings[NUMNATURES] = {
 const string itemStrings[NUMITEMS] = {
     "No Item", "Leftovers", "Choice Band", "Choice Scarf", "Choice Specs",
     "Light Ball", "Life Orb", "Light Clay", "King's Rock", "Focus Sash",
-    "Black Sludge", "Oran Berry", "Sitrus Berry", "Eject Policy", "Red Card",
+    "Black Sludge", "Oran Berry", "Sitrus Berry", "Eject Policy", "Red Card", "Eviolite",
     
     "Venusaurite", "Charizardite X", "Charizardite Y", "Blastoisinite", "Alakazite", "Gengarite", "Kangaskhanite", "Pinsirite", "Gyaradosite", "Aerodactylite", "Mewtwonite X", "Mewtwonite Y", "Ampharosite", "Scizorite", "Heracronite", "Houndoominite", "Tyranitarite", "Blazikenite", "Gardevoirite", "Mawilite", "Aggronite", "Medichamite", "Manectite", "Bannetite", "Absolite", "Garchompite", "Lucarionite", "Abomasite",
     
-    "Swampertite", "Sceptilite", "Sableite", "Diancite", "Latiasite", "Latiosite"
+    "Swampertite", "Sceptilite", "Sableite", "Diancite", "Metagrossite", "Salamencite", "Altarite", "Slowbrite", "Audinite", "Lopunnite", "Latiasite", "Latiosite",
 };
 
 const string abilityStrings[NUMABILITIES] = {
     "No Ability", "Levitate", "Swift Swim", "Intimidate", "Huge Power",
-    "Static", "Serene Grace", "Unaware", "MagicBounce", "Pressure",
+    "Static", "Serene Grace", "Unaware", "Magic Bounce", "Pressure",
     "Sand Stream", "Multiscale", "Synchronize", "Clear Body", "Drizzle",
     "Drought", "Air Lock", "Stance Change", "Torrent", "Blaze", "Overgrow",
     "Swarm", "Technician", "Poison Point", "Snow Warning", "Anticipation",
-    "Mold Breaker", "Pure Power", "Prankster", "Defiant"
+    "Mold Breaker", "Pure Power", "Prankster", "Defiant", "Speed Boost", "Deathly Touch",
+    "Skill Link", "Run Away", "Overcoat"
 };
 
 const string moveTypeStrings[NUMMOVETYPES] = {
@@ -91,22 +92,22 @@ const string vstatusFullStrings[NUMVSTATUSES] = {
 };
 
 const string weatherStrings[NUMWEATHERS] = {
-    "No Weather", "Sunny", "Rain", "Sandstorm", "Hail", "Random"
+    "No Weather", "Sunny", "Rain", "Sandstorm", "Hail", "Fog", "Twilight", "Random"
 };
 
 const string weatherStartStrings[NUMWEATHERS] = {
     "", "The sunlight turned harsh.", "It started to rain.",
-    "A sandstorm kicked up!", "It started to hail!"
+    "A sandstorm kicked up!", "It started to hail!", "Fog crept up thick as soup!", "The surroundings turned to twilight."
 };
 
 const string weatherEndStrings[NUMWEATHERS] = {
     "", "The sunlight faded.", "The rain stopped.", "The sandstorm subsided.",
-    "The hail stopped."
+    "The hail stopped.", "The fog lifted.", "Twilight ended."
 };
 
 const string weatherContStrings[NUMWEATHERS] = {
     "", "The sunlight is harsh.", "Rain continues to fall.",
-    "The sandstorm rages on.", "Hail continues to fall."
+    "The sandstorm rages on.", "Hail continues to fall.", "The fog is deep...", "The battlefield seems faint and dreamlike."
 };
 
 const string weatherHurtStrings[NUMWEATHERS] = {
@@ -114,7 +115,7 @@ const string weatherHurtStrings[NUMWEATHERS] = {
 };
 
 const string genderStrings[4] = {
-    "M", "F", "-", "?"
+    "M", "F", "?", "-"
 };
 
 const string PKMNTRAINER = "PKMN Trainer";
@@ -155,8 +156,8 @@ const string titleArray[NUMTITLES] = {
     BEAUTY, POKEFAN, SAGETRAINER, ACTRESS, FISHERMAN
 };
 
-const string musicTracksStrings[numTracks] = {
-    "None"
+const string musicTracksStrings[NUMTRACKS] = {
+    "None", "B&W Trainer Battle", "PBR Gateway Coliseum", "X&Y Trainer Battle", "RB&Y Trainer Battle", "RB&Y Elite Four", "RB&Y Champion", "RS&E Champion", "DPP&Pt Champion", "X&Y Champion", "RS&E Trainer Battle"
 };
 
 const string switchStringsA[2] = {
@@ -175,5 +176,8 @@ const string switchStringsD[2] = {
     "False", "True"
 };
 
+const string locationStrings[NUMLOCATIONS] = {
+    "No Location", "Coliseum", "Field", "Grass", "Beach", "Water", "River", "Ocean", "Cave", "Dark Cave", "Building", "Desert", "Mountain", "Volcano", "Snow", "Boreal", "Forest", "Jungle", "Industrial", "Bridge"
+};
 
 #endif /* defined(__PokemonThrowdown__strings__) */

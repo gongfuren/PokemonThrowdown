@@ -21,7 +21,7 @@ enum PokeAbility
     PSynchronize, PClearBody, PDrizzle, PDrought, PAirLock, PStanceChange,
     PTorrent, PBlaze, POvergrow, PSwarm, PTechnician, PPoisonPoint,
     PSnowWarning, PAnticipation, PMoldBreaker, PPurePower, PPrankster,
-    PDefiant
+    PDefiant, PSpeedBoost, PDeathlyTouch, PSkillLink, PRunAway, POvercoat
 };
 
 #endif /* defined(__PokemonThrowdown__abilitydata__) */

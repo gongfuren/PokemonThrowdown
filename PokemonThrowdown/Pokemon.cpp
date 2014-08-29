@@ -58,9 +58,9 @@ Pokemon::Pokemon(pokedynamicdata h, Trainer* trainer, int wp)
     {
         int adder = (i == HPStat) ? 10 + m_level : 5;
         double nature = (i == HPStat) ? 1.0 : natureMultiplier(m_nature, i-1);
-        m_IVs[i] = (h.IVs[i] == -1) ? randInt(0, 31)
+        m_IVs[i] = (h.IVs[i] < 0) ? randInt(0, 31)
         : h.IVs[i];
-        m_EVs[i] = (h.EVs[i] == -1) ? randInt(0, 85)
+        m_EVs[i] = (h.EVs[i] < 0) ? 85
         : h.EVs[i];
         m_baseStats[i] = ((2 * pokelib[h.index].stats[i] + m_IVs[i] + m_EVs[i]
                         / 4) * m_level / 100 + adder) * nature;
@@ -75,7 +75,7 @@ Pokemon::Pokemon(pokedynamicdata h, Trainer* trainer, int wp)
     
     for (int i = 0; i < MAXMOVES; i++)
     {
-        if (h.moveIDs[i] != -1)
+        if (h.moveIDs[i] >= 0)
             m_moves[i] = new Move(h.moveIDs[i], this);
         else
             m_moves[i] = NULL;
@@ -117,7 +117,7 @@ int Pokemon::getForm() const
 
 bool Pokemon::hasCompatMegaStone() const
 {
-    bool hci = false;
+    bool hci = false, skipci = true;
     int pind = -1;
     int ms = static_cast<int>(m_item->getID() - HVenusaurite);
     
@@ -125,13 +125,14 @@ bool Pokemon::hasCompatMegaStone() const
     {
         if (pokelib[i].ID == m_ID)
         {
-            if (m_item->getID() == HCharizarditeY || m_item->getID() == HMewtwoniteY)
-                continue;
-            else
+            if (skipci && (m_item->getID() == HCharizarditeY || m_item->getID() == HMewtwoniteY))
             {
-                pind = i;
-                break;
+                skipci = false;
+                continue;
             }
+            
+            pind = i;
+            break;
         }
     }
     
@@ -611,7 +612,7 @@ bool Pokemon::increaseStat(int whichStat, int levels)
                     case 2:
                         cout << getTrainer()->getTitle() << " "
                         << getTrainer()->getName() << "'s " << getName() << "'s "
-                        << statFullStrings[whichStat] << " " << "drastically increased!"
+                        << statFullStrings[whichStat] << " " << "drastically rose!"
                         << endl;
                         break;
                 }
@@ -1112,6 +1113,9 @@ bool Pokemon::executeMove(Pokemon* target, Move* move)
         
         moveAccuracy = c;
         
+        if (weather == Fog)
+            moveAccuracy *= 0.9;
+        
         moveHits = (randInt(0, 99) < moveAccuracy);
     }
     
@@ -1349,6 +1353,9 @@ bool Pokemon::applyStatus(Pokemon* target, Move* move)
         case MUpDef2:
             sc[DefStat] = 2;
             break;
+        case MUpSpA3:
+            sc[SpAStat] = 3;
+            break;
         case MLowerSpA:
             sc[SpAStat] = -1;
             break;
@@ -1450,6 +1457,10 @@ bool Pokemon::applyStatus(Pokemon* target, Move* move)
             if (weather != Hail)
                 field->initializeWeather(Hail);
             break;
+        case MTwilight:
+            if (weather != Twilight)
+                field->initializeWeather(Twilight);
+            break;
         case MProtect:
             target->addVStatus(ProtectVStatus);
             target->protectDialogue();
@@ -1513,7 +1524,7 @@ void Pokemon::applyAttack(Pokemon* target, Move* move)
     Field* field = getTrainer()->getBattle()->getField();
     
     double typeBoost, pureDamage, sTAB, crit, modulus, other, attackMultiplier,
-    specialAttMultiplier, specialDefMultiplier, modifier, spOrNot,
+    specialAttMultiplier, defMultiplier, specialDefMultiplier, modifier, spOrNot,
     damage, totalDamage, attack;
     
     int critThreshold;
@@ -1613,7 +1624,14 @@ void Pokemon::applyAttack(Pokemon* target, Move* move)
     else
         specialAttMultiplier = 1.0;
     
+    defMultiplier = 1.0;
     specialDefMultiplier = 1.0;
+    
+    if (target->getItem()->getID() == HEviolite)
+    {
+        defMultiplier = 1.5;
+        specialDefMultiplier = 1.5;
+    }
     
     if (field->getWeather() == Rain)
         // Water attacks get a 1.5x damage boost in Rain
@@ -1642,6 +1660,14 @@ void Pokemon::applyAttack(Pokemon* target, Move* move)
     {
         
     }
+    else if (field->getWeather() == Twilight)
+        // Twilight
+    {
+        if (move->getType() == LightType || move->getType() == DarkType || move->getType() == PsychicType || move->getType() == GhostType || move->getType() == NeutralType)
+            other = 1.5;
+        else if (move->getType() == BugType || move->getType() == FairyType || move->getType() == FlyingType || move->getType() == FightingType || move->getType() == NormalType)
+            other = 0.5;
+    }
     
     if (attacker->getItem()->getID() == HLightBall && attacker->getID() == 25)
         // Pikachu holding a Light Ball
@@ -1662,7 +1688,7 @@ void Pokemon::applyAttack(Pokemon* target, Move* move)
             attack = static_cast<double>(attacker->getStats(AttStat) *
                                          attackMultiplier);
         
-        spOrNot = attack / static_cast<double>(target->getStats(DefStat));
+        spOrNot = attack / static_cast<double>(target->getStats(DefStat) * defMultiplier);
     }
     // Special attack
     else

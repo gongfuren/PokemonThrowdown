@@ -15,12 +15,12 @@ enum HoldItem
 {
     HNoItem, HLeftovers, HChoiceBand, HChoiceScarf, HChoiceSpecs, HLightBall,
     HLifeOrb, HLightClay, HKingsRock, HFocusSash, HBlackSludge,
-    HOranBerry, HSitrusBerry, HEjectPolicy, HRedCard,
+    HOranBerry, HSitrusBerry, HEjectPolicy, HRedCard, HEviolite,
     
     HVenusaurite, HCharizarditeX, HCharizarditeY, HBlastoisinite, HAlakazite, HGengarite, HKangaskhanite, HPinsirite, HGyaradosite, HAerodactylite, HMewtwoniteX, HMewtwoniteY, HAmpharosite, HScizorite, HHeracronite, HHoundoominite, HTyranitarite, HBlazikenite, HGardevoirite, HMawilite, HAggronite, HMedichamite, HManectite, HBannetite, HAbsolite, HGarchompite, HLucarionite, HAbomasite,
     
     // Experimental Items
-    HSwampertite, HSceptilite, HSableite, HDiancite, HLatiasite, HLatiosite, HMetagrossite, HSalamencite, HAltarite, HSlowbrite, HAudinite, HLopunnite
+    HSwampertite, HSceptilite, HSableite, HDiancite, HMetagrossite, HSalamencite, HAltarite, HSlowbrite, HAudinite, HLopunnite, HLatiasite, HLatiosite,
 };
 
 #endif /* defined(__PokemonThrowdown__itemdata__) */

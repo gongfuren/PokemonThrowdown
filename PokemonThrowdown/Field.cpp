@@ -16,11 +16,11 @@
 Field::Field(Battle* battle, int X, int Y)
 : Zone(X, Y, 1, 2)
 {
-    m_location = GatewayColiseum;
+    m_location = static_cast<Location>(locationID);
     m_battle = battle;
     
     if (weatherID == RandomWeather)
-        m_weather = static_cast<Weather>(randInt(0, 4));
+        m_weather = static_cast<Weather>(randInt(NoWeather, Twilight));
     else
         m_weather = static_cast<Weather>(weatherID);
     

@@ -263,3 +263,48 @@ int inputGadget(int numChoices)
     
     return choice;
 }
+
+int stringToNumber(const string& string)
+{
+    int size = static_cast<int>(string.length()), place = 1, number = 0;
+    for (int i = size-1; i >= 0; i--, place *= 10)
+        number += (string[i] - '0') * place;
+    return number;
+}
+
+int numericalGadget(int min, int max, string error)
+{
+    int retval = 0;
+    string buffer;
+feed_input_num___:
+    getline(cin, buffer);
+    if (buffer != ":q")
+    {
+        for (int i = 0; i < buffer.length(); i++)
+        {
+            if (!isnumber(buffer[i]))
+            {
+                cerr << error << endl;
+                goto feed_input_num___;
+            }
+        }
+        retval = stringToNumber(buffer);
+        if (retval > max || retval < min)
+        {
+            cerr << error << endl;
+            goto feed_input_num___;
+        }
+    }
+    else
+        return -1;
+    
+    return retval;
+}
+
+void confirmGadget()
+{
+    int choice = -1, prog = 0;
+    string confirm[1] = { "OK" };
+    while (choice != 0)
+        choice = selectorGadget(confirm, 1, prog, 1, false);
+}

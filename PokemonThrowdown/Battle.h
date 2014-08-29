@@ -87,7 +87,7 @@ private:
     int browse(bool p = true) const;
     int randomChoice(bool p = true) const;
     void dispMoveInfo(const movedata* m) const;
-    bool chosePokemon(int p, bool* r, bool m = true, bool i = true, bool dynamic = false) const;
+    bool chosePokemon(int p, bool* r, bool m = true, bool i = true, bool dynamic = false, bool custom = false, int ci = -1) const;
     
     // Main Battle cycle, calls the respective phases
     void cycle();

@@ -16,7 +16,7 @@ using namespace std;
 
 // Note: This data file does not adhere to an 80 column limit!
 
-// Move Data
+// Move Data /////////////////////////////////////////////////////////////////
 
 struct movedata
 {
@@ -1305,8 +1305,8 @@ const movedata movelib[MAXTOTALMOVES] = {
     910,    "Terrablast",   RockType,   Special,    Tough,    5,  100,    100,    X,  MNoEffect,  Opponent,   false,
     "The user alters gravity, attacking the target using the surrounding objects.",
     // 628
-    911,    "???",    FireType,   Special,    Beauty, 5,  100,    100,    X,  MBurn30,  Opponent,   false,
-    "",
+    911,    "Twilight",    PsychicType,   Status,    UnknownStat, 5,  -1,    -1,    X,  MTwilight,  None,   false,
+    "Darkens the sky to twilight, creating a dreamlike atmosphere where Psychic,\nLight, Dark, and Ghost moves are boosted in power.",
     // 629
     912,    "Lightning Edge", ElectricType,   Physical,    Cool, 5,  100,    100,    X,  MHighCrit,  Opponent,   false,
     "The user slashes its target with a sword of lightning. Has a high chance of\nlanding a critical hit.",
@@ -1371,7 +1371,7 @@ const movedata movelib[MAXTOTALMOVES] = {
     932,    "Exertion",    PsychicType,  Status, Smart, 15,  -1, -1, X,  MLowerDefSpDUpAtt2SpA2Spe2,    Self,   false,
     "The user exerts itself, reducing stamina but greatly increasing power.",
     // 650
-    -1,    "Loving Embrace",  NeutralType, Physical, UnknownStat,    5, -1, 50, X,  MOHKO,  Opponent,   true,
+    -1,    "Loving Embrace",  NeutralType, Physical, UnknownStat,    25, -1, 60, X,  MOHKO,  Opponent,   true,
     "The user embraces the target with sinister energy. The target will faint\ninstantly if hit.",
 };
 
