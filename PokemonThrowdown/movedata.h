@@ -1356,11 +1356,11 @@ const movedata movelib[MAXTOTALMOVES] = {
     927,    "Crimson Sunset",   FireType,    Special,    Cool,    5,  -1, 50,    X,  MOHKO,  Opponent, false,
 	"Sets off a catastrophic explosion that rises into the air like a deep red\nsun. The target will faint instantly if hit.",
     // 645
-    928,    "Nether Sphere",   DarkType, Special,    Smart,    5,  100,    100, X, MNoEffect,   Opponent, false,
-	"The user fires a strange ball of darkness that drains energy.",
+    928,    "Nether Blade",   DarkType, Special,    Tough,    5,  100,    100, X, MNoEffect,   Opponent, false,
+	"The user generates a sword of darkness and attacks the target.",
     // 646
     929,    "Radiant Blade",    LightType,  Special,    Beauty,    5, 100,    100,        X,  MNoEffect,  Opponent, false,
-	"Generates a sword of light and attacks the target.",
+	"The user generates a sword of light and attacks the target.",
     // 647
     930,    "Shining Strike", LightType,    Physical,   Cool,    5,  100,    100,    X,  MNoEffect,  Opponent,   false,
     "The user accumulates light energy and attacks the target.",
@@ -1371,8 +1371,8 @@ const movedata movelib[MAXTOTALMOVES] = {
     932,    "Exertion",    PsychicType,  Status, Smart, 15,  -1, -1, X,  MLowerDefSpDUpAtt2SpA2Spe2,    Self,   false,
     "The user exerts itself, reducing stamina but greatly increasing power.",
     // 650
-    -1,    "Loving Embrace",  NeutralType, Physical, UnknownStat,    25, -1, 60, X,  MOHKO,  Opponent,   true,
-    "The user embraces the target with sinister energy. The target will faint\ninstantly if hit.",
+    -1,    "Loving Embrace",  NeutralType, Physical, UnknownStat,    25, 40, 50, X,  MNoEffect,  Opponent,   true,
+    "The user embraces the target closely.",
 };
 
 #endif /* defined(__PokemonThrowdown__movedata__) */

@@ -1007,7 +1007,7 @@ void Battle::dispPokeMoves(const pokedynamicdata pokemon, bool dynamic) const
     {
         moveID = pokemon.moveIDs[i];
         
-        if (moveID == -1)
+        if (moveID < 0)
         {
             if (i == 0)
             {

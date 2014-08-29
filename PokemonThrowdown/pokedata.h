@@ -85,7 +85,7 @@ const pokedynamicdata pokedynamiclib[POKEDYLIBSIZE] = {
     252, 252, 0, 0, 6, 0, 100,    425, 533, 14, 588,    Male,   0,
     // Hypergeo
     788,    "", RashNature,   31, 31, 31, 31, 31, 31, HLeftovers,
-    0, 6, 0, 252, 0, 252, 100,    407, 295, 294, 408,  Genderless, 0,
+    0, 6, 0, 252, 0, 252, 100,    407, 295, 294, 646,  Genderless, 0,
     // Constantinoble
     798,    "", BraveNature,   31, 31, 31, 31, 31, 31, HLeftovers,
     252, 252, 6, 0, 0, 0, 100,    643, 647, 533, 467,   Genderless, 0,
@@ -1827,7 +1827,7 @@ const pokedata pokelib[MAXTOTALPOKEMON] = {
     //
     
     // 786
-    -1,    "Doppelganger",   NeutralType,    NoType,  184,    1,    219,    1, 219, 96,
+    -1,    "Doppelganger",   NeutralType,    NoType,  184,    1,    119,    1, 119, 96,
     Genderless,   PDeathlyTouch,	PNoAbility,	PNoAbility,	"A ghoulish figure that wanders until it finds an unwary target.",
     // 787
     903,    "Hypogeo",  RockType, NoType,   55, 20, 80,    15, 80,    10,

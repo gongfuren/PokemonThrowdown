@@ -1711,18 +1711,19 @@ void Pokemon::applyAttack(Pokemon* target, Move* move)
         totalDamage = 40;
     else if (move->getEffect() == MDamageLevel)
         totalDamage = attacker->getLevel();
+    else
+    {
+        if (crit > 1.0)
+            cout << "A critical hit!" << endl;
+        if (typeBoost > 1.0)
+            cout << "It's super effective!" << endl;
+        else if (typeBoost < 1.0)
+            cout << "It's not very effective..." << endl;
+    }
     
     phld1 = target->getStatsStatus(HPStat);
     target->decreaseHP(totalDamage);
     phld2 = phld1 - target->getStatsStatus(HPStat);
-    
-    if (crit == 1.50)
-        cout << "A critical hit!" << endl;
-    
-    if (typeBoost > 1.0)
-        cout << "It's super effective!" << endl;
-    else if (typeBoost < 1.0)
-        cout << "It's not very effective..." << endl;
     
     if (move->getEffect() == MOHKO)
         // OHKO move that hit (since it made it here)
@@ -1796,7 +1797,24 @@ void Pokemon::applyEffect(Pokemon* target, Move* move, int damage)
         }
     }
     
-    // Target side-effects (successfully hit)
+    // Contact side effects
+    if (move->getContact())
+    {
+        if (target->getAbility()->getID() == PDeathlyTouch)
+        {
+            target->flashAbility();
+            cout << getName() << " lost all of its HP!" << endl;
+            decreaseHP(getStats(HPStat));
+        }
+        else if (getAbility()->getID() == PDeathlyTouch)
+        {
+            flashAbility();
+            cout << target->getName() << " lost all of its HP!" << endl;
+            target->decreaseHP(target->getStats(HPStat));
+        }
+    }
+    
+    // Target side-effects
     
     if (target->isFainted() || target->getStats(HPStat) == 0)
         // did the target faint?

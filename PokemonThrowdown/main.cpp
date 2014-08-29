@@ -69,7 +69,7 @@ int main()
 static void titleScreen()
 {
     cout << "O***0***O***0***O***0" << endl
-    << "* Pokemon Throwdown * v0.4" << endl
+    << "* Pokemon Throwdown * v0.4.1" << endl
     << "0***O***0***O***0***O" << endl;
 }
 

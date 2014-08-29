@@ -888,7 +888,12 @@ static bool customizePokemon(int whichTrainer, int whichPokemon)
                                 tmp << pokedynamicarray[whichTrainer][whichPokemon].IVs[i];
                         }
                         else
-                            tmp << pokedynamicarray[whichTrainer][whichPokemon].EVs[i];
+                        {
+                            if (pokedynamicarray[whichTrainer][whichPokemon].EVs[i] < 0)
+                                tmp << "(Don't Care)";
+                            else
+                                tmp << pokedynamicarray[whichTrainer][whichPokemon].EVs[i];
+                        }
                         vopts[i] = tmp.str();
                     }
                     vopts[NUMSTATS] = (thisIVs ? "Max All" : "Spread Evenly");

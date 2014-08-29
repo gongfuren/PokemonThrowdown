@@ -88,7 +88,7 @@ void Computer::actionSelect()
                 break;
             }
             
-            if (moves[i]->getMoveType() == Status || moves[i]->getDamage() == -1)
+            if (moves[i]->getMoveType() == Status)
             {
                 smartScores[i] = randInt(0, 150);
                 
