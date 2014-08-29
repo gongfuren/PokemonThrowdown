@@ -354,13 +354,19 @@ void Pokemon::castAbility()
         if (getAbility()->getID() == PPressure)
         {
             flashAbility();
-            cout << getName() << " " << "is exerting its Pressure!" << endl;
+            cout << getName() << " " << "is exerting its " << abilityStrings[getAbility()->getID()] << "!" << endl;
         }
         
         if (getAbility()->getID() == PMoldBreaker)
         {
             flashAbility();
             cout << getName() << " " << "breaks the mold!" << endl;
+        }
+        
+        if (getAbility()->getID() == PDeathlyTouch)
+        {
+            flashAbility();
+            cout << getName() << " " << "has " << abilityStrings[getAbility()->getID()] << "!" << endl;
         }
     }
     

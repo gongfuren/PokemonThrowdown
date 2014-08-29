@@ -9,6 +9,7 @@
 #include "constants.h"
 #include "utilities.h"
 #include <cstdlib>
+#include <cctype>
 #include <string>
 #include <limits>
 #include <iostream>
@@ -282,7 +283,7 @@ feed_input_num___:
     {
         for (int i = 0; i < buffer.length(); i++)
         {
-            if (!isnumber(buffer[i]))
+            if (!isdigit(buffer[i]))
             {
                 cerr << error << endl;
                 goto feed_input_num___;

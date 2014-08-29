@@ -18,7 +18,11 @@ using namespace std;
 template <typename Object>
 bool listContains(const list<Object> l, Object o)
 {
-    typename list<Object>::const_iterator p = find(l.begin(), l.end(), o);
+    typename list<Object>::const_iterator p;
+    
+    for (p = l.begin(); p != l.end(); p++)
+        if (*p == o)
+            break;
     
     if (p == l.end())
         return false;

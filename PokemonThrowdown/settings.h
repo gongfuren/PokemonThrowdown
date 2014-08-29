@@ -41,6 +41,8 @@ bool choseMove(int index, bool confirm = true);
 // Variables set within run of the program. Plan to have the option to save
 // settings to a file and access them in a future run of the program.
 
+extern bool savingEnabled;
+
 extern int musicID;
 extern int weatherID;
 extern bool soundEffects;
@@ -60,9 +62,9 @@ extern int numExports;
 
 // Line number references for the settings file
 
-const uint8_t NAMETAG = 0;
-const uint8_t WEATHERTAG = 1;
-const uint8_t TRAINERSTART = 2;
+const int NAMETAG = 0;
+const int WEATHERTAG = 1;
+const int TRAINERSTART = 2;
 const int TRAINERENTRYSIZE = 4;
 const int POKEENTRYSIZE = 8;
 const int TNPENTRY = TRAINERENTRYSIZE + POKEENTRYSIZE * 6;
@@ -72,5 +74,6 @@ const int TNPENTRY = TRAINERENTRYSIZE + POKEENTRYSIZE * 6;
 const string SETTINGSTAG = "PKTDS04IPC2014___";
 const string SETTINGSFILENAME = "PKTDSettings.txt";
 const string EXPORTFILENAME = "PKTDExport";
+const string VERSIONNUMBER = "v0.4.2";
 
 #endif /* defined(__PokemonThrowdown__settings__) */

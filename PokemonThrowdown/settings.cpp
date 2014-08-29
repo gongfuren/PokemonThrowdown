@@ -15,8 +15,10 @@
 #include "movedata.h"
 #include <iostream>
 #include <sstream>
+#include <cctype>
 #include <fstream>
 #include <vector>
+#include <cmath>
 using namespace std;
 
 static void defaultPokemon(pokedynamicdata& p);
@@ -36,7 +38,8 @@ static bool serror()
 static bool ioerror()
 {
     cerr << "There was an error opening the settings file!" << " "
-    << "Settings may not be saved\nbetween program runs." << endl;
+    << "Settings will not be saved\nbetween program runs." << endl
+    << "Run with '-s' option to disable save files." << endl;
     return false;
 }
 
@@ -84,11 +87,14 @@ bool customTrainers()
         
         if (choice == BACK)
         {
-            cout << "Saving..." << endl;
-            if (saveSettings())
-                cout << "Settings saved in './" << SETTINGSFILENAME << "'!" << endl;
-            else
-                cout << "Could not save settings!" << endl;
+            if (savingEnabled)
+            {
+                cout << "Saving..." << endl;
+                if (saveSettings())
+                    cout << "Settings saved in './" << SETTINGSFILENAME << "'!" << endl;
+                else
+                    cout << "Could not save settings!" << endl;
+            }
             return false;
         }
         
@@ -207,11 +213,14 @@ void configureSettings()
             }
                 break;
             default:
-                cout << "Saving..." << endl;
-                if (saveSettings())
-                    cout << "Settings saved in './" << SETTINGSFILENAME << "'!" << endl;
-                else
-                    cerr << "Could not save settings!" << endl;
+                if (savingEnabled)
+                {
+                    cout << "Saving..." << endl;
+                    if (saveSettings())
+                        cout << "Settings saved in './" << SETTINGSFILENAME << "'!" << endl;
+                    else
+                        cerr << "Could not save settings!" << endl;
+                }
                 return;
         }
     }
@@ -221,7 +230,7 @@ static bool saveSettings()
 {
     ofstream settings;
     
-    settings.open(SETTINGSFILENAME);
+    settings.open(SETTINGSFILENAME.c_str());
     
     if (settings.is_open())
     {
@@ -276,20 +285,24 @@ static bool saveSettings()
 
 bool loadSettings()
 {
-    cout << "Loading..." << endl;
-    
-    cout << "Initializing settings variables";
+    cout << "Loading...";
     
     defaultSettings();
     
     cout << endl;
+    
+    if (!savingEnabled)
+    {
+        cout << "Done!" << endl;
+        return true;
+    }
     
     cout << "Looking for settings file..." << endl;
     
     string buffer;
     ifstream settings;
     
-    settings.open(SETTINGSFILENAME);
+    settings.open(SETTINGSFILENAME.c_str());
     
     if (!settings.is_open()) // no settings file
     {
@@ -302,7 +315,8 @@ bool loadSettings()
         {
             saveSettings();
             cout << "Success!" << endl
-            << "Game settings will be saved in './" << SETTINGSFILENAME << "'." << endl;
+            << "Game settings will be saved in './" << SETTINGSFILENAME << "'." << endl
+            << "Run with '-s' option to disable save files." << endl;
             return true;
         }
     }
@@ -319,7 +333,7 @@ bool loadSettings()
         return serror();
     if (!getline(settings, buffer))
         return serror();
-    if (buffer.length() != 1 || !isnumber(buffer[0]))
+    if (buffer.length() != 1 || !isdigit(buffer[0]))
         return serror();
     
     int inputWeather = stringToNumber(buffer);
@@ -428,7 +442,6 @@ bool loadSettings()
     cout << endl;
     
     cout << "Done!" << endl;
-    
     settings.close();
     return true;
 }
@@ -437,7 +450,7 @@ static bool initSet(const string filename)
 {
     ofstream settingso;
     
-    settingso.open(filename);
+    settingso.open(filename.c_str());
     if (!settingso.is_open())
         return false;
     
@@ -645,10 +658,10 @@ static bool pokeMoveChoice(int choice, int whichTrainer, int whichPokemon, bool 
             {
                 string candidate = (moves ? movelib[i].name : pokelib[i].name), term = buffer;
                 
-                for (int i = 0; i < candidate.length(); i++)
-                    candidate[i] = tolower(candidate[i]);
-                for (int i = 0; i < term.length(); i++)
-                    term[i] = tolower(term[i]);
+                for (int j = 0; j < candidate.length(); j++)
+                    candidate[j] = tolower(candidate[j]);
+                for (int j = 0; j < term.length(); j++)
+                    term[j] = tolower(term[j]);
                 
                 if (candidate.find(term) != -1)
                     matches.push_back(i);
@@ -1302,7 +1315,7 @@ static bool exportTeam(int whichTrainer)
     tmp << EXPORTFILENAME << numExports << ".txt";
     fileName = tmp.str();
     
-    teamExport.open(fileName);
+    teamExport.open(fileName.c_str());
     
     if (teamExport.is_open())
         // Export text file with Pokemon properties for future reference
