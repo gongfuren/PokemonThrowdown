@@ -10,6 +10,7 @@
 #include <string>
 //#include <ctime>
 #include <unistd.h>
+#include <cstdlib>
 #include "constants.h"
 #include "utilities.h"
 #include "Battle.h"
