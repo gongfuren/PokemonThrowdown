@@ -43,7 +43,7 @@ static bool ioerror()
 {
     cerr << "There was an error opening the settings file!" << " "
     << "Settings will not be saved\nbetween program runs." << endl
-    << "Run with '-s' option to disable save files." << endl;
+    << "Run with '-d' option to disable save files." << endl;
     return false;
 }
 
@@ -314,7 +314,7 @@ bool loadSettings()
             saveSettings();
             cout << "Success!" << endl
             << "Game settings will be saved in './" << SETTINGSFILENAME << "'." << endl
-            << "Run with '-s' option to disable save files." << endl;
+            << "Run with '-d' option to disable save files." << endl;
             return true;
         }
     }
