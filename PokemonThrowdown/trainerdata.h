@@ -13,12 +13,11 @@
 #include "strings.h"
 
 #include <string>
-using namespace std;
 
 struct trainerdata
 {
-    string name;
-    string title;
+    std::string name;
+    std::string title;
     bool male;
     int reward;
     int pokemonIDs[MAXPOKEMON];

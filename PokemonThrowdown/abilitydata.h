@@ -13,7 +13,6 @@
 
 #include "strings.h"
 
-// TODO: implement most abilities
 enum PokeAbility
 {
     PNoAbility, PLevitate, PSwiftSwim, PIntimidate, PHugePower, PStatic,

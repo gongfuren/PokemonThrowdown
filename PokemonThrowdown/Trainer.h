@@ -13,7 +13,6 @@
 #include "trainerdata.h"
 
 #include <string>
-using namespace std;
 
 class Battle;
 class Move;
@@ -34,15 +33,15 @@ public:
     void displayState() const;
     
     Battle* getBattle() const;
-    string getName() const;
-    string getTitle() const;
-    string getTitleName() const;
+    std::string getName() const;
+    std::string getTitle() const;
+    std::string getTitleName() const;
     bool getMale() const;
     int getReward() const;
     int getCurrent() const;
     Pokemon* getPokemon(int pokemonmon) const;
     Pokemon* getPokemon() const;
-    string getPokemonName() const;
+    std::string getPokemonName() const;
     Move* getPokemonMove(int whichMove) const;
     bool getVictory() const;
     void setVictory();
@@ -61,7 +60,7 @@ public:
     int getIntendedSwitch() const;
     bool setIntendedSwitch(int which);
     
-    string generateBalls() const;
+    std::string generateBalls() const;
     
     void checkFaint();
     virtual bool choosePokemon() = 0;
@@ -72,8 +71,8 @@ public:
     int getNumPokemon() const;
     
 private:    
-    string m_name;
-    string m_title;
+    std::string m_name;
+    std::string m_title;
     bool m_male;
     int m_reward;
     

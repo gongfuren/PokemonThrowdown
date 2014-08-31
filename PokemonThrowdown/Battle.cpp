@@ -30,15 +30,11 @@
 #include <iostream>
 using namespace std;
 
-// Battle Implementation
-
-// Battle construction
+// Battle construction ///////////////////////////////////////////////////////
 
 Battle::Battle()
 {
-    m_field = new Field(this, 0, 0);
-    
-    // Zero out variables
+    // Initialize variables
     m_player = NULL;
     m_player2 = NULL;
     m_opponent = NULL;
@@ -48,31 +44,19 @@ Battle::Battle()
     m_numPlayers = 0;
     for (int i = 0; i < MAXPLAYERS; i++)
         m_participants[i] = NULL;
+    m_field = new Field(this, 0, 0);
     
     // Custom Initialization
     for (int i = 0; i < 2; i++)
-    {
-        if (!chooseTrainer())
-            return;
-    }
-    
-    m_turns = 0;
+        chooseTrainer(); // unfortunately this is where it starts to get ugly
     
     chooseLead();
-}
-
-Battle::~Battle()
-{
-    for (int i = 0; i < NUMPLAYERS; i++)
-        delete m_participants[i];
-    
-    delete m_field;
 }
 
 void Battle::chooseLead()
 {
     int choice, prog = 0;
-    string pref[6];
+    string pref[MAXPOKEMON];
     
     for (int i = 0; i < m_player->getNumPokemon(); i++)
         pref[i] = m_player->getPokemon(i)->getName();
@@ -87,9 +71,7 @@ void Battle::chooseLead()
             choice = selectorGadget(pref, m_player->getNumPokemon(), prog, 6, false);
         }
         else
-        {
             choice = 0;
-        }
         
         m_actor->setCurrent(choice);
     }
@@ -100,7 +82,7 @@ bool Battle::chooseTrainer()
     trainerdata protoman;
     pokedynamicdata protomon;
     
-    int choice[4] = { -1, -1, -1, -1 };
+    int choice[MAXMOVES] = { -1, -1, -1, -1 };
     int pokemonID, np;
     int i, prog[3] = { 0, 0, 0 };
     bool rerun;
@@ -124,13 +106,9 @@ bool Battle::chooseTrainer()
     {
         // Introduction
         if (m_numPlayers == 0)
-        {
             cout << "Choose a trainer." << endl;
-        }
         else
-        {
             cout << "Choose an opponent." << endl;
-        }
         
         choice[0] = selectorGadget(names, 0, prog[0], 10, false, NULL, 0, cNames, numCustomTrainers);
         
@@ -313,9 +291,7 @@ bool Battle::chosePokemon(int p, bool* r, bool m, bool i, bool dynamic, bool cus
         if (m)
         {
             if (choice == csize-2)
-            {
                 dispPokeSummary(pdd);
-            }
             else if (choice == csize-1)
                 dispPokeMoves(pdd);
         }
@@ -355,22 +331,14 @@ void Battle::dispMoveInfo(const movedata* m) const
         cout << m->description << endl;
 }
 
-// Battle Flow
-// Everything above this line happens during Battle construction
+// Battle Flow ///////////////////////////////////////////////////////////////
 
 void Battle::start()
 {
-    if (m_turns < 0)    // left here for potential back functionality
-        return;
-    
-    greet();
-    cycle();
-}
-
-void Battle::greet() const
-{
     cout << m_opponent->getTitleName()
     << " " << "would like to battle!" << endl;
+    
+    cycle();
 }
 
 void Battle::clockTick()
@@ -515,17 +483,13 @@ void Battle::battlePhase()
         rCtr = 0;
         
         for (int i = 0; i < NUMPLAYERS; i++)
-        {
             if (priorityScore[i] == p)
                 tpa[rCtr++] = m_participants[i];
-        }
         
         sortSpeeds(tpa, rCtr);
         
         for (int i = 0; i < rCtr; i++)
-        {
             priorityArray[tCtr++] = tpa[i];
-        }
     }
     
     // Event before moves are executed (i.e. Mega Evolution)
@@ -557,9 +521,6 @@ void Battle::battlePhase()
             cout << pokemon->getName() << " " << "is tightening its focus!" << endl;
             pokemon->addVStatus(FocusVStatus);
         }
-        
-        if (moveID == -1)
-            delete move;
     }
     
     // Cycle through pokemon with highest priority first
@@ -598,9 +559,7 @@ void Battle::battlePhase()
         }
         
         if (pokemon->passThroughStatus())
-        {
             pokemon->executeMove(target);
-        }
         else
         {
             displayState(false);
@@ -641,7 +600,7 @@ void Battle::postBattlePhase()
         m_participants[i]->getPokemon()->getItem()->endOfTurn();
     
     for (int i = 0; i < NUMPLAYERS; i++)
-        statusEffect(m_participants[i]);
+        m_participants[i]->getPokemon()->statusEffect();
     
     checkFaint();
     
@@ -655,42 +614,29 @@ bool Battle::battleIsOver() const
     if (m_player->getVictory() || m_opponent->getVictory() || checkWin())
     {
         if (m_player->getVictory() && m_opponent->getVictory())
-        {
             cout << "The match was a draw!" << endl;
-        }
         else if (m_player->getVictory())
-        {
             cout << m_player->getTitleName() << " "
             << "won the battle!" << endl << "Got" << " $"
             << m_opponent->getReward() << " " << "for winning!" << endl;
-        }
         else if (m_opponent->getVictory())
-        {
             cout << m_opponent->getTitleName() << " "
             << "won the battle!" << endl;
-        }
         
+        confirmGadget();
+                
         return true;
     }
     else
-    {
         return false;
-    }
 }
 
 void Battle::sortSpeeds(Trainer* trainers[], int number)
 {
     for (int i = 0; i < number; i++)
-    {
         for (int j = i+1; j < number; j++)
-        {
-            if (speedCompare(trainers[j]->getPokemon(),
-                             trainers[i]->getPokemon()) > 0)
-            {
+            if (speedCompare(trainers[j]->getPokemon(), trainers[i]->getPokemon()) > 0)
                 swap(&trainers[j], &trainers[i]);
-            }
-        }
-    }
 }
 
 void Battle::swap(Trainer** trainerA, Trainer** trainerB)
@@ -716,13 +662,9 @@ const
     efSB = pokemonB->getStats(SpeStat) * smB;
     
     if (efSA > efSB)
-    {
         return 1;
-    }
     else if (efSB > efSA)
-    {
         return -1;
-    }
     else
     {
         int ft = (static_cast<bool>(randInt(0,1))) ? 1 : -1;
@@ -733,9 +675,7 @@ const
 void Battle::actionSelect()
 {    
     for (int i = 0; i < NUMPLAYERS; i++)
-    {
         m_participants[i]->actionSelect();
-    }
 }
 
 void Battle::fieldEvent()
@@ -748,10 +688,8 @@ void Battle::fieldEvent()
 void Battle::summonEffects()
 {
     for (int i = 0; i < NUMPLAYERS; i++)
-    {
         // Ability cast point
         m_participants[i]->getPokemon()->castAbility();
-    }
 }
 
 void Battle::turnCount() const
@@ -762,41 +700,6 @@ void Battle::turnCount() const
         o << " (" << weatherStrings[m_field->getWeather()] << ")";
     
     cout << "Turn" << " " << m_turns+1 << o.str() << endl;
-}
-
-void Battle::statusEffect(Trainer* trainer) const
-{
-    Pokemon* pokemon = trainer->getPokemon();
-    
-    pokemon->removeShortStatus();
-    
-    if (pokemon->isFainted())
-        return;
-    
-    if (pokemon->getStatus() == BurnStatus)
-    {
-        cout << trainer->getTitleName()
-        << "'s " << pokemon->getName() << " " << "is hurt by its burn!" << endl;
-        pokemon->decreaseHP(static_cast<double>(pokemon->getBaseStats(HPStat))
-                         * (0.125));
-    }
-    else if (pokemon->getStatus() == PoisonStatus)
-    {
-        cout << trainer->getTitleName() << "'s "
-        << pokemon->getName() << " " << "is hurt by poison!" << endl;
-        pokemon->decreaseHP(static_cast<double>(pokemon->getBaseStats(HPStat))
-                         * (0.125));
-    }
-    else if (pokemon->getStatus() == ToxicStatus)
-    {
-        pokemon->setToxicTurns(pokemon->getToxicTurns()+1);
-        cout << trainer->getTitleName() << "'s "
-        << pokemon->getName() << " " << "is hurt by poison!" << endl;
-        pokemon->decreaseHP(static_cast<double>(pokemon->getBaseStats(HPStat)) *
-                           (pokemon->getToxicTurns() * (0.0625)));
-    }
-    
-    pokemon->decTauntTurns();
 }
 
 Weather Battle::getWeather() const
@@ -892,8 +795,7 @@ void Battle::dispPokeSummary(int slotNumber) const
     << "Nature" << ": " << natureStrings[pokemon->getNature()] << endl
     
     // Stats
-    << statFullStrings[HPStat] << ": " << pokemon->getStats(HPStat) << '/'
-    << pokemon->getBaseStats(HPStat) << endl;
+    << statFullStrings[HPStat] << ": " << pokemon->getStats(HPStat) << '/' << pokemon->getBaseStats(HPStat) << endl;
     for (int i = AttStat; i < NUMSTATS; i++)
         pout << statFullStrings[i] << ": " << pokemon->getBaseStats(i) << endl;
     
@@ -1088,4 +990,14 @@ bool Battle::setParticipants(Trainer* participant)
 int Battle::getNumPlayers() const
 {
     return m_numPlayers;
+}
+
+// Battle destructor /////////////////////////////////////////////////////////
+
+Battle::~Battle()
+{
+    for (int i = 0; i < NUMPLAYERS; i++)
+        delete m_participants[i];
+    
+    delete m_field;
 }

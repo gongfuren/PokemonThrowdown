@@ -10,6 +10,7 @@
 #define __PokemonThrowdown__util__
 
 #include <iostream>
+#include <list>
 #include "constants.h"
 
 // Auxiliary Function Declarations ///////////////////////////////////////////
@@ -30,6 +31,12 @@ double typeMultiplier(Type type1, Type type2, Type type3 = NoType);
 //
 // Ex: natureMultiplier(AdamantNature, AttStat) == 1.1
 double natureMultiplier(Nature nature, int stat);
+
+// stringToNumber()
+// Simple conversion to int from a string
+int stringToNumber(const std::string& string);
+
+// UI
 
 // selectorGadget()
 //
@@ -61,14 +68,27 @@ int inputGadget(int numChoices);
 
 // numericalGadget()
 // Accepts input from cin between min and max, inclusive
-int numericalGadget(int min, int max, string error = "Invalid input!");
+int numericalGadget(int min, int max, std::string error = "Invalid input!");
 
 // confirmGadget()
 // Displays an OK prompt for the user at the command line
-void confirmGadget();
+void confirmGadget(std::string message = "OK");
 
-// stringToNumber()
-// Simple conversion to int from a string
-int stringToNumber(const string& string);
+// listContains()
+// True if list contains o, false otherwise
+template <typename Object>
+bool listContains(const std::list<Object> l, Object o)
+{
+    typename std::list<Object>::const_iterator p;
+    
+    for (p = l.begin(); p != l.end(); p++)
+        if (*p == o)
+            break;
+    
+    if (p == l.end())
+        return false;
+    else
+        return true;
+}
 
 #endif /* defined(__PokemonThrowdown__util__) */

@@ -8,7 +8,7 @@
 
 #include <iostream>
 #include <string>
-//#include <ctime>
+#include <ctime>
 #include <unistd.h>
 #include <cstdlib>
 #include "constants.h"
@@ -18,61 +18,66 @@
 #include "settings.h"
 using namespace std;
 
+// CL Option Vars
+
 bool savingEnabled = true;
 
-static void commandLineParser(int argc, char* argv[]);
+// Helper Function Declarations
 
-static void displayCredits();
+static void commandLineParser(int argc, char* argv[]);
+static void usage(char* argn);
 static void titleScreen();
+static void startBattle();
+static void displayCredits();
+static void displayHelp(char* argn);
 
 // Main //////////////////////////////////////////////////////////////////////
 
 int main(int argc, char* argv[])
 {
-    // Command line arguments
+    bool reflashTitle = false, rerun = true;
+    int prog = 0;
+    const int numOpts = 6;
+    string opts[numOpts] = { "Play", "Trainers", "Settings", "Credits", "Help", "Quit" };
+    
+    // Command line arguments (if any)
     commandLineParser(argc, argv);
     
-    // Title Screen
+    // Title Banner
     titleScreen();
     
     // Initialize environment
-    //srand(static_cast<unsigned int>(time(NULL))); // RNG
+    srand(static_cast<unsigned int>(time(NULL))); // RNG
     loadSettings(); // Settings
     
-    bool ff = false;
-    int choice, prog = 0;
-    const int numOpts = 5;
-    string opts[numOpts];
-    
-    for (;;)
+    while (rerun)
     {
-        if (ff)
+        // Title Screen
+        if (reflashTitle)
             titleScreen();
         else
-            ff = true;
+            reflashTitle = !reflashTitle;
         
-        // Main Menu
-        opts[0] = "Play";
-        opts[1] = "Trainers";
-        opts[2] = "Settings";
-        opts[3] = "Credits";
-        opts[4] = "Quit";
-        choice = selectorGadget(opts, numOpts, prog, numOpts, false);
-        
-        if (choice == 0) // Play
+        switch (selectorGadget(opts, numOpts, prog, numOpts, false))
         {
-            Battle b;
-            b.start();
-            cout << endl;
+            case 0:
+                startBattle();
+                break;
+            case 1:
+                customTrainers();
+                break;
+            case 2:
+                configureSettings();
+                break;
+            case 3:
+                displayCredits();
+                break;
+            case 4:
+                displayHelp(argv[0]);
+                break;
+            default:
+                rerun = false;
         }
-        else if (choice == 1)
-            customTrainers();
-        else if (choice == 2)
-            configureSettings();
-        else if (choice == 3)
-            displayCredits();
-        else // Quit
-            break;
     }
 }
 
@@ -85,25 +90,46 @@ static void titleScreen()
     << "0***O***0***O***0***O" << endl;
 }
 
+static void startBattle()
+{
+    Battle b;
+    b.start();
+}
+
 static void displayCredits()
 {
-    cout << "PokemonThrowdown:" << endl << endl;
+    cout << "PokemonThrowdown:" << endl;
     
-    cout << "An originally-coded Pokemon simulator that is true to the game."
-    << endl << endl
+    cout << "An originally-coded Pokemon simulator that is true to the game." << endl
     
-    << "All credit goes to Nintendo for original game design, "
-    "mechanics, etc." << endl << endl << "Made by a huge fan."
-    << endl << endl
+    << "All credit goes to Nintendo for original game design, mechanics, etc." << endl
     
-    << "throwdown (n.) informal" << endl
+    << "Made by a huge fan." << endl;
+    
+    confirmGadget();
+    
+    cout << "throwdown (n.) informal" << endl
     << "a performance by or competition between rappers, breakdancers, etc." << endl
-    << "ex: a funky hip-hop throwdown." << endl << endl
+    << "ex: a funky hip-hop throwdown." << endl;
     
-    << "Pokemon \"Throwdown\" is a play on the popular web-based Pokemon Showdown battle simulator." << endl << endl
+    cout << "Pokemon \"Throwdown\" is a play on the popular web-based Pokemon Showdown battle simulator." << endl
     
     << "(C) 2013-2014 Ian P. Cordero." << endl;
     // Contributors feel free to add your names here.
+    
+    confirmGadget();
+}
+
+static void displayHelp(char* argn)
+{
+    cerr << "Pokemon Throwdown Command Line Interface" << endl;
+    
+    usage(argn);
+    
+    confirmGadget();
+    
+    cerr << "Options Breakdown:" << endl
+    << "-d\n\tDisable save file capability (team export will still be available)." << endl;
     
     confirmGadget();
 }
@@ -112,26 +138,25 @@ static void displayCredits()
 
 static void usage(char* argn)
 {
-    cerr << "Usage: " << argn << " [-s]" << endl;
-    exit(1);
+    cerr << "Usage: " << argn << " [-d]" << endl;
 }
 
 static void commandLineParser(int argc, char* argv[])
 {
-    while (1)
+    for (;;)
     {
-        switch (getopt(argc, argv, "s"))
+        switch (getopt(argc, argv, "d"))
         {
-            case 's':
+            case 'd':
                 savingEnabled = false;
                 break;
             default:
                 usage(argv[0]);
-                break;
+                exit(1);
             case -1:
                 goto options_exhausted___;
         }
     }
 options_exhausted___:
-    return;
+    ;
 }

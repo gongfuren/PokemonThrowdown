@@ -11,7 +11,6 @@
 
 #include <iostream>
 #include "constants.h"
-using namespace std;
 
 struct trainerdata;
 struct pokedynamicdata;
@@ -38,10 +37,11 @@ bool choseMove(int index, bool confirm = true);
 
 // Settings Variables ////////////////////////////////////////////////////////
 
-// Variables set within run of the program. Plan to have the option to save
-// settings to a file and access them in a future run of the program.
+// At the command line
 
 extern bool savingEnabled;
+
+// Within the program
 
 extern int musicID;
 extern int weatherID;
@@ -60,7 +60,7 @@ extern const pokedynamicdata* pokebattlers[MAXPOKEMON];
 
 extern int numExports;
 
-// Line number references for the settings file
+// Line number references
 
 const int NAMETAG = 0;
 const int WEATHERTAG = 1;
@@ -71,9 +71,10 @@ const int TNPENTRY = TRAINERENTRYSIZE + POKEENTRYSIZE * 6;
 
 // String constants for settings file
 
-const string SETTINGSTAG = "PKTDS04IPC2014___";
-const string SETTINGSFILENAME = "PKTDSettings.txt";
-const string EXPORTFILENAME = "PKTDExport";
-const string VERSIONNUMBER = "v0.4.2";
+const std::string SETTINGSTAG = "PKTDS04IPC2014___";
+const std::string SETTINGSFILENAME = "PKTDSettings.txt";
+const std::string EXPORTFILENAME = "PKTDExport";
+
+const std::string VERSIONNUMBER = "v0.4.3";
 
 #endif /* defined(__PokemonThrowdown__settings__) */

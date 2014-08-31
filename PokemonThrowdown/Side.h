@@ -44,8 +44,8 @@ public:
     
 private:
     Slot* m_slots[MAXPOKEMONPERPLAYER];
-    list<EntryHazard> m_hazards;
-    list<Screen> m_screens;
+    std::list<EntryHazard> m_hazards;
+    std::list<Screen> m_screens;
     Trainer* m_trainers[MAXPLAYERSPERSIDE];
     int m_numTrainers;
     

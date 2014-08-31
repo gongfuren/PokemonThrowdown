@@ -12,8 +12,6 @@
 #include "constants.h"
 #include "pokedata.h"
 #include "Field.h"
-#include <string>
-using namespace std;
 
 class Trainer;
 class Pokemon;
@@ -28,11 +26,29 @@ class Battle
 // Displays relevant information regarding battle
 {
 public:
+    // Construct the Battle
     Battle();
     ~Battle();
     
     // Start the Battle
     void start();
+    
+    // Accessor functions
+    Trainer* getPlayer() const;
+    Trainer* getOpponent() const;
+    Trainer* getParticipants(int i) const;
+    Weather getWeather() const;
+    Field* getField() const;
+    int getPreMoveIDs(int trainer, int pokemon, int moveslot) const;
+    int* getPreMoveIDs() const;
+    int getNumPlayers() const;
+    
+    // Mutator functions
+    bool setPlayer(Trainer* player);
+    bool setOpponent(Trainer* opponent);
+    bool setParticipants(Trainer* participant);
+    bool setWeather(Weather weather);
+    bool setField(Field* field);
     
     // Display state of battle participants (i.e. Level, Name, Status, HP)
     void displayState(bool showTurnCount) const;
@@ -52,29 +68,9 @@ public:
     
     // Cast effects (i.e. Abilities) when Pokemon is "summoned" (sent out)
     void summonEffects();
-    
-    // TODO: implement appropriately
-    void statusEffect(Trainer* trainer) const;
-    
+        
     // Check if any Pokemon have fainted
     void checkFaint() const;
-    
-    // Accessor functions
-    Trainer* getPlayer() const;
-    Trainer* getOpponent() const;
-    Trainer* getParticipants(int i) const;
-    Weather getWeather() const;
-    Field* getField() const;
-    int getPreMoveIDs(int trainer, int pokemon, int moveslot) const;
-    int* getPreMoveIDs() const;
-    int getNumPlayers() const;
-    
-    // Mutator functions
-    bool setPlayer(Trainer* player);
-    bool setOpponent(Trainer* opponent);
-    bool setParticipants(Trainer* participant);
-    bool setWeather(Weather weather);
-    bool setField(Field* field);
     
 private:
     // Tick the clock for each turn
@@ -91,9 +87,6 @@ private:
     
     // Main Battle cycle, calls the respective phases
     void cycle();
-    
-    // Battle greeting
-    void greet() const;
     
     // Have participants choose their lead Pokemon
     void chooseLead();
@@ -120,7 +113,7 @@ private:
     // Tell participants to choose actions
     void actionSelect();
     
-    // (Currently messy) functions for judging when a Battle is over
+    // Functions for judging when a Battle is over
     bool checkWin() const;
     bool battleIsOver() const;
     
@@ -136,7 +129,7 @@ private:
     Trainer* m_opponent;
     Trainer* m_opponent2;
     Trainer* m_actor;
-    Trainer* m_participants[NUMPLAYERS];
+    Trainer* m_participants[MAXPLAYERS];
     int m_turns;
     int m_numPlayers;
 };

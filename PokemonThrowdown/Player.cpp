@@ -236,7 +236,7 @@ bool Player::chooseFight()
     int playerChoice, i, j, prog;
     bool canMega, willMegaEvolve = false, hasMovesLeft = false;
     
-    string mvref[4], meref[2];
+    string mvref[MAXMOVES], meref[2];
     int mvsize, mesize;
     
     for (i = 0; i < MAXMOVES; i++)
@@ -247,6 +247,7 @@ bool Player::chooseFight()
         if (move->getCurrentPP() > 0)
             hasMovesLeft = true;
     }
+    
     if (!hasMovesLeft)
     {
         playerChoice = MAXMOVES;
@@ -297,19 +298,16 @@ choose_move___:
         {
             getBattle()->dispPokeMoves();
             playerChoice = mvsize+mesize;
+            confirmGadget();
             continue;
         }
         
         if (canMega && playerChoice == mvsize+mesize-2)
         {
             if (willMegaEvolve)
-            {
                 willMegaEvolve = false;
-            }
             else
-            {
                 willMegaEvolve = true;
-            }
             
             playerChoice = mvsize+mesize;
         }

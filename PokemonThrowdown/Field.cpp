@@ -12,6 +12,7 @@
 #include "strings.h"
 #include "utilities.h"
 #include "settings.h"
+using namespace std;
 
 Field::Field(Battle* battle, int X, int Y)
 : Zone(X, Y, 1, 2)

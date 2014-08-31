@@ -21,6 +21,8 @@
 #include <cmath>
 using namespace std;
 
+// Helper function declarations
+
 static void defaultPokemon(pokedynamicdata& p);
 static void defaultTrainer(trainerdata& p);
 static bool initSet(const string filename);
@@ -28,6 +30,8 @@ static bool saveSettings();
 static bool customizeTrainer(int whichTrainer);
 static void defaultSettings();
 static bool exportTeam(int whichTrainer);
+
+// Error utility functions
 
 static bool serror()
 {
@@ -42,6 +46,8 @@ static bool ioerror()
     << "Run with '-s' option to disable save files." << endl;
     return false;
 }
+
+// Settings variables
 
 int musicID;
 int weatherID;
@@ -58,14 +64,14 @@ int numExports;
 pokedynamicdata pokedynamicarray[MAXCTRAINERS][MAXPOKEMON];
 trainerdata trainerarray[MAXCTRAINERS];
 
-// Settings functions
+// Settings functions ////////////////////////////////////////////////////////
 
 bool customTrainers()
 {
     int choice = -1, sizeo = 1, prog = 0;
     string opts[1], cTrainers[MAXCTRAINERS];
     
-    while (1)
+    for (;;)
     {
         cout << "Trainers:" << endl;
         
@@ -116,7 +122,7 @@ void configureSettings()
     const int numSettings = 8;
     string opts[numSettings];
     
-    while (1)
+    for (;;)
     {
         cout << "Settings:" << endl;
         
@@ -125,8 +131,6 @@ void configureSettings()
             tmp << "Weather: " << weatherStrings[weatherID];
             opts[0] = tmp.str();
         }
-        
-        // Location
         
         {
             ostringstream tmp;
@@ -140,15 +144,11 @@ void configureSettings()
             opts[2] = tmp.str();
         }
         
-        // Volume
-        
         {
             ostringstream tmp;
             tmp << "Volume: " << volumeLevel;
             opts[3] = tmp.str();
         }
-        
-        // Sound Effects
         
         {
             ostringstream tmp;
@@ -161,8 +161,6 @@ void configureSettings()
             tmp << "Mute: " << switchStringsB[muteVolume];
             opts[5] = tmp.str();
         }
-        
-        // Animations
         
         {
             ostringstream tmp;
@@ -446,6 +444,8 @@ bool loadSettings()
     return true;
 }
 
+// Helper Functions //////////////////////////////////////////////////////////
+
 static bool initSet(const string filename)
 {
     ofstream settingso;
@@ -569,7 +569,7 @@ bool chosePokemon(int index, bool confirm)
     string yopts[1] = { "Confirm" };
     string copts[1] = { "Info" };
     
-    while (1)
+    for (;;)
     {
         cout << "You chose " << pokelib[index].name << ":" << endl;
         choice = selectorGadget(copts, csize, prog, csize+ysize, true, NULL, 0, yopts, ysize);
@@ -590,7 +590,7 @@ bool choseMove(int index, bool confirm)
     int ysize = confirm ? 1: 0, choice = -1, prog = 0;
     string yopts[1] = { "Confirm" };
     
-    while (1)
+    for (;;)
     {
         cout << "You chose " << movelib[index].name << ":" << endl;
         choseMoveInfo(index);
@@ -678,7 +678,7 @@ static bool pokeMoveChoice(int choice, int whichTrainer, int whichPokemon, bool 
             for (int i = 0; i < matches.size(); i++)
                 matchStrings[i] = (moves ? movelib[matches[i]].name : pokelib[matches[i]].name);
             
-            while (1)
+            for (;;)
             {
                 choice = selectorGadget(matchStrings, static_cast<int>(matches.size()), prog, 10);
                 if (choice != BACK)
@@ -729,7 +729,7 @@ static bool pokeMoveChoice(int choice, int whichTrainer, int whichPokemon, bool 
             
             for (int i = 1; i < (moves ? MAXNUMMOVES : MAXNUMPOKEMON); i++)
                 popts[i-1] = (moves ? movelib[i].name : pokelib[i].name);
-            while (1)
+            for (;;)
             {
                 choice = selectorGadget(popts, (moves ? MAXNUMMOVES : MAXNUMPOKEMON)-1, prog, 10);
                 if (choice != BACK)
@@ -769,7 +769,7 @@ static bool customizePokemon(int whichTrainer, int whichPokemon)
     int choice = -1, prog = 0;
     string opts[12], pokeName;
     
-    while (1)
+    for (;;)
     {
         prog = 0;
         
@@ -849,7 +849,7 @@ static bool customizePokemon(int whichTrainer, int whichPokemon)
         {
             case 0:
             {
-                while (1)
+                for (;;)
                 {
                     cout << "Choose a Pokemon:" << endl;
                     string sopts[3] = { "Browse", "Search", "Random" };
@@ -886,7 +886,7 @@ static bool customizePokemon(int whichTrainer, int whichPokemon)
                 bool thisIVs = (choice == 3);
                 string vopts[NUMSTATS+3];
                 
-                while (1)
+                for (;;)
                 {
                     cout << (thisIVs ? "Individual Values:" : "Effort Values:") << endl;
                     for (int i = 0; i < NUMSTATS; i++)
@@ -1048,7 +1048,7 @@ static bool customizePokemon(int whichTrainer, int whichPokemon)
                     if (choice != BACK)
                     {
                         if (choice == 0)
-                            while (1)
+                            for (;;)
                             {
                                 cout << "Choose a Move:" << endl;
                                 string sopts[3] = { "Browse", "Search", "Random" };
@@ -1134,7 +1134,7 @@ static bool customPokemon(int whichTrainer)
     int choice = -1, sizeo = 1, prog = 0, csize = numCustomPokemon[whichTrainer], esize = 1;
     string opts[1], endOpts[1], cPokemon[MAXPOKEMON];
     
-    while (1)
+    for (;;)
     {
         prog = 0;
         csize = numCustomPokemon[whichTrainer];
@@ -1205,7 +1205,7 @@ static bool customizeTrainer(int whichTrainer)
     int choice = -1, prog;
     string opts[6], buffer;
     
-    while (1)
+    for (;;)
     {
         prog = 0;
         

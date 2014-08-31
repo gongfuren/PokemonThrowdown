@@ -12,16 +12,13 @@
 #include "constants.h"
 
 #include <string>
-using namespace std;
-
-// Note: This data file does not adhere to an 80 column limit!
 
 // Move Data /////////////////////////////////////////////////////////////////
 
 struct movedata
 {
     int ID;
-    string name;
+    std::string name;
     Type type;
     MoveType moveType;
     ContestStat contestStat;
@@ -32,7 +29,7 @@ struct movedata
     MoveEffect effect;
     MoveTarget target;
     bool contact;
-    string description;
+    std::string description;
 };
 
 const movedata movelib[MAXTOTALMOVES] = {

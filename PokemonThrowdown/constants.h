@@ -9,26 +9,7 @@
 #ifndef __PokemonThrowdown__Constants__
 #define __PokemonThrowdown__Constants__
 
-#include <list>
-#include <string>
-using namespace std;
-
 // Note: This data file does not adhere to an 80 column limit!
-
-template <typename Object>
-bool listContains(const list<Object> l, Object o)
-{
-    typename list<Object>::const_iterator p;
-    
-    for (p = l.begin(); p != l.end(); p++)
-        if (*p == o)
-            break;
-    
-    if (p == l.end())
-        return false;
-    else
-        return true;
-}
 
 // Global Constants
 

@@ -14,7 +14,6 @@
 #include "itemdata.h"
 
 #include <string>
-using namespace std;
 
 // Note: This data file does not adhere to an 80 column limit!
 
@@ -26,13 +25,13 @@ struct pokedata
 {
     // Invariant
     int ID;
-    string name;
+    std::string name;
     Type type1;
     Type type2;
     int stats[NUMSTATS];
     Gender gender; // variant for some, but not all Pokemon
     PokeAbility ability[3];
-    string description;
+    std::string description;
 };
 // learnset? form list?
 
@@ -42,7 +41,7 @@ struct pokedynamicdata
 {
     int index; // index in pokelib[] corresponding to Pokemon we want
     
-    string nickname;
+    std::string nickname;
     Nature nature;
     int IVs[NUMSTATS];
     // Can be changed within a single Pokemon

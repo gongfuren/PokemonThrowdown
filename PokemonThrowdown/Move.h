@@ -11,9 +11,7 @@
 
 #include "constants.h"
 #include "movedata.h"
-
 #include <string>
-using namespace std;
 
 class Pokemon;
 
@@ -25,12 +23,12 @@ public:
     ~Move();
     
     // Accessor Functions
-    string getName() const;
+    std::string getName() const;
     Type getType() const;
     int getDamage() const;
     int getAccuracy() const;
     MoveType getMoveType() const;
-    string getDescription() const;
+    std::string getDescription() const;
     MoveEffect getEffect() const;
     MoveTarget getTarget() const;
     int getID() const;
@@ -62,14 +60,14 @@ public:
     
 private:
     int m_ID;
-    string m_name;
+    std::string m_name;
     Type m_type;
     int m_damage;
     int m_accuracy;
     MoveEffect m_effect;
     int m_PP;
     MoveType m_moveType;
-    string m_description;
+    std::string m_description;
     MoveTarget m_target;
     bool m_contact;
     

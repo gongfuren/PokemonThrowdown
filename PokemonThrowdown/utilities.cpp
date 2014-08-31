@@ -37,11 +37,7 @@ double natureMultiplier(Nature nature, int stat)
     return natureArray[nature][stat];
 }
 
-int selectorGadget(string opts[], int sizeo, int& prog,
-                   int entriesPerPage, bool back,
-                   string specialOpts[], int sizes,
-                   string specialBeginOpts[], int sizeb,
-                   string specialEndOpts[], int sizee)
+int selectorGadget(string opts[], int sizeo, int& prog, int entriesPerPage, bool back, string specialOpts[], int sizes, string specialBeginOpts[], int sizeb, string specialEndOpts[], int sizee)
 {
     int i, j, k, choice, noffs, poffs, nhoffs, phoffs, nloffs, ploffs;
     bool next, prev, nexth, prevh, nextl, prevl, jump, alphaOmega;
@@ -245,7 +241,7 @@ int inputGadget(int numChoices)
 {
     int choice = -1;
     
-    while (1)
+    for (;;)
     {
         cin >> choice;
         
@@ -281,6 +277,12 @@ feed_input_num___:
     getline(cin, buffer);
     if (buffer != ":q")
     {
+        if (buffer == "")
+        {
+            cerr << error << endl;
+            goto feed_input_num___;
+        }
+        
         for (int i = 0; i < buffer.length(); i++)
         {
             if (!isdigit(buffer[i]))
@@ -302,10 +304,9 @@ feed_input_num___:
     return retval;
 }
 
-void confirmGadget()
+void confirmGadget(string message)
 {
     int choice = -1, prog = 0;
-    string confirm[1] = { "OK" };
-    while (choice != 0)
-        choice = selectorGadget(confirm, 1, prog, 1, false);
+    string confirm[1] = { message };
+    choice = selectorGadget(confirm, 1, prog, 1, false);
 }

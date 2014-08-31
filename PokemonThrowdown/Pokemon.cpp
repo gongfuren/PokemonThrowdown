@@ -87,8 +87,10 @@ Pokemon::Pokemon(pokedynamicdata h, Trainer* trainer, int wp)
 
 Pokemon::~Pokemon()
 {
-    for (int i = 0; i < MAXMOVES; i++)
+    for (int i = 0; i < MAXMOVES+1; i++)
         delete m_moves[i];
+    delete m_ability;
+    delete m_item;
 }
 
 void Pokemon::transform(int pokemonID)
@@ -2098,4 +2100,33 @@ string Pokemon::statusText(bool showStats) const
 string Pokemon::getNickname() const
 {
     return m_nickname;
+}
+
+void Pokemon::statusEffect()
+{
+    Pokemon* pokemon = this;
+    
+    pokemon->removeShortStatus();
+    
+    if (pokemon->isFainted())
+        return;
+    
+    if (pokemon->getStatus() == BurnStatus)
+    {
+        cout << getTrainer()->getTitleName() << "'s " << pokemon->getName() << " " << "is hurt by its burn!" << endl;
+        pokemon->decreaseHP(static_cast<double>(pokemon->getBaseStats(HPStat)) * (0.125));
+    }
+    else if (pokemon->getStatus() == PoisonStatus)
+    {
+        cout << getTrainer()->getTitleName() << "'s " << pokemon->getName() << " " << "is hurt by poison!" << endl;
+        pokemon->decreaseHP(static_cast<double>(pokemon->getBaseStats(HPStat)) * (0.125));
+    }
+    else if (pokemon->getStatus() == ToxicStatus)
+    {
+        pokemon->setToxicTurns(pokemon->getToxicTurns()+1);
+        cout << getTrainer()->getTitleName() << "'s " << pokemon->getName() << " " << "is hurt by poison!" << endl;
+        pokemon->decreaseHP(static_cast<double>(pokemon->getBaseStats(HPStat)) * (pokemon->getToxicTurns() * (0.0625)));
+    }
+    
+    pokemon->decTauntTurns();
 }

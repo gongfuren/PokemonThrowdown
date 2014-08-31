@@ -16,7 +16,6 @@
 #include <string>
 #include <list>
 #include <stack>
-using namespace std;
 
 class Trainer;
 class Slot;
@@ -31,8 +30,8 @@ public:
     ~Pokemon();
     
     // Accessor functions
-    string getName() const;
-    string getNickname() const;
+    std::string getName() const;
+    std::string getNickname() const;
     Type getType1() const;
     Type getType2() const;
     PokeStatus getStatus() const;
@@ -46,12 +45,12 @@ public:
     Ability* getAbility() const;
     Item* getItem() const;
     bool hasCompatMegaStone() const;
-    string getDescription() const;
+    std::string getDescription() const;
     int getForm() const;
     int getID() const;
     Trainer* getTrainer() const;
     Slot* getSlot() const;
-    const stack<Move*>* getMoveHistory() const;
+    const std::stack<Move*>* getMoveHistory() const;
     int getTurnsOut() const;
     Move* getLockedMove() const;
     int getIntendedMove() const;
@@ -75,6 +74,7 @@ public:
     bool hasVStatus(VolatileStatus vstatus) const;
     
     // Other
+    void statusEffect();
     void checkFaint();
     bool hasMaxHP() const;
     void decreaseHP(int howMuch);
@@ -93,7 +93,7 @@ public:
     void tick();
     
     // Battle serving
-    string statusText(bool showStats) const;
+    std::string statusText(bool showStats) const;
     
     // Status state
     int getToxicTurns() const;
@@ -134,13 +134,13 @@ private:
     void avoidDialogue() const;
     
     // Data members
-    string m_name;
-    string m_nickname;
+    std::string m_name;
+    std::string m_nickname;
     int m_ID;
     Type m_type1;
     Type m_type2;
     PokeStatus m_status;
-    list<VolatileStatus> m_vstatuses;
+    std::list<VolatileStatus> m_vstatuses;
     int m_baseStats[NUMSTATS];
     int m_IVs[NUMSTATS];
     int m_EVs[NUMSTATS];
@@ -149,7 +149,7 @@ private:
     Nature m_nature;
     Ability* m_ability;
     Item* m_item;
-    string m_description;
+    std::string m_description;
     
     // The state (how many increases/decreases) of each stat
     int m_statsStatus[NUMALLSTATS];
@@ -173,7 +173,7 @@ private:
     
     // Move slots and history
     Move* m_moves[MAXMOVES+1];
-    stack<Move*> m_moveHistory;
+    std::stack<Move*> m_moveHistory;
     
     // Keep track of Slot position and owning Trainer
     Trainer* m_trainer;

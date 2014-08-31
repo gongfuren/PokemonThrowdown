@@ -11,6 +11,7 @@
 #include "Trainer.h"
 #include "constants.h"
 #include "strings.h"
+using namespace std;
 
 Slot::Slot(Side* side, int X, int Y)
 : Zone(X, Y, 1, 1)
@@ -20,7 +21,6 @@ Slot::Slot(Side* side, int X, int Y)
 
 Slot::~Slot()
 {
-    
 }
 
 bool Slot::isFull() const

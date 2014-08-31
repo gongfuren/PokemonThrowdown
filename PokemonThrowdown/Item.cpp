@@ -11,6 +11,7 @@
 #include "itemdata.h"
 #include "constants.h"
 #include "strings.h"
+using namespace std;
 
 Item::Item(int ID, Pokemon* pokemon)
 {
@@ -21,7 +22,6 @@ Item::Item(int ID, Pokemon* pokemon)
 
 Item::~Item()
 {
-    
 }
 
 int Item::getID() const

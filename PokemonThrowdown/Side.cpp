@@ -8,7 +8,7 @@
 
 #include "Side.h"
 #include "Slot.h"
-#include "constants.h"
+#include "utilities.h"
 
 Side::Side(Field* field, int X, int Y)
 : Zone(X, Y, 1, 1)

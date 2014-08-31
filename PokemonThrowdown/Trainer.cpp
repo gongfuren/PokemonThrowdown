@@ -10,6 +10,7 @@
 #include "trainerdata.h"
 #include "Battle.h"
 #include "strings.h"
+#include "utilities.h"
 
 #include <iostream>
 #include <sstream>
@@ -316,6 +317,7 @@ bool Trainer::chooseBag() const
     // No bag implementation since focus is on competitive
     // (no using items, among other things) battling
     cout << "You can't do that right now." << endl;
+    confirmGadget();
     
     return false;
 }

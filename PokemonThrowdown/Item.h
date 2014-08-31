@@ -9,9 +9,7 @@
 #ifndef __PokemonThrowdown__Item__
 #define __PokemonThrowdown__Item__
 
-#include <iostream>
 #include <string>
-using namespace std;
 
 class Pokemon;
 
@@ -24,7 +22,7 @@ public:
     
     int getID() const;
     int getAge() const;
-    string getName() const;
+    std::string getName() const;
     Pokemon* getPokemon() const;
     
     bool restrictsChoice() const;
@@ -37,7 +35,7 @@ public:
     
 private:
     int m_ID;
-    string name;
+    std::string name;
     int m_age;
     
     Pokemon* m_pokemon;
