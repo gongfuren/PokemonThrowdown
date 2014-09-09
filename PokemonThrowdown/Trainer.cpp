@@ -11,15 +11,15 @@
 #include "Battle.h"
 #include "strings.h"
 #include "utilities.h"
+#include "Game.h"
+#include "Settings.h"
 
 #include <iostream>
 #include <sstream>
 #include <stdlib.h>
 using namespace std;
 
-const pokedynamicdata* pokebattlers[MAXPOKEMON];
-
-Trainer::Trainer(trainerdata h, Battle* battle)
+Trainer::Trainer(trainerdata h, Battle* battle, int whichTrainer)
 : m_battle(battle)
 {
     m_current = -1;
@@ -31,19 +31,14 @@ Trainer::Trainer(trainerdata h, Battle* battle)
     m_intendedMove = NoDecision;
     m_usedMega = false;
     m_reward = h.reward;
-    m_numPokemon = 6;
+    m_numPokemon = h.numPokemon;
     
     for (int i = 0; i < 6; i++)
     {
-        if (pokebattlers[i] == NULL)
-        {
-            m_numPokemon--;
-            m_pokemon[i] = NULL;
-        }
+        if (i < h.numPokemon)
+            m_pokemon[i] = new Pokemon(*getBattle()->getGame()->getSettings()->getPokemon(whichTrainer, i), this, i);
         else
-        {
-            m_pokemon[i] = new Pokemon(*pokebattlers[i], this, i);
-        }
+            m_pokemon[i] = NULL;
     }
 }
 
@@ -144,14 +139,15 @@ void Trainer::switchPokemon(bool optional)
 {
     if (optional)
     {
-        cout << getTitleName() << " " << "withdrew" << " "
-        << getPokemon()->getName() << "!" << endl;
+        cout << getTitleName() << " " << "withdrew" << " " << getPokemon()->getName() << "!" << endl;
         getPokemon()->clearVolatiles();
     }
     
     cout << generateBalls() << endl;
     
     summonPokemon(m_intendedSwitch);
+    
+    // m_field->getSide(i)->getSlot()->fillSlot(m_actor->getPokemon());
 }
 
 int Trainer::getIntendedSwitch() const

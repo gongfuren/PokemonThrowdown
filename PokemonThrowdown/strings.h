@@ -91,7 +91,7 @@ const std::string vstatusFullStrings[NUMVSTATUSES] = {
 };
 
 const std::string weatherStrings[NUMWEATHERS] = {
-    "No Weather", "Sunny", "Rain", "Sandstorm", "Hail", "Fog", "Twilight", "Random"
+    "(No Weather)", "Sunny", "Rain", "Sandstorm", "Hail", "Fog", "Twilight", "Random"
 };
 
 const std::string weatherStartStrings[NUMWEATHERS] = {
@@ -156,7 +156,7 @@ const std::string titleArray[NUMTITLES] = {
 };
 
 const std::string musicTracksStrings[NUMTRACKS] = {
-    "None", "B&W Trainer Battle", "PBR Gateway Coliseum", "X&Y Trainer Battle", "RB&Y Trainer Battle", "RB&Y Elite Four", "RB&Y Champion", "RS&E Champion", "DPP&Pt Champion", "X&Y Champion", "RS&E Trainer Battle"
+    "No Music", "PBR Gateway Coliseum", "B&W Trainer Battle", "X&Y Trainer Battle", "RB&Y Trainer Battle", "RB&Y Elite Four", "RB&Y Champion", "RS&E Champion", "DPP&Pt Champion", "X&Y Champion", "RS&E Trainer Battle"
 };
 
 const std::string switchStringsA[2] = {
@@ -176,7 +176,11 @@ const std::string switchStringsD[2] = {
 };
 
 const std::string locationStrings[NUMLOCATIONS] = {
-    "No Location", "Coliseum", "Field", "Grass", "Beach", "Water", "River", "Ocean", "Cave", "Dark Cave", "Building", "Desert", "Mountain", "Volcano", "Snow", "Boreal", "Forest", "Jungle", "Industrial", "Bridge"
+    "No Location", "Gateway Coliseum", "(Field)", "(Grass)", "(Beach)", "(Water)", "(River)", "(Ocean)", "(Cave)", "(Dark Cave)", "(Building)", "(Desert)", "(Mountain)", "(Volcano)", "(Snow)", "(Boreal)", "(Forest)", "(Jungle)", "(Industrial)", "(Bridge)"
 };
+
+const std::string battleTypeStrings[NUMBATTLETYPES] = { "Single Battle" };
+const std::string battleRuleStrings[NUMBATTLERULES] = { "No Restrictions" };
+const std::string battleLevelStrings[NUMBATTLELEVELS] = { "Any Level" };
 
 #endif /* defined(__PokemonThrowdown__strings__) */

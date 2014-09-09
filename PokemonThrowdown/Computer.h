@@ -17,14 +17,14 @@ class Computer : public Trainer
 // Represents a computer controlled Trainer
 {
 public:
-    Computer(trainerdata h, Battle* battle);
+    Computer(trainerdata h, Battle* battle, int whichTrainer = 0);
     ~Computer();
     
     virtual void actionSelect();
     virtual bool chooseRun();
     virtual bool isComputer() const;
     virtual bool choosePokemon();
-    virtual bool trainerSummon(bool optional);
+    virtual bool trainerSummon(bool optional, bool uTurn = false);
     
 private:
     int m_difficulty;

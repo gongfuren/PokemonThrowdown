@@ -21,11 +21,13 @@ class Trainer;
 class Slot;
 class Item;
 class Ability;
+class Substitute;
 
 class Pokemon
 // Represents a Battle-ready Pokemon and its current state
 {
 public:
+    Pokemon();
     Pokemon(pokedynamicdata h, Trainer* trainer, int wp);
     ~Pokemon();
     
@@ -79,9 +81,9 @@ public:
     bool hasMaxHP() const;
     void decreaseHP(int howMuch);
     bool increaseHP(int howMuch);
-    bool decreaseStat(int whichStat, bool silent);
+    bool decreaseStat(int whichStat, bool silent = false);
     bool decreaseStat(int whichStat, int levels);
-    bool increaseStat(int whichStat, bool silent);
+    bool increaseStat(int whichStat, bool silent = false);
     bool increaseStat(int whichStat, int levels);
     void restoreStat(int whichStat);
     void clearVolatiles();
@@ -126,8 +128,9 @@ private:
     
     void flashAbility() const;
     bool applyStatus(Pokemon* target, Move* move);
-    void applyAttack(Pokemon* target, Move* move);
-    void applyEffect(Pokemon* target, Move* move, int damage = 0);
+    void applyAttack(Pokemon* target, Move* move, bool silent = false);
+    void applyAttackerEffect(Pokemon* target, Move* move, int damage = 0);
+    void applyTargetEffect(Pokemon* target, Move* move, int damage = 0);
     void applySideEffects(Move* move);
     
     void protectDialogue() const;
@@ -170,6 +173,7 @@ private:
     int m_toxicTurns;
     int m_rampageTurns;
     int m_tauntTurns;
+    Substitute* m_sub;
     
     // Move slots and history
     Move* m_moves[MAXMOVES+1];
@@ -178,6 +182,18 @@ private:
     // Keep track of Slot position and owning Trainer
     Trainer* m_trainer;
     Slot* m_slot;
+};
+
+class Substitute
+{
+public:
+    Substitute(int HP, Pokemon* pokemon) { s_HP = HP; s_pokemon = pokemon; };
+    int getHP() const { return s_HP; };
+    bool decreaseHP(int howMuch);
+    
+private:
+    Pokemon* s_pokemon;
+    int s_HP;
 };
 
 #endif /* defined(__PokemonThrowdown__Pokemon__) */

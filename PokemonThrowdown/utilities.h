@@ -15,6 +15,8 @@
 
 // Auxiliary Function Declarations ///////////////////////////////////////////
 
+// General Utilities
+
 // randInt()
 // Returns a randomly chosen integer between lowest and highest inclusive
 int randInt(int lowest, int highest);
@@ -73,6 +75,12 @@ int numericalGadget(int min, int max, std::string error = "Invalid input!");
 // confirmGadget()
 // Displays an OK prompt for the user at the command line
 void confirmGadget(std::string message = "OK");
+
+// backGadget()
+// Displays a Back prompt for the user at the command line
+void backGadget();
+
+// Other
 
 // listContains()
 // True if list contains o, false otherwise

@@ -21,6 +21,10 @@
 #include <sstream>
 using namespace std;
 
+Pokemon::Pokemon()
+{
+}
+
 Pokemon::Pokemon(pokedynamicdata h, Trainer* trainer, int wp)
 : m_trainer(trainer)
 {
@@ -1173,7 +1177,50 @@ bool Pokemon::executeMove(Pokemon* target, Move* move)
             applyStatus(target, getMove(intendedMove));
         else
             // Attack
-            applyAttack(target, getMove(intendedMove));
+        {
+            if (getMove(intendedMove)->getEffect() == MMultiHit || getMove(intendedMove)->getEffect() == MDoubleHit)
+            {
+                int numHits = 2, randomNum;
+                
+                if (!(getMove(intendedMove)->getEffect() == MDoubleHit))
+                {
+                    if (getAbility()->getID() == PSkillLink)
+                        numHits = 5;
+                    else
+                    {
+                        randomNum = randInt(0, 999);
+                        if (randomNum < 333)
+                            numHits += 0;
+                        else if (randomNum < 333 * 2)
+                            numHits += 1;
+                        else if (randomNum < 833)
+                            numHits += 2;
+                        else
+                            numHits += 3;
+                    }
+                }
+                
+                for (int i = 0; i < numHits; i++)
+                {
+                    if (i < numHits - 1)
+                        applyAttack(target, getMove(intendedMove), true);
+                    else
+                        applyAttack(target, getMove(intendedMove));
+                    
+                    battle->displayState(false);
+                    
+                    if (target->getStatsStatus(HPStat) == 0)
+                    {
+                        numHits -= numHits - i - 1;
+                        break;
+                    }
+                }
+                
+                cout << "Hit " << numHits << " time(s)!" << endl;
+            }
+            else
+                applyAttack(target, getMove(intendedMove));
+        }
     }
     
     applySideEffects(getMove(intendedMove));
@@ -1337,6 +1384,25 @@ bool Pokemon::applyStatus(Pokemon* target, Move* move)
             target->addVStatus(TauntVStatus);
             target->m_tauntTurns = 3;
             break;
+        case MSub:
+        {
+            int subHP = getBaseStats(HPStat) / 4;
+            if (pokemon->hasVStatus(SubVStatus))
+            {
+                cout << "But it failed!" << endl;
+                return false;
+            }
+            else if (getStatsStatus(HPStat) <= subHP)
+            {
+                cout << pokemon->getName() << " was too weak to make a substitute!" << endl;
+                return false;
+            }
+            cout << pokemon->getName() << " cut its HP and made a substitute!" << endl;
+            decreaseHP(subHP);
+            pokemon->m_sub = new Substitute(subHP, this);
+            pokemon->addVStatus(SubVStatus);
+        }
+            break;
         case MLowerAtt:
             sc[AttStat] = -1;
             break;
@@ -1360,6 +1426,9 @@ bool Pokemon::applyStatus(Pokemon* target, Move* move)
             break;
         case MUpDef2:
             sc[DefStat] = 2;
+            break;
+        case MUpDef3:
+            sc[DefStat] = 3;
             break;
         case MUpSpA3:
             sc[SpAStat] = 3;
@@ -1388,6 +1457,9 @@ bool Pokemon::applyStatus(Pokemon* target, Move* move)
         case MUpSpD2:
             sc[SpDStat] = 2;
             break;
+        case MUpSpD3:
+            sc[SpDStat] = 3;
+            break;
         case MLowerSpe:
             sc[SpeStat] = -1;
             break;
@@ -1407,6 +1479,10 @@ bool Pokemon::applyStatus(Pokemon* target, Move* move)
         case MUpAttDef:
             sc[AttStat] = 1;
             sc[DefStat] = 1;
+            break;
+        case MUpAttAcc:
+            sc[AttStat] = 1;
+            sc[AccStat] = 1;
             break;
         case MUpAttSpA:
             sc[AttStat] = 1;
@@ -1497,6 +1573,10 @@ bool Pokemon::applyStatus(Pokemon* target, Move* move)
             if (!target->setStatus(ParalyzeStatus))
                 cout << "But it failed!" << endl;
             break;
+        case MBatonPass:
+            cout << getName() << " went back to " << getTrainer()->getTitleName() << "!" << endl;
+            getTrainer()->trainerSummon(false, true);
+            break;
         default:
             break;
     }
@@ -1526,7 +1606,7 @@ bool Pokemon::applyStatus(Pokemon* target, Move* move)
     return true;
 }
 
-void Pokemon::applyAttack(Pokemon* target, Move* move)
+void Pokemon::applyAttack(Pokemon* target, Move* move, bool silent)
 {
     Pokemon* attacker = this, * tmp;
     Field* field = getTrainer()->getBattle()->getField();
@@ -1569,13 +1649,22 @@ void Pokemon::applyAttack(Pokemon* target, Move* move)
     if (typeBoost == 0.0)
         // Target is immune to attack
     {
-        cout << "It doesn't affect" << " "
-        << target->getTrainer()->getTitleName() << "'s " << target->getName()
-        << "." << endl;
+        if (!silent)
+            cout << "It doesn't affect" << " " << target->getTrainer()->getTitleName() << "'s " << target->getName() << "." << endl;
         return;
     }
     
     pureDamage = move->getDamage();
+    
+    if (move->getEffect() == MStored)
+        // Stored power
+    {
+        int boost = 0;
+        for (int i = AttStat; i <= EvaStat; i++)
+            if (getStatsStatus(i) > 0)
+                boost += getStatsStatus(i);
+        pureDamage += 20 * boost;
+    }
     
     if (move->getType() == attacker->getType1() ||
         move->getType() == attacker->getType2())
@@ -1683,6 +1772,10 @@ void Pokemon::applyAttack(Pokemon* target, Move* move)
     else if (attacker->getItem()->getID() == HLifeOrb)
         other *= 1.3;
     
+    if (attacker->getAbility()->getID() == PTechnician && move->getDamage() <= 60)
+        // Technician
+        other *= 1.5;
+    
     modifier = typeBoost * sTAB * crit * modulus * other;
     
     // Physical attack
@@ -1706,8 +1799,7 @@ void Pokemon::applyAttack(Pokemon* target, Move* move)
                              * specialDefMultiplier));
     }
     
-    damage = (((2.0 * attacker->getLevel() + 10.0) / 250.0) *
-              (spOrNot) * pureDamage + 2.0);
+    damage = (((2.0 * attacker->getLevel() + 10.0) / 250.0) * spOrNot * pureDamage + 2.0);
     
     totalDamage = damage * modifier;
     
@@ -1723,24 +1815,52 @@ void Pokemon::applyAttack(Pokemon* target, Move* move)
     {
         if (crit > 1.0)
             cout << "A critical hit!" << endl;
-        if (typeBoost > 1.0)
-            cout << "It's super effective!" << endl;
-        else if (typeBoost < 1.0)
-            cout << "It's not very effective..." << endl;
+        
+        if (!silent)
+        {
+            if (typeBoost > 1.0)
+                cout << "It's super effective!" << endl;
+            else if (typeBoost < 1.0)
+                cout << "It's not very effective..." << endl;
+        }
     }
     
     phld1 = target->getStatsStatus(HPStat);
-    target->decreaseHP(totalDamage);
-    phld2 = phld1 - target->getStatsStatus(HPStat);
     
-    if (move->getEffect() == MOHKO)
-        // OHKO move that hit (since it made it here)
-        cout << "It's a one-hit KO!" << endl;
+    if (target->hasVStatus(SubVStatus))
+        // Substitute
+    {
+        int tmp = target->m_sub->getHP();
+        
+        if (!silent)
+            cout << "The substitute took damage for " << target->getName() << "!" << endl;
+        
+        if (target->m_sub->decreaseHP(totalDamage))
+        {
+            delete target->m_sub;
+            cout << "The substitute faded!" << endl;
+        }
+        
+        tmp -= target->m_sub->getHP();
+        applyAttackerEffect(target, move, tmp);
+        
+        return;
+    }
+    else
+    {
+        target->decreaseHP(totalDamage);
+        phld2 = phld1 - target->getStatsStatus(HPStat);
+        
+        if (move->getEffect() == MOHKO)
+            // OHKO move that hit (since it made it here)
+            cout << "It's a one-hit KO!" << endl;
+        applyAttackerEffect(target, move, phld2);
+    }
     
-    applyEffect(target, move, phld2);
+    applyTargetEffect(target, move);
 }
 
-void Pokemon::applyEffect(Pokemon* target, Move* move, int damage)
+void Pokemon::applyAttackerEffect(Pokemon* target, Move* move, int damage)
 {
     Pokemon* attacker = this;
     MoveEffect effect = move->getEffect();
@@ -1761,10 +1881,45 @@ void Pokemon::applyEffect(Pokemon* target, Move* move, int damage)
         attacker->decreaseStat(SpAStat, 2);
     }
     
+    if (effect == MLowerAttDefSelf)
+        // Superpower
+    {
+        attacker->decreaseStat(AttStat);
+        attacker->decreaseStat(DefStat);
+    }
+    
+    if (effect == MLowerDefSpDSelf)
+        // Close Combat
+    {
+        attacker->decreaseStat(DefStat);
+        attacker->decreaseStat(SpDStat);
+    }
+    
+    if (effect == MLowerDefSpDSpeSelf)
+        // V-create
+    {
+        attacker->decreaseStat(DefStat);
+        attacker->decreaseStat(SpDStat);
+        attacker->decreaseStat(SpeStat);
+    }
+    
     if (effect == MAnnihilation)
         // Annihilation effect
     {
         attacker->decreaseStat(AttStat, 2);
+    }
+    
+    if (effect == MUpAll10 && randInt(0, 9) < 1)
+        // Ancient Power
+    {
+        for (int i = AttStat; i <= SpeStat; i++)
+            attacker->increaseStat(i);
+    }
+    
+    if (effect == MUpSpA50 && randInt(0, 1) < 1)
+        // Charge beam
+    {
+        attacker->increaseStat(SpAStat);
     }
     
     // Drain
@@ -1805,6 +1960,20 @@ void Pokemon::applyEffect(Pokemon* target, Move* move, int damage)
         }
     }
     
+    if (effect == MBatonPass)
+        // U-Turn
+    {
+        cout << getName() << " went back to " << getTrainer()->getTitleName() << "!" << endl;
+        getTrainer()->trainerSummon(false, true);
+    }
+    
+    if (attacker->getItem()->getID() == HLifeOrb)
+        // Life Orb recoil
+    {
+        cout << getName() << " lost some of its HP!" << endl;
+        attacker->decreaseHP(getBaseStats(HPStat) / 10);
+    }
+    
     // Contact side effects
     if (move->getContact())
     {
@@ -1821,7 +1990,12 @@ void Pokemon::applyEffect(Pokemon* target, Move* move, int damage)
             target->decreaseHP(target->getStats(HPStat));
         }
     }
-    
+}
+
+void Pokemon::applyTargetEffect(Pokemon* target, Move* move, int damage)
+{
+    MoveEffect effect = move->getEffect();
+
     // Target side-effects
     
     if (target->isFainted() || target->getStats(HPStat) == 0)
@@ -1994,9 +2168,7 @@ void Pokemon::applySideEffects(Move* move)
     
     if (move->getEffect() == MSelfdestruct)
         // Self Destruct or Explosion
-    {
         decreaseHP(getStats(HPStat));
-    }
     
     if (move->getEffect() == MFocusPunch)
         // Focus punch
@@ -2129,4 +2301,18 @@ void Pokemon::statusEffect()
     }
     
     pokemon->decTauntTurns();
+}
+
+// Substitute ////////////////////////////////////////////////////////////////
+
+bool Substitute::decreaseHP(int howMuch)
+{
+    s_HP -= howMuch;
+    if (s_HP <= 0)
+    {
+        s_pokemon->removeVStatus(SubVStatus);
+        return true;
+    }
+    else
+        return false;
 }

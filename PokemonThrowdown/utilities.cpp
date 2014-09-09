@@ -12,6 +12,7 @@
 #include <cctype>
 #include <string>
 #include <limits>
+#include <vector>
 #include <iostream>
 using namespace std;
 
@@ -310,3 +311,86 @@ void confirmGadget(string message)
     string confirm[1] = { message };
     choice = selectorGadget(confirm, 1, prog, 1, false);
 }
+
+void backGadget()
+{
+    int prog = 0;
+    const int numOpts = 0;
+    string void_opts[numOpts];
+    
+    selectorGadget(void_opts, numOpts, prog);
+}
+
+void searchGadget()
+{
+    vector<int> matches;
+}
+
+/*
+case 1:
+{
+    vector<int> matches;
+    string buffer;
+re_search___:
+    cout << "Enter search term (type \":q\" to cancel search):" << endl;
+    getline(cin, buffer);
+    
+    if (buffer == ":q")
+    return false;
+    
+    for (int i = 1; i < (moves ? MAXNUMMOVES : MAXNUMPOKEMON); i++)
+    {
+        string candidate = (moves ? movelib[i].name : pokelib[i].name), term = buffer;
+        
+        for (int j = 0; j < candidate.length(); j++)
+            candidate[j] = tolower(candidate[j]);
+        for (int j = 0; j < term.length(); j++)
+            term[j] = tolower(term[j]);
+        
+        if (candidate.find(term) != -1)
+            matches.push_back(i);
+    }
+    
+    if (matches.empty())
+    {
+        cout << "No " << (moves ? "Moves" : "Pokemon") << " match the search terms!" << endl;
+        goto re_search___;
+    }
+    
+    string* matchStrings = new string[matches.size()];
+    
+    for (int i = 0; i < matches.size(); i++)
+    {
+        ostringstream tmp;
+        tmp << (moves ? movelib[matches[i]].name : pokelib[matches[i]].name) << " (#" << (moves ? movelib[matches[i]].ID : pokelib[matches[i]].ID) << ")";
+        matchStrings[i] = tmp.str();
+    }
+    
+    for (;;)
+    {
+        choice = selectorGadget(matchStrings, static_cast<int>(matches.size()), prog, 10);
+        if (choice != BACK)
+        {
+            if (moves ? choseMove(matches[choice]) : chosePokemon(matches[choice]))
+            {
+                if (moves)
+                    pokedynamicarray[whichTrainer][whichPokemon].moveIDs[whichMove] = matches[choice];
+                else
+                    pokedynamicarray[whichTrainer][whichPokemon].index = matches[choice];
+            }
+            else
+                continue;
+            break;
+        }
+        else
+        {
+            delete[] matchStrings;
+            matches.clear();
+            goto re_search___;
+        }
+    }
+    
+    delete[] matchStrings;
+    }
+    break;
+*/

@@ -9,13 +9,16 @@
 #include "Computer.h"
 #include "Pokemon.h"
 #include "Battle.h"
+#include "Field.h"
+#include "Side.h"
+#include "Slot.h"
 #include "Ability.h"
 #include "utilities.h"
 #include <stack>
 using namespace std;
 
-Computer::Computer(trainerdata h, Battle* battle)
-: Trainer(h, battle)
+Computer::Computer(trainerdata h, Battle* battle, int whichTrainer)
+: Trainer(h, battle, whichTrainer)
 {
     m_difficulty = 1;
 }
@@ -185,7 +188,7 @@ bool Computer::choosePokemon()
     return true;
 }
 
-bool Computer::trainerSummon(bool optional)
+bool Computer::trainerSummon(bool optional, bool uTurn)
 {
     int pokemonLeft = 0, choice;
     
@@ -204,9 +207,18 @@ bool Computer::trainerSummon(bool optional)
         {
             if (choice == 0)
             {
-                // Set intended switch
-                setIntendedSwitch(i);
-                setIntendedMove(SwitchDecision);
+                if (uTurn)
+                {
+                    setIntendedSwitch(i);
+                    switchPokemon(false);
+                    getBattle()->getField()->getSide(1)->getSlot(0)->fillSlot(getPokemon());
+                }
+                else
+                {
+                    // Set intended switch
+                    setIntendedSwitch(i);
+                    setIntendedMove(SwitchDecision);
+                }
                 
                 break;
             }

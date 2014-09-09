@@ -8,22 +8,23 @@
 
 #include "Field.h"
 #include "Side.h"
+#include "Game.h"
 #include "Battle.h"
 #include "strings.h"
 #include "utilities.h"
-#include "settings.h"
+#include "Settings.h"
 using namespace std;
 
 Field::Field(Battle* battle, int X, int Y)
 : Zone(X, Y, 1, 2)
 {
-    m_location = static_cast<Location>(locationID);
     m_battle = battle;
+    m_location = static_cast<Location>(getBattle()->getGame()->getSettings()->getLocationID());
     
-    if (weatherID == RandomWeather)
+    if (getBattle()->getGame()->getSettings()->getWeatherID() == RandomWeather)
         m_weather = static_cast<Weather>(randInt(NoWeather, Twilight));
     else
-        m_weather = static_cast<Weather>(weatherID);
+        m_weather = static_cast<Weather>(getBattle()->getGame()->getSettings()->getWeatherID());
     
     for (int i = 0; i < NUMSIDES; i++)
         m_sides[i] = new Side(this, X, Y);

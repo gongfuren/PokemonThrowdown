@@ -8,6 +8,9 @@
 
 #include "Player.h"
 #include "Battle.h"
+#include "Field.h"
+#include "Side.h"
+#include "Slot.h"
 #include "constants.h"
 #include "strings.h"
 #include "utilities.h"
@@ -16,8 +19,8 @@
 #include <sstream>
 using namespace std;
 
-Player::Player(trainerdata h, Battle* battle)
-: Trainer(h, battle)
+Player::Player(trainerdata h, Battle* battle, int whichTrainer)
+: Trainer(h, battle, whichTrainer)
 {
     
 }
@@ -110,7 +113,7 @@ bool Player::isComputer() const
     return false;
 }
 
-bool Player::trainerSummon(bool optional)
+bool Player::trainerSummon(bool optional, bool uTurn)
 {
     int choice, i, prog = 0;
     bool rerun = false;
@@ -222,9 +225,18 @@ bool Player::trainerSummon(bool optional)
     }
     while (rerun);
     
-    // Set intended switch
-    setIntendedSwitch(choice);
-    setIntendedMove(SwitchDecision);
+    if (uTurn)
+    {
+        setIntendedSwitch(choice);
+        switchPokemon(false);
+        getBattle()->getField()->getSide(0)->getSlot()->fillSlot(getPokemon());
+    }
+    else
+    {
+        // Set intended switch
+        setIntendedSwitch(choice);
+        setIntendedMove(SwitchDecision);
+    }
     
     return true;
 }

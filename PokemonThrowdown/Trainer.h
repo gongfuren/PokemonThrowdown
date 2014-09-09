@@ -22,7 +22,7 @@ class Trainer
 // Pokemon, and his/her/its current state
 {
 public:
-    Trainer(trainerdata h, Battle* battle);
+    Trainer(trainerdata h, Battle* battle, int whichTrainer = 0);
     virtual ~Trainer();
     
     void setCurrent(int current);
@@ -64,7 +64,7 @@ public:
     
     void checkFaint();
     virtual bool choosePokemon() = 0;
-    virtual bool trainerSummon(bool optional) = 0;
+    virtual bool trainerSummon(bool optional, bool uTurn = false) = 0;
     bool replacePokemon();
     bool chooseBag() const;
     

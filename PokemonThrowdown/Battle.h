@@ -16,6 +16,7 @@
 class Trainer;
 class Pokemon;
 class Move;
+class Game;
 
 struct trainerdata;
 struct movedata;
@@ -27,8 +28,11 @@ class Battle
 {
 public:
     // Construct the Battle
-    Battle();
+    Battle(Game* game);
     ~Battle();
+    
+    // Configure the Battle
+    bool configure();
     
     // Start the Battle
     void start();
@@ -42,6 +46,7 @@ public:
     int getPreMoveIDs(int trainer, int pokemon, int moveslot) const;
     int* getPreMoveIDs() const;
     int getNumPlayers() const;
+    Game* getGame();
     
     // Mutator functions
     bool setPlayer(Trainer* player);
@@ -83,13 +88,16 @@ private:
     int browse(bool p = true) const;
     int randomChoice(bool p = true) const;
     void dispMoveInfo(const movedata* m) const;
-    bool chosePokemon(int p, bool* r, bool m = true, bool i = true, bool dynamic = false, bool custom = false, int ci = -1) const;
+    bool chosePokemon(int p, bool* r, bool m = true, bool i = true, bool dynamic = false, bool custom = false, int ci = -1);
     
     // Main Battle cycle, calls the respective phases
     void cycle();
     
     // Have participants choose their lead Pokemon
     void chooseLead();
+    
+    // Greeting for battle
+    void greet();
     
     // Five Battle phases:
     
@@ -123,6 +131,7 @@ private:
     void swap(Trainer** trainerA, Trainer** trainerB);
     
     // Data members
+    Game* m_game;
     Field* m_field;
     Trainer* m_player;
     Trainer* m_player2;

@@ -7,131 +7,29 @@
 //
 
 #include <iostream>
-#include <string>
-#include <ctime>
-#include <unistd.h>
-#include <cstdlib>
-#include "constants.h"
-#include "utilities.h"
-#include "Battle.h"
-#include "strings.h"
-#include "settings.h"
+#include <ctime> // time()
+#include <unistd.h> // getopt()
+#include <cstdlib> // srand()
+#include "Game.h"
 using namespace std;
 
-// CL Option Vars
+// Command Line
 
 bool savingEnabled = true;
-
-// Helper Function Declarations
-
 static void commandLineParser(int argc, char* argv[]);
-static void usage(char* argn);
-static void titleScreen();
-static void startBattle();
-static void displayCredits();
-static void displayHelp(char* argn);
 
 // Main //////////////////////////////////////////////////////////////////////
 
 int main(int argc, char* argv[])
 {
-    bool reflashTitle = false, rerun = true;
-    int prog = 0;
-    const int numOpts = 6;
-    string opts[numOpts] = { "Play", "Trainers", "Settings", "Credits", "Help", "Quit" };
-    
     // Command line arguments (if any)
     commandLineParser(argc, argv);
     
-    // Title Banner
-    titleScreen();
-    
     // Initialize environment
     srand(static_cast<unsigned int>(time(NULL))); // RNG
-    loadSettings(); // Settings
     
-    while (rerun)
-    {
-        // Title Screen
-        if (reflashTitle)
-            titleScreen();
-        else
-            reflashTitle = !reflashTitle;
-        
-        switch (selectorGadget(opts, numOpts, prog, numOpts, false))
-        {
-            case 0:
-                startBattle();
-                break;
-            case 1:
-                customTrainers();
-                break;
-            case 2:
-                configureSettings();
-                break;
-            case 3:
-                displayCredits();
-                break;
-            case 4:
-                displayHelp(argv[0]);
-                break;
-            default:
-                rerun = false;
-        }
-    }
-}
-
-// Helper Functions //////////////////////////////////////////////////////////
-
-static void titleScreen()
-{
-    cout << "O***0***O***0***O***0" << endl
-    << "* Pokemon Throwdown * " << VERSIONNUMBER << endl
-    << "0***O***0***O***0***O" << endl;
-}
-
-static void startBattle()
-{
-    Battle b;
-    b.start();
-}
-
-static void displayCredits()
-{
-    cout << "PokemonThrowdown:" << endl;
-    
-    cout << "An originally-coded Pokemon simulator that is true to the game." << endl
-    
-    << "All credit goes to Nintendo for original game design, mechanics, etc." << endl
-    
-    << "Made by a huge fan." << endl;
-    
-    confirmGadget();
-    
-    cout << "throwdown (n.) informal" << endl
-    << "a performance by or competition between rappers, breakdancers, etc." << endl
-    << "ex: a funky hip-hop throwdown." << endl;
-    
-    cout << "Pokemon \"Throwdown\" is a play on the popular web-based Pokemon Showdown battle simulator." << endl
-    
-    << "(C) 2013-2014 Ian P. Cordero." << endl;
-    // Contributors feel free to add your names here.
-    
-    confirmGadget();
-}
-
-static void displayHelp(char* argn)
-{
-    cerr << "Pokemon Throwdown Command Line Interface" << endl;
-    
-    usage(argn);
-    
-    confirmGadget();
-    
-    cerr << "Options Breakdown:" << endl
-    << "-d\n\tDisable save file capability (team export will still be available)." << endl;
-    
-    confirmGadget();
+    // Begin Game
+    Game g;
 }
 
 // Command Line //////////////////////////////////////////////////////////////

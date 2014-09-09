@@ -58,7 +58,7 @@ const int NUMPOKEMONPERPLAYER[NUMPLAYERS] = { 1, 1 };
 const int MAXPOKEMON = 6;
 const int MAXPLAYERS = 4;
 
-const int MAXNUMMOVES = 651;
+const int MAXNUMMOVES = 652;
 const int MAXNUMPOKEMON = 801;
 
 const int MAXTOTALMOVES = MAXNUMMOVES;
@@ -69,59 +69,59 @@ const int MAXTOTALBATTLES = 100;
 
 const int MAXTYPES = 18 + 1 + 2;    // "Actual" types + NoType + Neutral/Light
 
-const double ELE0 = 0.00;
-const double ELE5 = 0.50;
-const double ELE1 = 1.00;
-const double ELE2 = 2.00;
+const double EL0 = 0.00;
+const double EL5 = 0.50;
+const double EL1 = 1.00;
+const double EL2 = 2.00;
 
 // Attacking Type j, Defending Type i
 const double typeArray[MAXTYPES][MAXTYPES] = {
     
  // NO    NRM   GRS   FIR   WTR   ELE   ICE   BUG   PSN   FGT   FLY   GRD   RCK   GHT   PSY   DRG   DRK   STL   FRY   NTL   LIT
     
-    ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, // NO
+    EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, // NO
     
-    ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE5, ELE0, ELE1, ELE1, ELE1, ELE5, ELE1, ELE1, ELE1, // NRM
+    EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL5, EL0, EL1, EL1, EL1, EL5, EL1, EL1, EL1, // NRM
     
-    ELE1, ELE1, ELE5, ELE5, ELE2, ELE1, ELE1, ELE1, ELE5, ELE1, ELE5, ELE2, ELE2, ELE1, ELE1, ELE5, ELE1, ELE5, ELE1, ELE1, ELE1, // GRS
+    EL1, EL1, EL5, EL5, EL2, EL1, EL1, EL1, EL5, EL1, EL5, EL2, EL2, EL1, EL1, EL5, EL1, EL5, EL1, EL1, EL1, // GRS
     
-    ELE1, ELE1, ELE2, ELE5, ELE5, ELE1, ELE2, ELE2, ELE1, ELE1, ELE1, ELE1, ELE5, ELE1, ELE1, ELE5, ELE1, ELE2, ELE1, ELE1, ELE1, // FIR
+    EL1, EL1, EL2, EL5, EL5, EL1, EL2, EL2, EL1, EL1, EL1, EL1, EL5, EL1, EL1, EL5, EL1, EL2, EL1, EL1, EL1, // FIR
     
-    ELE1, ELE1, ELE5, ELE2, ELE5, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE2, ELE2, ELE1, ELE1, ELE5, ELE1, ELE1, ELE1, ELE1, ELE1, // WTR
+    EL1, EL1, EL5, EL2, EL5, EL1, EL1, EL1, EL1, EL1, EL1, EL2, EL2, EL1, EL1, EL5, EL1, EL1, EL1, EL1, EL1, // WTR
     
-    ELE1, ELE1, ELE5, ELE1, ELE2, ELE5, ELE1, ELE1, ELE1, ELE1, ELE2, ELE0, ELE1, ELE1, ELE1, ELE5, ELE1, ELE1, ELE1, ELE1, ELE1, // ELE
+    EL1, EL1, EL5, EL1, EL2, EL5, EL1, EL1, EL1, EL1, EL2, EL0, EL1, EL1, EL1, EL5, EL1, EL1, EL1, EL1, EL1, // ELE
     
-    ELE1, ELE1, ELE2, ELE5, ELE5, ELE1, ELE5, ELE1, ELE1, ELE1, ELE2, ELE2, ELE1, ELE1, ELE1, ELE2, ELE1, ELE5, ELE1, ELE1, ELE1, // ICE
+    EL1, EL1, EL2, EL5, EL5, EL1, EL5, EL1, EL1, EL1, EL2, EL2, EL1, EL1, EL1, EL2, EL1, EL5, EL1, EL1, EL1, // ICE
     
-    ELE1, ELE1, ELE2, ELE5, ELE1, ELE1, ELE1, ELE1, ELE5, ELE5, ELE5, ELE5, ELE1, ELE5, ELE2, ELE1, ELE2, ELE5, ELE5, ELE1, ELE1, // BUG
+    EL1, EL1, EL2, EL5, EL1, EL1, EL1, EL1, EL5, EL5, EL5, EL5, EL1, EL5, EL2, EL1, EL2, EL5, EL5, EL1, EL1, // BUG
     
-    ELE1, ELE1, ELE2, ELE1, ELE1, ELE1, ELE1, ELE5, ELE5, ELE5, ELE1, ELE5, ELE5, ELE1, ELE1, ELE1, ELE1, ELE0, ELE2, ELE1, ELE1, // PSN
+    EL1, EL1, EL2, EL1, EL1, EL1, EL1, EL5, EL5, EL5, EL1, EL5, EL5, EL1, EL1, EL1, EL1, EL0, EL2, EL1, EL1, // PSN
     
-    ELE1, ELE2, ELE1, ELE1, ELE1, ELE1, ELE2, ELE5, ELE5, ELE1, ELE5, ELE1, ELE2, ELE0, ELE5, ELE1, ELE2, ELE2, ELE5, ELE1, ELE1, // FGT
+    EL1, EL2, EL1, EL1, EL1, EL1, EL2, EL5, EL5, EL1, EL5, EL1, EL2, EL0, EL5, EL1, EL2, EL2, EL5, EL1, EL1, // FGT
     
- // NO    NRM   GRS   FIR   WTR   ELE   ICE   BUG   PSN   FGT   FLY   GRD   RCK   GHT   PSY   DRG   DRK   STL   FRY   NTL   LIT
+ // NO   NRM  GRS  FIR  WTR  ELE  ICE  BUG  PSN  FGT  FLY  GRD  RCK  GHT  PSY  DRG  DRK  STL  FRY  NTL  LIT
     
-    ELE1, ELE1, ELE2, ELE1, ELE1, ELE5, ELE1, ELE2, ELE1, ELE2, ELE1, ELE1, ELE5, ELE1, ELE1, ELE1, ELE1, ELE5, ELE1, ELE1, ELE1, // FLY
+    EL1, EL1, EL2, EL1, EL1, EL5, EL1, EL2, EL1, EL2, EL1, EL1, EL5, EL1, EL1, EL1, EL1, EL5, EL1, EL1, EL1, // FLY
     
-    ELE1, ELE1, ELE5, ELE2, ELE1, ELE2, ELE1, ELE5, ELE2, ELE1, ELE0, ELE1, ELE2, ELE1, ELE1, ELE1, ELE1, ELE2, ELE1, ELE1, ELE1, // GRD
+    EL1, EL1, EL5, EL2, EL1, EL2, EL1, EL5, EL2, EL1, EL0, EL1, EL2, EL1, EL1, EL1, EL1, EL2, EL1, EL1, EL1, // GRD
     
-    ELE1, ELE1, ELE1, ELE2, ELE1, ELE1, ELE2, ELE2, ELE1, ELE5, ELE2, ELE5, ELE1, ELE1, ELE1, ELE1, ELE1, ELE5, ELE1, ELE1, ELE1, // RCK
+    EL1, EL1, EL1, EL2, EL1, EL1, EL2, EL2, EL1, EL5, EL2, EL5, EL1, EL1, EL1, EL1, EL1, EL5, EL1, EL1, EL1, // RCK
     
-    ELE1, ELE0, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE2, ELE2, ELE1, ELE5, ELE1, ELE1, ELE1, ELE5, // GHT
+    EL1, EL0, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL2, EL2, EL1, EL5, EL1, EL1, EL1, EL5, // GHT
     
-    ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE2, ELE2, ELE1, ELE1, ELE1, ELE1, ELE5, ELE1, ELE0, ELE5, ELE1, ELE1, ELE1, // PSY
+    EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL2, EL2, EL1, EL1, EL1, EL1, EL5, EL1, EL0, EL5, EL1, EL1, EL1, // PSY
     
-    ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE2, ELE1, ELE5, ELE0, ELE1, ELE1, // DRG
+    EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL2, EL1, EL5, EL0, EL1, EL1, // DRG
     
-    ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE5, ELE1, ELE1, ELE1, ELE2, ELE2, ELE1, ELE5, ELE1, ELE5, ELE1, ELE2, // DRK
+    EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL5, EL1, EL1, EL1, EL2, EL2, EL1, EL5, EL1, EL5, EL1, EL2, // DRK
     
-    ELE1, ELE1, ELE1, ELE5, ELE5, ELE5, ELE2, ELE1, ELE1, ELE1, ELE1, ELE1, ELE2, ELE1, ELE1, ELE1, ELE1, ELE5, ELE2, ELE1, ELE1, // STL
+    EL1, EL1, EL1, EL5, EL5, EL5, EL2, EL1, EL1, EL1, EL1, EL1, EL2, EL1, EL1, EL1, EL1, EL5, EL2, EL1, EL1, // STL
     
-    ELE1, ELE1, ELE1, ELE5, ELE1, ELE1, ELE1, ELE1, ELE5, ELE2, ELE1, ELE1, ELE1, ELE1, ELE1, ELE2, ELE2, ELE5, ELE1, ELE1, ELE1, // FRY
+    EL1, EL1, EL1, EL5, EL1, EL1, EL1, EL1, EL5, EL2, EL1, EL1, EL1, EL1, EL1, EL2, EL2, EL5, EL1, EL1, EL1, // FRY
     
-    ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, // NTL
+    EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, // NTL
     
-    ELE1, ELE1, ELE5, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE1, ELE2, ELE1, ELE1, ELE2, ELE1, ELE1, ELE1, ELE5  // LIT
+    EL1, EL1, EL5, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL2, EL1, EL1, EL2, EL1, EL1, EL1, EL5  // LIT
 };
 
 const int NUMNATURES = 26;
@@ -270,41 +270,65 @@ enum Gender
     Male, Female, NoGender, Genderless
 };
 
-enum BattleType
-{
-    SingleBattle, DoubleBattle, TripleBattle, RotationBattle, HoardBattle
-};
-
 // TODO: organize and consolidate move effects
 enum MoveEffect
 {
     MNoEffect,
     
+    // Status
     MPoison10, MPoison15, MPoison30, MPoison40, MToxic100, MBurn10, MBurn15, MBurn30, MFreeze10, MFreeze50, MParalyze10, MParalyze15, MParalyze30, MParalyze100, MConfuse10, MConfuse20, MConfuse100, MTri20, MConfuse, MAttract, MBurn, MSleep, MParalyze, MToxic, MPoison, MFlinch10, MFlinch20, MFlinch30, MFlinch100, MCrit100, MSleep50,
     
-    MLowerAtt, MLowerDef, MLowerSpA, MLowerSpD, MLowerSpe, MLowerAcc, MLowerEva, MLowerAcc100, MLowerAttDef, MLowerSpD10, MLowerSpD20, MLowerSpD40, MLowerSpD50, MLowerSpA100, MUpAtt, MUpDef, MUpSpA, MUpSpD, MUpSpe, MUpAcc, MUpEva, MUpDef10, MUpAtt100, MUpRnd, MUpAtt2, MUpDef2, MUpSpA2, MUpSpD2, MUpSpe2, MUpAcc2, MUpEva2, MUpSpA3, MUpDef3, MLowerAtt2, MLowerDef2, MLowerSpA2, MLowerSpD2, MLowerSpe2, MLowerAcc2, MLowerEva2, MLowerDefSpDUpAtt2SpA2Spe2, MLowerSpeUpAttDef, MUpSpASpD, MUpSpASpDSpe, MUpAttDefSpe, MUpAttSpe, MUpAttDef, MUpAttSpA, MUpDefSpD, MUpAttAcc, MUpAttSpe2, MUpAll, MUpAll10,
+    // Stat Changes
+    MLowerAtt, MLowerDef, MLowerSpA, MLowerSpD, MLowerSpe, MLowerAcc, MLowerEva, MLowerAcc100, MLowerAttDef, MLowerSpD10, MLowerSpD20, MLowerSpD40, MLowerSpD50, MLowerSpA100, MUpAtt, MUpDef, MUpSpA, MUpSpD, MUpSpe, MUpAcc, MUpEva, MUpDef10, MUpAtt100, MUpRnd, MUpAtt2, MUpDef2, MUpSpA2, MUpSpD2, MUpSpe2, MUpAcc2, MUpEva2, MUpSpA3, MUpDef3, MLowerAtt2, MLowerDef2, MLowerSpA2, MLowerSpD2, MLowerSpe2, MLowerAcc2, MLowerEva2, MLowerDefSpDUpAtt2SpA2Spe2, MLowerSpeUpAttDef, MUpSpASpD, MUpSpASpDSpe, MUpAttDefSpe, MUpAttSpe, MUpAttDef, MUpAttSpA, MUpDefSpD, MUpAttAcc, MUpAttSpe2, MUpAll, MUpSpD3,
     
+    // Special 1
     MMoveFirst, MMoveFirst2, MHighCrit, MNeverMiss, MOHKO, MMultiHit, MDoubleHit, MRecharge, MOverheat, MAnnihilation, MCharge, MDamage20, MDamage40, MDamageLevel, MIgnoreDef100, MRampage, MProtect, MShield, MFocusPunch, MCounter, MRoar, MSuckerPunch, MSelfdestruct, MSolarbeam, MRazorwind, MSkullbash, MSkyAttack, MSkyDrop, MShadowForce, MFly, MDive, MDig, MPhantomForce, MSplash,
     
-    MLowerAttDefSelf, MLowerDefSpDSelf, MLowerDefSpDSpeSelf,
+    // Stat Changes
+    MLowerAttDefSelf, MLowerDefSpDSelf, MLowerDefSpDSpeSelf, MUpSpA50, MUpAll10,
     
+    // HP Effects
     MHeal50, MHeal100, MDrain50, MDrain75, MRecoil25, MRecoil33, MRecoilStrug, MRecoilHalf,
     
+    // Weather
     MRain, MSun, MHail, MSandstorm, MTrickRoom, MGravity, MTwilight,
     
-    MBind, MWrap, MFireSpin, MWhirlpool, MMagmaStorm, MSandTomb, MStomp, MMinimize, MJumpKick, MPayDay, MShockDef, MRage, MFuryCut, MTeleport, MDisable, MBatonPass, MTrap, MPartialTrap, MSub, MHazard, MDehazard, MReflect, MLightScreen, MVitalThrow, MFoul, MSplit, MTaunt
+    // Special 2
+    MBind, MWrap, MFireSpin, MWhirlpool, MMagmaStorm, MSandTomb, MStomp, MMinimize, MJumpKick, MPayDay, MShockDef, MRage, MFuryCut, MTeleport, MDisable, MBatonPass, MTrap, MPartialTrap, MSub, MHazard, MDehazard, MReflect, MLightScreen, MVitalThrow, MFoul, MSplit, MTaunt, MStored
 };
 
 const int NUMTRACKS = 11;
 enum musicTracks
 {
-    NoMusic, BWTrainer, PBRGateway, XYTrainer, RBYTrainer, RBYFinal, RBYChampion, RSEChampion, DPPtChampion, XYChampion, RSETrainer
+    NoMusic, PBRGateway, BWTrainer, XYTrainer, RBYTrainer, RBYFinal, RBYChampion, RSEChampion, DPPtChampion, XYChampion, RSETrainer
+};
+
+const int NUMBATTLETYPES = 1;
+const int NUMBATTLERULES = 1;
+const int NUMBATTLELEVELS = 1;
+
+enum BattleType
+{
+    SingleBattle, DoubleBattle, TripleBattle, RotationBattle, HoardBattle
+};
+
+enum BattleRule
+{
+    NoRestrictions
+};
+
+enum BattleLevel
+{
+    BLAny, BL100, BL50, BL5
 };
 
 const int NUMTRAINERS = 6;
 const int MAXCTRAINERS = 10;
-const int POKEDYLIBSIZE = MAXPOKEMON * NUMTRAINERS;
 
 const int DF = 787;
+
+const int MAXVOLUMELEVEL = 100;
+const int MINVOLUMELEVEL = 0;
+const int VOLUMEINCREMENTS = 10;
 
 #endif /* defined(__PokemonThrowdown__Constants__) */

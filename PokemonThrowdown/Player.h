@@ -17,14 +17,14 @@ class Player : public Trainer
 // Represents a human controlled Trainer
 {
 public:
-    Player(trainerdata h, Battle* battle);
+    Player(trainerdata h, Battle* battle, int whichTrainer = 0);
     ~Player();
     
     virtual void actionSelect();
     virtual bool chooseRun();
     virtual bool choosePokemon();
     virtual bool isComputer() const;
-    virtual bool trainerSummon(bool optional);
+    virtual bool trainerSummon(bool optional, bool uTurn = false);
     bool chooseFight();
     
 private:

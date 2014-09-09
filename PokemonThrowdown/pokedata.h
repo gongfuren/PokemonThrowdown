@@ -53,45 +53,7 @@ struct pokedynamicdata
     int currentAbility;
 };
 
-const pokedynamicdata pokedynamiclib[POKEDYLIBSIZE] = {
-    // Zapdos
-    145,    "", RashNature,   -1, -1, -1, -1, -1, -1, HNoItem,
-    252, 0, 0, 252, 0, 6, 100,    432, 257, 85, 355,   Genderless, 0,
-    // Chansey
-    113,    "Eggy Azalea", CalmNature,   -1, -1, -1, -1, -1, -1, HEviolite,
-    252, 0, 252, 0, 6, 0, 100,    69, 135, 312, 92, Female,   0,
-    // Cloyster
-    91,    "", NaughtyNature,   -1, -1, -1, -1, -1, -1, HNoItem,
-    0, 252, 0, 252, 0, 6, 100,    350, 333, 420, 504,   Male, 0,
-    // Dragonite
-    149,    "", AdamantNature,   -1, -1, -1, -1, -1, -1, HNoItem,
-    6, 252, 0, 0, 0, 252, 100,    349, 200, 89, 355,    Male,   0,
-    // Mew
-    151,    "Nyan Cat", RashNature,   -1, -1, -1, -1, -1, -1, HLeftovers,
-    252, 0, 0, 252, 0, 6, 100,    282, 473, 105, 347,  Genderless, 0,
-    // Mewtwo
-    150,    "", MildNature,   -1, -1, -1, -1, -1, -1, HMewtwoniteY,
-    252, 0, 6, 252, 0, 0, 100,    396, 540, 247, 94,    Genderless,    0,
-    
-    // Volcarona
-    637,    "", TimidNature,   31, 31, 31, 31, 31, 31, HLifeOrb,
-    6, 0, 0, 252, 0, 252, 100,    542, 552, 405, 483,   Female, 0,
-    // Clefable
-    36,    "Carnatia", BoldNature,   31, 31, 31, 31, 31, 31, HLeftovers,
-    252, 0, 126, 6, 126, 0, 100,    322, 585, 500, 236,     Female,   0,
-    // Aegislash
-    681,    "", AdamantNature,   31, 31, 31, 31, 31, 31, HLeftovers,
-    252, 252, 0, 0, 6, 0, 100,    425, 533, 14, 588,    Male,   0,
-    // Hypergeo
-    788,    "", RashNature,   31, 31, 31, 31, 31, 31, HLeftovers,
-    0, 6, 0, 252, 0, 252, 100,    407, 295, 294, 646,  Genderless, 0,
-    // Constantinoble
-    798,    "", BraveNature,   31, 31, 31, 31, 31, 31, HLeftovers,
-    252, 252, 6, 0, 0, 0, 100,    643, 647, 533, 467,   Genderless, 0,
-    // Mawile
-    303,    "Eliza", AdamantNature,   31, 31, 31, 31, 31, 31, HMawilite,
-    252, 252, 6, 0, 0, 0, 100,    389, 583, 264, 164,    Female,    0,
-    
+const pokedynamicdata pokedynamiclib[NUMTRAINERS][MAXPOKEMON] = {
     // Espeon
     196,    "", TimidNature,   31, 31, 31, 31, 31, 31, HNoItem,
     6, 0, 0, 252, 0, 252, 100,    247, 347, 115, 94,     Male,   0,
@@ -110,6 +72,25 @@ const pokedynamicdata pokedynamiclib[POKEDYLIBSIZE] = {
     // Pikachu
     25,    "", RashNature,   31, 31, 31, 31, 31, 31, HLightBall,
     0, 6, 0, 252, 0, 252, 100,    344, 98, 87, 57,    Male,    0,
+    
+    // Zapdos
+    145,    "", RashNature,   -1, -1, -1, -1, -1, -1, HNoItem,
+    252, 0, 0, 252, 0, 6, 100,    432, 257, 85, 355,   Genderless, 0,
+    // Chansey
+    113,    "Eggy Azalea", CalmNature,   -1, -1, -1, -1, -1, -1, HEviolite,
+    252, 0, 252, 0, 6, 0, 100,    69, 135, 312, 92, Female,   0,
+    // Cloyster
+    91,    "", NaughtyNature,   -1, -1, -1, -1, -1, -1, HNoItem,
+    0, 252, 0, 252, 0, 6, 100,    350, 333, 420, 504,   Male, 0,
+    // Dragonite
+    149,    "", AdamantNature,   -1, -1, -1, -1, -1, -1, HNoItem,
+    6, 252, 0, 0, 0, 252, 100,    349, 200, 89, 355,    Male,   0,
+    // Mew
+    151,    "Nyan Cat", RashNature,   -1, -1, -1, -1, -1, -1, HLeftovers,
+    252, 0, 0, 252, 0, 6, 100,    282, 473, 105, 347,  Genderless, 0,
+    // Mewtwo
+    150,    "", MildNature,   -1, -1, -1, -1, -1, -1, HMewtwoniteY,
+    252, 0, 6, 252, 0, 0, 100,    396, 540, 247, 94,    Genderless,    0,
     
     // Umbreon
     197,    "", ImpishNature,   31, 31, 31, 31, 31, 31, HLeftovers,
@@ -130,6 +111,44 @@ const pokedynamicdata pokedynamiclib[POKEDYLIBSIZE] = {
     248,    "", AdamantNature,   31, 31, 31, 31, 31, 31, HTyranitarite,
     252, 252, 0, 0, 0, 6, 100,    242, 444, 89, 349,    Male,    0,
     
+    // Deoxys (Attack)
+    778,    "", RashNature,   31, 31, 31, 31, 31, 31, HFocusSash,
+    0, 252, 0, 252, 0, 6, 100,    354, 94, 247, 282,   Genderless, 0,
+    // Gengar
+    94,    "", CalmNature,   31, 31, 31, 31, 31, 31, HBlackSludge,
+    252, 0, 0, 252, 0, 6, 100,    164, 50, 247, 85,     Male,   0,
+    // Scizor
+    212,    "Annoying", AdamantNature,   31, 31, 31, 31, 31, 31, HScizorite,
+    252, 252, 0, 0, 0, 6, 100,    14, 418, 369, 355,   Male, 0,
+    // Hydreigon
+    635,    "", ModestNature,   31, 31, 31, 31, 31, 31, HLifeOrb,
+    6, 0, 0, 252, 0, 252, 100,    434, 276, 399, 53,    Male,   0,
+    // Knightingale
+    797,    "", QuietNature,   31, 31, 31, 31, 31, 31, HNoItem,
+    252, 0, 0, 252, 6, 0, 100,    59, 645, 400, 467,  Genderless, 0,
+    // Doppelganger
+    786,    "Katia", CalmNature,   31, 31, 31, 31, 31, 31, HNoItem,
+    252, 0, 126, 0, 126, 0, 100,    650, 137, -1, -1,    Genderless,    0,
+    
+    // Clefable
+    36,    "Carnatia", BoldNature,   31, 31, 31, 31, 31, 31, HLeftovers,
+    252, 0, 126, 6, 126, 0, 100,    322, 585, 500, 236,     Female,   0,
+    // Volcarona
+    637,    "", TimidNature,   31, 31, 31, 31, 31, 31, HLifeOrb,
+    6, 0, 0, 252, 0, 252, 100,    542, 552, 405, 483,   Female, 0,
+    // Aegislash
+    681,    "", AdamantNature,   31, 31, 31, 31, 31, 31, HLeftovers,
+    252, 252, 0, 0, 6, 0, 100,    425, 533, 14, 588,    Male,   0,
+    // Hypergeo
+    788,    "", RashNature,   31, 31, 31, 31, 31, 31, HLeftovers,
+    0, 6, 0, 252, 0, 252, 100,    407, 295, 294, 646,  Genderless, 0,
+    // Constantinoble
+    798,    "", BraveNature,   31, 31, 31, 31, 31, 31, HLeftovers,
+    252, 252, 6, 0, 0, 0, 100,    643, 647, 533, 467,   Genderless, 0,
+    // Mawile
+    303,    "Eliza", AdamantNature,   31, 31, 31, 31, 31, 31, HMawilite,
+    252, 252, 6, 0, 0, 0, 100,    389, 583, 264, 164,    Female,    0,
+    
     // Skarmory
     227,    "", AdamantNature,   -1, -1, -1, -1, -1, -1, HLeftovers,
     -1, -1, -1, -1, -1, -1, 100,    355, 18, 211, 191,   NoGender, 0,
@@ -148,25 +167,6 @@ const pokedynamicdata pokedynamiclib[POKEDYLIBSIZE] = {
     // Metagross
     376,    "", AdamantNature,   -1, -1, -1, -1, -1, -1, HMetagrossite,
     -1, -1, -1, -1, -1, -1, 100,    428, 468, 309, 359,    Genderless,    0,
-    
-    // Deoxys (Attack)
-    778,    "", RashNature,   31, 31, 31, 31, 31, 31, HFocusSash,
-    0, 252, 0, 252, 0, 6, 100,    354, 94, 247, 282,   Genderless, 0,
-    // Gengar
-    94,    "", CalmNature,   31, 31, 31, 31, 31, 31, HBlackSludge,
-    252, 0, 0, 252, 0, 6, 100,    164, 50, 247, 85,     Male,   0,
-    // Scizor
-    212,    "Annoying", AdamantNature,   31, 31, 31, 31, 31, 31, HScizorite,
-    252, 252, 0, 0, 0, 6, 100,    14, 418, 369, 355,   Male, 0,
-    // Hydreigon
-    635,    "", ModestNature,   31, 31, 31, 31, 31, 31, HLifeOrb,
-    6, 0, 0, 252, 0, 252, 100,    434, 406, 399, 53,    Male,   0,
-    // Knightingale
-    797,    "", QuietNature,   31, 31, 31, 31, 31, 31, HNoItem,
-    252, 0, 0, 252, 6, 0, 100,    59, 645, 400, 467,  Genderless, 0,
-    // Doppelganger
-    786,    "Katia", CalmNature,   31, 31, 31, 31, 31, 31, HNoItem,
-    252, 0, 126, 0, 126, 0, 100,    650, 137, -1, -1,    Genderless,    0,
 };
 
 const pokedata pokelib[MAXTOTALPOKEMON] = {
@@ -360,7 +360,7 @@ const pokedata pokelib[MAXTOTALPOKEMON] = {
     93,	"Haunter",	GhostType,	PoisonType,	45,	50,	45,	115,	55,	95,
 	NoGender,	PNoAbility,	PNoAbility,	PNoAbility,	"",
     94,	"Gengar",	GhostType,	PoisonType,	60,	65,	60,	130,	75,	110,
-	NoGender,	PNoAbility,	PNoAbility,	PNoAbility,	"",
+	NoGender,	PLevitate,	PNoAbility,	PNoAbility,	"",
     95,	"Onix",	RockType,	GroundType,	35,	45,	160,	30,	45,	70,
 	NoGender,	PNoAbility,	PNoAbility,	PNoAbility,	"",
     96,	"Drowzee",	PsychicType,	NoType,	60,	48,	45,	43,	90,	42,
@@ -596,7 +596,7 @@ const pokedata pokelib[MAXTOTALPOKEMON] = {
     211,	"Qwilfish",	WaterType,	PoisonType,	65,	95,	75,	55,	55,	85,
 	NoGender,	PNoAbility,	PNoAbility,	PNoAbility,	"",
     212,	"Scizor",	BugType,	SteelType,	70,	130,	100,	55,	80,	65,
-	NoGender,	PNoAbility,	PNoAbility,	PNoAbility,	"",
+	NoGender,	PTechnician,	PNoAbility,	PNoAbility,	"",
     213,	"Shuckle",	BugType,	RockType,	20,	10,	230,	10,	230,	5,
 	NoGender,	PNoAbility,	PNoAbility,	PNoAbility,	"",
     214,	"Heracross",	BugType,	FightingType,	80,	125,	75,	40,	95,	85,
@@ -744,7 +744,7 @@ const pokedata pokelib[MAXTOTALPOKEMON] = {
     285,	"Shroomish",	GrassType,	NoType,	60,	40,	60,	40,	60,	35,
 	NoGender,	PNoAbility,	PNoAbility,	PNoAbility,	"",
     286,	"Breloom",	GrassType,	FightingType,	60,	130,	80,	60,	60,	70,
-	NoGender,	PNoAbility,	PNoAbility,	PNoAbility,	"",
+	NoGender,	PNoAbility,	PNoAbility,	PTechnician,	"",
     287,	"Slakoth",	NormalType,	NoType,	60,	60,	60,	35,	35,	30,
 	NoGender,	PNoAbility,	PNoAbility,	PNoAbility,	"",
     288,	"Vigoroth",	NormalType,	NoType,	80,	80,	80,	55,	55,	90,
@@ -932,9 +932,9 @@ const pokedata pokelib[MAXTOTALPOKEMON] = {
     379,	"Registeel",	SteelType,	NoType,	80,	75,	150,	75,	150,	50,
 	Genderless,	PNoAbility,	PNoAbility,	PNoAbility,	"",
     380,	"Latias",	DragonType,	PsychicType,	80,	80,	90,	110,	130,	110,
-	Female,	PNoAbility,	PNoAbility,	PNoAbility,	"",
+	Genderless,	PNoAbility,	PNoAbility,	PNoAbility,	"",
     381,	"Latios",	DragonType,	PsychicType,	80,	90,	80,	130,	110,	110,
-	Male,	PNoAbility,	PNoAbility,	PNoAbility,	"",
+	Genderless,	PNoAbility,	PNoAbility,	PNoAbility,	"",
     382,	"Kyogre",	WaterType,	NoType,	100,	100,	90,	150,	140,	90,
 	Genderless,	PDrizzle,	PNoAbility,	PNoAbility,	"",
     383,	"Groudon",	GroundType,	NoType,	100,	150,	140,	100,	90,	90,
@@ -1665,7 +1665,7 @@ const pokedata pokelib[MAXTOTALPOKEMON] = {
 	NoGender,	PMoldBreaker,	PNoAbility,	PNoAbility,	"",
     // 735
     212,	"Scizor (Mega)",	BugType,	SteelType,	70,	150,	140,	65,	100,	75,
-	NoGender,	PNoAbility,	PNoAbility,	PNoAbility,	"",
+	NoGender,	PTechnician,	PNoAbility,	PNoAbility,	"",
     // 736
     214,	"Heracross (Mega)",	BugType,	FightingType,	80,	185,	115,	40,	105,	75,
 	NoGender,	PNoAbility,	PNoAbility,	PNoAbility,	"",
@@ -1817,10 +1817,10 @@ const pokedata pokelib[MAXTOTALPOKEMON] = {
     719,    "Diancie",  RockType,   FairyType,  50, 100, 150, 100, 150, 50,
     Genderless, PClearBody,	PNoAbility,	PNoAbility,	"",
     // 784
-    720,    "Volcanion",    FireType,   WaterType,  100, 100, 100, 100, 100, 100,
+    720,    "Hoopa",    PsychicType,    GhostType,  80, 110, 60, 150, 130, 70,
     Genderless, PNoAbility,	PNoAbility,	PNoAbility,	"",
     // 785
-    721,    "Hoopa",    PsychicType,    GhostType,  100, 100, 100, 100, 100, 100,
+    721,    "Volcanion",    FireType,   WaterType,  80, 110, 120, 130, 90, 70,
     Genderless, PNoAbility,	PNoAbility,	PNoAbility,	"",
     
     //
