@@ -15,3 +15,23 @@ Zone::Zone(int X, int Y, int width, int height)
     m_width = width;
     m_height = height;
 }
+
+int Zone::getWidth() const
+{
+    return m_width;
+}
+
+int Zone::getHeight() const
+{
+    return m_height;
+}
+
+int Zone::getXPosition() const
+{
+    return m_X;
+}
+
+int Zone::getYPosition() const
+{
+    return m_Y;
+}

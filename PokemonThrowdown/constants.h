@@ -331,4 +331,14 @@ const int MAXVOLUMELEVEL = 100;
 const int MINVOLUMELEVEL = 0;
 const int VOLUMEINCREMENTS = 10;
 
+enum PokeAbility
+{
+    PNoAbility, PLevitate, PSwiftSwim, PIntimidate, PHugePower, PStatic,
+    PSereneGrace, PUnaware, PMagicBounce, PPressure, PSandStream, PMultiscale,
+    PSynchronize, PClearBody, PDrizzle, PDrought, PAirLock, PStanceChange,
+    PTorrent, PBlaze, POvergrow, PSwarm, PTechnician, PPoisonPoint,
+    PSnowWarning, PAnticipation, PMoldBreaker, PPurePower, PPrankster,
+    PDefiant, PSpeedBoost, PDeathlyTouch, PSkillLink, PRunAway, POvercoat
+};
+
 #endif /* defined(__PokemonThrowdown__Constants__) */

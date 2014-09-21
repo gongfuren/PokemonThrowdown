@@ -12,10 +12,10 @@
 #include "constants.h"
 #include "Move.h"
 #include "pokedata.h"
-
 #include <string>
 #include <list>
 #include <stack>
+#include <vector>
 
 class Trainer;
 class Slot;
@@ -27,7 +27,6 @@ class Pokemon
 // Represents a Battle-ready Pokemon and its current state
 {
 public:
-    Pokemon();
     Pokemon(pokedynamicdata h, Trainer* trainer, int wp);
     ~Pokemon();
     
@@ -57,9 +56,18 @@ public:
     Move* getLockedMove() const;
     int getIntendedMove() const;
     bool isFainted() const;
+    
+    // Secondary accessor functions
+    void pushTarget(Pokemon* target);
+    Pokemon* popTarget();
+    const std::stack<Pokemon*>* getTargets() const;
+    const std::vector<Pokemon*>* getOpponents() const;
+    const std::vector<Pokemon*>* getAdjacent() const;
+    
+    void initializeAbility(int whichAbility);
 
     // Set functions
-    void setIntendedMove(int choice);
+    void setIntendedMove(int choice, Pokemon* target = NULL);
     bool setStatus(PokeStatus status, bool rest = false);
     void setFainted();
     
@@ -67,7 +75,7 @@ public:
     void removeStatus();
     void removeVStatuses();
     void removeVStatus(VolatileStatus vstatus);
-    void removeShortStatus();
+    void onShortStatusExpire();
     
     // Add functions
     void addVStatus(VolatileStatus vstatus);
@@ -91,7 +99,8 @@ public:
     bool unlockMove();
     bool passThroughStatus();
     
-    // Do something on each turn tick
+    // tick()
+    // Do something on each turn tick: i.e. increment turns out
     void tick();
     
     // Battle serving
@@ -106,7 +115,7 @@ public:
     void setRampageTurns(int turns);
     void decTauntTurns();
     
-    void castAbility();
+    void onSendOut();
     
     void formChange(int form);
     void megaEvolve();
@@ -160,6 +169,13 @@ private:
     // Intended move slot number
     int m_intendedMove;
     Move* m_locked;
+    
+    // Opponents
+    std::vector<Pokemon*> m_opponents;
+    std::vector<Pokemon*> m_adjacent;
+    
+    // Intended target
+    std::stack<Pokemon*> m_targets;
     
     // Is this Pokemon fainted?
     bool m_fainted;

@@ -740,7 +740,7 @@ bool Settings::customPokemon(int whichTrainer)
                 fileName = tmp.str();
                 
                 cout << "Exporting team to './" << fileName << "'..." << endl;
-                if (exportTeam(whichTrainer))
+                if (exportTeamToFile(whichTrainer))
                     cout << "Success! Please check './" << fileName << "' to verify your results." << endl;
                 else
                     cout << "Oops! The export failed. The program may not have permission to save to this\ndirectory." << endl;
@@ -858,7 +858,7 @@ bool Settings::customizeTrainer(int whichTrainer)
     return true;
 }
 
-bool Settings::exportTeam(int whichTrainer)
+bool Settings::exportTeamToFile(int whichTrainer)
 {
     ofstream teamExport;
     string fileName;
@@ -962,13 +962,13 @@ bool Settings::exportTeam(int whichTrainer)
 
 // Settings //////////////////////////////////////////////////////////////////
 
-bool Settings::load()
+bool Settings::loadSettings()
 {
     defaultSettings();
     
     cout << endl;
     
-    if (!savingEnabled)
+    if (!SAVING_ENABLED)
         return true;
     
     cout << "Looking for settings file..." << endl;
@@ -987,7 +987,7 @@ bool Settings::load()
             return ioerror();
         else
         {
-            save();
+            saveSettings();
             cout << "Success!" << endl
             << "Game settings will be saved in './" << SETTINGSFILENAME << "'." << endl
             << "Run with '-d' option to disable save files." << endl;
@@ -1118,7 +1118,7 @@ bool Settings::load()
     return true;
 }
 
-bool Settings::configure()
+bool Settings::configureSettings()
 {
     int choice = -1, prog = 0;
     const int numSettings = 8;
@@ -1283,11 +1283,11 @@ bool Settings::configure()
             }
                 break;
             default:
-                if (savingEnabled)
+                if (SAVING_ENABLED)
                 {
                     cout << "Saving..." << endl;
                     
-                    if (save())
+                    if (saveSettings())
                         cout << "Settings saved in './" << SETTINGSFILENAME << "'!" << endl;
                     else
                     {
@@ -1341,7 +1341,7 @@ bool Settings::configureTrainers()
     return true;
 }
 
-bool Settings::save()
+bool Settings::saveSettings()
 {
     ofstream settings;
     

@@ -87,16 +87,10 @@ void backGadget();
 template <typename Object>
 bool listContains(const std::list<Object> l, Object o)
 {
-    typename std::list<Object>::const_iterator p;
-    
-    for (p = l.begin(); p != l.end(); p++)
+    for (typename std::list<Object>::const_iterator p = l.begin(); p != l.end(); p++)
         if (*p == o)
-            break;
-    
-    if (p == l.end())
-        return false;
-    else
-        return true;
+            return true;
+    return false;
 }
 
 #endif /* defined(__PokemonThrowdown__util__) */

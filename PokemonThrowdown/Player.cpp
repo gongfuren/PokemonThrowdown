@@ -310,7 +310,6 @@ choose_move___:
         {
             getBattle()->dispPokeMoves();
             playerChoice = mvsize+mesize;
-            confirmGadget();
             continue;
         }
         

@@ -16,6 +16,8 @@
 class Side;
 class Battle;
 
+// Vastly unfinished
+
 class Field : public Zone
 // Represents the battlefield and its current state
 {

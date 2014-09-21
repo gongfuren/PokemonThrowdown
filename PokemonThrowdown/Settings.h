@@ -30,31 +30,33 @@ void chosePokemonInfo(int index);
 
 // Command Line
 
-extern bool savingEnabled;
+extern bool SAVING_ENABLED;
 
 // Settings //////////////////////////////////////////////////////////////////
 
 class Settings
 {
 public:
-    // Core functions
-    bool configure();
-    bool configureTrainers();
+    // configureSettings()
+    // Configure settings
+    bool configureSettings();
 
-    bool load();
-    bool save();
-    bool exportTeam(int whichTrainer);
+    // loadSettings()
+    // Init settings variables and load settings from save file if it exists
+    bool loadSettings();
     
+    // saveSettings()
+    // Save to file
+    bool saveSettings();
+    
+    // exportTeamToFile()
+    // Save standard format of a Trainer's team to file
+    bool exportTeamToFile(int whichTrainer);
+    
+    // defaultSettings()
+    // Initialize settings with default values
     void defaultSettings();
-    
-    // Secondary functions
-    void defaultTrainer(int whichTrainer);
-    void defaultPokemon(int whichTrainer, int whichPokemon);
-    bool customizePokemon(int whichTrainer, int whichPokemon);
-    bool customPokemon(int whichTrainer);
-    bool customizeTrainer(int whichTrainer);
-    bool pokeMoveChoice(int choice, int whichTrainer, int whichPokemon, bool moves = false, int whichMove = 0);
-    
+
     // Accessor (get) functions
     int getBattleType() const;
     int getBattleRules() const;
@@ -124,6 +126,16 @@ public:
     void zeroNumExports();
     
 private:
+    // Secondary core functions
+    bool configureTrainers();
+    
+    void defaultTrainer(int whichTrainer);
+    void defaultPokemon(int whichTrainer, int whichPokemon);
+    bool customizePokemon(int whichTrainer, int whichPokemon);
+    bool customPokemon(int whichTrainer);
+    bool customizeTrainer(int whichTrainer);
+    bool pokeMoveChoice(int choice, int whichTrainer, int whichPokemon, bool moves = false, int whichMove = 0);
+    
     // Data members
     int m_battleType;
     int m_battleRules;
@@ -161,6 +173,6 @@ const std::string SETTINGSTAG = "PKTDS04IPC2014___";
 const std::string SETTINGSFILENAME = "PKTDSettings.txt";
 const std::string EXPORTFILENAME = "PKTDExport";
 
-const std::string VERSIONNUMBER = "v0.5";
+const std::string VERSIONNUMBER = "v0.5.1";
 
 #endif /* defined(__PokemonThrowdown__settings__) */

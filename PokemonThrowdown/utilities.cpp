@@ -1,5 +1,5 @@
 //
-//  utils.cpp
+//  utilities.cpp
 //  pokemongame
 //
 //  Created by Ian Cordero on 6/6/14.
@@ -8,11 +8,9 @@
 
 #include "constants.h"
 #include "utilities.h"
-#include <cstdlib>
-#include <cctype>
-#include <string>
-#include <limits>
-#include <vector>
+#include <cstdlib> // rand()
+#include <cctype> // isdigit()
+#include <limits> // max()
 #include <iostream>
 using namespace std;
 
@@ -50,6 +48,7 @@ int selectorGadget(string opts[], int sizeo, int& prog, int entriesPerPage, bool
     
     if (prog < 0)
         prog = 0;
+    
     if (prog > sizeo + sizeb + sizee)
         prog = (sizeo + sizee + sizeb)
         - ((sizeo + sizee + sizeb) % entriesPerPage)-1;
@@ -240,7 +239,7 @@ int selectorGadget(string opts[], int sizeo, int& prog, int entriesPerPage, bool
 
 int inputGadget(int numChoices)
 {
-    int choice = -1;
+    int choice;
     
     for (;;)
     {
@@ -300,16 +299,18 @@ feed_input_num___:
         }
     }
     else
-        return -1;
+        return BACK;
     
     return retval;
 }
 
 void confirmGadget(string message)
 {
-    int choice = -1, prog = 0;
-    string confirm[1] = { message };
-    choice = selectorGadget(confirm, 1, prog, 1, false);
+    int prog = 0;
+    const int numOpts = 1;
+    string confirm[numOpts] = { message };
+    
+    selectorGadget(confirm, numOpts, prog, numOpts, false);
 }
 
 void backGadget()
@@ -320,77 +321,3 @@ void backGadget()
     
     selectorGadget(void_opts, numOpts, prog);
 }
-
-void searchGadget()
-{
-    vector<int> matches;
-}
-
-/*
-case 1:
-{
-    vector<int> matches;
-    string buffer;
-re_search___:
-    cout << "Enter search term (type \":q\" to cancel search):" << endl;
-    getline(cin, buffer);
-    
-    if (buffer == ":q")
-    return false;
-    
-    for (int i = 1; i < (moves ? MAXNUMMOVES : MAXNUMPOKEMON); i++)
-    {
-        string candidate = (moves ? movelib[i].name : pokelib[i].name), term = buffer;
-        
-        for (int j = 0; j < candidate.length(); j++)
-            candidate[j] = tolower(candidate[j]);
-        for (int j = 0; j < term.length(); j++)
-            term[j] = tolower(term[j]);
-        
-        if (candidate.find(term) != -1)
-            matches.push_back(i);
-    }
-    
-    if (matches.empty())
-    {
-        cout << "No " << (moves ? "Moves" : "Pokemon") << " match the search terms!" << endl;
-        goto re_search___;
-    }
-    
-    string* matchStrings = new string[matches.size()];
-    
-    for (int i = 0; i < matches.size(); i++)
-    {
-        ostringstream tmp;
-        tmp << (moves ? movelib[matches[i]].name : pokelib[matches[i]].name) << " (#" << (moves ? movelib[matches[i]].ID : pokelib[matches[i]].ID) << ")";
-        matchStrings[i] = tmp.str();
-    }
-    
-    for (;;)
-    {
-        choice = selectorGadget(matchStrings, static_cast<int>(matches.size()), prog, 10);
-        if (choice != BACK)
-        {
-            if (moves ? choseMove(matches[choice]) : chosePokemon(matches[choice]))
-            {
-                if (moves)
-                    pokedynamicarray[whichTrainer][whichPokemon].moveIDs[whichMove] = matches[choice];
-                else
-                    pokedynamicarray[whichTrainer][whichPokemon].index = matches[choice];
-            }
-            else
-                continue;
-            break;
-        }
-        else
-        {
-            delete[] matchStrings;
-            matches.clear();
-            goto re_search___;
-        }
-    }
-    
-    delete[] matchStrings;
-    }
-    break;
-*/

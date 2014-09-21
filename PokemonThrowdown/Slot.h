@@ -16,6 +16,8 @@
 class Pokemon;
 class Side;
 
+// Vastly unfinished
+
 class Slot : public Zone
 // Represents a slot on one side of the battlefield
 // Each Slot holds 0 or 1 Pokemon

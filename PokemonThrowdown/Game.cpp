@@ -15,6 +15,7 @@
 #include "movedata.h"
 #include "constants.h"
 #include "utilities.h"
+#include "Settings.h"
 using namespace std;
 
 // Core Game Functions ///////////////////////////////////////////////////////
@@ -32,7 +33,7 @@ void Game::loadingScreen()
 {
     cout << "Loading..." << endl;
     
-    if (!getSettings()->load())
+    if (!getSettings()->loadSettings())
         cout << "Oops! Something seems to have went wrong." << endl;
 }
 
@@ -41,7 +42,7 @@ void Game::mainMenu()
     bool rerun = true;
     int prog = 0;
     const int numOpts = 4;
-    string opts[numOpts] = { "Play!", "Settings", "Guide Book", "Quit" };
+    string opts[numOpts] = { "Play!", "Settings", "Guide", "Quit" };
     
     while (rerun)
     {
@@ -53,7 +54,7 @@ void Game::mainMenu()
                 startBattle();
                 break;
             case 1:
-                getSettings()->configure();
+                getSettings()->configureSettings();
                 break;
             case 2:
                 guideBook();
@@ -277,8 +278,6 @@ void Game::pokeMoveDexBrowse(bool moves)
         }
         else
         {
-            int prog2 = 0;
-            
             if (moves)
             {
                 cout << movelib[choice+1].name << endl;
@@ -287,11 +286,7 @@ void Game::pokeMoveDexBrowse(bool moves)
             else
                 chosePokemonInfo(choice+1);
             
-            switch (selectorGadget(popts, 0, prog2))
-            {
-                default:
-                    break;
-            }
+            confirmGadget();
         }
     }
     
@@ -357,13 +352,7 @@ void Game::pokeMoveDexSearch(bool moves)
                 else
                     chosePokemonInfo(matches[choice]);
                 
-                int prog2 = 0;
-                
-                switch (selectorGadget(matchStrings, 0, prog2))
-                {
-                    default:
-                        break;
-                }
+                confirmGadget();
             }
             
             delete[] matchStrings;
@@ -375,26 +364,16 @@ void Game::pokeMoveDexSearch(bool moves)
 void Game::pokeMoveDexRandom(bool moves)
 {
     int pokeMoveID = randInt(1, moves ? MAXNUMMOVES : MAXNUMPOKEMON);
-    const int numOpts = 0;
-    int prog = 0;
-    string iopts[numOpts];
     
-    while (true)
+    if (moves)
     {
-        if (moves)
-        {
-            cout << movelib[pokeMoveID].name << endl;
-            choseMoveInfo(pokeMoveID);
-        }
-        else
-            chosePokemonInfo(pokeMoveID);
-        
-        switch (selectorGadget(iopts, numOpts, prog))
-        {
-            default:
-                return;
-        }
+        cout << movelib[pokeMoveID].name << endl;
+        choseMoveInfo(pokeMoveID);
     }
+    else
+        chosePokemonInfo(pokeMoveID);
+    
+    confirmGadget();
 }
 
 void Game::pokeMoveDex(bool moves)
@@ -456,4 +435,16 @@ void Game::printTitle(int whichTitle)
             cout << "O***0***O***0***O***0" << endl << "* Pokemon Throwdown * " << VERSIONNUMBER << endl << "0***O***0***O***0***O" << endl;
             break;
     }
+}
+
+// Game Construction /////////////////////////////////////////////////////////
+
+Game::Game()
+{
+    m_settings = new Settings;
+}
+
+Game::~Game()
+{
+    delete m_settings;
 }

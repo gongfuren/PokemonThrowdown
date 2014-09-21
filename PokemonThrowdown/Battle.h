@@ -27,17 +27,41 @@ class Battle
 // Displays relevant information regarding battle
 {
 public:
-    // Construct the Battle
-    Battle(Game* game);
-    ~Battle();
-    
+    // configure()
     // Configure the Battle
     bool configure();
     
+    // start()
     // Start the Battle
     void start();
     
+    // displayState()
+    // Display state of battle participants (i.e. Level, Name, Status, HP)
+    void displayState(bool showTurnCount) const;
+    
+    // dispPokeSummary()
+    // Display in-battle summary
+    void dispPokeSummary(int slotNumber) const;
+    // Display summary of specified Pokemon species
+    void dispPokeSummary(const pokedynamicdata pokemon, bool dynamic = false) const;
+    
+    // dispPokeMoves()
+    // Display in-battle (i.e. with current PP) moves
+    void dispPokeMoves(int pokemon) const;
+    void dispPokeMoves() const;
+    // Display currently-set moves for Pokemon of specified species
+    void dispPokeMoves(const pokedynamicdata pokemon, bool dynamic = false) const;
+    
+    // summonEffects()
+    // Cast effects (i.e. Abilities) when Pokemon is "summoned" (sent out)
+    void summonEffects();
+    
+    // checkFaint()
+    // Check if any Pokemon have fainted
+    void checkFaint() const;
+    
     // Accessor functions
+    Trainer* getActor() const;
     Trainer* getPlayer() const;
     Trainer* getOpponent() const;
     Trainer* getParticipants(int i) const;
@@ -49,33 +73,16 @@ public:
     Game* getGame();
     
     // Mutator functions
+    void setActor(Trainer* actor);
     bool setPlayer(Trainer* player);
     bool setOpponent(Trainer* opponent);
     bool setParticipants(Trainer* participant);
     bool setWeather(Weather weather);
     bool setField(Field* field);
     
-    // Display state of battle participants (i.e. Level, Name, Status, HP)
-    void displayState(bool showTurnCount) const;
-    
-    // Display in-battle summary
-    void dispPokeSummary(int slotNumber) const;
-    
-    // Display summary of specified Pokemon species
-    void dispPokeSummary(const pokedynamicdata pokemon, bool dynamic = false) const;
-    
-    // Display in-battle (i.e. with current PP) moves
-    void dispPokeMoves(int pokemon) const;
-    void dispPokeMoves() const;
-    
-    // Display currently-set moves for Pokemon of specified species
-    void dispPokeMoves(const pokedynamicdata pokemon, bool dynamic = false) const;
-    
-    // Cast effects (i.e. Abilities) when Pokemon is "summoned" (sent out)
-    void summonEffects();
-        
-    // Check if any Pokemon have fainted
-    void checkFaint() const;
+    // Construct the Battle
+    Battle(Game* game);
+    ~Battle();
     
 private:
     // Tick the clock for each turn
@@ -90,7 +97,7 @@ private:
     void dispMoveInfo(const movedata* m) const;
     bool chosePokemon(int p, bool* r, bool m = true, bool i = true, bool dynamic = false, bool custom = false, int ci = -1);
     
-    // Main Battle cycle, calls the respective phases
+    // Main Battle cycle: calls the respective phases
     void cycle();
     
     // Have participants choose their lead Pokemon

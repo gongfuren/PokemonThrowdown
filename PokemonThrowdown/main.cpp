@@ -15,7 +15,7 @@ using namespace std;
 
 // Command Line
 
-bool savingEnabled = true;
+bool SAVING_ENABLED = true;
 static void commandLineParser(int argc, char* argv[]);
 
 // Main //////////////////////////////////////////////////////////////////////
@@ -30,6 +30,7 @@ int main(int argc, char* argv[])
     
     // Begin Game
     Game g;
+    g.start();
 }
 
 // Command Line //////////////////////////////////////////////////////////////
@@ -46,7 +47,7 @@ static void commandLineParser(int argc, char* argv[])
         switch (getopt(argc, argv, "d"))
         {
             case 'd':
-                savingEnabled = false;
+                SAVING_ENABLED = false;
                 break;
             default:
                 usage(argv[0]);

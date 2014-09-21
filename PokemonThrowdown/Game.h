@@ -10,16 +10,14 @@
 #define __PokemonThrowdown__Game__
 
 #include "utilities.h"
-#include "Settings.h"
+
+class Settings;
 
 class Game
 {
 public:
+    // start()
     // Begin the Game
-    Game()
-    {
-        start();
-    };
     void start()
     {
         titleScreen();
@@ -28,10 +26,14 @@ public:
     };
     
     // Accessor (get) functions
-    Settings* getSettings()
+    Settings* getSettings() const
     {
-        return &m_settings;
+        return m_settings;
     };
+    
+    // Construction
+    Game();
+    ~Game();
     
 private:
     // Core functions
@@ -56,7 +58,7 @@ private:
     void pokeMoveDexSearch(bool moves);
     
     // Data members
-    Settings m_settings;
+    Settings* m_settings;
 };
 
 #endif /* defined(__PokemonThrowdown__Game__) */

@@ -10,7 +10,6 @@
 #define __PokemonThrowdown__pokedata__
 
 #include "constants.h"
-#include "abilitydata.h"
 #include "itemdata.h"
 
 #include <string>

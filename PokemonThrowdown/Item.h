@@ -10,10 +10,13 @@
 #define __PokemonThrowdown__Item__
 
 #include <string>
+#include "Reactor.h"
 
 class Pokemon;
 
-class Item
+// Vastly unfinished
+
+class Item : public Reactor
 // Represents an Item and its current state (i.e. used, active)
 {
 public:

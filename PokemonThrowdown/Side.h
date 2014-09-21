@@ -18,6 +18,8 @@ class Slot;
 class Field;
 class Trainer;
 
+// Vastly unfinished
+
 class Side : public Zone
 // Represents one side of the battlefield (there are always two sides) and
 // the state of a respective side

@@ -11,12 +11,20 @@
 
 #include <iostream>
 
+// Vastly unfinished
+
 class Zone
 // Abstract class representing any "Zone" on the battlefield that has
 // its own characteristics and may or may not hold a/some Pokemon at any given
 // time
 {
 public:
+    // Accessor functions
+    int getWidth() const;
+    int getHeight() const;
+    int getXPosition() const;
+    int getYPosition() const;
+    
     Zone(int X, int Y, int width, int height);
     
 private:

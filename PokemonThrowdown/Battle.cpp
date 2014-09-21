@@ -31,31 +31,16 @@
 #include <iostream>
 using namespace std;
 
-// Battle construction ///////////////////////////////////////////////////////
-
-Battle::Battle(Game* game)
-{
-    // Initialize variables
-    m_game = game;
-    m_player = NULL;
-    m_player2 = NULL;
-    m_opponent = NULL;
-    m_opponent2 = NULL;
-    m_turns = 0;
-    m_actor = NULL;
-    m_numPlayers = 0;
-    for (int i = 0; i < MAXPLAYERS; i++)
-        m_participants[i] = NULL;
-    m_field = new Field(this, 0, 0);
-}
+// Core Battle functions /////////////////////////////////////////////////////
 
 bool Battle::configure()
 {
-    // Custom Initialization
+    // Choose Trainers
     for (int i = 0; i < 2; i++)
         if (!chooseTrainer())
             return false;
     
+    // Choose lead (for Player)
     chooseLead();
     
     return true;
@@ -65,23 +50,24 @@ void Battle::chooseLead()
 {
     int choice, prog = 0;
     string pref[MAXPOKEMON];
-    
-    for (int i = 0; i < m_player->getNumPokemon(); i++)
-        pref[i] = m_player->getPokemon(i)->getName();
 
     for (int i = 0; i < NUMPLAYERS; i++)
     {
-        m_actor = m_participants[i];
+        setActor(getParticipants(i));
         
-        if (!m_actor->isComputer())
+        if (!getActor()->isComputer())
         {
-            cout << "Choose lead Pokemon" << ":" << endl;
-            choice = selectorGadget(pref, m_player->getNumPokemon(), prog, 6, false);
+            cout << "Choose lead Pokemon:" << endl;
+            
+            for (int j = 0; j < getActor()->getNumPokemon(); j++)
+                pref[j] = getActor()->getPokemon(j)->getName();
+            
+            choice = selectorGadget(pref, getActor()->getNumPokemon(), prog, 6, false);
         }
         else
             choice = 0;
         
-        m_actor->setCurrent(choice);
+        getActor()->setCurrent(choice);
     }
 }
 
@@ -92,10 +78,12 @@ bool Battle::chooseTrainer()
     
     int choice[MAXMOVES] = { -1, -1, -1, -1 };
     int np, whichTrainer;
-    int i, prog[3] = { 0, 0, 0 };
+    const int numOpts = 2, numLevels = 3;
+    int i, prog[numLevels] = { 0, 0, 0 };
     bool rerun;
-    string names[NUMTRAINERS], pref[MAXPOKEMON], cref[2], cNames[MAXCTRAINERS];
+    string names[NUMTRAINERS], pref[MAXPOKEMON], cref[numOpts], cNames[MAXCTRAINERS];
     
+    // Load Trainer names
     for (i = 0; i < NUMTRAINERS; i++)
     {
         ostringstream o;
@@ -110,9 +98,9 @@ bool Battle::chooseTrainer()
         cNames[i] = tmp.str();
     }
     
+    // Choose Trainers
     do
     {
-        // Introduction
         if (m_numPlayers == 0)
             cout << "Choose a trainer." << endl;
         else
@@ -138,7 +126,7 @@ bool Battle::chooseTrainer()
             cref[0] = "Confirm";
             cref[1] = "Pokemon";
             
-            choice[1] = selectorGadget(cref, 2, prog[1]);
+            choice[1] = selectorGadget(cref, numOpts, prog[1]);
             
             if (choice[1] == BACK)
             {
@@ -151,7 +139,7 @@ bool Battle::chooseTrainer()
             
             do
             {
-                np = 6;
+                np = MAXPOKEMON;
                 
                 for (int i = 0; i < MAXPOKEMON; i++)
                 {
@@ -183,13 +171,13 @@ bool Battle::chooseTrainer()
                 
                 if (rerun)
                 {
-                    choice[2] = -1;
+                    choice[2] = BACK;
                     continue;
                 }
             }
-            while (choice[2] < 0 || choice[2] >= 6);
+            while (choice[2] < 0 || choice[2] >= MAXPOKEMON);
         }
-        while (choice[1] < 0 || choice[1] >= 2);
+        while (choice[1] < 0 || choice[1] >= numOpts);
     }
     while (choice[0] < 0 || choice[0] >= NUMTRAINERS + getGame()->getSettings()->getNumCustomTrainers());
     
@@ -350,19 +338,6 @@ void Battle::greet()
     cout << battlePartString << endl;
     cout << banner2 << endl;
     
-    /*cout
-     << "MM88MMMD~D8MMMMMMI+?M8+NMMMMMM,:,?NMMMMM" << endl
-     << "MM8ZNMDN=DO8MMMMMND8IZ$O:?O$M.,:..M.NNNM" << endl
-     << "MD,?$DDO.II=?MMM7+,O8O8ZMZIN.~~:...ZIMMM" << endl
-     << "MO ..~DN+O8M~.8D=7=7??:~$8ZZ.::.. D,.~MM" << endl
-     << "8:......,.,MM,.,N=?NM,..?O,~~:: .. ...:Z" << endl
-     << "I:,.... ...,?DNN7=$+O,.:O7:~~~~:::~..=.." << endl
-     << ".?....Z 7 ..$.,MN.=++:=?ON......:.,..  ." << endl
-     << "........=...Z~ON=. ~...ZOM.,,,.:....==+N" << endl
-     << "I.?. .....,.?7=~.:.?I?.+MMD~~~...8MMMMMN" << endl
-     << "DDD. .  . :.==:?,.=+?..?,~..:.:++ODMMDD." << endl;
-     
-     cout << banner1 << endl;*/
     offset = centerOffset(static_cast<int>(banner1.length()), static_cast<int>(location.length()));
     for (int i = 0; i < offset; i++)
         cout << " ";
@@ -445,9 +420,7 @@ void Battle::summonsPhase()
         
         if (m_actor->getPokemon() == NULL || m_actor->getPokemon()->isFainted())
             // Choose replacement for fainted Pokemon
-        {
             m_actor->replacePokemon();
-        }
     }
     
     for (int i = 0; i < NUMPLAYERS; i++)
@@ -611,7 +584,9 @@ void Battle::battlePhase()
         }
         
         if (pokemon->passThroughStatus())
+        {
             pokemon->executeMove(target);
+        }
         else
         {
             displayState(false);
@@ -741,7 +716,7 @@ void Battle::summonEffects()
 {
     for (int i = 0; i < NUMPLAYERS; i++)
         // Ability cast point
-        m_participants[i]->getPokemon()->castAbility();
+        m_participants[i]->getPokemon()->onSendOut();
 }
 
 void Battle::turnCount() const
@@ -856,6 +831,8 @@ void Battle::dispPokeSummary(int slotNumber) const
         pout << pokemon->getDescription() << endl;
     
     cout << pout.str();
+    
+    confirmGadget();
 }
 
 void Battle::dispPokeSummary(const pokedynamicdata pokemon, bool dynamic) const
@@ -885,6 +862,8 @@ void Battle::dispPokeSummary(const pokedynamicdata pokemon, bool dynamic) const
     // Description
     if (pokelib[pokemon.index].description != "")
         cout << pokelib[pokemon.index].description << endl;
+    
+    confirmGadget();
 }
 
 void Battle::dispPokeMoves(int pokemon) const
@@ -942,6 +921,8 @@ void Battle::dispPokeMoves(int pokemon) const
         
         cout << pout.str() << endl;
     }
+    
+    confirmGadget();
 }
 
 void Battle::dispPokeMoves() const
@@ -1004,6 +985,8 @@ void Battle::dispPokeMoves(const pokedynamicdata pokemon, bool dynamic) const
     }
     
     cout << o.str();
+    
+    confirmGadget();
 }
 
 bool Battle::setPlayer(Trainer* player)
@@ -1049,7 +1032,33 @@ Game* Battle::getGame()
     return m_game;
 }
 
-// Battle destructor /////////////////////////////////////////////////////////
+Trainer* Battle::getActor() const
+{
+    return m_actor;
+}
+
+void Battle::setActor(Trainer* actor)
+{
+    m_actor = actor;
+}
+
+// Battle construction ///////////////////////////////////////////////////////
+
+Battle::Battle(Game* game)
+{
+    // Initialize variables
+    m_game = game;
+    m_field = new Field(this, 0, 0);
+    m_player = NULL;
+    m_player2 = NULL;
+    m_opponent = NULL;
+    m_opponent2 = NULL;
+    m_turns = 0;
+    m_actor = NULL;
+    m_numPlayers = 0;
+    for (int i = 0; i < MAXPLAYERS; i++)
+        m_participants[i] = NULL;
+}
 
 Battle::~Battle()
 {

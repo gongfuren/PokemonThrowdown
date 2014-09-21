@@ -1275,8 +1275,8 @@ const movedata movelib[MAXTOTALMOVES] = {
     901,    "Starshock",   LightType,    Special,    Beauty,    15,  50, 100,    X,  MConfuse10,  Opponent, false,
 	"The user creates flickers of light that it fires at the foe.",
     // 619
-    902,    "???",   NoType,    Special,    UnknownStat,    -1,  -1, -1,    X,  MNoEffect,  Opponent, false,
-	"",
+    902,    "Meteorite Mash",   SteelType,    Physical,    UnknownStat,    25,  50, 100,    X,  MNoEffect,  Opponent, true,
+	"The user rushes at the foe like a meteorite and throws a punch.",
     // 620
     903,    "Shooting Star",   LightType,    Special,    Beauty,    10,  95, 100,    X,  MLowerSpD10,  Opponent, false,
 	"The user causes shooting stars made of energy to rain down and cause damage.",
@@ -1303,7 +1303,7 @@ const movedata movelib[MAXTOTALMOVES] = {
     "The user alters gravity, attacking the target using the surrounding terrain.",
     // 628
     911,    "Twilight",    PsychicType,   Status,    UnknownStat, 5,  -1,    -1,    X,  MTwilight,  None,   false,
-    "Darkens the sky to twilight, creating a dreamlike atmosphere where Psychic,\nLight, Dark, and Ghost moves are boosted in power.",
+    "Darkens the sky to twilight, creating a dreamlike atmosphere where Psychic,\nLight, Dark, Fairy, and Ghost moves are boosted in power.",
     // 629
     912,    "Lightning Edge", ElectricType,   Physical,    Cool, 5,  100,    100,    X,  MHighCrit,  Opponent,   false,
     "The user slashes its target with a sword of lightning. Has a high chance of\nlanding a critical hit.",

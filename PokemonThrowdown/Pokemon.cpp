@@ -9,6 +9,7 @@
 #include "Pokemon.h"
 #include "pokedata.h"
 #include "Ability.h"
+#include "abilitydata.h"
 #include "Trainer.h"
 #include "Battle.h"
 #include "constants.h"
@@ -20,10 +21,6 @@
 #include <string>
 #include <sstream>
 using namespace std;
-
-Pokemon::Pokemon()
-{
-}
 
 Pokemon::Pokemon(pokedynamicdata h, Trainer* trainer, int wp)
 : m_trainer(trainer)
@@ -45,7 +42,9 @@ Pokemon::Pokemon(pokedynamicdata h, Trainer* trainer, int wp)
     m_level = h.level;
     m_nature = (h.nature == NoNature)
     ? static_cast<Nature>(randInt(HardyNature, NUMNATURES-1)) : h.nature;
-    m_ability = new Ability(pokelib[h.index].ability[h.currentAbility], this);
+    
+    initializeAbility(pokelib[h.index].ability[h.currentAbility]);
+    
     m_item = new Item(h.item, this);
     m_description = pokelib[h.index].description;
     m_sleepTurns = 0;
@@ -87,6 +86,8 @@ Pokemon::Pokemon(pokedynamicdata h, Trainer* trainer, int wp)
     
     // Struggle
     m_moves[MAXMOVES] = new Move(165, this);
+    
+    m_sub = NULL;
 }
 
 Pokemon::~Pokemon()
@@ -95,6 +96,7 @@ Pokemon::~Pokemon()
         delete m_moves[i];
     delete m_ability;
     delete m_item;
+    delete m_sub;
 }
 
 void Pokemon::transform(int pokemonID)
@@ -106,7 +108,7 @@ void Pokemon::transform(int pokemonID)
     m_type2 = me.type2;
     
     delete m_ability;
-    m_ability = new Ability(me.ability[0], this);
+    initializeAbility(me.ability[0]);
     
     for (int i = AttStat; i < NUMSTATS; i++)
     {
@@ -297,7 +299,7 @@ void Pokemon::setSleepTurns(int turns)
 
 void Pokemon::flashAbility() const
 {
-    cout << getName() << "'s " << abilityStrings[m_ability->getID()] << ":" << endl;
+    getAbility()->flash();
 }
 
 void Pokemon::tick()
@@ -305,76 +307,30 @@ void Pokemon::tick()
     m_turnsOut++;
 }
 
-void Pokemon::castAbility()
+void Pokemon::initializeAbility(int whichAbility)
+{
+#define acase(name) \
+case P ## name: \
+m_ability = new name(this); \
+break;
+    
+    switch (whichAbility)
+    {
+            acase(Levitate); acase(Intimidate); acase(Pressure); acase(MoldBreaker); acase(Drizzle); acase(Drought); acase(SnowWarning); acase(SandStream); acase(DeathlyTouch); acase(Defiant); acase(ClearBody); acase(SkillLink); acase(StanceChange); acase(HugePower); acase(PurePower); acase(Technician); acase(SereneGrace);
+        default:
+            m_ability = new Ability(whichAbility, this);
+            break;
+    }
+    
+#undef acase
+}
+
+void Pokemon::onSendOut()
 {
     if (m_turnsOut != -1)
         return;
     
-    Pokemon* opponent;
-    Trainer* actor;
-    
-    for (int i = 0; i < NUMPLAYERS; i++)
-    {
-        actor = getTrainer()->getBattle()->getParticipants(i);
-        opponent = actor->getPokemon();
-        
-        if (opponent == this)
-            // This loop deals with ability effects on other Pokemon
-            continue;
-        
-        if (getAbility()->getID() == PIntimidate)
-        {
-            flashAbility();
-            opponent->decreaseStat(AttStat, false);
-        }
-        
-        if (getAbility()->getID() == PDrizzle
-            && getTrainer()->getBattle()->getWeather() != Rain)
-        {
-            flashAbility();
-            getTrainer()->getBattle()->getField()->initializeWeather(Rain);
-        }
-        
-        if (getAbility()->getID() == PDrought
-            && getTrainer()->getBattle()->getWeather() != Sunny)
-        {
-            flashAbility();
-            getTrainer()->getBattle()->getField()->initializeWeather(Sunny);
-        }
-        
-        if (getAbility()->getID() == PSandStream
-            && getTrainer()->getBattle()->getWeather() != Sandstorm)
-        {
-            flashAbility();
-            getTrainer()->getBattle()->getField()->
-            initializeWeather(Sandstorm);
-        }
-        
-        if (getAbility()->getID() == PSnowWarning
-            && getTrainer()->getBattle()->getWeather() != Hail)
-        {
-            flashAbility();
-            getTrainer()->getBattle()->getField()->initializeWeather(Hail);
-        }
-        
-        if (getAbility()->getID() == PPressure)
-        {
-            flashAbility();
-            cout << getName() << " " << "is exerting its " << abilityStrings[getAbility()->getID()] << "!" << endl;
-        }
-        
-        if (getAbility()->getID() == PMoldBreaker)
-        {
-            flashAbility();
-            cout << getName() << " " << "breaks the mold!" << endl;
-        }
-        
-        if (getAbility()->getID() == PDeathlyTouch)
-        {
-            flashAbility();
-            cout << getName() << " " << "has " << abilityStrings[getAbility()->getID()] << "!" << endl;
-        }
-    }
+    getAbility()->onSendOut();
     
     m_turnsOut = 0;
 }
@@ -445,21 +401,12 @@ void Pokemon::avoidDialogue() const
 
 bool Pokemon::decreaseStat(int whichStat, bool silent)
 {
-    bool normalExecution = true;
+    bool isLowered = true;
     
-    if (!silent && m_ability->getID() == PClearBody)
-        // Clear Body cancellation
-    {
-        normalExecution = false;
-        
-        flashAbility();
-        
-        cout << getTrainer()->getTitleName()
-        << "'s " << getName() << "'s " << statFullStrings[whichStat] << " "
-        << "was not lowered!" << endl;
-    }
+    if (!silent)
+        getAbility()->onTryLowerStat(isLowered, whichStat);
     
-    if (normalExecution)
+    if (isLowered)
     {
         if (!silent && m_statsStatus[whichStat] <= -6)
         {
@@ -481,13 +428,10 @@ bool Pokemon::decreaseStat(int whichStat, bool silent)
     }
     
     // Defiant Att boost
-    if (!silent && m_ability->getID() == PDefiant)
-    {
-        flashAbility();
-        increaseStat(AttStat, 2);
-    }
+    if (!silent)
+        getAbility()->onLowerStat();
     
-    return normalExecution;
+    return isLowered;
 }
 
 bool Pokemon::decreaseStat(int whichStat, int levels)
@@ -744,10 +688,8 @@ bool Pokemon::passThroughStatus()
                 cout << getName() << " " << "hurt itself in its confusion!" << endl;
                 
                 int pureDamage = 40;
-                int attackMultiplier = 1.0;
-                if (getAbility()->getID() == PHugePower
-                    || getAbility()->getID() == PPurePower)
-                    attackMultiplier = 2.0;
+                double attackMultiplier = 1.0;
+                getAbility()->onAttackMultiplier(attackMultiplier);
                 int spOrNot
                 = static_cast<double>(getStats(AttStat) * attackMultiplier)
                 / static_cast<double>(getStats(DefStat));
@@ -780,29 +722,12 @@ void Pokemon::formChange(int form)
         
         getTrainer()->setUsedMega();
     }
-    else if (m_ID == 681)
-        // Aegislash
+    else if (getID() == 681) // Aegislash
     {
-        flashAbility();
-        
-        cout << "Changed to" << " ";
-        
-        if (m_form == 0)
-            // Shield to Blade
-        {
+        if (getForm() == 0)
             transform(762);
-            
-            cout <<  "Blade";
-        }
         else
-            // Blade to Shield
-        {
             transform(681);
-            
-            cout << "Shield";
-        }
-        
-        cout << " " << "Forme!" << endl;
     }
     
     m_form = form;
@@ -885,9 +810,10 @@ bool Pokemon::setStatus(PokeStatus status, bool rest)
     return true;
 }
 
-void Pokemon::setIntendedMove(int choice)
+void Pokemon::setIntendedMove(int choice, Pokemon* target)
 {
     m_intendedMove = choice;
+    pushTarget(target);
 }
 
 void Pokemon::checkFaint()
@@ -901,8 +827,8 @@ bool Pokemon::executeMove(Pokemon* target, Move* move)
     int intendedMove = getIntendedMove();
     Battle* battle = getTrainer()->getBattle();
     Weather weather;
-    bool moveHits, changeForm, rerun;
-    int moveAccuracy, whatForm;
+    bool moveHits, rerun;
+    int moveAccuracy;
     VolatileStatus vs;
     
     if (move == NULL)
@@ -925,28 +851,7 @@ bool Pokemon::executeMove(Pokemon* target, Move* move)
         }
     }
     
-    if (getAbility()->getID() == PStanceChange)
-    {
-        changeForm = false;
-        
-        if (getForm() == 0)
-        {
-            whatForm = 1;
-            
-            if (move->getMoveType() != Status)
-                changeForm = true;
-        }
-        else
-        {
-            whatForm = 0;
-            
-            if (move->getID() == 588)
-                changeForm = true;
-        }
-        
-        if (changeForm)
-            formChange(whatForm);
-    }
+    getAbility()->onExecuteMove(move);
     
     if (move->getEffect() == MCharge)
     {
@@ -1072,7 +977,7 @@ bool Pokemon::executeMove(Pokemon* target, Move* move)
     
     move->decrementCurrentPP();
     
-    if (target->getAbility()->getID() == PPressure && target != this)
+    if (target->getAbility()->onIncreasePPUsage() && target != this)
         move->decrementCurrentPP();
     
     moveAccuracy = move->getAccuracy();
@@ -1184,7 +1089,7 @@ bool Pokemon::executeMove(Pokemon* target, Move* move)
                 
                 if (!(getMove(intendedMove)->getEffect() == MDoubleHit))
                 {
-                    if (getAbility()->getID() == PSkillLink)
+                    if (getAbility()->onMaxMultiHit())
                         numHits = 5;
                     else
                     {
@@ -1239,7 +1144,7 @@ Slot* Pokemon::getSlot() const
     return m_slot;
 }
 
-void Pokemon::removeShortStatus()
+void Pokemon::onShortStatusExpire()
 {
     if (hasVStatus(ProtectVStatus))
         removeVStatus(ProtectVStatus);
@@ -1632,19 +1537,12 @@ void Pokemon::applyAttack(Pokemon* target, Move* move, bool silent)
         return;
     }
     
-    if (target->getAbility()->getID() == PLevitate && move->getType()
-        == GroundType)
-        // Target has Levitate and attacker is using GroundType move
-    {
-        typeBoost = 0.0;
-        target->flashAbility();
-    }
-    else
-        // Take type matchup into account
-    {
-        typeBoost = typeMultiplier(move->getType(), target->getType1(),
-                                   target->getType2());
-    }
+    // Calculate type multiplier
+    typeBoost = typeMultiplier(move->getType(), target->getType1(),
+                               target->getType2());
+    
+    // Levitate
+    target->getAbility()->onTargeted(move->getID(), typeBoost);
     
     if (typeBoost == 0.0)
         // Target is immune to attack
@@ -1698,12 +1596,9 @@ void Pokemon::applyAttack(Pokemon* target, Move* move, bool silent)
     if (move->getEffect() == MFoul)
         attacker = target;
 
-    if (attacker->getAbility()->getID() == PHugePower
-        || attacker->getAbility()->getID() == PPurePower)
-        // Huge/Pure power ability: attack 2.0x
-        attackMultiplier = 2.0;
-    else
-        attackMultiplier = 1.0;
+    attackMultiplier = 1.0;
+    
+    getAbility()->onAttackMultiplier(attackMultiplier);
     
     if (attacker->getStatus() == BurnStatus)
         // Attacker is burned: attack 0.5x
@@ -1760,9 +1655,9 @@ void Pokemon::applyAttack(Pokemon* target, Move* move, bool silent)
     else if (field->getWeather() == Twilight)
         // Twilight
     {
-        if (move->getType() == LightType || move->getType() == DarkType || move->getType() == PsychicType || move->getType() == GhostType || move->getType() == NeutralType)
+        if (move->getType() == LightType || move->getType() == DarkType || move->getType() == PsychicType || move->getType() == GhostType || move->getType() == FairyType || move->getType() == NeutralType)
             other = 1.5;
-        else if (move->getType() == BugType || move->getType() == FairyType || move->getType() == FlyingType || move->getType() == FightingType || move->getType() == NormalType)
+        else if (move->getType() == BugType || move->getType() == RockType || move->getType() == FlyingType || move->getType() == FightingType || move->getType() == SteelType || move->getType() == NormalType)
             other = 0.5;
     }
     
@@ -1772,9 +1667,7 @@ void Pokemon::applyAttack(Pokemon* target, Move* move, bool silent)
     else if (attacker->getItem()->getID() == HLifeOrb)
         other *= 1.3;
     
-    if (attacker->getAbility()->getID() == PTechnician && move->getDamage() <= 60)
-        // Technician
-        other *= 1.5;
+    attacker->getAbility()->onDamageMultiplier(pureDamage, move);
     
     modifier = typeBoost * sTAB * crit * modulus * other;
     
@@ -1977,18 +1870,8 @@ void Pokemon::applyAttackerEffect(Pokemon* target, Move* move, int damage)
     // Contact side effects
     if (move->getContact())
     {
-        if (target->getAbility()->getID() == PDeathlyTouch)
-        {
-            target->flashAbility();
-            cout << getName() << " lost all of its HP!" << endl;
-            decreaseHP(getStats(HPStat));
-        }
-        else if (getAbility()->getID() == PDeathlyTouch)
-        {
-            flashAbility();
-            cout << target->getName() << " lost all of its HP!" << endl;
-            target->decreaseHP(target->getStats(HPStat));
-        }
+        target->getAbility()->onContacted(this);
+        getAbility()->onMadeContact(target);
     }
 }
 
@@ -2014,6 +1897,8 @@ void Pokemon::applyTargetEffect(Pokemon* target, Move* move, int damage)
         else
             freezeChance = 10;
         
+        getAbility()->onAddedEffectChance(freezeChance);
+        
         if (randInt(0, 99) < freezeChance)
             target->setStatus(FreezeStatus);
     }
@@ -2021,7 +1906,11 @@ void Pokemon::applyTargetEffect(Pokemon* target, Move* move, int damage)
     if (effect == MSleep50)
         // Sleep chance
     {
-        if (randInt(0, 1) < 1)
+        int sleepChance = 1;
+        
+        getAbility()->onAddedEffectChance(sleepChance);
+        
+        if (randInt(0, 1) < sleepChance)
             target->setStatus(SleepStatus);
     }
     
@@ -2046,8 +1935,7 @@ void Pokemon::applyTargetEffect(Pokemon* target, Move* move, int damage)
                 break;
         }
         
-        if (getAbility()->getID() == PSereneGrace)
-            flinchChance *= 2;
+        getAbility()->onAddedEffectChance(flinchChance);
         
         if (randInt(0, 99) < flinchChance)
             target->addVStatus(FlinchVStatus);
@@ -2058,19 +1946,21 @@ void Pokemon::applyTargetEffect(Pokemon* target, Move* move, int damage)
     {
         if (target->getStatus() == HealthyStatus)
         {
-            int chance;
+            int burnChance;
             
             switch (effect)
             {
                 default:
-                    chance = 10; break;
+                    burnChance = 10; break;
                 case MBurn15:
-                    chance = 15; break;
+                    burnChance = 15; break;
                 case MBurn30:
-                    chance = 30; break;
+                    burnChance = 30; break;
             }
             
-            if (randInt(0, 99) < chance)
+            getAbility()->onAddedEffectChance(burnChance);
+            
+            if (randInt(0, 99) < burnChance)
                 target->setStatus(BurnStatus);
         }
     }
@@ -2081,21 +1971,23 @@ void Pokemon::applyTargetEffect(Pokemon* target, Move* move, int damage)
     {
         if (target->getStatus() == HealthyStatus)
         {
-            int chance;
+            int poisonChance;
             
             switch (effect)
             {
                 default:
-                    chance = 10; break;
+                    poisonChance = 10; break;
                 case MPoison15:
-                    chance = 15; break;
+                    poisonChance = 15; break;
                 case MPoison30:
-                    chance = 30; break;
+                    poisonChance = 30; break;
                 case MPoison40:
-                    chance = 40; break;
+                    poisonChance = 40; break;
             }
             
-            if (randInt(0, 99) < chance)
+            getAbility()->onAddedEffectChance(poisonChance);
+            
+            if (randInt(0, 99) < poisonChance)
                 target->setStatus(PoisonStatus);
         }
     }
@@ -2105,6 +1997,10 @@ void Pokemon::applyTargetEffect(Pokemon* target, Move* move, int damage)
     {
         if (target->getStatus() == HealthyStatus)
         {
+            int triChance = 20;
+            
+            getAbility()->onAddedEffectChance(triChance);
+            
             if (randInt(0, 99) < 20)
             {
                 switch(randInt(0, 2))
@@ -2129,21 +2025,23 @@ void Pokemon::applyTargetEffect(Pokemon* target, Move* move, int damage)
     {
         if (target->getStatus() == HealthyStatus)
         {
-            int chance;
+            int paralyzeChance;
             
             switch (effect)
             {
                 default:
-                    chance = 10; break;
+                    paralyzeChance = 10; break;
                 case MParalyze15:
-                    chance = 15; break;
+                    paralyzeChance = 15; break;
                 case MParalyze30:
-                    chance = 30; break;
+                    paralyzeChance = 30; break;
                 case MParalyze100:
-                    chance = 100; break;
+                    paralyzeChance = 100; break;
             }
             
-            if (randInt(0, 99) < chance)
+            getAbility()->onAddedEffectChance(paralyzeChance);
+            
+            if (randInt(0, 99) < paralyzeChance)
                 target->setStatus(ParalyzeStatus);
         }
     }
@@ -2278,7 +2176,7 @@ void Pokemon::statusEffect()
 {
     Pokemon* pokemon = this;
     
-    pokemon->removeShortStatus();
+    pokemon->onShortStatusExpire();
     
     if (pokemon->isFainted())
         return;
@@ -2301,6 +2199,38 @@ void Pokemon::statusEffect()
     }
     
     pokemon->decTauntTurns();
+}
+
+const stack<Pokemon*>* Pokemon::getTargets() const
+{
+    return &m_targets;
+}
+
+const vector<Pokemon*>* Pokemon::getOpponents() const
+{
+    return &m_opponents;
+}
+
+const vector<Pokemon*>* Pokemon::getAdjacent() const
+{
+    return &m_adjacent;
+}
+
+void Pokemon::pushTarget(Pokemon* target)
+{
+    m_targets.push(target);
+}
+
+Pokemon* Pokemon::popTarget()
+{
+    if (!m_targets.empty())
+    {
+        Pokemon* retpok = m_targets.top();
+        m_targets.pop();
+        return retpok;
+    }
+    else
+        return NULL;
 }
 
 // Substitute ////////////////////////////////////////////////////////////////

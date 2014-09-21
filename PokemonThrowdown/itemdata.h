@@ -11,6 +11,8 @@
 
 #include <iostream>
 
+// Vastly unfinished
+
 enum HoldItem
 {
     HNoItem, HLeftovers, HChoiceBand, HChoiceScarf, HChoiceSpecs, HLightBall,

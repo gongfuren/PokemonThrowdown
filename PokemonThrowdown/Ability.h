@@ -10,22 +10,30 @@
 #define __PokemonThrowdown__Ability__
 
 #include <iostream>
-#include "abilitydata.h"
+#include "Reactor.h"
 
 class Pokemon;
 
-class Ability
+// Vastly unfinished
+
+class Ability : public Reactor
 {
 public:
-    Ability(int ID, Pokemon* pokemon);
-    ~Ability();
+    // Other
+    void flash() const;
     
+    // Accessor Functions
+    std::string getName() const;
     int getID() const;
     Pokemon* getPokemon() const;
     
+    // Construction and Destruction
+    Ability(int ID, Pokemon* pokemon);
+    ~Ability();
+    
 private:
     int m_ID;
-    std::string name;
+    std::string m_name;
     
     Pokemon* m_pokemon;
 };
