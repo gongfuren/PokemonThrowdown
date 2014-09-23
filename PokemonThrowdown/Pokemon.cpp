@@ -1728,13 +1728,14 @@ void Pokemon::applyAttack(Pokemon* target, Move* move, bool silent)
         if (!silent)
             cout << "The substitute took damage for " << target->getName() << "!" << endl;
         
+        tmp -= target->m_sub->getHP();
+        
         if (target->m_sub->decreaseHP(totalDamage))
         {
-            delete target->m_sub;
+            delete target->m_sub; target->m_sub = NULL;
             cout << "The substitute faded!" << endl;
         }
         
-        tmp -= target->m_sub->getHP();
         applyAttackerEffect(target, move, tmp);
         
         return;

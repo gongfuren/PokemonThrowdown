@@ -173,6 +173,6 @@ const std::string SETTINGSTAG = "PKTDS04IPC2014___";
 const std::string SETTINGSFILENAME = "PKTDSettings.txt";
 const std::string EXPORTFILENAME = "PKTDExport";
 
-const std::string VERSIONNUMBER = "v0.5.1";
+const std::string VERSIONNUMBER = "v0.5.2";
 
 #endif /* defined(__PokemonThrowdown__settings__) */

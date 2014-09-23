@@ -315,7 +315,10 @@ int centerOffset(int length1, int length2)
 
 void Battle::greet()
 {
-    string banner1 = "(-o-)(-o-)(-o-)(-o-)(-o-)(-o-)";
+    // Uncomment for a vs. banner (of questionable utility) that shows
+    // battle rules, among other things...
+    
+    /*string banner1 = "(-o-)(-o-)(-o-)(-o-)(-o-)(-o-)";
     string banner2 = "|/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\|";
     string location = locationStrings[getField()->getLocation()];
     string battlePartString;
@@ -352,7 +355,7 @@ void Battle::greet()
     cout << battleRuleString << endl;
     cout << banner1 << endl;
     
-    confirmGadget("Begin!");
+    confirmGadget("Begin!");*/
     
     cout << m_opponent->getTitleName()
     << " " << "would like to battle!" << endl;
