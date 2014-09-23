@@ -51,7 +51,7 @@ private:
     void displayHelp();
     
     void typeSummary(int whichType = 0);
-    void printTitle(int whichTitle = randInt(0, 2));
+    void printTitle(int whichTitle = 1);
     void pokeMoveDex(bool moves = false);
     void pokeMoveDexBrowse(bool moves);
     void pokeMoveDexRandom(bool moves);
