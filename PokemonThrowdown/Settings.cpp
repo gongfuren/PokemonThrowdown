@@ -429,7 +429,31 @@ bool Settings::customizePokemon(int whichTrainer, int whichPokemon)
             {
                 string aopts[NUMNATURES];
                 for (int i = 0; i < NUMNATURES; i++)
-                    aopts[i] = natureStrings[i];
+                {
+                    ostringstream tmp;
+                    tmp << natureStrings[i] << " (";
+                    bool ntl = true;
+                    for (int j = 0; j < NUMSTATS-1; j++)
+                    {
+                        if (natureArray[i][j] > 1.0)
+                        {
+                            ntl = false;
+                            tmp << "+" << statStrings[j+1] << ", ";
+                        }
+                    }
+                    for (int j = 0; j < NUMSTATS-1; j++)
+                    {
+                        if (natureArray[i][j] < 1.0)
+                        {
+                            ntl = false;
+                            tmp << "-" << statStrings[j+1];
+                        }
+                    }
+                    if (ntl)
+                        tmp << "Balanced";
+                    tmp << ")";
+                    aopts[i] = tmp.str();
+                }
                 choice = selectorGadget(aopts, NUMNATURES, prog);
                 if (choice != BACK)
                     getPokemon(whichTrainer, whichPokemon)->nature = static_cast<Nature>(choice);

@@ -211,7 +211,7 @@ bool Move::determineFailure(Pokemon* target) const
             || targetMove->getPriorityScore() > getPriorityScore())
             failed = true;
     }
-    // Casting weather that already exists
+    // Casting weather that already exists or cannot dominate super-weather
     else if ((m_effect == MRain && battle->getWeather() == Rain) ||
              (m_effect == MSun && battle->getWeather() == Sunny) ||
              (m_effect == MSandstorm && battle->getWeather() == Sandstorm) ||

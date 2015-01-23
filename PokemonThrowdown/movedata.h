@@ -1353,8 +1353,8 @@ const movedata movelib[MAXTOTALMOVES] = {
     927,    "Crimson Sunset",   FireType,    Special,    Cool,    5,  -1, 50,    X,  MOHKO,  Opponent, false,
 	"Sets off a catastrophic explosion that rises into the air like a deep red\nsun. The target will faint instantly if hit.",
     // 645
-    928,    "Nether Star",   DarkType, Special,    Tough,    5,  100,    100, X, MNoEffect,   Opponent, false,
-	"The user summons a small dark star and detonates it on the target.",
+    928,    "Evenstar",   DarkType, Special,    Tough,    5,  100,    100, X, MNoEffect,   Opponent, false,
+	"The user summons a sphere of dark energy and detonates it on the target.",
     // 646
     929,    "Radiant Blade",    LightType,  Special,    Beauty,    5, 100,    100,        X,  MNoEffect,  Opponent, false,
 	"The user generates a sword of light and attacks the target.",
@@ -1372,7 +1372,13 @@ const movedata movelib[MAXTOTALMOVES] = {
     "The user embraces the target closely.",
     // 651
     617,	"Light of Ruin",	FairyType,	Special,	UnknownStat,	5,	140,	90,	VI,	MRecoilHalf,	Opponent, false,
-	"Drawing power from the Eternal Flower, the user fires a powerful beam of light.\nThis also damages the user quite a lot."
+	"Drawing power from the Eternal Flower, the user fires a powerful beam of light.\nThis also damages the user quite a lot.",
+    // 652
+    618,	"Precipice Blades",	GroundType,	Physical,	UnknownStat,	10,	100,	100,	VI,	MNoEffect,	Opponent, false,
+    "???",
+    // 653
+    619,	"Origin Pulse",	WaterType,	Special,	UnknownStat,	10,	100,	100,	VI,	MNoEffect,	Opponent, false,
+    "???",
 };
 
 #endif /* defined(__PokemonThrowdown__movedata__) */

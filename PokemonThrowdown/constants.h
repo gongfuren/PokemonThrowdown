@@ -58,7 +58,7 @@ const int NUMPOKEMONPERPLAYER[NUMPLAYERS] = { 1, 1 };
 const int MAXPOKEMON = 6;
 const int MAXPLAYERS = 4;
 
-const int MAXNUMMOVES = 652;
+const int MAXNUMMOVES = 654;
 const int MAXNUMPOKEMON = 801;
 
 const int MAXTOTALMOVES = MAXNUMMOVES;
@@ -76,8 +76,8 @@ const double EL2 = 2.00;
 
 // Attacking Type j, Defending Type i
 const double typeArray[MAXTYPES][MAXTYPES] = {
-    
- // NO    NRM   GRS   FIR   WTR   ELE   ICE   BUG   PSN   FGT   FLY   GRD   RCK   GHT   PSY   DRG   DRK   STL   FRY   NTL   LIT
+
+ // NO   NRM  GRS  FIR  WTR  ELE  ICE  BUG  PSN  FGT  FLY  GRD  RCK  GHT  PSY  DRG  DRK  STL  FRY  NTL  LIT
     
     EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, EL1, // NO
     
@@ -158,7 +158,7 @@ const double natureArray[NUMNATURES][NUMSTATS-1] = {
     1.0, 1.0, 0.9, 1.1, 1.0 // Careful
 };
 
-const int NUMABILITIES = 35;
+const int NUMABILITIES = 38;
 
 const int NUMTITLES = 28;
 
@@ -239,10 +239,10 @@ const int NUMLOCATIONS = 20;
 
 enum Weather
 {
-    NoWeather, Sunny, Rain, Sandstorm, Hail, Fog, Twilight, RandomWeather
+    NoWeather, Sunny, Rain, Sandstorm, Hail, Fog, ExtremeSun, HeavyRain, Twilight, RandomWeather
 };
 
-const int NUMWEATHERS = 8;
+const int NUMWEATHERS = 10;
 
 // TODO: implement terrain-type moves
 enum Terrain
@@ -338,7 +338,8 @@ enum PokeAbility
     PSynchronize, PClearBody, PDrizzle, PDrought, PAirLock, PStanceChange,
     PTorrent, PBlaze, POvergrow, PSwarm, PTechnician, PPoisonPoint,
     PSnowWarning, PAnticipation, PMoldBreaker, PPurePower, PPrankster,
-    PDefiant, PSpeedBoost, PDeathlyTouch, PSkillLink, PRunAway, POvercoat
+    PDefiant, PSpeedBoost, PDeathlyTouch, PSkillLink, PRunAway, POvercoat,
+    PDesolateLand, PPrimordialSea, PStrongJaw
 };
 
 #endif /* defined(__PokemonThrowdown__Constants__) */

@@ -13,8 +13,6 @@
 #include "Game.h"
 using namespace std;
 
-// Command Line
-
 bool SAVING_ENABLED = true;
 static void commandLineParser(int argc, char* argv[]);
 

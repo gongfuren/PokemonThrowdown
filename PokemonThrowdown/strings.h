@@ -30,10 +30,9 @@ const std::string typeStrings[MAXTYPES] = {
 };
 
 const std::string natureStrings[NUMNATURES] = {
-    "No Nature", "Hardy", "Lonely", "Brave", "Adamant", "Naughty", "Bold",
-    "Docile", "Relaxed", "Impish", "Lax", "Timid", "Hasty", "Serious", "Jolly",
-    "Naive", "Modest", "Mild", "Quiet", "Bashful", "Rash", "Calm", "Gentle",
-    "Sassy", "Careful", "Quick"
+    "No Nature", "Hardy", "Lonely", "Brave", "Adamant", "Naughty", "Docile",
+    "Bold", "Relaxed", "Impish", "Lax", "Serious", "Timid", "Hasty", "Jolly",
+    "Naive", "Bashful", "Modest", "Mild", "Quiet", "Rash", "Quirky", "Calm", "Gentle", "Sassy", "Careful"
 };
 
 const std::string itemStrings[NUMITEMS] = {
@@ -53,7 +52,7 @@ const std::string abilityStrings[NUMABILITIES] = {
     "Drought", "Air Lock", "Stance Change", "Torrent", "Blaze", "Overgrow",
     "Swarm", "Technician", "Poison Point", "Snow Warning", "Anticipation",
     "Mold Breaker", "Pure Power", "Prankster", "Defiant", "Speed Boost", "Deathly Touch",
-    "Skill Link", "Run Away", "Overcoat"
+    "Skill Link", "Run Away", "Overcoat", "Desolate Land", "Primordial Sea", "Strong Jaw"
 };
 
 const std::string moveTypeStrings[NUMMOVETYPES] = {
@@ -91,26 +90,34 @@ const std::string vstatusFullStrings[NUMVSTATUSES] = {
 };
 
 const std::string weatherStrings[NUMWEATHERS] = {
-    "(No Weather)", "Sunny", "Rain", "Sandstorm", "Hail", "Fog", "Twilight", "Random"
+    "(No Weather)", "Sunny", "Rain", "Sandstorm", "Hail", "Fog", "Extreme Sun", "Heavy Rain", "Twilight", "Random"
 };
 
 const std::string weatherStartStrings[NUMWEATHERS] = {
     "", "The sunlight turned harsh.", "It started to rain.",
-    "A sandstorm kicked up!", "It started to hail!", "Fog crept up thick as soup!", "The surroundings turned to twilight."
+    "A sandstorm kicked up!", "It started to hail!", "Fog crept up thick as soup!", "The sunlight turned extremely harsh!", "A heavy rain began to fall!", "The surroundings turned to twilight."
 };
 
 const std::string weatherEndStrings[NUMWEATHERS] = {
     "", "The sunlight faded.", "The rain stopped.", "The sandstorm subsided.",
-    "The hail stopped.", "The fog lifted.", "Twilight ended."
+    "The hail stopped.", "The fog lifted.", "The harsh sunlight faded.", "The heavy rain stopped.", "Twilight ended."
 };
 
 const std::string weatherContStrings[NUMWEATHERS] = {
     "", "The sunlight is harsh.", "Rain continues to fall.",
-    "The sandstorm rages on.", "Hail continues to fall.", "The fog is deep...", "The battlefield seems faint and dreamlike."
+    "The sandstorm rages on.", "Hail continues to fall.", "The fog is deep...", "The sunlight is extremely harsh.", "Heavy rain continues to fall.", "The battlefield seems faint and dreamlike."
 };
 
 const std::string weatherHurtStrings[NUMWEATHERS] = {
     "", "", "", "is buffetted by the sandstorm!", "is pelted by the hail!"
+};
+
+const std::string weatherPreventStrings[NUMWEATHERS] = {
+    "", "", "", "", "", "", "The extremely harsh sunlight was not lessened at all!", "There is no relief from this heavy rain!"
+};
+
+const std::string weatherFailStrings[NUMWEATHERS] = {
+    "", "", "", "", "", "", "The Water-type attack evaporated in the harsh sunlight!", "The Fire-type attack fizzled out in the heavy rain!"
 };
 
 const std::string genderStrings[4] = {
