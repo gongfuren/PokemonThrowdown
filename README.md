@@ -4,6 +4,10 @@
 
 Pokemon Throwdown is an originally-coded Pokemon battle simulator that is true to the game. It was inspired and created by a huge fan. All credit goes to Nintendo for original game design, mechanics, etc.
 
+## Install
+
+Compile in the PokemonThrowdown directory using g++. "g++ *.cpp -o PokemonThrowdown" should do the trick.
+
 ## Etc.
 
 **throwdown (n.) informal**
