@@ -1,59 +1,19 @@
 //
 //  main.cpp
-//  pokemongame
+//  PokemonThrowdown
 //
-//  Created by Ian Cordero on 8/6/13.
-//  Copyright (c) 2013-2014 Ian Cordero. All rights reserved.
+//  Created by Ian Cordero on 1/30/15.
+//  Copyright (c) 2015 Ian Cordero. All rights reserved.
 //
 
-#include <iostream>
+#include "utilities.h" // toInt()
 #include <ctime> // time()
-#include <unistd.h> // getopt()
 #include <cstdlib> // srand()
-#include "Game.h"
-using namespace std;
+#include "Game.h" // Game
 
-bool SAVING_ENABLED = true;
-static void commandLineParser(int argc, char* argv[]);
-
-// Main //////////////////////////////////////////////////////////////////////
-
-int main(int argc, char* argv[])
+int main(int argc, const char* argv[])
 {
-    // Command line arguments (if any)
-    commandLineParser(argc, argv);
-    
-    // Initialize environment
-    srand(static_cast<unsigned int>(time(NULL))); // RNG
-    
-    // Begin Game
     Game g;
+    srand(toInt(time(NULL))); // Start RNG
     g.start();
-}
-
-// Command Line //////////////////////////////////////////////////////////////
-
-static void usage(char* argn)
-{
-    cerr << "Usage: " << argn << " [-d]" << endl;
-}
-
-static void commandLineParser(int argc, char* argv[])
-{
-    for (;;)
-    {
-        switch (getopt(argc, argv, "d"))
-        {
-            case 'd':
-                SAVING_ENABLED = false;
-                break;
-            default:
-                usage(argv[0]);
-                exit(1);
-            case -1:
-                goto options_exhausted___;
-        }
-    }
-options_exhausted___:
-    ;
 }

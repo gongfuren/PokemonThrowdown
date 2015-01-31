@@ -2,95 +2,138 @@
 //  utilities.h
 //  PokemonThrowdown
 //
-//  Created by Ian Cordero on 7/29/14.
-//  Copyright (c) 2014 Ian Cordero. All rights reserved.
+//  Created by Ian Cordero on 1/30/15.
+//  Copyright (c) 2015 Ian Cordero. All rights reserved.
 //
 
-#ifndef __PokemonThrowdown__util__
-#define __PokemonThrowdown__util__
+#ifndef __PokemonThrowdown__utilities__
+#define __PokemonThrowdown__utilities__
 
-#include <iostream>
-#include <list>
-#include "constants.h"
+#include <iostream> // std::string
+#include <sstream> // std::ostringstream
+#include <cstdlib> // exit()
+#include <limits> // max
 
-// Auxiliary Function Declarations ///////////////////////////////////////////
-
-// General Utilities
-
-// randInt()
-// Returns a randomly chosen integer between lowest and highest inclusive
-int randInt(int lowest, int highest);
-
-// typeMultiplier()
-// Returns multiplier corresponding to 'type1's damage on 'type2' or
-// 'type2'/'type3'
 //
-// Ex: typeMultiplier(DragonType, FairyType) == 0.0
-double typeMultiplier(Type type1, Type type2, Type type3 = NoType);
-
-// natureMultiplier()
-// Returns multiplier corresponding to nature's influence on stat
+// toInt()
+// Returns an int representation of a number.
 //
-// Ex: natureMultiplier(AdamantNature, AttStat) == 1.1
-double natureMultiplier(Nature nature, int stat);
-
-// stringToNumber()
-// Simple conversion to int from a string
-int stringToNumber(const std::string& string);
-
-// UI
-
-// selectorGadget()
-//
-// Organizes and displays all 'sizeo' indices of opts[] as a user-interactive
-// menu.
-//
-// Returns index of opts[] corresponding to user choice. If user chooses "Back"
-// (Back is enabled by default) returns -1. You must check and do something useful
-// with this value (i.e. break out of a loop).
-//
-// Allows pagination, with 'entriesPerPage' choices per page, not including
-// extra items.
-//
-// Starts at index 'prog' (and updates it so you can call this function again and
-// not lose your place).
-//
-// Pass in specialOpts[] for extra options on every page. specialEndOpts[] for
-// options only at the end of the list after opts[], specialBeginOpts[] for
-// options only at the beginning.
-int selectorGadget(std::string opts[], int sizeo, int& prog,
-                   int entriesPerPage = 10, bool back = true,
-                   std::string specialOpts[] = NULL, int sizes = 0,
-                   std::string specialBeginOpts[] = NULL, int sizeb = 0,
-                   std::string specialEndOpts[] = NULL, int sizee = 0);
-
-// inputGadget()
-// Simple utility for accepting a checked int input from the command line.
-int inputGadget(int numChoices);
-
-// numericalGadget()
-// Accepts input from cin between min and max, inclusive
-int numericalGadget(int min, int max, std::string error = "Invalid input!");
-
-// confirmGadget()
-// Displays an OK prompt for the user at the command line
-void confirmGadget(std::string message = "OK");
-
-// backGadget()
-// Displays a Back prompt for the user at the command line
-void backGadget();
-
-// Other
-
-// listContains()
-// True if list contains o, false otherwise
-template <typename Object>
-bool listContains(const std::list<Object> l, Object o)
+template <typename T>
+int toInt(T number)
 {
-    for (typename std::list<Object>::const_iterator p = l.begin(); p != l.end(); p++)
-        if (*p == o)
-            return true;
-    return false;
+    return static_cast<int>(number);
 }
 
-#endif /* defined(__PokemonThrowdown__util__) */
+//
+// toDouble()
+// Returns a double representation of a number.
+//
+template <typename T>
+double toDouble(T number)
+{
+    return static_cast<double>(number);
+}
+
+//
+// toString()
+// Returns a string representation of an item.
+//
+template <typename T>
+std::string toString(T item)
+{
+    std::ostringstream tmp;
+    tmp << item;
+    return tmp.str();
+}
+
+//
+// swap()
+// Swap two items.
+//
+template <typename T>
+void swap(T& first, T& second)
+{
+    T temp = first;
+    first = second;
+    second = temp;
+}
+
+//
+// max()
+// Return the larger of two items.
+//
+template <typename T>
+T max(T first, T second)
+{
+    return (first > second) ? first : second;
+}
+
+//
+// min()
+// Return the smaller of two items.
+//
+template <typename T>
+T min(T first, T second)
+{
+    return (first < second) ? first : second;
+}
+
+//
+// randInt()
+// Get a random integer between 0 and range-1, inclusive.
+//
+int randInt(int range);
+
+//
+// randInt()
+// Get a random integer between lowest and highest, inclusive.
+//
+int randInt(int lowest, int highest);
+
+//
+// print()
+// Prints to console.
+//
+template <typename T>
+void print(T item)
+{
+    std::cout << item;
+}
+
+//
+// println()
+// Prints to console, followed by a newline.
+//
+template <typename T>
+void println(T item)
+{
+    std::cout << item << std::endl;
+}
+
+//
+// error()
+// Prints error to console, then exits.
+//
+template <typename T>
+void error(T message)
+{
+    std::cerr << message << std::endl;
+    exit(EXIT_FAILURE);
+}
+
+//
+// getNumericalInput()
+// A utility function that shields the program from std::cin's horrible
+// quirks and pitfalls.
+// Prompts user for numerical input. Loops until a valid input between 1
+// and numChoices inclusive is given.
+//
+int getNumericalInput(int numChoices);
+
+//
+// getStringInput
+// Prompts user for string input.
+//
+std::string getStringInput();
+
+#endif /* defined(__PokemonThrowdown__utilities__) */
