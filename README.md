@@ -2,7 +2,9 @@
 
 ## About
 
-Are you a Pokemon fan? Feast your eyes on the best command line Pokemon game there ever was! Featuring *ALL* 718 Pokemon and *ALL* 616 Pokemon moves, this simulator is the simulator to beat all others.
+Are you a Pokemon fan? 
+
+Feast your eyes on the best command line Pokemon game there ever was! Featuring *ALL* 718 Pokemon and *ALL* 616 Pokemon moves, this simulator is the simulator to beat all others.
 
 ![alt tag](https://cloud.githubusercontent.com/assets/7758601/5987608/7a0b27da-a8e9-11e4-93fb-7786a3a88623.png)
 
@@ -18,7 +20,7 @@ Export your teams into text files for easy posting to online forums, telling fri
 
 ![alt tag](https://cloud.githubusercontent.com/assets/7758601/5987631/0f81c688-a8eb-11e4-80ef-b9219bd5bf8c.png)
 
-Includes a sprinkling of custom (non-canon) Pokemon by yours truly!
+Includes a sprinkling of custom (non-canon) Pokemon and custom moves by yours truly! There are even two new types that are exclusive to these custom Pokemon. If you want to sharply increase your Pokemon knowledge, there are complete Pokedex and Movedex guides where you can look up Pokemon and moves.
 
 ![alt tag](https://cloud.githubusercontent.com/assets/7758601/5987611/857ac562-a8e9-11e4-9759-842c84ebb5a6.png)
 
