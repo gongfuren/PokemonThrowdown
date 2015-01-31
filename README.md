@@ -2,11 +2,11 @@
 
 ## About
 
-Are you a Pokemon fan? Feast your eyes on the best command line Pokemon game there ever was! Featuring ALL 718 Pokemon and ALL 616 Pokemon moves, this simulator is the simulator to beat all others.
+Are you a Pokemon fan? Feast your eyes on the best command line Pokemon game there ever was! Featuring *ALL* 718 Pokemon and *ALL* 616 Pokemon moves, this simulator is the simulator to beat all others.
 
 ![alt tag](https://cloud.githubusercontent.com/assets/7758601/5987608/7a0b27da-a8e9-11e4-93fb-7786a3a88623.png)
 
-Pokemon Throwdown is an originally-coded Pokemon battle simulator that is true to the game.
+Pokemon Throwdown is an originally-coded Pokemon battle simulator that is true to the game. Built to run on any OS from the command line so nobody has to miss out on the fun :).
 
 ![alt tag](https://cloud.githubusercontent.com/assets/7758601/5987609/7f4b79ac-a8e9-11e4-89b7-1aae8942af51.png)
 
@@ -14,7 +14,7 @@ Pokemon Throwdown features great customizability and the ability to create and c
 
 ![alt tag](https://cloud.githubusercontent.com/assets/7758601/5987610/8218d198-a8e9-11e4-80fd-de2bcd9c81d5.png)
 
-Export your teams into text files for easy posting to online forums or friends, or transferring your teams to Pokemon Showdown.
+Export your teams into text files for easy posting to online forums, telling friends about your teams, or transferring your teams to [Pokemon Showdown](http://pokemonshowdown.com).
 
 ![alt tag](https://cloud.githubusercontent.com/assets/7758601/5987631/0f81c688-a8eb-11e4-80ef-b9219bd5bf8c.png)
 
@@ -28,7 +28,7 @@ Pokemon Throwdown was inspired and created by a huge fan. All credit goes to Nin
 
 ## Install
 
-Latest Release: 
+**Latest Release**: 
 
 Click on "releases" above to get the latest working copy. This release features the fully-featured program.
 
@@ -44,4 +44,4 @@ The current commit is a reworking of the game to use better programming practice
 a performance by or competition between rappers, breakdancers, etc.
 *Ex: a funky hip-hop throwdown.*
 
-Pokemon "Throwdown" is a play on the popular web-based Pokemon Showdown battle simulator.
+Pokemon "Throwdown" is a play on the popular web-based [Pokemon Showdown](http://pokemonshowdown.com) battle simulator.
