@@ -20,7 +20,7 @@ Export your teams into text files for easy posting to online forums, telling fri
 
 ![alt tag](https://cloud.githubusercontent.com/assets/7758601/5987631/0f81c688-a8eb-11e4-80ef-b9219bd5bf8c.png)
 
-Includes a sprinkling of custom (non-canon) Pokemon and custom moves by yours truly! There are even two new types that are exclusive to these custom Pokemon. If you want to sharply increase your Pokemon knowledge, there are complete Pokedex and Movedex guides where you can look up Pokemon and moves.
+Includes a sprinkling of custom (non-canon) Pokemon and custom moves by yours truly! There are even two new types that are exclusive to these custom Pokemon, a Pokedex and Movedex, and more!
 
 ![alt tag](https://cloud.githubusercontent.com/assets/7758601/5987611/857ac562-a8e9-11e4-9759-842c84ebb5a6.png)
 
@@ -38,7 +38,7 @@ Compile in the "PokemonThrowdown" directory using g++. Typing "g++ *.cpp -o Poke
 
 **In Progress**:
 
-The current commit is a reworking of the game to use better programming practices and is incomplete. This is because I started this game in Spring 2013 while taking my first CS class, so it did not use the best design principles and became rather unmaintainable. Please use the latest release by clicking "releases" above.
+The current commit is a reworking of the game to use better programming practices and design principles and is incomplete. Please use the latest release by clicking "releases" above.
 
 ## Etc.
 
