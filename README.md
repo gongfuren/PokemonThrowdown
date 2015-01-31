@@ -30,13 +30,13 @@ Pokemon Throwdown was inspired and created by a huge fan. All credit goes to Nin
 
 Latest Release: 
 
-Click on releases above to get the latest working copy. This release features the fully-featured program.
+Click on "releases" above to get the latest working copy. This release features the fully-featured program.
 
 Compile in the "PokemonThrowdown" directory using g++. Typing "g++ *.cpp -o PokemonThrowdown" on the command line should do the trick.
 
 In Progress:
 
-The current commit is a reworking of the game to use better programming practices. This is because I started this game in Spring 2013 while taking my first CS class, so it did not use the best design principles and became rather unmaintainable.
+The current commit is a reworking of the game to use better programming practices and is incomplete. This is because I started this game in Spring 2013 while taking my first CS class, so it did not use the best design principles and became rather unmaintainable. Please use the latest release by clicking "releases" above.
 
 ## Etc.
 
