@@ -20,6 +20,10 @@ class Type;
 class Types
 {
 public:
+    Types();
+    
+    ~Types();
+    
     double getMultiplier(const Type& attackingType) const;
     
 private:

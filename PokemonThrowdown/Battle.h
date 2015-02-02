@@ -10,24 +10,41 @@
 #define __PokemonThrowdown__Battle__
 
 #include <vector> 
+#include "Controller.h"
 
-class Trainer;
+class Player;
 class Window;
+class Computer;
 
 //
 // Battle
 // Orchestrates Trainers and battle phases.
 //
-class Battle
+class Battle : public Controller
 {
 public:
     Battle(Window* window);
     
+    ~Battle();
+    
     void start();
     
+    void intro();
+    
+    void actionPhase();
+    
+    void battlePhase();
+    
+    void endOfTurn();
+    
+    bool isOver() const;
+    
 private:
-    std::vector<Trainer*> trainers;
-    Window* window;
+    std::vector<Player*> players;
+    Player* human;
+    Computer* computer;
+    Player* victor;
+    int turnsPassed;
 };
 
 #endif /* defined(__PokemonThrowdown__Battle__) */

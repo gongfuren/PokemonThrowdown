@@ -17,3 +17,8 @@ HPMultiplierException::HPMultiplierException()
 : LogicException("Cannot ask HPStat for its multiplier.")
 {
 }
+
+NavigationException::NavigationException(std::string message)
+: LogicException(message)
+{
+}

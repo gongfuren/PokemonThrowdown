@@ -9,6 +9,10 @@
 #ifndef __PokemonThrowdown__Stats__
 #define __PokemonThrowdown__Stats__
 
+#include <vector> 
+
+#define vector std::vector
+
 class Stat;
 
 //
@@ -18,6 +22,14 @@ class Stat;
 class Stats
 {
 public:
+    enum ID
+    { HP = 0, Att, Def, SpA, SpD, Spe, Acc, Eva
+    };
+    
+    Stats();
+    
+    ~Stats();
+    
     Stat* getHP() const;
     
     Stat* getAtt() const;
@@ -34,11 +46,10 @@ public:
     
     Stat* getEva() const;
     
-    enum ID { HP = 0, Att, Def, SpA, SpD, Spe, Acc, Eva };
-    static const int MaxNumStats = 8;
-    
 private:
-    Stat* stats[MaxNumStats];
+    vector<Stat*> stats;
 };
+
+#undef vector
 
 #endif /* defined(__PokemonThrowdown__Stats__) */

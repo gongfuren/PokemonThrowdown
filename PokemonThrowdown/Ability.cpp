@@ -7,3 +7,8 @@
 //
 
 #include "Ability.h"
+
+Ability::Ability(Pokemon* pokemon)
+: Reactor(pokemon)
+{
+}

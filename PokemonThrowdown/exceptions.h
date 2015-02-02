@@ -24,4 +24,10 @@ public:
     HPMultiplierException();
 };
 
+class NavigationException : public LogicException
+{
+public:
+    NavigationException(std::string message);
+};
+
 #endif /* defined(__PokemonThrowdown__exceptions__) */

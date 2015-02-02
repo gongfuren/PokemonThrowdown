@@ -17,6 +17,6 @@ TextLabelNode::TextLabelNode(std::string label, WinNode* parent)
 
 void TextLabelNode::display()
 {
-    println(label);
     WinNode::display();
+    println(label);
 }

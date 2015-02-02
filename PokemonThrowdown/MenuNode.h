@@ -9,8 +9,16 @@
 #ifndef __PokemonThrowdown__MenuNode__
 #define __PokemonThrowdown__MenuNode__
 
+#include <functional>
 #include "WinNode.h"
-#include "Menu.h"
+
+#define function std::function
+#define override virtual
+
+class Menu;
+class BannerNode;
+class TableNode;
+class NumericalGadgetNode;
 
 //
 // MenuNode
@@ -21,5 +29,8 @@ class MenuNode : public WinNode
 public:
     MenuNode(const Menu& menu, WinNode* parent);
 };
+
+#undef function
+#undef override
 
 #endif /* defined(__PokemonThrowdown__MenuNode__) */

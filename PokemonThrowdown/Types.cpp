@@ -9,6 +9,19 @@
 #include "Types.h"
 #include "Type.h"
 
+Types::Types()
+{
+    types.push_back(new Type());
+}
+
+Types::~Types()
+{
+    for (Type* type : types)
+    {
+        delete type;
+    }
+}
+
 double Types::getMultiplier(const Type& attackingType) const
 {
     double multiplier = 1.0;

@@ -6,8 +6,29 @@
 //  Copyright (c) 2015 Ian Cordero. All rights reserved.
 //
 
+#include <vector>
 #include "Stats.h"
 #include "Stat.h"
+
+Stats::Stats()
+{
+    stats.push_back(new HPStat());
+    stats.push_back(new Stat());
+    stats.push_back(new Stat());
+    stats.push_back(new Stat());
+    stats.push_back(new Stat());
+    stats.push_back(new Stat());
+    stats.push_back(new BattleStat());
+    stats.push_back(new BattleStat());
+}
+
+Stats::~Stats()
+{
+    for (Stat* stat : stats)
+    {
+        delete stat;
+    }
+}
 
 Stat* Stats::getHP() const
 {

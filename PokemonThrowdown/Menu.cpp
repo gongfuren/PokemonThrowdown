@@ -8,15 +8,15 @@
 
 #include "Menu.h"
 
-#define string std::string
-#define vector std::vector
-#define function std::function
+using namespace std;
 
-Menu::Menu(string title, vector<string> options, function<void(int)> callback)
+Menu::Menu(string title, vector<string> options, function<void(int)> callback, bool backButtonEnabled, int paginationLimit)
 {
     this->title = title;
     this->options = options;
     this->callback = callback;
+    this->backButtonEnabled = backButtonEnabled;
+    this->paginationLimit = paginationLimit;
 }
 
 string Menu::getTitle() const
@@ -32,6 +32,16 @@ vector<string> Menu::getOptions() const
 function<void(int)> Menu::getCallback() const
 {
     return callback;
+}
+
+bool Menu::getBackButtonEnabled() const
+{
+    return backButtonEnabled;
+}
+
+int Menu::getPaginationLimit() const
+{
+    return paginationLimit;
 }
 
 void Menu::executeCallback(int argument)

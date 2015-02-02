@@ -11,9 +11,12 @@
 
 #include "Reactor.h"
 
+class Pokemon;
+
 class Ability : public Reactor
 {
-    
+public:
+    Ability(Pokemon* pokemon);
 };
 
 #endif /* defined(__PokemonThrowdown__Ability__) */

@@ -9,7 +9,7 @@
 #include "WinNode.h"
 #include <algorithm> // find()
 
-#define vector std::vector
+using namespace std;
 
 WinNode::WinNode(WinNode* parent)
 {
@@ -39,6 +39,7 @@ void WinNode::removeFromParent()
     if (parent != nullptr)
     {
         parent->children.erase(find(parent->children.begin(), parent->children.end(), this));
+        delete this;
     }
 }
 

@@ -10,6 +10,10 @@
 #define __PokemonThrowdown__Team__
 
 #include <iostream>
+#include <vector>
+
+#define vector std::vector
+#define string std::string
 
 class Pokemon;
 
@@ -20,10 +24,24 @@ class Pokemon;
 class Team
 {
 public:
-    static const int MaxNumPokemon = 6;
+    Team();
+    
+    ~Team();
+    
+    vector<Pokemon*> getActive() const;
+    
+    vector<Pokemon*> getPokemon() const;
+    
+    vector<string> getPokemonNames() const;
+    
+    static const int FirstActiveSlot = 0;
     
 private:
-    Pokemon* pokemon[MaxNumPokemon];
+    vector<Pokemon*> active;
+    vector<Pokemon*> pokemon;
 };
+
+#undef vector
+#undef string
 
 #endif /* defined(__PokemonThrowdown__Team__) */

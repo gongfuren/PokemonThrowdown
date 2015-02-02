@@ -9,9 +9,15 @@
 #include "Stat.h"
 #include "exceptions.h"
 
-constexpr double Stat::multipliers[Stats::MaxNumStats * 2 + 1];
+constexpr double Stat::multipliers[MaxMagnitude * 2 + 1];
 
-constexpr double BattleStat::battleMultipliers[Stats::MaxNumStats * 2 + 1];
+constexpr double BattleStat::battleMultipliers[MaxMagnitude * 2 + 1];
+
+Stat::Stat()
+{
+    magnitude = 0;
+    amplitude = 100;
+}
 
 Stat::Stat(int amplitude)
 {
@@ -56,6 +62,11 @@ double Stat::getMultiplier() const
     return multipliers[magnitude + MaxMagnitude];
 }
 
+HPStat::HPStat()
+: Stat(200, 200)
+{
+}
+
 HPStat::HPStat(int amplitude)
 : Stat(amplitude, amplitude)
 {
@@ -80,6 +91,16 @@ void HPStat::lower(int amount)
 double HPStat::getMultiplier() const
 {
     throw HPMultiplierException();
+}
+
+BattleStat::BattleStat()
+: Stat(1, 0)
+{
+}
+
+BattleStat::BattleStat(int amplitude)
+: Stat(amplitude)
+{
 }
 
 double BattleStat::getMultiplier() const
