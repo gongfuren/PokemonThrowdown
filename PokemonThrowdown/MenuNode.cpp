@@ -9,13 +9,12 @@
 #include "MenuNode.h"
 #include "TableNode.h"
 #include "BannerNode.h"
-#include "NumericalGadgetNode.h"
 #include "utilities.h" // toInt()
+#include "Menu.h"
 
 MenuNode::MenuNode(const Menu& menu, WinNode* parent)
 : WinNode(parent)
 {
     addChild(new BannerNode(menu.getTitle(), this));
-    addChild(new TableNode(menu.getOptions(), this));
-    addChild(new NumericalGadgetNode(toInt(menu.getOptions().size()), menu.getCallback(), this));
+    addChild(new TableNode(menu.getOptions(), menu.getPaginationLimit(), menu.getBackButtonEnabled(), menu.getCallback(), this));
 }

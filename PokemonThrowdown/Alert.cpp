@@ -8,12 +8,14 @@
 
 #include "Alert.h"
 
-Alert::Alert(std::string text)
+using namespace std;
+
+Alert::Alert(string text)
 {
     this->text = text;
 }
 
-std::string Alert::getText() const
+string Alert::getText() const
 {
     return text;
 }

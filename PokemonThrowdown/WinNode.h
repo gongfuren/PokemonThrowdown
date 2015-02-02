@@ -38,7 +38,6 @@ public:
 private:
     std::vector<WinNode*> children;
     WinNode* parent;
-    Window* window;
 };
 
 #endif /* defined(__PokemonThrowdown__WinNode__) */

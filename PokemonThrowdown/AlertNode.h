@@ -12,6 +12,8 @@
 #include "WinNode.h"
 #include <iostream>
 
+#define override virtual
+
 //
 // AlertNode
 // Intended for a short-lived alert. Passed in to Window and immediately
@@ -21,8 +23,10 @@ class AlertNode : public WinNode
 {
 public:
     AlertNode(std::string alert, WinNode* parent);
-    
+        
 private:
 };
+
+#undef override
 
 #endif /* defined(__PokemonThrowdown__AlertNode__) */

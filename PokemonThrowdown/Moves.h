@@ -9,6 +9,12 @@
 #ifndef __PokemonThrowdown__Moves__
 #define __PokemonThrowdown__Moves__
 
+#include <vector> 
+#include <iostream>
+
+#define vector std::vector
+#define string std::string
+
 class Move;
 
 //
@@ -18,10 +24,21 @@ class Move;
 class Moves
 {
 public:
-    static const int MaxNumMoves = 4;
+    Moves();
+    
+    ~Moves();
+    
+    vector<Move*> getMoves() const;
+    
+    vector<string> getMoveNames() const;
+    
+    int getNumber() const;
     
 private:
-    Move* moves[MaxNumMoves];
+    vector<Move*> moves;
 };
+
+#undef vector
+#undef string
 
 #endif /* defined(__PokemonThrowdown__Moves__) */

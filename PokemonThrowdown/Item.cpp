@@ -7,3 +7,8 @@
 //
 
 #include "Item.h"
+
+Item::Item(Pokemon* pokemon)
+: Reactor(pokemon)
+{
+}

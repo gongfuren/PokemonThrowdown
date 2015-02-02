@@ -23,10 +23,26 @@ class TableCellNode : public WinNode
 public:
     TableCellNode(std::string label, int iD, WinNode* parent);
     
-    override void display();
-    
-private:
+protected:
     int iD;
+};
+
+class BackTableCellNode : public TableCellNode
+{
+public:
+    BackTableCellNode(WinNode* parent);
+};
+
+class NextTableCellNode : public TableCellNode
+{
+public:
+    NextTableCellNode(WinNode* parent);
+};
+
+class PrevTableCellNode : public TableCellNode
+{
+public:
+    PrevTableCellNode(WinNode* parent);
 };
 
 #undef override

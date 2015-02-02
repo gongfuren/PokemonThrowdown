@@ -11,10 +11,14 @@
 
 #include <iostream>
 
+#define string std::string
+
+class Moves;
 class Stats;
 class Types;
 class Ability;
 class Item;
+class Status;
 
 //
 // Pokemon
@@ -23,16 +27,52 @@ class Item;
 class Pokemon
 {
 public:
+    enum Gender
+    {
+        Male = 0, Female, Genderless
+    };
+    
     Pokemon();
     
+    ~Pokemon();
+    
+    string getName() const;
+    
+    string* getNickname() const;
+    
+    Moves* getMoves() const;
+    
+    Stats* getStats() const;
+    
+    Types* getTypes() const;
+    
+    Ability* getAbility() const;
+    
+    Item* getItem() const;
+    
+    Gender getGender() const;
+    
+    Status* getStatus() const;
+    
+    int getLevel() const;
+    
+    string getFullName() const;
+    
+    static string description(Gender gender);
+    
 private:
-    std::string name;
-    std::string nickname;
+    string name;
+    string* nickname;
+    Moves* moves;
     Stats* stats;
     Types* types;
     Ability* ability;
     Item* item;
-    enum Gender { Male = 0, Female, Genderless } gender;
+    Gender gender;
+    Status* status;
+    int level;
 };
+
+#undef string
 
 #endif /* defined(__PokemonThrowdown__Pokemon__) */

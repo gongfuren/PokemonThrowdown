@@ -10,12 +10,13 @@
 #define __PokemonThrowdown__Alert__
 
 #include <iostream>
+#include "Presentable.h"
 
 //
 // Alert
 // Represents an up front alert where the user must press 'OK' to continue.
 //
-class Alert
+class Alert : public Presentable
 {
 public:
     Alert(std::string text);

@@ -9,7 +9,6 @@
 #ifndef __PokemonThrowdown__Game__
 #define __PokemonThrowdown__Game__
 
-class Battle;
 class Settings;
 class Guide;
 class Window;
@@ -28,7 +27,6 @@ public:
     void start();
     
 private:
-    Battle* battle;
     Settings* settings;
     Guide* guide;
     Window* window;

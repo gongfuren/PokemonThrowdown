@@ -9,6 +9,7 @@
 #include "TableCellNode.h"
 #include "TextLabelNode.h"
 #include "utilities.h" // print()
+#include "Menu.h"
 
 TableCellNode::TableCellNode(std::string label, int iD, WinNode* parent)
 : WinNode(parent)
@@ -17,9 +18,17 @@ TableCellNode::TableCellNode(std::string label, int iD, WinNode* parent)
     addChild(new TextLabelNode(label, this));
 }
 
-void TableCellNode::display()
+BackTableCellNode::BackTableCellNode(WinNode* parent)
+: TableCellNode(".. (Back)", Menu::BackValue, parent)
 {
-    print(iD+1);
-    print(": ");
-    WinNode::display();
+}
+
+NextTableCellNode::NextTableCellNode(WinNode* parent)
+: TableCellNode(">> (Next)", Menu::NextChoice, parent)
+{
+}
+
+PrevTableCellNode::PrevTableCellNode(WinNode* parent)
+: TableCellNode("<< (Prev)", Menu::PrevChoice, parent)
+{
 }

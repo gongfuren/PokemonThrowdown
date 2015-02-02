@@ -9,9 +9,25 @@
 #ifndef __PokemonThrowdown__Reactor__
 #define __PokemonThrowdown__Reactor__
 
+#define empty {}
+
+class Pokemon;
+
 class Reactor
 {
 public:
+    Reactor(Pokemon* pokemon);
+    
+    Pokemon* getPokemon() const;
+    
+    virtual void onSendOut() empty;
+    
+    virtual void onMadeContact() empty;
+        
+private:
+    Pokemon* pokemon;
 };
+
+#undef empty
 
 #endif /* defined(__PokemonThrowdown__Reactor__) */

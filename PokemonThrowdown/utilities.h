@@ -63,7 +63,7 @@ void swap(T& first, T& second)
 // Return the larger of two items.
 //
 template <typename T>
-T max(T first, T second)
+T maximum(T first, T second)
 {
     return (first > second) ? first : second;
 }
@@ -73,7 +73,7 @@ T max(T first, T second)
 // Return the smaller of two items.
 //
 template <typename T>
-T min(T first, T second)
+T minimum(T first, T second)
 {
     return (first < second) ? first : second;
 }

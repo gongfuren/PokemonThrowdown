@@ -7,3 +7,13 @@
 //
 
 #include "Reactor.h"
+
+Reactor::Reactor(Pokemon* pokemon)
+{
+    this->pokemon = pokemon;
+}
+
+Pokemon* Reactor::getPokemon() const
+{
+    return pokemon;
+}

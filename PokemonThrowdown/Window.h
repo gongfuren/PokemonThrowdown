@@ -12,6 +12,8 @@
 class Menu;
 class WinNode;
 class Alert;
+class Dialogue;
+class StatusBox;
 
 //
 // Window
@@ -31,8 +33,10 @@ public:
     
     void alert(const Alert& alert);
     
-    void display();
+    void present(const Dialogue& dialogue);
     
+    void present(const StatusBox& statusBox);
+        
 private:
     WinNode* root;
 };

@@ -11,6 +11,9 @@
 #include "Alert.h"
 #include "AlertNode.h"
 #include "WindowView.h"
+#include "Dialogue.h"
+#include "DialogueNode.h"
+#include "StatusBoxNode.h"
 
 Window::Window()
 {
@@ -26,6 +29,7 @@ void Window::present(const Menu& menu)
 {
     root->removeChildren();
     root->addChild(new MenuNode(menu, root));
+    root->display();
 }
 
 void Window::alert(const Alert& alert)
@@ -34,10 +38,16 @@ void Window::alert(const Alert& alert)
     alertNode.display();
 }
 
-void Window::display()
+void Window::present(const Dialogue& dialogue)
 {
-    if (root != nullptr)
-    {
-        root->display();
-    }
+    root->removeChildren();
+    root->addChild(new DialogueNode(dialogue.getText(), nullptr));
+    root->display();
+}
+
+void Window::present(const StatusBox& statusBox)
+{
+    root->removeChildren();
+    root->addChild(new StatusBoxNode(statusBox, nullptr));
+    root->display();
 }

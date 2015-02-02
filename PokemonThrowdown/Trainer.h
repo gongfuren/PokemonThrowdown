@@ -11,6 +11,8 @@
 
 #include <iostream>
 
+#define string std::string
+
 class Team;
 
 //
@@ -20,12 +22,32 @@ class Team;
 class Trainer
 {
 public:
+    enum Gender
+    {
+        Male = 0, Female
+    };
+    
+    Trainer();
+    
+    ~Trainer();
+    
+    string getTitle() const;
+    
+    string getName() const;
+    
+    Team* getTeam() const;
+    
+    Gender getGender() const;
+    
+    string getTitleAndName() const;
     
 private:
-    std::string title;
-    std::string name;
+    string title;
+    string name;
     Team* team;
-    enum Gender { Male = 0, Female } gender;
+    Gender gender;
 };
+
+#undef string
 
 #endif /* defined(__PokemonThrowdown__Trainer__) */
