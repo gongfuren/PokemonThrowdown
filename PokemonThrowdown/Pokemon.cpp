@@ -14,21 +14,26 @@
 #include "Item.h"
 #include <iostream>
 #include "Status.h"
+#include "Team.h"
+#include "Move.h"
+#include "utilities.h" // toDouble()
+#include "Stat.h"
 
 using namespace std;
 
-Pokemon::Pokemon()
+Pokemon::Pokemon(Team* team)
 {
     name = "Pikachu";
     nickname = nullptr;
-    moves = new Moves();
-    stats = new Stats();
-    types = new Types();
+    moves = new Moves(this);
+    stats = new Stats(this);
+    types = new Types(this);
     ability = new Ability(this);
     item = new Item(this);
     gender = Male;
     status = new Status(this);
     level = 100;
+    this->team = team;
 }
 
 Pokemon::~Pokemon()
@@ -108,10 +113,46 @@ string Pokemon::description(Pokemon::Gender gender)
     switch (gender)
     {
         case Pokemon::Male:
+            return "Male";
+        case Pokemon::Female:
+            return "Female";
+        default:
+            return "Genderless";
+    }
+}
+
+string Pokemon::shortDescription(Pokemon::Gender gender)
+{
+    switch (gender)
+    {
+        case Pokemon::Male:
             return "M";
         case Pokemon::Female:
             return "F";
         default:
             return "-";
+    }
+}
+
+Trainer* Pokemon::getTrainer() const
+{
+    return team->getTrainer();
+}
+
+double Pokemon::getCriticalMultiplier() const
+{
+    const double CriticalRate = 0.0625;
+    const double DiceRoll = toDouble(randInt(0, 9999)) / 10000.0;
+    
+    if (DiceRoll < CriticalRate)
+    {
+        // TEMPORARY FIX TODO!!!
+        println("A critical hit!");
+        
+        return 1.50;
+    }
+    else
+    {
+        return 1.00;
     }
 }

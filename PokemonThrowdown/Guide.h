@@ -9,6 +9,10 @@
 #ifndef __PokemonThrowdown__Guide__
 #define __PokemonThrowdown__Guide__
 
+//
+// Guide
+// The controller for the user guide at the main menu.
+//
 class Guide
 {
     

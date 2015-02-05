@@ -19,7 +19,8 @@
 #include "Moves.h"
 #include "Move.h"
 #include "Action.h"
-#include "utilities.h" // randInt
+#include "utilities.h" // randInt()
+#include "Slot.h"
 
 using namespace std;
 
@@ -37,29 +38,43 @@ Player::~Player()
 
 void Player::initialSummon()
 {
-    getWindow()->present(Dialogue("You sent out " + trainer->getTeam()->getActive()[0]->getFullName() + "!"));
+    getWindow()->present(Dialogue("You sent out " + trainer->getTeam()->getSlot()->getPokemon()->getFullName() + "!"));
+}
+
+void Player::introduceSelf() const
+{
 }
 
 void Player::selectAction()
 {
-    int choice = 0;
+    int choice = Action::DontCare;
     
     while (action == nullptr)
     {
-        Menu menu = Menu("What would you like to do?", { "Fight!", "Bag", "Pokemon", "Run" }, [&choice] (int a) { choice = a; });
+        Menu menu = Menu("What will " + trainer->getTeam()->getSlot()->getPokemon()->getFullName() + " do?", { "Fight!", "Bag", "Pokemon", "Run" }, [&choice] (int a) { choice = a; });
         getWindow()->present(menu);
         
         switch (choice)
         {
             case 0:
             {
-                Menu moveSelect = Menu("Choose a move:", trainer->getTeam()->getActive()[Team::FirstActiveSlot]->getMoves()->getMoveNames(), [&choice] (int a) { choice = a; }, true);
+                const Team* team = trainer->getTeam();
+                const Pokemon* pokemon = team->getSlot()->getPokemon();
+                const Moves* moves = pokemon->getMoves();
+                
+                const Menu moveSelect = Menu("Choose a move:", moves->getMoveNames(), [&choice] (int a) { choice = a; }, true);
                 getWindow()->present(moveSelect);
                 
                 switch (choice)
                 {
                     default:
-                        action = new Action(Action::Fight, choice);
+                    {
+                        Move* move = moves->getMoves().at(choice);
+                        Slot* target = getOpponent()->getTrainer()->getTeam()->getSlot();
+                        
+                        move->setTarget(target);
+                        action = new Action(move, team->getSlot()->getPokemon());
+                    }
                         break;
                     case Menu::BackValue:
                         break;
@@ -71,13 +86,14 @@ void Player::selectAction()
                 break;
             case 2:
             {
-                Menu pokemonSelect = Menu("Choose a Pokemon:", trainer->getTeam()->getPokemonNames(), [&choice] (int a) { choice = a; }, true);
+                const Team* team = trainer->getTeam();
+                Menu pokemonSelect = Menu("Choose a Pokemon:", team->getPokemonNames(), [&choice] (int a) { choice = a; }, true);
                 getWindow()->present(pokemonSelect);
                 
                 switch (choice)
                 {
                     default:
-                        action = new Action(Action::Pokemon, choice);
+                        action = new Action(team->getPokemon().at(choice));
                         break;
                     case Menu::BackValue:
                         break;
@@ -91,7 +107,7 @@ void Player::selectAction()
                 
                 if (choice == 0)
                 {
-                    action = new Action(Action::Run, Action::DontCare);
+                    action = new Action();
                     getWindow()->present(Dialogue("You forfeited the match."));
                 }
             }
@@ -116,6 +132,30 @@ void Player::clearAction()
     action = nullptr;
 }
 
+void Player::setOpponent(Player *opponent)
+{
+    this->opponent = opponent;
+}
+
+Player* Player::getOpponent() const
+{
+    return opponent;
+}
+
+void Player::selectReplacementPokemon()
+{
+    int choice;
+    const Team* team = trainer->getTeam();
+    
+    Menu pokemonSelect = Menu("Choose a Pokemon:", team->getPokemonNames(), [&choice] (int a) { choice = a; });
+    getWindow()->present(pokemonSelect);
+    
+    Pokemon* pokemon = trainer->getTeam()->getPokemon().at(choice);
+    
+    getWindow()->present(Dialogue(trainer->getTitleAndName() + " sent out " + pokemon->getFullName() + "!"));
+    trainer->getTeam()->setActive(pokemon);
+}
+
 Computer::Computer(Window* window)
 : Player(window)
 {
@@ -132,12 +172,30 @@ void Computer::introduceSelf() const
 
 void Computer::initialSummon()
 {
-    getWindow()->present(Dialogue(trainer->getTitleAndName() + " sent out " + trainer->getTeam()->getActive()[Team::FirstActiveSlot]->getFullName() + "!"));
+    const Pokemon* pokemon = trainer->getTeam()->getSlot()->getPokemon();
+    
+    getWindow()->present(Dialogue(trainer->getTitleAndName() + " sent out " + pokemon->getFullName() + "!"));
 }
 
 void Computer::selectAction()
 {
-    const int MoveNumber = randInt(0, trainer->getTeam()->getActive()[Team::FirstActiveSlot]->getMoves()->getNumber()-1);
+    const Team* team = trainer->getTeam();
+    const Moves* moves = team->getSlot()->getPokemon()->getMoves();
+    const int MoveNumber = randInt(0, moves->getNumber()-1);
+    Move* move = moves->getMoves().at(MoveNumber);
+    Slot* target = getOpponent()->getTrainer()->getTeam()->getSlot();
     
-    action = new Action(Action::Fight, MoveNumber);
+    move->setTarget(target);
+    action = new Action(moves->getMoves().at(MoveNumber), team->getSlot()->getPokemon());
+}
+
+void Computer::selectReplacementPokemon()
+{
+    const Team* team = trainer->getTeam();
+    const int choice = randInt(1, toInt(team->getPokemon().size())-1);
+    
+    Pokemon* pokemon = trainer->getTeam()->getPokemon().at(choice);
+    
+    getWindow()->present(Dialogue(trainer->getTitleAndName() + " sent out " + pokemon->getFullName() + "!"));
+    trainer->getTeam()->setActive(pokemon);
 }

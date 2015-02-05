@@ -12,6 +12,10 @@
 #include <iostream>
 #include "Presentable.h"
 
+//
+// Dialogue
+// A dialogue to be presented to the user in the standard dialogue box.
+//
 class Dialogue : public Presentable
 {
 public:

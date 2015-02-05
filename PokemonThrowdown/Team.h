@@ -16,6 +16,8 @@
 #define string std::string
 
 class Pokemon;
+class Trainer;
+class Slot;
 
 //
 // Team
@@ -24,21 +26,31 @@ class Pokemon;
 class Team
 {
 public:
-    Team();
+    Team(Trainer* trainer);
     
     ~Team();
     
-    vector<Pokemon*> getActive() const;
+    Slot* getSlot() const;
+    
+    vector<Slot*> getSlots() const;
     
     vector<Pokemon*> getPokemon() const;
     
     vector<string> getPokemonNames() const;
     
-    static const int FirstActiveSlot = 0;
+    void setActive(Pokemon* pokemon);
+    
+    void clearActive();
+    
+    Trainer* getTrainer() const;
+    
+    static const int FirstSlot = 0;
+    static const int FirstPokemon = 0;
     
 private:
-    vector<Pokemon*> active;
+    vector<Slot*> slots;
     vector<Pokemon*> pokemon;
+    Trainer* trainer;
 };
 
 #undef vector

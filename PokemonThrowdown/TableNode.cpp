@@ -8,10 +8,11 @@
 
 #include "TableNode.h"
 #include "TableCellNode.h"
-#include "utilities.h" // min(), toInt(), toString()
+#include "utilities.h" // toInt(), toString()
 #include "Menu.h"
 #include <functional>
 #include <cmath> // ceil()
+#include <algorithm> // min(), max()
 
 using namespace std;
 
@@ -46,7 +47,7 @@ void TableNode::display()
         const int OffsetPrev = toInt(getPrevEnabled());
         const int OffsetBack = toInt(backButtonEnabled);
         
-        for (int i = getCurrentIndex(); i < minimum(getCurrentIndex() + numCellsPerPage, numCellsTotal); i++)
+        for (int i = getCurrentIndex(); i < min(getCurrentIndex() + numCellsPerPage, numCellsTotal); i++)
         {
             print(toString(++menuItemNumber) + ": ");
             getChildren()[i]->display();
@@ -75,11 +76,11 @@ void TableNode::display()
         
         if (input == getNextChoice())
         {
-            currentPage = minimum(toInt(ceil(toDouble(numCellsTotal) / toDouble(numCellsPerPage))), currentPage+1);
+            currentPage = min(toInt(ceil(toDouble(numCellsTotal) / toDouble(numCellsPerPage))), currentPage+1);
         }
         else if (input == getPrevChoice())
         {
-            currentPage = maximum(0, currentPage-1);
+            currentPage = max(0, currentPage-1);
         }
         else if (input == getBackChoice())
         {
@@ -101,7 +102,7 @@ int TableNode::getCurrentIndex() const
 
 int TableNode::getNumChoices() const
 {
-    return minimum(numCellsPerPage, numCellsTotal - getCurrentIndex());
+    return min(numCellsPerPage, numCellsTotal - getCurrentIndex());
 }
 
 bool TableNode::getNextEnabled() const

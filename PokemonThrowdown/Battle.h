@@ -15,6 +15,7 @@
 class Player;
 class Window;
 class Computer;
+class Field;
 
 //
 // Battle
@@ -31,6 +32,8 @@ public:
     
     void intro();
     
+    void summonsPhase();
+    
     void actionPhase();
     
     void battlePhase();
@@ -41,10 +44,9 @@ public:
     
 private:
     std::vector<Player*> players;
-    Player* human;
-    Computer* computer;
     Player* victor;
     int turnsPassed;
+    Field* field;
 };
 
 #endif /* defined(__PokemonThrowdown__Battle__) */

@@ -16,6 +16,7 @@
 #define string std::string
 
 class Move;
+class Pokemon;
 
 //
 // Moves
@@ -24,7 +25,7 @@ class Move;
 class Moves
 {
 public:
-    Moves();
+    Moves(Pokemon* pokemon);
     
     ~Moves();
     
@@ -34,8 +35,11 @@ public:
     
     int getNumber() const;
     
+    Pokemon* getPokemon() const;
+    
 private:
     vector<Move*> moves;
+    Pokemon* pokemon;
 };
 
 #undef vector

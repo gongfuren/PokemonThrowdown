@@ -8,7 +8,7 @@
 
 #include "Status.h"
 #include "Reactor.h"
-#include <vector> 
+#include <vector>
 
 using namespace std;
 
@@ -18,9 +18,31 @@ Status::Status(Pokemon* pokemon)
     condition = new HealthyCondition(pokemon);
 }
 
+Status::~Status()
+{
+    delete condition;
+    
+    for (Volatile* v : volatiles)
+    {
+        delete v;
+    }
+}
+
 Condition* Status::getCondition() const
 {
     return condition;
+}
+
+void Status::setCondition(Condition* condition)
+{
+    clearCondition();
+    this->condition = condition;
+}
+
+void Status::clearCondition()
+{
+    delete condition;
+    condition = nullptr;
 }
 
 vector<Volatile*> Status::getVolatiles() const
@@ -33,6 +55,10 @@ Condition::Condition(Pokemon* pokemon)
 {
 }
 
+Condition::~Condition()
+{
+}
+
 StatusBox::StatusToken HealthyCondition::getToken() const
 {
     return StatusBox::StatusToken::Healthy;
@@ -41,4 +67,14 @@ StatusBox::StatusToken HealthyCondition::getToken() const
 HealthyCondition::HealthyCondition(Pokemon* pokemon)
 : Condition(pokemon)
 {
+}
+
+FaintCondition::FaintCondition(Pokemon* pokemon)
+: Condition(pokemon)
+{
+}
+
+StatusBox::StatusToken FaintCondition::getToken() const
+{
+    return StatusBox::StatusToken::Faint;
 }

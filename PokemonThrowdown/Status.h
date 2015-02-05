@@ -18,12 +18,23 @@
 class Condition;
 class Volatile;
 
+//
+// Status
+// The whole, general status (NOT just the status condition) of a Pokemon. Includes
+// its status condition and any volatile status conditions it may have.
+//
 class Status : public Reactor
 {
 public:
     Status(Pokemon* pokemon);
     
+    ~Status();
+    
     Condition* getCondition() const;
+    
+    void setCondition(Condition* condition);
+    
+    void clearCondition();
     
     vector<Volatile*> getVolatiles() const;
     
@@ -32,24 +43,34 @@ private:
     vector<Volatile*> volatiles;
 };
 
+//
+// Condition
+// Represents a status condition on a Pokemon. A Pokemon may have only one
+// status condition.
+//
 class Condition : public Reactor
 {
 public:
     Condition(Pokemon* pokemon);
     
+    virtual ~Condition();
+    
     virtual StatusBox::StatusToken getToken() const = 0;
     
-private:
+protected:
     int age;
 };
 
-class Volatile : public Reactor
+//
+// Volatile
+// Represents a volatile status condition on a Pokemon. These conditions are
+// removed upon switching out.
+//
+class Volatile : public Condition
 {
 public:
-    StatusBox::VolatileToken getToken() const;
     
 private:
-    int age;
 };
 
 class HealthyCondition : public Condition
@@ -92,7 +113,10 @@ class FreezeCondition : public Condition
 
 class FaintCondition : public Condition
 {
+public:
+    FaintCondition(Pokemon* pokemon);
     
+    StatusBox::StatusToken getToken() const;
 };
 
 #undef vector

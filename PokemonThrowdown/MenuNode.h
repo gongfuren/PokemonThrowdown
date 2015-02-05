@@ -22,6 +22,7 @@ class NumericalGadgetNode;
 
 //
 // MenuNode
+// Visual representation of a Menu.
 // Master node for a option-based menu.
 //
 class MenuNode : public WinNode

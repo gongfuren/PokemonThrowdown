@@ -13,6 +13,8 @@
 
 #define override virtual
 
+class Pokemon;
+
 //
 // Stat
 // Represents a Pokemon stat during battle.
@@ -20,21 +22,25 @@
 class Stat
 {
 public:
-    Stat();
+    Stat(Stats* stats);
     
-    Stat(int amplitude);
+    Stat(int amplitude, Stats* stats);
     
-    Stat(int amplitude, int magnitude);
+    Stat(int amplitude, int magnitude, Stats* stats);
     
     int getStatus() const;
     
     int getValue() const;
+    
+    int getEffectiveValue() const;
     
     virtual void raise(int amount);
     
     virtual void lower(int amount);
     
     virtual double getMultiplier() const;
+    
+    Pokemon* getPokemon() const;
     
     static const int MaxMagnitude = 6;
     
@@ -46,14 +52,15 @@ private:
     static constexpr double multipliers[MaxMagnitude * 2 + 1] = {
         0.25, 0.285, 0.3333, 0.40, 0.50, 0.6666, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0
     };
+    Stats* stats;
 };
 
 class HPStat : public Stat
 {
 public:
-    HPStat();
+    HPStat(Stats* stats);
     
-    HPStat(int amplitude);
+    HPStat(int amplitude, Stats* stats);
     
     override void raise(int amount);
     
@@ -65,9 +72,9 @@ public:
 class BattleStat : public Stat
 {
 public:
-    BattleStat();
+    BattleStat(Stats* stats);
     
-    BattleStat(int amplitude);
+    BattleStat(int amplitude, Stats* stats);
     
     override double getMultiplier() const;
     

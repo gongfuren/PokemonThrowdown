@@ -9,7 +9,7 @@
 #include "utilities.h" // toInt()
 #include <ctime> // time()
 #include <cstdlib> // srand()
-#include "Game.h" // Game
+#include "Game.h"
 
 int main(int argc, const char* argv[])
 {

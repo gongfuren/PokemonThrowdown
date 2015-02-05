@@ -47,35 +47,13 @@ std::string toString(T item)
 }
 
 //
-// swap()
-// Swap two items.
+// toBool()
+// Returns C++'s bool representation of an item.
 //
 template <typename T>
-void swap(T& first, T& second)
+bool toBool(T item)
 {
-    T temp = first;
-    first = second;
-    second = temp;
-}
-
-//
-// max()
-// Return the larger of two items.
-//
-template <typename T>
-T maximum(T first, T second)
-{
-    return (first > second) ? first : second;
-}
-
-//
-// min()
-// Return the smaller of two items.
-//
-template <typename T>
-T minimum(T first, T second)
-{
-    return (first < second) ? first : second;
+    return static_cast<bool>(item);
 }
 
 //

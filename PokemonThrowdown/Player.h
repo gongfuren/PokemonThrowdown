@@ -18,6 +18,10 @@ class Window;
 class Trainer;
 struct Action;
 
+//
+// Player
+// A human player that controls a Trainer and their Pokemon.
+//
 class Player : public Controller
 {
 public:
@@ -27,21 +31,33 @@ public:
     
     virtual void initialSummon();
     
-    virtual void selectAction();
+    virtual void introduceSelf() const;
     
-    bool didForfeit() const;
+    virtual void selectAction();
     
     Trainer* getTrainer() const;
     
     Action* getAction() const;
     
     void clearAction();
+    
+    void setOpponent(Player* opponent);
+    
+    Player* getOpponent() const;
+    
+    virtual void selectReplacementPokemon();
         
 protected:
     Trainer* trainer;
     Action* action;
+    Player* opponent;
 };
 
+//
+// Computer
+// A Player that selects its own actions instead of prompting the user to select
+// its actions.
+//
 class Computer : public Player
 {
 public:
@@ -51,9 +67,11 @@ public:
     
     override void initialSummon();
     
-    void introduceSelf() const;
+    override void introduceSelf() const;
     
     override void selectAction();
+    
+    override void selectReplacementPokemon();
 };
 
 #undef vector

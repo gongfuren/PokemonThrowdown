@@ -13,6 +13,11 @@
 
 class Pokemon;
 
+//
+// Ability
+// Each Pokemon has an ability that activates certain features based on events
+// that occur during battle.
+//
 class Ability : public Reactor
 {
 public:

@@ -41,6 +41,8 @@ public:
     
     string getTitleAndName() const;
     
+    bool hasAblePokemon() const;
+    
 private:
     string title;
     string name;

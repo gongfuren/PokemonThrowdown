@@ -19,6 +19,10 @@
 
 struct HPBar;
 
+//
+// StatusBox
+// A status box that conveys information such as Pokemon level, HP, status, etc.
+//
 class StatusBox : public Presentable
 {
 public:
@@ -32,7 +36,7 @@ public:
         Confuse, Attract, FocusEnergy, Rollout, Protect, FocusPunch, PerishSong
     };
     
-    StatusBox(Pokemon* pokemon);
+    StatusBox(Pokemon* pokemon, bool hPVisible = false);
     
     ~StatusBox();
     
@@ -40,7 +44,9 @@ public:
     
     int getHPTotal() const;
     
-    StatusToken* getStatusToken() const;
+    bool getHPVisible() const;
+    
+    StatusToken getStatusToken() const;
     
     vector<VolatileToken> getVolatileTokens() const;
     
@@ -50,9 +56,14 @@ public:
     
     string getPokemonName() const;
     
+    static string description(StatusToken token);
+    
 private:
-    struct { int magnitude; int amplitude; } hPBar;
-    StatusToken* statusToken;
+    static const int NumStatusTokens = 7;
+    static const string TokenLabels[NumStatusTokens];
+    
+    struct { int magnitude; int amplitude; bool visible; } hPBar;
+    StatusToken statusToken;
     vector<VolatileToken> volatileTokens;
     int level;
     Pokemon::Gender gender;
