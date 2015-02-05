@@ -16,10 +16,12 @@
 
 using namespace std;
 
-StatusBox::StatusBox(Pokemon* pokemon)
+const string StatusBox::TokenLabels[StatusBox::NumStatusTokens] = { "OK ", "PSN", "BRN", "PRZ", "SLP", "FRZ", "FNT" };
+
+StatusBox::StatusBox(Pokemon* pokemon, bool hPVisible)
 {
-    hPBar = { pokemon->getStats()->getHP()->getStatus(), pokemon->getStats()->getHP()->getValue() };
-    statusToken = new StatusToken(pokemon->getStatus()->getCondition()->getToken());
+    hPBar = { pokemon->getStats()->getHP()->getStatus(), pokemon->getStats()->getHP()->getValue(), hPVisible };
+    statusToken = StatusToken(pokemon->getStatus()->getCondition()->getToken());
     level = pokemon->getLevel();
     gender = pokemon->getGender();
     name = pokemon->getFullName();
@@ -27,7 +29,6 @@ StatusBox::StatusBox(Pokemon* pokemon)
 
 StatusBox::~StatusBox()
 {
-    delete statusToken;
 }
 
 int StatusBox::getHP() const
@@ -40,7 +41,12 @@ int StatusBox::getHPTotal() const
     return hPBar.amplitude;
 }
 
-StatusBox::StatusToken* StatusBox::getStatusToken() const
+bool StatusBox::getHPVisible() const
+{
+    return hPBar.visible;
+}
+
+StatusBox::StatusToken StatusBox::getStatusToken() const
 {
     return statusToken;
 }
@@ -63,4 +69,9 @@ Pokemon::Gender StatusBox::getGender() const
 string StatusBox::getPokemonName() const
 {
     return name;
+}
+
+string StatusBox::description(StatusBox::StatusToken token)
+{
+    return TokenLabels[token];
 }

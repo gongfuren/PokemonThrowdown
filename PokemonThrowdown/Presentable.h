@@ -9,6 +9,11 @@
 #ifndef __PokemonThrowdown__Presentable__
 #define __PokemonThrowdown__Presentable__
 
+//
+// Presentable
+// Abstract class representing a data structure that can be passed to the window
+// to be presented to the user.
+//
 class Presentable
 {
 };

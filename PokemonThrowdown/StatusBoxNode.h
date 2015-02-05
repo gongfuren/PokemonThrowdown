@@ -13,10 +13,16 @@
 
 class StatusBox;
 
+//
+// StatusBoxNode
+// Visual representation of a StatusBox.
+//
 class StatusBoxNode : public WinNode
 {
 public:
     StatusBoxNode(const StatusBox& statusBox, WinNode* parent);
+    
+    static const int HPBarWidth = 40;
     
 private:
 };

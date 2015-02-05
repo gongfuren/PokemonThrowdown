@@ -10,16 +10,17 @@
 #include "Stats.h"
 #include "Stat.h"
 
-Stats::Stats()
+Stats::Stats(Pokemon* pokemon)
 {
-    stats.push_back(new HPStat());
-    stats.push_back(new Stat());
-    stats.push_back(new Stat());
-    stats.push_back(new Stat());
-    stats.push_back(new Stat());
-    stats.push_back(new Stat());
-    stats.push_back(new BattleStat());
-    stats.push_back(new BattleStat());
+    stats.push_back(new HPStat(this));
+    stats.push_back(new Stat(this));
+    stats.push_back(new Stat(this));
+    stats.push_back(new Stat(this));
+    stats.push_back(new Stat(this));
+    stats.push_back(new Stat(this));
+    stats.push_back(new BattleStat(this));
+    stats.push_back(new BattleStat(this));
+    this->pokemon = pokemon;
 }
 
 Stats::~Stats()
@@ -68,4 +69,9 @@ Stat* Stats::getAcc() const
 Stat* Stats::getEva() const
 {
     return stats[Eva];
+}
+
+Pokemon* Stats::getPokemon() const
+{
+    return pokemon;
 }

@@ -9,6 +9,9 @@
 #include <iostream>
 #include "Trainer.h"
 #include "Team.h"
+#include "Pokemon.h"
+#include "Stats.h"
+#include "Stat.h"
 
 using namespace std;
 
@@ -16,7 +19,7 @@ Trainer::Trainer()
 {
     title = "PKMN Trainer";
     name = "Red";
-    team = new Team();
+    team = new Team(this);
     gender = Male;
 }
 
@@ -48,4 +51,17 @@ Trainer::Gender Trainer::getGender() const
 string Trainer::getTitleAndName() const
 {
     return title + " " + name;
+}
+
+bool Trainer::hasAblePokemon() const
+{
+    for (Pokemon* p : team->getPokemon())
+    {
+        if (p->getStats()->getHP()->getStatus() > 0)
+        {
+            return true;
+        }
+    }
+    
+    return false;
 }

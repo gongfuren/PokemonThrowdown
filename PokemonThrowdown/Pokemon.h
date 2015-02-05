@@ -19,6 +19,9 @@ class Types;
 class Ability;
 class Item;
 class Status;
+class Team;
+class Trainer;
+class Move;
 
 //
 // Pokemon
@@ -29,10 +32,15 @@ class Pokemon
 public:
     enum Gender
     {
-        Male = 0, Female, Genderless
+        Male, Female, Genderless
     };
     
-    Pokemon();
+    enum Nature
+    {
+        NoNature
+    };
+    
+    Pokemon(Team* team);
     
     ~Pokemon();
     
@@ -60,6 +68,12 @@ public:
     
     static string description(Gender gender);
     
+    static string shortDescription(Gender gender);
+    
+    Trainer* getTrainer() const;
+        
+    double getCriticalMultiplier() const;
+    
 private:
     string name;
     string* nickname;
@@ -71,6 +85,7 @@ private:
     Gender gender;
     Status* status;
     int level;
+    Team* team;
 };
 
 #undef string

@@ -12,10 +12,14 @@
 #include <stdexcept>
 #include <iostream>
 
-class LogicException : public std::logic_error
+#define string std::string
+#define logic_error std::logic_error
+#define runtime_error std::runtime_error
+
+class LogicException : public logic_error
 {
 public:
-    LogicException(std::string message);
+    LogicException(string message);
 };
 
 class HPMultiplierException : public LogicException
@@ -27,7 +31,50 @@ public:
 class NavigationException : public LogicException
 {
 public:
-    NavigationException(std::string message);
+    NavigationException(string message);
 };
+
+class BattleControlFlowException : public LogicException
+{
+public:
+    BattleControlFlowException();
+    BattleControlFlowException(string message);
+};
+
+class ZombiePokemonException : public LogicException
+{
+public:
+    ZombiePokemonException();
+};
+
+class RuntimeException : public runtime_error
+{
+public:
+    RuntimeException(string message);
+};
+
+class ArrayOutOfBoundsException : public RuntimeException
+{
+public:
+    ArrayOutOfBoundsException();
+};
+
+class InvalidPointerException : public RuntimeException
+{
+public:
+    InvalidPointerException();
+    InvalidPointerException(string message);
+};
+
+class PokemonTeamPointerException : public InvalidPointerException
+{
+public:
+    PokemonTeamPointerException();
+    PokemonTeamPointerException(string message);
+};
+
+#undef logic_error
+#undef runtime_error
+#undef string
 
 #endif /* defined(__PokemonThrowdown__exceptions__) */

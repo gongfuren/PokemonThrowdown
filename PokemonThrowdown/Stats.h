@@ -14,6 +14,7 @@
 #define vector std::vector
 
 class Stat;
+class Pokemon;
 
 //
 // Stats
@@ -26,7 +27,7 @@ public:
     { HP = 0, Att, Def, SpA, SpD, Spe, Acc, Eva
     };
     
-    Stats();
+    Stats(Pokemon* pokemon);
     
     ~Stats();
     
@@ -46,8 +47,11 @@ public:
     
     Stat* getEva() const;
     
+    Pokemon* getPokemon() const;
+    
 private:
     vector<Stat*> stats;
+    Pokemon* pokemon;
 };
 
 #undef vector

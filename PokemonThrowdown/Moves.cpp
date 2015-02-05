@@ -14,9 +14,10 @@
 
 using namespace std;
 
-Moves::Moves()
+Moves::Moves(Pokemon* pokemon)
 {
-    moves.push_back(new Move());
+    moves.push_back(new Move(this));
+    this->pokemon = pokemon;
 }
 
 Moves::~Moves()
@@ -45,4 +46,9 @@ vector<string> Moves::getMoveNames() const
 int Moves::getNumber() const
 {
     return toInt(moves.size());
+}
+
+Pokemon* Moves::getPokemon() const
+{
+    return pokemon;
 }

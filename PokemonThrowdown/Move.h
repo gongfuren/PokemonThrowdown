@@ -10,8 +10,15 @@
 #define __PokemonThrowdown__Move__
 
 #include <iostream> 
+#include <vector> 
 
 #define string std::string
+#define vector std::vector
+
+class Pokemon;
+class Moves;
+class Type;
+class Slot;
 
 //
 // Move
@@ -20,12 +27,36 @@
 class Move
 {
 public:
-    enum Callback
+    enum Category
     {
-        BasePowerCallback = 0
+        Physical, Special, Status
     };
     
-    Move();
+    enum Callback
+    {
+        BasePowerCallback
+    };
+    
+    enum Priority
+    {
+        QuickClaw = 8,
+        Pursuit = 7,
+        SwitchOut = 6,
+        HelpingHand = 5,
+        Protect = 4,
+        FakeOut = 3,
+        ExtremeSpeed = 2,
+        QuickAttack = 1,
+        RegularPriority = 0,
+        VitalThrow = -1,
+        FocusPunch = -3,
+        Revenge = -4,
+        Counter = -5,
+        Whirlwind = -6,
+        TrickRoom = -7
+    };
+    
+    Move(Moves* moves);
     
     string getName() const;
     
@@ -35,14 +66,36 @@ public:
     
     int getPP() const;
     
+    Category getCategory() const;
+    
+    Priority getPriority() const;
+    
+    const vector<Slot*> getTargets() const;
+    
+    void setTarget(Slot* target);
+    
+    void clearTargets();
+    
+    Type* getType() const;
+    
+    Pokemon* getPokemon() const;
+    
+    virtual void execute();
+    
 private:
     string name;
     int power;
     int accuracy;
     int pP;
-    enum { Physical = 0, Special, Status } type;
+    Category category;
+    Priority priority;
+    vector<Slot*> targets;
+    Type* type;
+    int hits;
+    Moves* moves;
 };
 
 #undef string
+#undef vector
 
 #endif /* defined(__PokemonThrowdown__Move__) */

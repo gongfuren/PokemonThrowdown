@@ -13,6 +13,12 @@
 
 class Pokemon;
 
+//
+// Reactor
+// An abstract class representing an element that reacts to events during battle.
+// Examples are when a Pokemon is sent out (onSendOut) or when a move makes
+// contact (onMadeContact)
+//
 class Reactor
 {
 public:

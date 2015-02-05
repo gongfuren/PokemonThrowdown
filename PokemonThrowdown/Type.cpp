@@ -13,10 +13,20 @@ constexpr Type::Effectiveness Type::Effectivenesses[MaxNumTypes][MaxNumTypes];
 
 Type::Type()
 {
-    typeID = Electric;
+    iD = Ground;
 }
 
-double Type::getMultiplier(const Type& attackingType) const
+Type::Type(Type::ID iD)
 {
-    return toDouble(Effectivenesses[attackingType.typeID][this->typeID]) / 100.0;
+    this->iD = iD;
+}
+
+double Type::getMultiplier(const Type* attackingType) const
+{
+    return toDouble(Effectivenesses[this->iD][attackingType->iD]) / 100.0;
+}
+
+Type::ID Type::getID() const
+{
+    return iD;
 }

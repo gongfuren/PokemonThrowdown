@@ -9,6 +9,10 @@
 #ifndef __PokemonThrowdown__Settings__
 #define __PokemonThrowdown__Settings__
 
+//
+// Settings
+// The controller for changing user settings at the menu.
+//
 class Settings
 {
     

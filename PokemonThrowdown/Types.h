@@ -12,6 +12,7 @@
 #include <vector>
 
 class Type;
+class Pokemon;
 
 //
 // Types
@@ -20,14 +21,17 @@ class Type;
 class Types
 {
 public:
-    Types();
+    Types(Pokemon* pokemon);
     
     ~Types();
     
-    double getMultiplier(const Type& attackingType) const;
+    double getMultiplier(const Type* attackingType) const;
+    
+    double getSameTypeAttackBonus(const Type* attackingType) const;
     
 private:
     std::vector<Type*> types;
+    Pokemon* pokemon;
 };
 
 #endif /* defined(__PokemonThrowdown__Types__) */

@@ -13,6 +13,12 @@
 
 class Pokemon;
 
+//
+// Item
+// Represents a Pokemon item.
+// Pokemon can optionally hold an item to restore HP or activate certain effects
+// during battle.
+//
 class Item : public Reactor
 {
 public:

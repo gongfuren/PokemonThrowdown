@@ -7,6 +7,9 @@
 //
 
 #include "utilities.h"
+#include <algorithm>
+
+using namespace std;
 
 int randInt(int lowest, int highest)
 {
@@ -26,8 +29,8 @@ int randInt(int range)
 //
 static void flush()
 {
-    std::cin.clear();
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    cin.clear();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
 
 int getNumericalInput(int numChoices)
@@ -38,9 +41,9 @@ int getNumericalInput(int numChoices)
     {
         print("?: ");
         
-        std::cin >> choice;
+        cin >> choice;
         
-        if (std::cin.fail() || choice < 1 || choice > numChoices)
+        if (cin.fail() || choice < 1 || choice > numChoices)
         {
             flush();
             continue;
@@ -55,9 +58,9 @@ int getNumericalInput(int numChoices)
 
 std::string getStringInput()
 {
-    std::string input;
+    string input;
     flush();
     print("?: ");
-    getline(std::cin, input);
+    getline(cin, input);
     return input;
 }
