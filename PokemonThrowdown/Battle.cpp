@@ -25,6 +25,7 @@
 #include "exceptions.h"
 #include "Field.h"
 #include "Slot.h"
+#include "Computer.h"
 
 using namespace std;
 

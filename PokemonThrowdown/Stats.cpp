@@ -9,6 +9,8 @@
 #include <vector>
 #include "Stats.h"
 #include "Stat.h"
+#include "HPStat.h" 
+#include "BattleStat.h"
 
 Stats::Stats(Pokemon* pokemon)
 {

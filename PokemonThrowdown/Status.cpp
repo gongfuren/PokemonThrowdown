@@ -9,6 +9,8 @@
 #include "Status.h"
 #include "Reactor.h"
 #include <vector>
+#include "Condition.h"
+#include "Volatile.h"
 
 using namespace std;
 
@@ -48,33 +50,4 @@ void Status::clearCondition()
 vector<Volatile*> Status::getVolatiles() const
 {
     return volatiles;
-}
-
-Condition::Condition(Pokemon* pokemon)
-: Reactor(pokemon)
-{
-}
-
-Condition::~Condition()
-{
-}
-
-StatusBox::StatusToken HealthyCondition::getToken() const
-{
-    return StatusBox::StatusToken::Healthy;
-}
-
-HealthyCondition::HealthyCondition(Pokemon* pokemon)
-: Condition(pokemon)
-{
-}
-
-FaintCondition::FaintCondition(Pokemon* pokemon)
-: Condition(pokemon)
-{
-}
-
-StatusBox::StatusToken FaintCondition::getToken() const
-{
-    return StatusBox::StatusToken::Faint;
 }

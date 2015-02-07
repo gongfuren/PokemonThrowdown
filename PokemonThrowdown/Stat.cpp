@@ -7,7 +7,6 @@
 //
 
 #include "Stat.h"
-#include "exceptions.h"
 #include "Pokemon.h"
 #include "Trainer.h"
 #include "Team.h"
@@ -15,8 +14,6 @@
 #include "Status.h"
 
 constexpr double Stat::multipliers[MaxMagnitude * 2 + 1];
-
-constexpr double BattleStat::battleMultipliers[MaxMagnitude * 2 + 1];
 
 Stat::Stat(Stats* stats)
 {
@@ -78,62 +75,4 @@ double Stat::getMultiplier() const
 Pokemon* Stat::getPokemon() const
 {
     return stats->getPokemon();
-}
-
-HPStat::HPStat(Stats* stats)
-: Stat(200, 200, stats)
-{
-}
-
-HPStat::HPStat(int amplitude, Stats* stats)
-: Stat(amplitude, amplitude, stats)
-{
-}
-
-void HPStat::raise(int amount)
-{
-    if ((magnitude += amount) > amplitude)
-    {
-        magnitude = amplitude;
-    }
-}
-
-void HPStat::lower(int amount)
-{
-    if (magnitude <= 0)
-    {
-        throw ZombiePokemonException();
-    }
-    
-    if ((magnitude -= amount) <= 0)
-    {
-        magnitude = 0;
-        
-        getPokemon()->getStatus()->setCondition(new FaintCondition(getPokemon()));
-        
-        // TEMPORARY FIX (TODO)!!!
-        println(getPokemon()->getTrainer()->getTitleAndName() + "'s " + getPokemon()->getFullName() + " fainted!");
-        
-        getPokemon()->getTrainer()->getTeam()->clearActive();
-    }
-}
-
-double HPStat::getMultiplier() const
-{
-    throw HPMultiplierException();
-}
-
-BattleStat::BattleStat(Stats* stats)
-: Stat(1, 0, stats)
-{
-}
-
-BattleStat::BattleStat(int amplitude, Stats* stats)
-: Stat(amplitude, stats)
-{
-}
-
-double BattleStat::getMultiplier() const
-{
-    return battleMultipliers[magnitude + MaxMagnitude];
 }

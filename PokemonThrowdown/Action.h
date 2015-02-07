@@ -10,8 +10,11 @@
 #define __PokemonThrowdown__Action__
 
 #include <vector> 
+#include "Printable.h"
+#include <string>
 
 #define vector std::vector
+#define string std::string
 
 class Move;
 class Item;
@@ -21,7 +24,7 @@ class Pokemon;
 // Action
 // A token representing a player's intended move.
 //
-struct Action
+struct Action : public Printable
 {
     enum Type
     {
@@ -46,6 +49,8 @@ struct Action
     //
     static bool compare(const Action* action1, const Action* action2);
     
+    string description() const;
+    
     Type type;
     Move* move;
     Item* item;
@@ -58,5 +63,6 @@ struct Action
 };
 
 #undef vector
+#undef string
 
 #endif /* defined(__PokemonThrowdown__Action__) */

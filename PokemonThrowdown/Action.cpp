@@ -13,6 +13,9 @@
 #include "Stats.h"
 #include "Stat.h"
 #include "utilities.h"
+#include <string> 
+
+using namespace std;
 
 Action::Action(Type type, Move* move, Item* item, Pokemon* pokemon, bool megaEvolution)
 {
@@ -47,8 +50,12 @@ bool Action::compare(const Action* action1, const Action* action2)
 {
     if ((action1->type != Fight && action1->type != Switch) || (action2->type != Fight && action2->type != Switch))
     {
-        throw InvalidPointerException();
+        throw InvalidPointerException("One of the compared types is not Action::Fight or Action::Switch.");
     }
+    
+    // DEBUG
+    println("action1:\n" + action1->description());
+    println("action2:\n" + action2->description());
     
     const int priority1 = (action1->type == Switch) ? Move::SwitchOut : action1->move->getPriority();
     const int priority2 = (action2->type == Switch) ? Move::SwitchOut : action2->move->getPriority();
@@ -71,4 +78,9 @@ bool Action::compare(const Action* action1, const Action* action2)
             return toBool(randInt(0, 1));
         }
     }
+}
+
+string Action::description() const
+{
+    return "Action: { type: " + toString(this->type) + ", move: " + toString(move) + ", item: " + toString(item) + ", pokemon: " + toString(pokemon) + ", megaEvolution: " + toString(megaEvolution) + " }";
 }

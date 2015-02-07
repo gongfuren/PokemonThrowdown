@@ -12,7 +12,6 @@
 #include "Controller.h"
 
 #define vector std::vector
-#define override virtual
 
 class Window;
 class Trainer;
@@ -53,28 +52,6 @@ protected:
     Player* opponent;
 };
 
-//
-// Computer
-// A Player that selects its own actions instead of prompting the user to select
-// its actions.
-//
-class Computer : public Player
-{
-public:
-    Computer(Window* window);
-    
-    ~Computer();
-    
-    override void initialSummon();
-    
-    override void introduceSelf() const;
-    
-    override void selectAction();
-    
-    override void selectReplacementPokemon();
-};
-
 #undef vector
-#undef override
 
 #endif /* defined(__PokemonThrowdown__Player__) */

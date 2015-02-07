@@ -15,6 +15,7 @@
 #include "Slot.h"
 #include "Status.h"
 #include "StatusBox.h"
+#include "Condition.h"
 
 using namespace std;
 
@@ -85,7 +86,7 @@ void Team::setActive(Pokemon* pokemon)
     // Check that we haven't tried to switch a Pokemon with itself
     if (pokemon == slots.at(FirstSlot)->getPokemon())
     {
-        throw PokemonTeamPointerException();
+        throw PokemonTeamPointerException("You can't switch a Pokemon with itself!");
     }
     
     // Check that we are swapping with a Pokemon within this team

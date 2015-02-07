@@ -15,7 +15,7 @@ class Window;
 
 //
 // WinNode
-// Interface for window view nodes. Calling display() on one will call display()
+// Base class for window view nodes. Calling display() on one will call display()
 // on all of a node's children.
 //
 class WinNode
