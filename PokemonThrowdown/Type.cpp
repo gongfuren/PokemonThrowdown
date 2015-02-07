@@ -13,7 +13,7 @@ constexpr Type::Effectiveness Type::Effectivenesses[MaxNumTypes][MaxNumTypes];
 
 Type::Type()
 {
-    iD = Ground;
+    iD = Electric;
 }
 
 Type::Type(Type::ID iD)

@@ -22,7 +22,7 @@ using namespace std;
 
 Move::Move(Moves* moves)
 {
-    name = "Earth Power";
+    name = "Thunderbolt";
     power = 90;
     accuracy = 100;
     pP = 15;

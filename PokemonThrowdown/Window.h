@@ -9,6 +9,8 @@
 #ifndef __PokemonThrowdown__Window__
 #define __PokemonThrowdown__Window__
 
+#include "Dialogue.h"
+
 class Menu;
 class WinNode;
 class Alert;
@@ -36,7 +38,7 @@ public:
     void present(const Dialogue& dialogue);
     
     void present(const StatusBox& statusBox);
-        
+    
 private:
     WinNode* root;
 };

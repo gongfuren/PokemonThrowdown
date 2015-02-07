@@ -14,10 +14,13 @@
 #include "Dialogue.h"
 #include "DialogueNode.h"
 #include "StatusBoxNode.h"
+#include <vector>
+
+using namespace std;
 
 Window::Window()
 {
-    root = new WindowView(nullptr);
+    root = new WindowView();
 }
 
 Window::~Window()

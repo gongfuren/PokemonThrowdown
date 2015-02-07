@@ -18,6 +18,7 @@
 class WindowView : public WinNode
 {
 public:
+    WindowView();
     WindowView(WinNode* parent);
 };
 
