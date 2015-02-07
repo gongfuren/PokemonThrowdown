@@ -13,6 +13,8 @@
 #include "exceptions.h"
 #include "utilities.h"
 #include "Slot.h"
+#include "Status.h"
+#include "StatusBox.h"
 
 using namespace std;
 
@@ -61,6 +63,18 @@ vector<string> Team::getPokemonNames() const
     for (Pokemon* p : pokemon)
     {
         names.push_back(p->getName());
+    }
+    
+    return names;
+}
+
+vector<string> Team::getPokemonNamesWithStatus() const
+{
+    vector<string> names;
+    
+    for (Pokemon* p : pokemon)
+    {
+        names.push_back(p->getName() + " " + StatusBox::description(p->getStatus()->getCondition()->getToken()));
     }
     
     return names;

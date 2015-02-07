@@ -38,6 +38,8 @@ public:
     
     vector<string> getPokemonNames() const;
     
+    vector<string> getPokemonNamesWithStatus() const;
+    
     void setActive(Pokemon* pokemon);
     
     void clearActive();

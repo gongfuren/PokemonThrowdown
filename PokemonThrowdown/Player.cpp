@@ -21,6 +21,8 @@
 #include "Action.h"
 #include "utilities.h" // randInt()
 #include "Slot.h"
+#include "Stats.h"
+#include "Stat.h"
 
 using namespace std;
 
@@ -87,7 +89,7 @@ void Player::selectAction()
             case 2:
             {
                 const Team* team = trainer->getTeam();
-                Menu pokemonSelect = Menu("Choose a Pokemon:", team->getPokemonNames(), [&choice] (int a) { choice = a; }, true);
+                Menu pokemonSelect = Menu("Choose a Pokemon:", team->getPokemonNamesWithStatus(), [&choice] (int a) { choice = a; }, true);
                 getWindow()->present(pokemonSelect);
                 
                 switch (choice)
@@ -144,16 +146,26 @@ Player* Player::getOpponent() const
 
 void Player::selectReplacementPokemon()
 {
-    int choice;
-    const Team* team = trainer->getTeam();
-    
-    Menu pokemonSelect = Menu("Choose a Pokemon:", team->getPokemonNames(), [&choice] (int a) { choice = a; });
-    getWindow()->present(pokemonSelect);
-    
-    Pokemon* pokemon = trainer->getTeam()->getPokemon().at(choice);
-    
-    getWindow()->present(Dialogue(trainer->getTitleAndName() + " sent out " + pokemon->getFullName() + "!"));
-    trainer->getTeam()->setActive(pokemon);
+    for (;;)
+    {
+        int choice;
+        const Team* team = trainer->getTeam();
+        
+        Menu pokemonSelect = Menu("Choose a Pokemon:", team->getPokemonNamesWithStatus(), [&choice] (int a) { choice = a; });
+        getWindow()->present(pokemonSelect);
+        
+        Pokemon* pokemon = trainer->getTeam()->getPokemon().at(choice);
+        
+        if (pokemon->getStats()->getHP()->getStatus() == 0)
+        {
+            getWindow()->alert(Alert(pokemon->getFullName() + " is fainted and cannot battle."));
+            continue;
+        }
+        
+        getWindow()->present(Dialogue(trainer->getTitleAndName() + " sent out " + pokemon->getFullName() + "!"));
+        trainer->getTeam()->setActive(pokemon);
+        break;
+    }
 }
 
 Computer::Computer(Window* window)
@@ -191,11 +203,21 @@ void Computer::selectAction()
 
 void Computer::selectReplacementPokemon()
 {
-    const Team* team = trainer->getTeam();
-    const int choice = randInt(1, toInt(team->getPokemon().size())-1);
-    
-    Pokemon* pokemon = trainer->getTeam()->getPokemon().at(choice);
-    
-    getWindow()->present(Dialogue(trainer->getTitleAndName() + " sent out " + pokemon->getFullName() + "!"));
-    trainer->getTeam()->setActive(pokemon);
+    for (;;)
+    {
+        const Team* team = trainer->getTeam();
+        const int choice = randInt(1, toInt(team->getPokemon().size())-1);
+        
+        Pokemon* pokemon = trainer->getTeam()->getPokemon().at(choice);
+        
+        // TEMP fix (TODO)!!!
+        if (pokemon->getStats()->getHP()->getStatus() == 0)
+        {
+            continue;
+        }
+        
+        getWindow()->present(Dialogue(trainer->getTitleAndName() + " sent out " + pokemon->getFullName() + "!"));
+        trainer->getTeam()->setActive(pokemon);
+        break;
+    }
 }

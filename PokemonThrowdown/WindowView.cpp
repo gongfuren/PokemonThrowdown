@@ -8,6 +8,11 @@
 
 #include "WindowView.h"
 
+WindowView::WindowView()
+: WinNode(nullptr)
+{
+}
+
 WindowView::WindowView(WinNode* parent)
 : WinNode(parent)
 {

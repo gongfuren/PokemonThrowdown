@@ -7,6 +7,7 @@
 //
 
 #include "Slot.h"
+#include <iostream>
 
 Slot::Slot(Pokemon* pokemon, Team* team)
 {
